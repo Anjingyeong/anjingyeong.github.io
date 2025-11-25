@@ -102,31 +102,33 @@
         <div class="project-card glass-card fade-in">
           <h3>RF-DETR기반 실시간 대장 내 용종 검출 시스템 개발</h3>
           <p>
-            RF-DETR(Real-time Fine-grained Detection Transformer) 기술을 활용하여 대장 내시경 영상에서 용종을 실시간으로 검출하는 시스템을 개발했습니다.
-            Transformer 기반 객체 탐지 모델을 의료 영상에 최적화하여 높은 정확도와 빠른 처리 속도를 달성했으며,
-            실제 임상 환경에서 즉각적인 진단 보조가 가능하도록 구현했습니다.
+            Transformer 기반 RF-DETR 모델과 DINOv2 백본을 적용하여 대장 내시경 영상에서 용종을 실시간으로 검출하는 시스템을 개발했습니다.
+            의료 데이터의 부족과 클래스 불균형 문제를 해결하기 위해 Elastic Deformation과 Grid Distortion 고급 데이터 증강 기법을 적용하였으며,
+            Weight Pruning과 Query 수 최적화를 통해 경량화를 구현했습니다. 베이스라인 대비 mAP 7% 향상과 22 FPS의 실시간 처리 속도를 달성하여
+            임상 환경에서의 실용성을 입증했습니다.
           </p>
           <div class="project-tags">
             <span class="tag">Python</span>
             <span class="tag">PyTorch</span>
-            <span class="tag">DETR</span>
-            <span class="tag">Transformer</span>
+            <span class="tag">RF-DETR</span>
+            <span class="tag">DINOv2</span>
             <span class="tag">Medical AI</span>
           </div>
         </div>
 
         <div class="project-card glass-card fade-in">
-          <h3>생성형 AI로 병변 검출 알고리즘 개발</h3>
+          <h3>VAE 기반 유방암 병변 검출 알고리즘 개발</h3>
           <p>
-            생성형 AI 기술을 활용하여 의료 영상에서 병변을 자동으로 검출하는 알고리즘을 개발했습니다.
-            데이터 증강 기법과 최신 딥러닝 아키텍처를 적용하여 제한적인 의료 데이터 환경에서도
-            높은 성능을 발휘하는 모델을 구축했습니다. 공학혁신상을 수상한 프로젝트입니다.
+            VAE(Variational AutoEncoder)를 활용하여 유방암 초음파 영상에서 병변을 자동으로 검출하는 알고리즘을 개발했습니다.
+            정상 이미지로 학습된 모델이 병변 이미지를 정상 형태로 재구성하고, 원본과의 차영상을 통해 병변을 검출하는 비지도 학습 방식을 적용했습니다.
+            동적 임계값 이진화 기법을 도입하여 작은 병변에서 40%, 큰 병변에서 90%의 Dice coefficient를 달성하며,
+            데이터 증강 없이도 안정적인 병변 검출이 가능함을 입증했습니다. 공학혁신상을 수상한 프로젝트입니다.
           </p>
           <div class="project-tags">
             <span class="tag">Python</span>
             <span class="tag">TensorFlow</span>
-            <span class="tag">GAN</span>
-            <span class="tag">CNN</span>
+            <span class="tag">VAE</span>
+            <span class="tag">AutoEncoder</span>
             <span class="tag">Medical Imaging</span>
           </div>
         </div>
