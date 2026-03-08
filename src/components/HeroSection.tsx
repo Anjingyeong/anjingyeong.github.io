@@ -43,9 +43,11 @@ const HeroSection = () => {
       <div className="container relative z-10">
         <div className="max-w-2xl">
           <div className="w-28 h-28 rounded-full border-2 border-primary/20 mb-8 overflow-hidden shadow-xl ring-4 ring-primary/5">
-            <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center text-muted-foreground text-sm font-medium">
-              Photo
-            </div>
+            <img
+              src="/profile.jpg"
+              alt="안진경 프로필 사진"
+              className="w-full h-full object-cover"
+            />
           </div>
 
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-6">
