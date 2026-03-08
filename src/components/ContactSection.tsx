@@ -3,9 +3,9 @@ import emailjs from "@emailjs/browser";
 import ScrollAnimator from "./ScrollAnimator";
 import { Github, Mail, MessageCircle, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
-const EMAILJS_SERVICE_ID = "service_portfolio";
-const EMAILJS_TEMPLATE_ID = "template_contact";
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID = "service_fzjt1eh";
+const EMAILJS_TEMPLATE_ID = "template_28s6apn";
+const EMAILJS_PUBLIC_KEY = "JkKEzpqeLoBpr4VBY";
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 
