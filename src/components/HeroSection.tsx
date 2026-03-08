@@ -42,7 +42,7 @@ const HeroSection = () => {
 
       <div className="container relative z-10">
         <div className="max-w-2xl">
-          <div className="w-28 h-28 rounded-full border-2 border-primary/20 mb-8 overflow-hidden shadow-xl ring-4 ring-primary/5">
+          <div className="w-40 h-40 md:w-56 md:h-56 rounded-full border-2 border-primary/20 mb-8 overflow-hidden shadow-xl ring-4 ring-primary/5">
             <img
               src="/profile.jpg"
               alt="안진경 프로필 사진"
