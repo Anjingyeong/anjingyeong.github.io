@@ -40,30 +40,27 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/80 backdrop-blur-lg shadow-sm border-b border-border" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-lg shadow-sm border-b border-border" : "bg-transparent"
+        }`}
       style={{ height: "var(--header-height)" }}
     >
       <div className="container flex items-center justify-between h-full">
-        <span className="text-lg font-bold text-foreground tracking-tight font-mono">&lt;AnJinGyeong /&gt;</span>
+        <span className="text-lg font-bold text-foreground tracking-tight font-mono">&lt;안진경의 포트폴리오&gt;</span>
 
         <nav className="hidden md:flex gap-6">
           {navItems.map((item) => (
             <button
               key={item.href}
               onClick={() => scrollTo(item.href)}
-              className={`text-sm font-medium relative transition-colors duration-200 ${
-                activeSection === item.href.slice(1)
+              className={`text-sm font-medium relative transition-colors duration-200 ${activeSection === item.href.slice(1)
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
-              }`}
+                }`}
             >
               {item.label}
               <span
-                className={`absolute -bottom-1 left-0 h-0.5 bg-primary rounded-full transition-all duration-300 ${
-                  activeSection === item.href.slice(1) ? "w-full" : "w-0"
-                }`}
+                className={`absolute -bottom-1 left-0 h-0.5 bg-primary rounded-full transition-all duration-300 ${activeSection === item.href.slice(1) ? "w-full" : "w-0"
+                  }`}
               />
             </button>
           ))}
@@ -80,9 +77,8 @@ const Header = () => {
             <button
               key={item.href}
               onClick={() => scrollTo(item.href)}
-              className={`text-left text-sm font-medium ${
-                activeSection === item.href.slice(1) ? "text-primary" : "text-muted-foreground"
-              }`}
+              className={`text-left text-sm font-medium ${activeSection === item.href.slice(1) ? "text-primary" : "text-muted-foreground"
+                }`}
             >
               {item.label}
             </button>

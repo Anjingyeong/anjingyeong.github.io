@@ -66,17 +66,23 @@ const HeroSection = () => {
             <span className={`inline-block w-0.5 h-5 bg-primary ml-1 align-middle transition-opacity ${showCursor ? "opacity-100" : "opacity-0"}`} />
           </p>
 
-          <p className="text-base text-muted-foreground mb-10 max-w-xl leading-relaxed">
-            AI 기술을 활용하여 실시간 데이터 처리 및 지능형 애플리케이션을 개발합니다.
-            의료AI부터 응용 소프트웨어까지, 다양한 분야의 AI 솔루션을 연구합니다.
+          <p className="text-base text-muted-foreground mb-8 max-w-xl leading-relaxed">
+            Computer Vision 기반 의료 영상 객체 탐지 모델의 mAP 7% 향상 및 22 FPS 실시간 처리 시스템 개발, VAE 기반 유방암 병변 비지도 학습 검출 등 실질적인 문제 해결 경험을 갖춘 AI/ML 엔지니어입니다.
           </p>
+
+          <div className="flex flex-wrap gap-2 mb-10">
+            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Python</span>
+            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">PyTorch</span>
+            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">TensorFlow</span>
+            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Docker</span>
+          </div>
 
           <div className="flex gap-3 flex-wrap">
             <a href="#projects" className="minimal-btn-primary" onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}>
-              System Modules
+              핵심 성과 보기
             </a>
-            <a href="#contact" className="minimal-btn-secondary" onClick={(e) => { e.preventDefault(); document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }); }}>
-              Connect
+            <a href="#about" className="minimal-btn-secondary" onClick={(e) => { e.preventDefault(); document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" }); }}>
+              내 이야기 읽기
             </a>
           </div>
         </div>

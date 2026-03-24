@@ -23,7 +23,7 @@ const Index = () => {
       </main>
       <footer className="relative z-10 border-t border-border py-8 text-center text-xs text-muted-foreground" style={{ background: "var(--gradient-hero)" }}>
         <div className="container font-mono">
-          &lt;AnJinGyeong /&gt; © {new Date().getFullYear()}
+          &lt;안진경의 포트폴리오&gt; © {new Date().getFullYear()}
         </div>
       </footer>
     </div>
