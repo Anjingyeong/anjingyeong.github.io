@@ -57,7 +57,8 @@ const projects: ProjectType[] = [
     images: [
       { src: "/images/vae_diff.png", caption: "1. 차영상 구하는법" },
       { src: "/images/vae_threshold.png", caption: "2. 동적임계값 사용전과 후 및 오리지널 마스크 이미지" },
-      { src: "/images/vae_result.png", caption: "3. 결과 수치이미지" }
+      { src: "/images/vae_result.png", caption: "3. 결과 수치이미지" },
+      { src: "/images/vae_award.jpg", caption: "🏆 공학혁신상 (창의혁신 DNA 산학협력 팀 프로젝트)" }
     ]
   },
   {
@@ -118,7 +119,9 @@ const projects: ProjectType[] = [
     gradient: "from-blue-500/10 to-indigo-500/10",
     videoUrl: "https://www.youtube.com/embed/n6xKcYq7bWE",
     images: [
-      { src: "/images/rf_detr_aug.png", caption: "고급 데이터 증강 기법 적용 예시 (Elastic Deformation, Grid Distortion 등)" }
+      { src: "/images/rf_detr_aug.png", caption: "고급 데이터 증강 기법 적용 예시 (Elastic Deformation, Grid Distortion 등)" },
+      { src: "/images/rf_detr_gold.jpg", caption: "🏆 금상 (제17회 건양대학교 캡스톤디자인 경진대회)" },
+      { src: "/images/rf_detr_bronze.jpg", caption: "🏆 동상 (창의적 종합설계 경진대회)" }
     ]
   },
   {
@@ -335,7 +338,7 @@ const ProjectsSection = () => {
                 <div className="space-y-8 mt-8 border-t border-border pt-8">
                   <h4 className="text-xl font-semibold mb-6 flex items-center gap-2">
                     <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
-                    고급 데이터 증강 기법 적용 이미지
+                    프로젝트 갤러리 및 수상 내역
                   </h4>
                   {selectedProject.images.map((img, idx) => (
                     <div key={idx} className="flex flex-col gap-4 mb-8 last:mb-0">
