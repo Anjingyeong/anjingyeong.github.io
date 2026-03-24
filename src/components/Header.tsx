@@ -53,8 +53,8 @@ const Header = () => {
               key={item.href}
               onClick={() => scrollTo(item.href)}
               className={`text-sm font-medium relative transition-colors duration-200 ${activeSection === item.href.slice(1)
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground"
+                ? "text-primary"
+                : "text-muted-foreground hover:text-foreground"
                 }`}
             >
               {item.label}

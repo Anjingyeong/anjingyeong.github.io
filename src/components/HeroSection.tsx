@@ -73,8 +73,8 @@ const HeroSection = () => {
           <div className="flex flex-wrap gap-2 mb-10">
             <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Python</span>
             <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">PyTorch</span>
-            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">TensorFlow</span>
-            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Docker</span>
+            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Java</span>
+            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">JavaScript</span>
           </div>
 
           <div className="flex gap-3 flex-wrap">
