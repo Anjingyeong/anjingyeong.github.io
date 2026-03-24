@@ -4,7 +4,7 @@ import { Github, Linkedin, Mail, BookOpen, MapPin, GraduationCap, Briefcase, Bra
 const infoItems = [
   { icon: MapPin, label: "위치", value: "서울, 대한민국" },
   { icon: GraduationCap, label: "학력", value: "건양대학교 의공학과" },
-  { icon: Briefcase, label: "분야", value: "AI/ML Engineer" },
+  { icon: Briefcase, label: "분야", value: "응용SW / AI·ML 개발" },
   { icon: Brain, label: "관심분야", value: "응용SW / AI·ML 개발" },
   { icon: Globe, label: "언어", value: "한국어, English" },
   { icon: Mail, label: "이메일", value: "anjin0910@gmail.com" },

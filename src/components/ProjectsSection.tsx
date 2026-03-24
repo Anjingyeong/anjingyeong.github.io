@@ -19,7 +19,7 @@ const projects: ProjectType[] = [
     title: "RF-DETR기반 실시간 대장 내 용종 검출 시스템 개발",
     description:
       "Transformer 기반 RF-DETR 모델과 DINOv2 백본을 적용하여 대장 내시경 영상에서 용종을 실시간으로 검출하는 시스템을 개발했습니다. Elastic Deformation과 Grid Distortion 고급 데이터 증강 기법을 적용하고, Weight Pruning과 Query 수 최적화를 통해 경량화를 구현했습니다.",
-    highlights: ["mAP 7% 향상", "22 FPS 실시간 처리", "임상 실용성 입증"],
+    highlights: ["mAP 7% 향상", "22 FPS 실시간 처리", "임상 실용성 입증", "금상 및 동상 수상"],
     tags: ["Python", "PyTorch", "RF-DETR", "DINOv2", "Medical AI"],
     gradient: "from-blue-500/10 to-indigo-500/10",
     videoUrl: "https://www.youtube.com/embed/n6xKcYq7bWE",
@@ -63,7 +63,7 @@ const ProjectsSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
           {projects.map((project, i) => (
             <ScrollAnimator key={i}>
-              <div 
+              <div
                 className="minimal-card-accent group cursor-pointer h-full transition-transform hover:-translate-y-1"
                 onClick={() => setSelectedProject(project)}
               >
@@ -110,14 +110,14 @@ const ProjectsSection = () => {
           }}>
             {/* Backdrop */}
             <div className="absolute inset-0 bg-background/80 backdrop-blur-sm pointer-events-none" />
-            
+
             {/* Modal Content */}
-            <div 
+            <div
               className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-card border border-border rounded-xl shadow-2xl p-6 md:p-8 animate-in fade-in zoom-in-95 duration-200"
               role="dialog"
               aria-modal="true"
             >
-              <button 
+              <button
                 className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-full transition-colors"
                 onClick={() => setSelectedProject(null)}
                 aria-label="Close modal"
@@ -139,12 +139,12 @@ const ProjectsSection = () => {
               {selectedProject.videoUrl && (
                 <div className="mb-8 rounded-xl overflow-hidden shadow-lg border border-border bg-black">
                   <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                    <iframe 
+                    <iframe
                       className="absolute top-0 left-0 w-full h-full"
-                      src={selectedProject.videoUrl} 
-                      title="YouTube video player" 
-                      frameBorder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      src={selectedProject.videoUrl}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     ></iframe>
                   </div>
@@ -160,9 +160,9 @@ const ProjectsSection = () => {
                   {selectedProject.images.map((img, idx) => (
                     <div key={idx} className="flex flex-col gap-4 mb-8 last:mb-0">
                       <div className="rounded-xl overflow-hidden border border-border bg-muted/20 flex items-center justify-center p-2">
-                        <img 
-                          src={img.src} 
-                          alt={img.caption} 
+                        <img
+                          src={img.src}
+                          alt={img.caption}
                           className="w-full h-auto object-contain max-h-[70vh] rounded-lg shadow-sm"
                           onError={(e) => {
                             (e.target as HTMLImageElement).src = '/placeholder.svg';
