@@ -136,8 +136,7 @@ const projects: ProjectType[] = [
             <span className="text-primary">1.</span> 프로젝트 개요
           </h4>
           <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-            <li><strong className="text-foreground/80">진행 기간:</strong> 2024.02 ~ 2024.03</li>
-            <li><strong className="text-foreground/80">팀 구성:</strong> 5인 (데이터 파이프라인, 풀스택 웹 개발, DB 모델링, 알고리즘 설계, UI/UX 시각화 등)</li>
+            <li><strong className="text-foreground/80">팀 구성:</strong> 6인 (데이터 파이프라인, 풀스택 웹 개발, DB 모델링, 알고리즘 설계, UI/UX 시각화 등)</li>
             <li><strong className="text-foreground/80">프로젝트 목표:</strong> 정보의 불균형 속에서 초보 투자자부터 전문가까지 예측 가능한 직관적 시각화 대시보드를 통한 합리적 투자 의사결정 지원</li>
             <li><strong className="text-foreground/80">담당 역할:</strong> Web Service 풀스택 개발, 웹 스크래핑 파이프라인 구축 및 데이터 분석 모델링 로직 설계</li>
             <li><strong className="text-foreground/80">Backend / Pipeline:</strong> Python, MySQL, BeautifulSoup4, pykrx 등</li>
