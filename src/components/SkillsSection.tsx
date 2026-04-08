@@ -11,27 +11,27 @@ interface SkillCategory {
 
 const skillCategories: SkillCategory[] = [
   {
-    title: "AI & Machine Learning",
+    title: "AI & Deep Learning",
     icon: Brain,
-    skills: ["Python / NumPy / pandas", "TensorFlow / PyTorch", "Deep Learning (CNN, RNN, GAN)", "Computer Vision (YOLO, DETR, OpenCV)"],
+    skills: ["Python / NumPy / pandas", "TensorFlow / PyTorch", "CNN, RNN, GAN, VAE", "Computer Vision (DETR, YOLO)", "CycleGAN / Medical Imaging"],
     color: "from-blue-500/10 to-blue-600/5",
   },
   {
-    title: "Data Analysis",
+    title: "Biomedical Domain",
     icon: Database,
-    skills: ["Data Preprocessing & Cleaning", "Statistical Analysis", "Feature Engineering", "Model Evaluation & Optimization"],
+    skills: ["의료 영상 데이터 분석", "병변 검출 및 영역 분할", "의료 데이터 특화 증강 (Elastic, Grid)", "비지도 학습 기반 이상 탐지", "임상 소프트웨어 워크플로우 설계"],
     color: "from-indigo-500/10 to-indigo-600/5",
   },
   {
-    title: "Visualization",
+    title: "Web Full-stack",
     icon: BarChart3,
-    skills: ["Matplotlib"],
-    color: "from-violet-500/10 to-violet-600/5",
+    skills: ["React / TypeScript", "Node.js / Express 기반 서버 구축", "RESTful API 파이프라인 설계", "MySQL 및 관계형 데이터베이스", "JWT 인증 프로세스 및 웹소켓"],
+    color: "from-emerald-500/10 to-teal-600/5",
   },
   {
-    title: "Tools & Others",
+    title: "Tools & DevOps",
     icon: Wrench,
-    skills: ["Git / GitHub", "Google Colab", "SQL"],
+    skills: ["Git / GitHub 버전 관리", "Google Colab 환경 구축", "OpenCV 실시간 영상 처리", "Streamlit 데이터 대시보드 구축", "데이터 수집 및 스크래핑 파이프라인"],
     color: "from-purple-500/10 to-purple-600/5",
   },
 ];
@@ -42,7 +42,7 @@ const SkillsSection = () => {
       <div className="container">
         <ScrollAnimator>
           <div className="section-header">
-            <h2>기술 스택</h2>
+            <h2>핵심 기술 역량</h2>
           </div>
         </ScrollAnimator>
 

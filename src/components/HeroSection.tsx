@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ArrowDown, Sparkles } from "lucide-react";
 
 const HeroSection = () => {
-  const fullText = "AI/ML Engineer";
+  const fullText = "Data-Driven Full-Stack Engineer";
   const [displayText, setDisplayText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [typingDone, setTypingDone] = useState(false);
@@ -55,8 +55,8 @@ const HeroSection = () => {
             <span className="text-sm font-medium text-primary">반갑습니다</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-foreground leading-[1.1]">
-            안진경입니다.
+          <h1 className="text-4xl md:text-[3.5rem] font-bold mb-4 text-foreground leading-[1.2] tracking-tight">
+            AI/ML의 깊이와<br className="hidden md:block" /> 풀스택 웹 인프라의 넓이를 연결합니다.
           </h1>
 
           <p className="text-lg md:text-xl font-mono mb-6">
@@ -66,15 +66,16 @@ const HeroSection = () => {
             <span className={`inline-block w-0.5 h-5 bg-primary ml-1 align-middle transition-opacity ${showCursor ? "opacity-100" : "opacity-0"}`} />
           </p>
 
-          <p className="text-base text-muted-foreground mb-8 max-w-xl leading-relaxed">
-            Computer Vision 기반 의료 영상 객체 탐지 모델의 mAP 7% 향상 및 22 FPS 실시간 처리 시스템 개발, VAE 기반 유방암 병변 비지도 학습 검출 등 실질적인 문제 해결 경험을 갖춘 AI/ML 엔지니어입니다.
-          </p>
-
+          <div className="text-base text-muted-foreground mb-8 max-w-xl leading-relaxed space-y-4">
+            <p>
+              AI 모델링부터 대규모 웹 트래픽 제어까지. 데이터의 흐름을 꿰뚫고, 예외 상황에서도 멈추지 않는 견고한 프로덕션 서비스를 설계합니다.
+            </p>
+          </div>
           <div className="flex flex-wrap gap-2 mb-10">
-            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Python</span>
-            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">PyTorch</span>
-            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Java</span>
-            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">JavaScript</span>
+            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Python · PyTorch</span>
+            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Spring Boot · JPA</span>
+            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">React · TS</span>
+            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">MySQL · WebSockets</span>
           </div>
 
           <div className="flex gap-3 flex-wrap">
@@ -82,7 +83,7 @@ const HeroSection = () => {
               핵심 성과 보기
             </a>
             <a href="#about" className="minimal-btn-secondary" onClick={(e) => { e.preventDefault(); document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" }); }}>
-              내 이야기 읽기
+              개발자 소개
             </a>
           </div>
         </div>
