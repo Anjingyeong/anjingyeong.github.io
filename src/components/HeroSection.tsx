@@ -41,50 +41,58 @@ const HeroSection = () => {
       <div className="absolute top-1/2 left-1/4 w-1 h-1 rounded-full bg-primary/15 animate-pulse" style={{ animationDelay: "2s" }} />
 
       <div className="container relative z-10">
-        <div className="max-w-2xl">
-          <div className="w-40 h-40 md:w-56 md:h-56 rounded-full border-2 border-primary/20 mb-8 overflow-hidden shadow-xl ring-4 ring-primary/5">
-            <img
-              src="/profile.jpg"
-              alt="안진경 프로필 사진"
-              className="w-full h-full object-cover"
-            />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center max-w-6xl mx-auto">
+          {/* Text Content (Left side on desktop) */}
+          <div className="order-2 lg:order-1">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-6">
+              <Sparkles size={14} className="text-primary" />
+              <span className="text-sm font-medium text-primary">반갑습니다</span>
+            </div>
 
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-6">
-            <Sparkles size={14} className="text-primary" />
-            <span className="text-sm font-medium text-primary">반갑습니다</span>
-          </div>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 text-foreground leading-[1.3] tracking-tight break-keep">
+              AI/ML의 깊이와<br className="hidden md:block" /> 풀스택 웹 인프라의 넓이를 연결합니다.
+            </h1>
 
-          <h1 className="text-4xl md:text-[3.5rem] font-bold mb-4 text-foreground leading-[1.2] tracking-tight">
-            AI/ML의 깊이와<br className="hidden md:block" /> 풀스택 웹 인프라의 넓이를 연결합니다.
-          </h1>
-
-          <p className="text-lg md:text-xl font-mono mb-6">
-            <span className="bg-clip-text text-transparent" style={{ backgroundImage: "var(--gradient-primary)" }}>
-              {displayText}
-            </span>
-            <span className={`inline-block w-0.5 h-5 bg-primary ml-1 align-middle transition-opacity ${showCursor ? "opacity-100" : "opacity-0"}`} />
-          </p>
-
-          <div className="text-base text-muted-foreground mb-8 max-w-xl leading-relaxed space-y-4">
-            <p>
-              AI 모델링부터 대규모 웹 트래픽 제어까지. 데이터의 흐름을 꿰뚫고, 예외 상황에서도 멈추지 않는 견고한 프로덕션 서비스를 설계합니다.
+            <p className="text-lg md:text-xl font-mono mb-6">
+              <span className="bg-clip-text text-transparent" style={{ backgroundImage: "var(--gradient-primary)" }}>
+                {displayText}
+              </span>
+              <span className={`inline-block w-0.5 h-5 bg-primary ml-1 align-middle transition-opacity ${showCursor ? "opacity-100" : "opacity-0"}`} />
             </p>
-          </div>
-          <div className="flex flex-wrap gap-2 mb-10">
-            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Python · PyTorch</span>
-            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Spring Boot · JPA</span>
-            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">React · TS</span>
-            <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">MySQL · WebSockets</span>
+
+            <div className="text-base text-muted-foreground mb-8 max-w-xl leading-relaxed space-y-4 relative z-20">
+              <p>
+                AI 모델링부터 대규모 웹 트래픽 제어까지. 데이터의 흐름을 꿰뚫고, 예외 상황에서도 멈추지 않는 견고한 프로덕션 서비스를 설계합니다.
+              </p>
+            </div>
+            
+            <div className="flex flex-wrap gap-2 mb-10 relative z-20">
+              <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Python · PyTorch</span>
+              <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Spring Boot · JPA</span>
+              <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">React · TS</span>
+              <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">MySQL · WebSockets</span>
+            </div>
+
+            <div className="flex gap-3 flex-wrap relative z-20">
+              <a href="#projects" className="minimal-btn-primary" onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}>
+                핵심 성과 보기
+              </a>
+              <a href="#about" className="minimal-btn-secondary" onClick={(e) => { e.preventDefault(); document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" }); }}>
+                개발자 소개
+              </a>
+            </div>
           </div>
 
-          <div className="flex gap-3 flex-wrap">
-            <a href="#projects" className="minimal-btn-primary" onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}>
-              핵심 성과 보기
-            </a>
-            <a href="#about" className="minimal-btn-secondary" onClick={(e) => { e.preventDefault(); document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" }); }}>
-              개발자 소개
-            </a>
+          {/* Profile Image (Right side on desktop) */}
+          <div className="flex justify-center lg:justify-end order-1 lg:order-2">
+            <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-[22rem] lg:h-[22rem] rounded-full border-2 border-primary/20 overflow-hidden shadow-2xl ring-8 ring-primary/5 group">
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <img
+                src="/profile.jpg"
+                alt="안진경 프로필 사진"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            </div>
           </div>
         </div>
       </div>
