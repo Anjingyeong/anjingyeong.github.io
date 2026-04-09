@@ -19,245 +19,130 @@ type ProjectType = {
 const projects: ProjectType[] = [
   {
     icon: Server,
-    title: "FullCount: 실시간 KBO 라이브 커뮤니티 플랫폼",
-    description: "고빈도 실시간 데이터 동기화와 복잡한 관계형 상태 머신 제어 역량을 검증하기 위해 구축한 풀스택 플랫폼입니다. 무결성 기반의 에스크로 설계와 비동기 오프로딩 체계를 적용하여 DB 부하를 혁신적으로 절감했습니다.",
+    title: "FullCount (실시간 야구 커뮤니티)",
+    description: "스포츠 커뮤니티 특성상 경기 시간에 트래픽과 데이터 갱신이 급증할 것을 선제적으로 가정하고, 이를 견딜 수 있는 튼튼한 풀스택 웹 인프라 설계에 집중한 아키텍처 시뮬레이션 프로젝트입니다.",
     longDescription: (
       <div className="space-y-6 text-base text-foreground/90">
         <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div><strong className="text-foreground">기간 및 규모:</strong> 2026.03 (Team Project, 5인)</div>
-            <div><strong className="text-foreground">역할:</strong> Team Leader & Lead Full-Stack Engineer</div>
+            <div><strong className="text-foreground">기간:</strong> 2026.03.27 ~ 2026.04.08 (약 2주)</div>
+            <div className="md:col-span-2"><strong className="text-foreground">역할:</strong> 팀 리더 / 풀스택 시스템 아키텍처 설계 및 총괄 (5인 팀)</div>
             <div className="md:col-span-2"><strong className="text-foreground">기술 스택:</strong> React, Spring Boot, MySQL, JPA, WebSockets, STOMP</div>
           </div>
         </div>
 
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
+          </h4>
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            <strong className="text-foreground/90">SK 쉴더스 지능형 애플리케이션 개발 과정 중 진행한 심화 프로젝트:</strong><br />
+            대규모 트래픽 환경에서 프론트엔드와 백엔드가 어떻게 유기적으로 맞물려야 안정적인 서비스를 제공할 수 있는지 시뮬레이션하는 데 목적을 두었습니다. 조장으로서 서비스 전체 아키텍처를 설계하며, 실시간성 데이터 처리와 시스템 안정성을 확보하는 훈련에 집중했습니다.
+          </p>
+        </div>
+
         <div>
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem (기술적 병목 및 과제)
+            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
           </h4>
           <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">트래픽 및 병목:</strong> 에스크로 트랜잭션과 실시간 채팅이 동시다발적으로 발생하는 환경에서, 기존 API Polling 방식은 막대한 DB I/O 병목 및 서버 오버헤드를 유발했습니다.</li>
-            <li><strong className="text-foreground/80">보안 충돌 리스크:</strong> React UI의 무상태 접근성을 유지하면서, 권한 제어가 필수적인 SSR 라우팅 영역에서 보안 충돌 및 인증 홀(Authentication Hole) 발생 리스크가 존재했습니다.</li>
+            <li><strong className="text-foreground/80">전체 시스템의 병목 현상:</strong> 실시간 채팅과 에스크로 결제가 동시에 일어날 때, 프론트엔드의 잦은 요청이 백엔드와 DB에 막대한 부하를 주어 서비스 전체가 느려질 위험을 식별했습니다.</li>
+            <li><strong className="text-foreground/80">인증 무결성과 사용자 경험의 충돌:</strong> 보안을 강화하면서도 페이지 이동 시 흐름이 끊기지 않는 매끄러운 사용자 경험을 확보해야 하는 설계상의 과제가 있었습니다.</li>
           </ul>
         </div>
 
         <div>
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution (공학적 해결책 및 기술 의사결정)
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
           </h4>
           <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">Asynchronous Off-loading & 실시간 브로드캐스팅:</strong> 단방향 API Polling을 폐기하고, WebSockets 및 STOMP 기반의 양방향 통신망을 도입했습니다. Redis Pub/Sub을 설계하여 시스템 지연 없이 타 클라이언트의 상태 전이를 브로드캐스팅 처리했습니다.</li>
-            <li><strong className="text-foreground/80">무결성 기반 에스크로 설계:</strong> Spring Boot와 JPA를 채택하여 영속성 컨텍스트(Persistence Context) 기반의 철저한 트랜잭션 롤백 통제 및 상태 일관성을 보장했습니다. 비동기 환경에서도 데이터의 ACID 요소를 엄격하게 유지하도록 관계형 상태 머신(State Machine)을 모델링했습니다.</li>
-            <li><strong className="text-foreground/80">Hybrid Security Token 브릿징:</strong> 구조적 보안을 위해 JWT 기반의 무상태 통신을 기본으로 하되, 403 권한 관리가 필요한 라우팅 영역에는 HttpOnly Cookie를 브릿징 결합하여 보안 위협을 원천 차단했습니다.</li>
+            <li><strong className="text-foreground/80">풀스택 최적화 파이프라인 설계:</strong> 백엔드에 Redis와 WebSocket을 도입해 DB 부하를 줄이고, 프론트엔드에는 비동기 상태 관리 로직을 적용해 서버 데이터 변경이 화면에 즉시 반영되도록 전체 파이프라인을 설계했습니다.</li>
+            <li><strong className="text-foreground/80">하이브리드 보안 및 라우팅 제어:</strong> 클라이언트 사이드의 무상태 통신 효율을 유지하면서, 서버 사이드(SSR) 권한 검증이 필요한 경로에는 HttpOnly Cookie를 브릿징하여 보안성과 성능의 균형을 맞췄습니다.</li>
+            <li><strong className="text-foreground/80">통합 트랜잭션 관리:</strong> 조장으로서 프론트엔드와 백엔드 간의 데이터 ACID 특성이 유지되도록 예외 처리 및 낙관적 업데이트 로직 전반을 조율했습니다.</li>
           </ul>
         </div>
 
         <div>
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result (정량적/정성적 성과)
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
           </h4>
           <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10 ml-4">
-            <h5 className="font-semibold text-emerald-500 mb-2 flex items-center gap-2">⚡ DB I/O 부하 80% 이상 혁신적 절감</h5>
-            <p className="text-sm leading-relaxed text-foreground/80">
-              30초 지연 분산 오프로딩을 통해 DB I/O 부하를 80% 이상 혁신적으로 단축하고 미션 크리티컬 리소스를 확보했습니다. 동시다발적인 트래픽 하에서도 무결성이 보장된 실시간 데이터 동기화 파이프라인 및 내결함성(Fault-tolerant) 인프라를 성공적으로 구축했습니다.
-            </p>
+            <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
+              <li>서비스 전체의 데이터 흐름을 설계하는 아키텍트로서, 팀원들의 파트를 조율하며 마감 기한 내에 안정적인 시스템 시뮬레이션을 완료했습니다.</li>
+              <li>백엔드 최적화가 프론트엔드 성능 향상으로 이어지는 유기적인 풀스택 개발 프로세스를 주도했습니다.</li>
+            </ul>
           </div>
         </div>
       </div>
     ),
-    highlights: ["DB I/O 80% 절감", "하이브리드 인증 체계", "에스크로 무결성 제어"],
-    tags: ["React", "Spring Boot", "STOMP/WebSockets", "Redis Pub/Sub", "JWT", "Thymeleaf"],
+    highlights: ["풀스택 파이프라인 설계", "하이브리드 보안", "무결성 기반 에스크로"],
+    tags: ["React", "Spring Boot", "STOMP/WebSockets", "Redis Pub/Sub", "JWT"],
     gradient: "from-emerald-500/10 to-teal-500/10",
     githubUrl: "https://github.com/Rookies5-MiniPj2-Team5",
     hasAwards: false,
   },
   {
-    icon: Eye,
-    title: "VAE 기반 비지도 학습 유방암 병변 검출 시스템",
-    description: "초음파 영상에서 유방암 병변을 자동으로 식별하기 위해 동적 임계값을 생성하는 비지도 학습(Unsupervised Learning) 파이프라인입니다. 정상 조직 데이터만을 활용하여 구조적 이상 지점을 독자적으로 격리해 냅니다.",
-    longDescription: (
-      <div className="space-y-6 text-base text-foreground/90">
-        <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div><strong className="text-foreground">기간 및 규모:</strong> 2024.03~2024.11 (Team Project)</div>
-            <div><strong className="text-foreground">역할:</strong> Generative AI & Vision Pipeline Engineer</div>
-            <div className="md:col-span-2"><strong className="text-foreground">기술 스택:</strong> Python, TensorFlow, VAE, Computer Vision</div>
-          </div>
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem (기술적 병목 및 과제)
-          </h4>
-          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">라벨링 비용 및 데이터 편향:</strong> 지도 학습 기반의 접근은 악성 종양 데이터의 천문학적 라벨링 비용과 심각한 데이터 편향성(Data Bias)을 초래했습니다.</li>
-            <li><strong className="text-foreground/80">정적 알고리즘의 한계:</strong> 일관성이 부족한 초음파 영상 특성상, 1차원적인 하드코딩 마스킹 방식으로는 노이즈 통제 및 유의미한 병변 바운딩 박스(Bounding Box) 추출에 한계가 존재했습니다.</li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution (공학적 해결책 및 기술 의사결정)
-          </h4>
-          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">비지도 학습(Unsupervised) 프레임워크 구축:</strong> 방대한 '건강한 정상 조직 이미지'만으로 정상 토폴로지를 인코딩/디코딩하도록 VAE 아키텍처를 적용하여 비용 효율성을 극대화했습니다.</li>
-            <li><strong className="text-foreground/80">차영상(Difference Matrix) 커스텀 손실 함수 파이프라인:</strong> TensorFlow 저수준 API를 활용해 딥러닝 블랙박스 의존도를 탈피한 수학적 이상 탐지 아키텍처를 구축했습니다. 정상 조직의 특성만을 뚜렷하게 학습시키기 위해, KLD(잠재 공간 분포 오차)를 강화하고 MSE(픽셀 재구성 오차) 비중을 텐서 연산 단계에서 통제하는 커스텀 손실 함수(β-VAE 구조 차용)를 직접 설계했습니다. 이를 통해 암세포 이미지가 입력될 경우 모델이 의도적으로 해당 부위 복원에 실패하도록 유도하였고, '원본 스캔 데이터'와 '정상으로 복원된 이미지' 간의 재구성 오차(Reconstruction Error)를 픽셀 단위 행렬로 빼기(차영상) 연산하여 비정상 종양 객체만을 정밀하게 격리 및 식별해 냈습니다.</li>
-            <li><strong className="text-foreground/80">Dynamic Thresholding(동적 임계값) 개발:</strong> 정적 마스킹의 한계를 극복하고자 실시간 이미지 픽셀 분포 비율을 계산해 노이즈를 클리닝하는 동적 임계값 알고리즘을 단독 구현했습니다.</li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result (정량적/정성적 성과)
-          </h4>
-          <div className="flex flex-col sm:flex-row gap-4 pl-4">
-            <div className="flex-1 p-4 rounded-xl bg-violet-500/5 border border-violet-500/10">
-              <p className="font-semibold text-violet-500 mb-1">안정적 분할 정밀도 달성</p>
-              <p className="text-2xl font-bold text-foreground hidden sm:block">Max 90% Dice</p>
-              <p className="text-sm text-foreground sm:hidden font-bold">Max 90% Dice</p>
-              <p className="text-sm text-foreground/80 mt-1">라벨링 데이터 0건 조건 하에서 상시 정밀도 유지</p>
-            </div>
-            <div className="flex-1 p-4 rounded-xl bg-primary/5 border border-primary/10">
-              <p className="font-semibold text-primary mb-1">창의혁신 DNA 산학협력 우수사례</p>
-              <p className="text-xl font-bold text-foreground">🏆 공학혁신상</p>
-              <p className="text-sm text-foreground/80 mt-1">공학적 설계 우수성 단독 인정 (산업부 주관)</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
-    highlights: ["Dice 40-90% 달성", "비지도 학습 모델 구축", "창의혁신 DNA 산학협력 동상 수상"],
-    tags: ["Python", "TensorFlow", "VAE", "Deep Learning", "Medical Imaging"],
-    gradient: "from-violet-500/10 to-purple-500/10",
-    images: [
-      { src: "/images/vae_diff.png", caption: "Phase 1: 이상치 격리를 위한 차영상(Difference Matrix) 연산 과정" },
-      { src: "/images/vae_threshold.png", caption: "Phase 2: 노이즈를 제거하고 정밀한 분할 마스크를 추출하는 동적 임계값 적용" },
-      { src: "/images/vae_result.png", caption: "Phase 3: 최종 바운딩 박스 생성 및 수치적 신뢰도 스코어링" },
-      { src: "/images/vae_award.jpg", caption: "🏆 공학혁신상 (창의혁신 DNA 산학협력 우수사례)" }
-    ],
-    githubUrl: "https://github.com/anjin0910-afk/vae-breast-cancer-anomaly",
-    hasAwards: true,
-  },
-  {
-    icon: Microscope,
-    title: "RF-DETR 실시간 대장 내 용종 검출 시스템",
-    description: "극단적인 의료 데이터 불균형 문제를 해결하기 위해 국소적 데이터 증강 파이프라인을 구축한 실시간 객체 탐지 서비스입니다. 연구 단계의 AI를 상용 엣지(Edge) 환경으로 이끌어낸 Data-Centric 모델 튜닝 파이프라인 사례입니다.",
-    longDescription: (
-      <div className="space-y-6 text-base text-foreground/90">
-        <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div><strong className="text-foreground">기간 및 규모:</strong> 2025.04~2025.10 (Team Project)</div>
-            <div><strong className="text-foreground">역할:</strong> Data Engineer & Vision Engineer</div>
-            <div className="md:col-span-2"><strong className="text-foreground">기술 스택:</strong> Python, PyTorch, RF-DETR, DINOv2, OpenCV</div>
-          </div>
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem (기술적 병목 및 과제)
-          </h4>
-          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">정확도 한계 및 과적합 리스크:</strong> 초기 독자적 퓨전 아키텍처(CenterNet + RetinaNet) 설계 시 정확도 한계에 봉착했습니다. 용종 구조 특성상의 동적 표면 왜곡으로 과적합 리스크가 높았습니다.</li>
-            <li><strong className="text-foreground/80">인프라 제약 조건:</strong> 상용 전개 시 엣지(Edge) 디바이스에서 실시간 추론 속도(Throughput)가 떨어지는 스펙다운 한계와 부딪혔습니다.</li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution (공학적 해결책 및 기술 의사결정)
-          </h4>
-          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">Pipeline Pivot 및 Data-Centric 접근:</strong> 구조적 참신함에 대한 집착을 버리고 SOTA 어텐션 기반 아키텍처(RF-DETR)로 신속 피벗했습니다. 부족한 데이터셋 병목을 고려해 데이터 중심 AI 튜닝으로 전면 개선했습니다.</li>
-            <li><strong className="text-foreground/80">도메인 특화 수학적 기하 증강:</strong> 단순 이미지 회전, 반전이 아닌 장벽의 물리적 탄력과 왜곡을 시뮬레이션하는 Elastic Deform 및 Grid Distortion 파이프라인을 도입하여 형태학적 Feature 학습을 강제화했습니다.</li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result (정량적/정성적 성과)
-          </h4>
-          <div className="flex flex-col md:flex-row flex-wrap gap-4 pl-4">
-            <div className="flex-1 min-w-[200px] p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10">
-              <p className="font-semibold text-indigo-500 mb-1">상용 Edge Inference Throughput</p>
-              <p className="text-2xl font-bold text-foreground">22+ FPS</p>
-            </div>
-            <div className="flex-1 min-w-[200px] p-4 rounded-xl bg-blue-500/5 border border-blue-500/10">
-              <p className="font-semibold text-blue-500 mb-1">기존 대비 정밀도 상승 (mAP)</p>
-              <p className="text-2xl font-bold text-foreground">+7% mAP</p>
-            </div>
-            <div className="flex-1 min-w-[200px] p-4 rounded-xl bg-amber-500/5 border border-amber-500/20">
-              <p className="font-semibold text-amber-500 mb-1 flex items-center gap-1">🏆 캡스톤 대상 및 수상</p>
-              <p className="text-[13px] font-bold text-foreground leading-snug pt-1">제17회 캡스톤디자인 <span>대상 (금상)</span><br />전국 공학교육혁신 컨소시엄 경진대회 <span>동상</span></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
-    highlights: ["mAP 7% 향상 달성", "22 FPS 실시간 추론", "End-to-end 인터페이스 배포", "캡스톤 대상(금상)"],
-    tags: ["Python", "PyTorch", "RF-DETR", "DINOv2", "Computer Vision"],
-    gradient: "from-blue-500/10 to-indigo-500/10",
-    videoUrl: "https://www.youtube.com/embed/n6xKcYq7bWE",
-    images: [
-      { src: "/images/rf_detr_aug.png", caption: "다양한 장 내 환경 모사를 위한 Elastic Deform 및 Grid Distortion 데이터 증강 기법 적용" },
-      { src: "/images/rf_detr_gold.jpg", caption: "🏆 금상 (대상) — 제17회 건양대학교 캡스톤디자인 경진대회" },
-      { src: "/images/rf_detr_bronze.jpg", caption: "🏆 동상 — 전국 공학교육혁신 컨소시엄 창의적 종합설계 경진대회" }
-    ],
-    githubUrl: "https://github.com/anjin0910-afk/RF-DETR-project",
-    hasAwards: true,
-  },
-  {
     icon: LineChart,
-    title: "Lumina Capital: 퀀트 투자 분석 대시보드",
-    description: "방대한 실시간 금융 데이터 및 기술적 지표를 집계하는 풀스택 데이터 기반 금융 대시보드입니다. 대규모 트래픽 렌더링 병목 및 UI 상태 증발 현상을 트러블슈팅하여 안정화시킨 아키텍처 최적화 사례입니다.",
+    title: "Lumina Capital (금융 데이터 서빙 아키텍처 시뮬레이션)",
+    description: "외부 API를 통해 대량의 금융 데이터를 수집하는 환경을 설계할 때, 동기식 스크래핑으로 인한 렌더 타임아웃을 예방하는 비동기 캐시 파이프라인 시뮬레이션 프로젝트입니다.",
     longDescription: (
       <div className="space-y-6 text-base text-foreground/90">
         <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div><strong className="text-foreground">기간 및 규모:</strong> 2026.02 (Team Project, 6인)</div>
-            <div><strong className="text-foreground">역할:</strong> Data Pipeline & Full-Stack Architect</div>
-            <div className="md:col-span-2"><strong className="text-foreground">기술 스택:</strong> Python, Streamlit, MySQL, BeautifulSoup4, pykrx, Seaborn</div>
+            <div><strong className="text-foreground">기간:</strong> 2026.02.23 ~ 2026.02.27 (1주)</div>
+            <div className="md:col-span-2"><strong className="text-foreground">역할:</strong> 풀스택 개발 (데이터 스크래핑 파이프라인 및 프론트엔드 시각화 전담 / 5인 팀)</div>
+            <div className="md:col-span-2"><strong className="text-foreground">기술 스택:</strong> Python, Streamlit, MySQL, BeautifulSoup4, pykrx</div>
           </div>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
+          </h4>
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            <strong className="text-foreground/90">SK 쉴더스 지능형 애플리케이션 개발 과정 중 진행한 기초 프로젝트:</strong><br />
+            외부 데이터 수집부터 프론트엔드 서빙까지의 전 과정을 경험하며 데이터 파이프라인의 기초를 다졌습니다. 실제 상용 서비스 수준의 방대한 데이터 스크래핑 환경을 가정하고 시스템의 가용성을 테스트하는 데 집중했습니다.
+          </p>
         </div>
 
         <div>
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span> Impact & Contribution
+            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
+          </h4>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li><strong className="text-foreground/80">데이터 수집 지연에 따른 UX 저하:</strong> 외부 사이트 데이터를 실시간으로 스크래핑하여 출력할 경우, 수집 과정의 지연이 프론트엔드 렌더링을 멈추게 하거나 타임아웃을 유발하는 구조적 병목이 예상되었습니다.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
+          </h4>
+          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
+            <li><strong className="text-foreground/80">엔드 투 엔드(End-to-End) 데이터 설계:</strong> 스크래핑-백엔드 캐싱-프론트엔드 시각화로 이어지는 데이터의 흐름을 직접 설계하고 구현했습니다.</li>
+            <li><strong className="text-foreground/80">비동기 스케줄링 기반 수집 최적화:</strong> 서버에서 주기적으로 스크래핑을 수행하고 메모리에 데이터를 캐싱하는 비동기 CRON 스케줄러를 구축하여 클라이언트 요청과의 의존성을 분리했습니다.</li>
+            <li><strong className="text-foreground/80">데이터 기반 대시보드 구현:</strong> 서버에 최적화되어 저장된 데이터를 프론트엔드에서 즉시 호출하도록 설계하여, 외부 서버 상태와 무관한 쾌적한 렌더링 환경을 조성했습니다.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
           </h4>
           <div className="p-4 rounded-xl bg-orange-500/5 border border-orange-500/10 ml-4">
-            <h5 className="font-semibold text-orange-500 mb-2 flex items-center gap-2">⚡ DB 타임아웃 붕괴 0% 달성 및 렌더 딜레이 타파</h5>
-            <p className="text-sm leading-relaxed text-foreground/80">
-              과다 접속 트래픽 중 동기식 스크래핑으로 인해 유발되는 심각한 렌더 대기 시간 문제를 식별하고, 로컬 캐시를 경유하는 1시간 단위 비동기(Asynchronous) CRON 아키텍처로 스크래핑 체계를 전면 교체하여 타임 아웃을 근절했습니다.
-            </p>
+            <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
+              <li>팀 내 데이터 수집과 서빙 전반을 책임지며, 1주일이라는 짧은 기간 내에 안정적인 데이터 파이프라인 시뮬레이션을 완료했습니다.</li>
+              <li>외부 지연 요소를 구조적으로 차단하는 설계를 통해 시스템 가용성을 높이는 풀스택 개발 역량을 증명했습니다.</li>
+            </ul>
           </div>
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span> What I Did (주요 수행 업무)
-          </h4>
-          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">백엔드 아키텍처 및 크롤링 파이프라인 설계:</strong> 파편화된 외부 투자 데이터를 자율 스케줄러로 실시간 폴링하고 안전하게 정규화된 형태의 데이터베이스로 적재 및 영속화하는 백그라운드 DAQ 계층 개발.</li>
-            <li><strong className="text-foreground/80">다단계 풀스택 통합 인터페이스 연동:</strong> 알고리즘 Risk Scoring 연산 결과를 다단계 사용자 설문 뷰와 빈틈없이 매핑시켜, 완전히 개인화된 맞춤형 핀테크 시그널 대시보드로 플로우 제어 수행.</li>
-            <li><strong className="text-foreground/80">시스템 렌더링 병목 트러블슈팅:</strong> 트래픽 스파이크 시 필연적으로 동반되는 치명적 동기식 렌더 지연 및 API 타임아웃 오류 병목 원인을 진단하고 인프라 교체 전격 시행.</li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span> Tech Rationale (기술 채택 의사결정)
-          </h4>
-          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">동기식 스크래핑에서 비동기 CRON 캐싱으로 구조 상향:</strong> 다중 웹 요청 시점마다 라이브 스크래핑을 일으키면 타겟 서버 측에서 의심 요청으로 판단해 강력한 통신 드랍을 유발했습니다. 이를 막기 위해 웹 접속자는 단지 빠르게 구축된 로컬망 DB를 조회할 수 있도록 '서버 내부에서만 1시간 단위 비동기 백그라운드 캐시 최적화' 구조로 아키텍처를 뒤집어 API 타임아웃 지표를 0% 근처로 타파했습니다.</li>
-            <li><strong className="text-foreground/80">Streamlit session_state 기반 캐시-락(Cache-lock) 적용:</strong> 복잡한 금융 설문 로직 상 화면 상태가 핫 로딩될 때마다 사용자가 입력 중이던 데이터가 증발하는 치명적인 Streamlit UI 결함이 잦았습니다. 이를 원초적인 영구 세션 잠금(Cache-lock) 테크닉으로 제어함으로써 복합적인 데이터 업데이트 속에서도 매끄러운 UX 진행을 통제해 냈습니다.</li>
-          </ul>
         </div>
       </div>
     ),
-    highlights: ["풀스택 아키텍처 구축", "비동기(Asynchronous) DAQ", "지표기반 상태 관리 설계"],
-    tags: ["Python", "Streamlit", "MySQL", "BeautifulSoup4", "pykrx", "Seaborn"],
+    highlights: ["비동기 캐시 시스템", "End-to-End 데이터 설계", "렌더링 지연 차단"],
+    tags: ["Python", "Streamlit", "MySQL", "CRON Scheduling"],
     gradient: "from-amber-500/10 to-orange-500/10",
     images: [
-      { src: "/images/lumina_dashboard.png", caption: "관리자를 위한 실시간 시장 집계 프론트엔드 뷰" },
+      { src: "/images/lumina_dashboard.png", caption: "관리자를 위한 대시보드 뷰" },
       { src: "/images/lumina_signup.png", caption: "암호화를 거친 안전한 사용자 인증 및 세션 관리 체계" },
       { src: "/images/lumina_terms.png", caption: "초보자를 위해 제공되는 인터랙티브 금융 용어 사전 인터페이스" },
       { src: "/images/lumina_survey.png", caption: "사용자 페르소나를 측정하는 다단계 자동화 투자 프로파일링" },
@@ -267,6 +152,143 @@ const projects: ProjectType[] = [
     ],
     githubUrl: "https://github.com/kimgeon0802/1team_mini_PJT",
     hasAwards: false,
+  },
+  {
+    icon: Microscope,
+    title: "의료 영상 실시간 병변 검출 시스템 (Capstone)",
+    description: "학부 캡스톤 디자인으로 진행한 프로젝트로, 데이터 증강과 구조적 가지치기를 통해 상용 엣지 디바이스 환경에서의 실시간 의료 영상 검출 AI 모델을 최적화했습니다.",
+    longDescription: (
+      <div className="space-y-6 text-base text-foreground/90">
+        <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <div><strong className="text-foreground">기간:</strong> 2025.04~2025.10 (Team Project)</div>
+            <div className="md:col-span-2">
+              <strong className="text-foreground">역할:</strong> AI 모델 최적화 및 학습 파이프라인 설계<br />
+              <span className="text-foreground/80 mt-1 inline-block">데이터 정규화부터 모델 프루닝(Pruning)까지, 실시간 추론 속도 향상을 위한 데이터 전처리 및 경량화 알고리즘 설계를 주도했습니다.</span>
+            </div>
+            <div className="md:col-span-2 mt-1"><strong className="text-foreground">기술 스택:</strong> Python, PyTorch, RF-DETR, DINOv2, OpenCV</div>
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
+          </h4>
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            학부 캡스톤 디자인으로 진행한 프로젝트로, 엣지 디바이스 환경에서의 상용화를 목표로 실시간 의료 영상 검출 AI 모델을 최적화했습니다. (교내 캡스톤 대회 금상 및 공학교육 컨소시엄 경진대회 동상)
+          </p>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
+          </h4>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li><strong className="text-foreground/80">데이터 부족과 자원 제약:</strong> 엣지 디바이스라는 제한된 하드웨어 리소스 환경에서 실시간 추론 속도를 확보해야 했습니다. 동시에 의료 데이터 특성상 절대적인 데이터 양이 부족하여 모델이 정답만 외워버리는 과적합 리스크가 존재했습니다.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
+          </h4>
+          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
+            <li><strong className="text-foreground/80">기하학적 왜곡 증강:</strong> 무분별한 파라미터 튜닝 대신 데이터 중심 접근을 택했습니다. 장벽의 탄력과 물리적 질감을 모사하는 증강 파이프라인을 직접 구축하여, 모델이 본연의 피처 학습에 집중하도록 유도했습니다.</li>
+            <li><strong className="text-foreground/80">구조적 가지치기:</strong> 상용 환경에서의 원활한 동작을 위해, 모델 결과 기여도가 낮은 가중치를 덜어내는 가지치기 기법을 적용하여 연산량을 타이트하게 최적화했습니다.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
+          </h4>
+          <div className="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 ml-4">
+            <p className="text-sm leading-relaxed text-foreground/80">
+              제한된 환경 속에서도 모델의 탐지 정밀도를 7% 향상시켰으며, 초당 22 프레임 이상의 처리 속도를 확보하여 엣지 환경에서의 상용화 가능성을 검증해 냈습니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
+    highlights: ["기하학적 왜곡 증강", "구조적 가지치기 최적화", "22 FPS 엣지 추론", "캡스톤 대상"],
+    tags: ["Python", "PyTorch", "RF-DETR", "Computer Vision"],
+    gradient: "from-blue-500/10 to-indigo-500/10",
+    videoUrl: "https://www.youtube.com/embed/n6xKcYq7bWE",
+    images: [
+      { src: "/images/rf_detr_aug.png", caption: "다양한 장 내 환경 모사를 위한 Elastic Deform 및 Grid Distortion 데이터 증강 기법 적용" },
+      { src: "/images/rf_detr_gold.jpg", caption: "🏆 금상 (대상) — 제17회 건양대학교 캡스톤디자인 경진대회" },
+      { src: "/images/rf_detr_bronze.jpg", caption: "🏆 동상 — 전국 공학교육혁신 컨소시엄 창의적 종합설계 경진대회" }
+    ],
+    hasAwards: true,
+  },
+  {
+    icon: Eye,
+    title: "유방암 검출 비지도학습 AI 설계",
+    description: "유방암 데이터셋을 활용하여 프레임워크의 저수준 API를 제어해 암세포의 미세한 특징을 스스로 군집화하고 탐지하도록 설계한 비지도학습 파이프라인입니다.",
+    longDescription: (
+      <div className="space-y-6 text-base text-foreground/90">
+        <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <div><strong className="text-foreground">기간:</strong> 2024.03~2024.11 (Team Project)</div>
+            <div className="md:col-span-2">
+              <strong className="text-foreground">역할:</strong> AI 모델링 및 커스텀 손실 함수(Loss) 설계<br />
+              <span className="text-foreground/80 mt-1 inline-block">프레임워크의 저수준 API를 활용하여 비지도학습 모델의 핵심 로직을 직접 구현하고, 학습 데이터의 무결성을 검증했습니다.</span>
+            </div>
+            <div className="md:col-span-2 mt-1"><strong className="text-foreground">기술 스택:</strong> Python, TensorFlow, VAE, Computer Vision</div>
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
+          </h4>
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            유방암 데이터셋을 활용하여 암세포의 미세한 특징을 스스로 군집화하고 탐지하는 비지도학습 기반의 AI 모델 설계 프로젝트입니다.(2024 DNA 공학혁신상 수상)
+          </p>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
+          </h4>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li><strong className="text-foreground/80">프레임워크 블랙박스 의존의 한계:</strong> 기존 라이브러리가 제공하는 블랙박스 형태의 기본 손실 함수만으로는 암세포 특유의 미세한 픽셀 이질감을 돋보이게 유도하고 학습시키는 데 구조적인 한계가 있었습니다.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
+          </h4>
+          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
+            <li><strong className="text-foreground/80">저수준 API 제어 및 로직 커스텀:</strong> 프레임워크의 저수준 API를 활용해 모델의 밑단 로직을 직접 제어했습니다. 분포 오차와 재구성 오차의 텐서 가중치를 데이터 특성에 맞게 세밀하게 조작하는 손실 함수를 설계했습니다.</li>
+            <li><strong className="text-foreground/80">정확도의 함정 검증:</strong> 98%라는 비정상적인 조기 정확도가 도출되었을 때 이에 안주하지 않고, 편향된 데이터 공간을 전수 조사하여 평가 로직의 오류를 바로잡았습니다.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
+          </h4>
+          <div className="p-4 rounded-xl bg-violet-500/5 border border-violet-500/10 ml-4">
+            <p className="text-sm leading-relaxed text-foreground/80">
+              겉보기 성능에 의존하지 않고 정상 데이터와 이상 데이터 간의 경계를 명확히 학습하도록 유도하여, 치명적인 배포 리스크를 사전에 차단하고 실질적인 모델 탐지력을 고도화하는 데이터 검증 역량을 확보했습니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
+    highlights: ["로우레벨 모델 제어", "정확도의 함정 검파", "창의혁신 DNA 동상"],
+    tags: ["Python", "TensorFlow", "VAE", "Unsupervised Learning"],
+    gradient: "from-violet-500/10 to-purple-500/10",
+    images: [
+      { src: "/images/vae_diff.png", caption: "Phase 1: 이상치 격리를 위한 차영상 연산 과정" },
+      { src: "/images/vae_threshold.png", caption: "Phase 2: 노이즈를 제거하고 정밀한 분할 마스크를 추출하는 동적 임계값 적용" },
+      { src: "/images/vae_result.png", caption: "Phase 3: 최종 바운딩 박스 생성 및 수치적 신뢰도 스코어링" },
+      { src: "/images/vae_award.jpg", caption: "🏆 공학혁신상 (창의혁신 DNA 산학협력 우수사례)" }
+    ],
+    githubUrl: "https://github.com/anjin0910-afk/vae-breast-cancer-anomaly",
+    hasAwards: true,
   }
 ];
 
