@@ -214,6 +214,7 @@ const projects: ProjectType[] = [
     tags: ["Python", "PyTorch", "RF-DETR", "Computer Vision"],
     gradient: "from-blue-500/10 to-indigo-500/10",
     videoUrl: "https://www.youtube.com/embed/n6xKcYq7bWE",
+    githubUrl: "https://github.com/anjin0910-afk/RF-DETR-project",
     images: [
       { src: "/images/rf_detr_aug.png", caption: "다양한 장 내 환경 모사를 위한 Elastic Deform 및 Grid Distortion 데이터 증강 기법 적용" },
       { src: "/images/rf_detr_gold.jpg", caption: "🏆 금상 (대상) — 제17회 건양대학교 캡스톤디자인 경진대회" },
