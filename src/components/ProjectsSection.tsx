@@ -79,6 +79,13 @@ const projects: ProjectType[] = [
     tags: ["React", "Spring Boot", "STOMP/WebSockets", "Redis Pub/Sub", "JWT"],
     gradient: "from-emerald-500/10 to-teal-500/10",
     githubUrl: "https://github.com/Rookies5-MiniPj2-Team5",
+    images: [
+      { src: "https://github.com/user-attachments/assets/b20b91f3-1c1a-4f1a-a44d-3177ebf97409", caption: "KBO 경기 일정 및 실시간 경기 현황 조회 화면" },
+      { src: "https://github.com/user-attachments/assets/5fa43941-2a73-484a-b7fc-c33f4d93a604", caption: "이메일 기반 회원가입 · JWT 인증 및 KBO 팀 기반 사용자 경험" },
+      { src: "https://github.com/user-attachments/assets/caa7a281-eebc-4065-800d-4dba9bb2b996", caption: "경기 일정·좌석 정보 기반 직관 메이트 및 크루 모집 게시글" },
+      { src: "https://github.com/user-attachments/assets/6bb97012-44c6-451d-9990-97fee92362c9", caption: "에스크로 기반 안전한 1:1 티켓 양도 및 거래 상태 관리" },
+      { src: "https://github.com/user-attachments/assets/56a4fab8-effd-448b-9f43-319d185d548a", caption: "WebSocket · STOMP 기반 실시간 1:1 및 그룹 채팅" },
+    ],
     hasAwards: false,
   },
   {
