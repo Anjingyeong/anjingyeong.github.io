@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ArrowDown, Sparkles } from "lucide-react";
 
 const HeroSection = () => {
-  const fullText = "Data-Driven Full-Stack Engineer";
+  const fullText = "Full-Stack Software Engineer";
   const [displayText, setDisplayText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [typingDone, setTypingDone] = useState(false);
@@ -50,7 +50,7 @@ const HeroSection = () => {
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 text-foreground leading-[1.3] tracking-tight break-keep">
-              AI/ML의 깊이와<br className="hidden md:block" /> 풀스택 웹 인프라의 넓이를 연결합니다.
+              도메인의 한계를 넘나들며<br className="hidden md:block" /> 비즈니스에 최적화된 서비스를 연결합니다.
             </h1>
 
             <p className="text-lg md:text-xl font-mono mb-6">
@@ -62,7 +62,8 @@ const HeroSection = () => {
 
             <div className="text-base text-muted-foreground mb-8 max-w-xl leading-relaxed space-y-4 relative z-20">
               <p>
-                AI 모델링부터 대규모 웹 트래픽 제어까지. 데이터의 흐름을 꿰뚫고, 예외 상황에서도 멈추지 않는 견고한 프로덕션 서비스를 설계합니다.
+                데이터 파이프라인부터 확장 가능한 대규모 웹 인프라, 직관적 UI까지. 
+                프론트/백엔드의 기술적 경계를 두지 않고, 예외 상황에서도 멈추지 않는 견고한 프로덕션을 설계합니다.
               </p>
             </div>
             
