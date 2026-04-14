@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ScrollAnimator from "./ScrollAnimator";
-import { Microscope, Eye, LineChart, ArrowUpRight, X, Database, Server } from "lucide-react";
+import { Microscope, Eye, LineChart, ArrowUpRight, X, Database, Server, RefreshCw } from "lucide-react";
 
 type ProjectType = {
   icon: React.ElementType;
@@ -163,7 +163,7 @@ const projects: ProjectType[] = [
   {
     icon: Microscope,
     title: "의료 영상 실시간 병변 검출 시스템 (Capstone)",
-    description: "학부 캡스톤 디자인으로 진행한 프로젝트로, 데이터 증강과 구조적 가지치기를 통해 상용 엣지 디바이스 환경에서의 실시간 의료 영상 검출 AI 모델을 최적화했습니다.",
+    description: "RF-DETR 논문을 직접 읽고 9개 아키텍처를 비교 실험해 Deformable Cross-Attention 구조를 선택, 학습 데이터 600→2,100장 증강과 비동기 추론 파이프라인까지 End-to-End로 구축한 대장 내시경 실시간 용종 검출 시스템입니다.",
     longDescription: (
       <div className="space-y-6 text-base text-foreground/90">
         <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
@@ -191,7 +191,9 @@ const projects: ProjectType[] = [
             <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
           </h4>
           <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">데이터 부족과 자원 제약:</strong> 엣지 디바이스라는 제한된 하드웨어 리소스 환경에서 실시간 추론 속도를 확보해야 했습니다. 동시에 의료 데이터 특성상 절대적인 데이터 양이 부족하여 모델이 정답만 외워버리는 과적합 리스크가 존재했습니다.</li>
+            <li><strong className="text-foreground/80">내시경 특화 탐지 환경의 복합 과제:</strong> 내시경 특유의 움직임 노이즈와 불규칙한 조명 환경에서 소형 병변까지 안정적으로 탐지하려면, 지역적 특징을 넘어 전역적 문맥을 함께 처리하는 모델 구조가 필요했습니다.</li>
+            <li><strong className="text-foreground/80">소형 병변 데이터 부족:</strong> 소형 병변 샘플이 절대적으로 부족하다는 것을 데이터 분포 분석으로 확인했고, 이로 인한 Recall 저하와 과적합 리스크가 컸습니다.</li>
+            <li><strong className="text-foreground/80">추론 파이프라인 UI 멈춤 현상:</strong> PyQt5 UI와 딥러닝 추론을 같은 스레드에서 실행하자 화면 멈춤과 FPS 급감이 발생했습니다.</li>
           </ul>
         </div>
 
@@ -200,8 +202,10 @@ const projects: ProjectType[] = [
             <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
           </h4>
           <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">기하학적 왜곡 증강:</strong> 무분별한 파라미터 튜닝 대신 데이터 중심 접근을 택했습니다. 장벽의 탄력과 물리적 질감을 모사하는 증강 파이프라인을 직접 구축하여, 모델이 본연의 피처 학습에 집중하도록 유도했습니다.</li>
-            <li><strong className="text-foreground/80">구조적 가지치기:</strong> 상용 환경에서의 원활한 동작을 위해, 모델 결과 기여도가 낮은 가중치를 덜어내는 가지치기 기법을 적용하여 연산량을 타이트하게 최적화했습니다.</li>
+            <li><strong className="text-foreground/80">논문 기반 모델 선택 및 비교 검증:</strong> RF-DETR 논문을 직접 읽고 Deformable Cross-Attention 구조의 전역 문맥 처리 능력을 선택 근거로 삼았습니다. 이를 검증하기 위해 YOLO 계열부터 Transformer 기반까지 총 <strong>9개 모델</strong>을 동일한 Kvasir 데이터셋으로 학습·비교했고, RF-DETR이 <strong>mAP@50 0.862, Precision 0.91</strong>로 최고 성능을 기록했습니다.</li>
+            <li><strong className="text-foreground/80">의료 데이터 특화 증강:</strong> Elastic Deformation과 Grid Distortion을 적용해 학습 데이터를 <strong>600장에서 2,100장</strong>으로 확장했습니다. Recall이 유의미하게 개선되었고, 파인튜닝으로 성능을 추가로 약 7% 향상시켰습니다.</li>
+            <li><strong className="text-foreground/80">비동기 추론 파이프라인 구축:</strong> 추론 스레드와 UI 업데이트 스레드를 분리하는 비동기 처리를 구현해 화면 멈춤 문제를 해결했습니다. 병변 감지 시 OpenCV로 프레임을 캡처하고 탐지 결과를 자동 녹화·저장하는 I/O 로직까지 완성했습니다.</li>
+            <li><strong className="text-foreground/80">구조적 가지치기:</strong> 모델 결과 기여도가 낮은 가중치를 제거하는 Pruning으로 연산량을 최적화하여 엣지 환경 실시간 추론을 달성했습니다.</li>
           </ul>
         </div>
 
@@ -210,14 +214,16 @@ const projects: ProjectType[] = [
             <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
           </h4>
           <div className="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 ml-4">
-            <p className="text-sm leading-relaxed text-foreground/80">
-              제한된 환경 속에서도 모델의 탐지 정밀도를 7% 향상시켰으며, 초당 22 프레임 이상의 처리 속도를 확보하여 엣지 환경에서의 상용화 가능성을 검증해 냈습니다.
-            </p>
+            <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
+              <li>9개 모델 비교 실험에서 RF-DETR이 <strong>mAP@50 0.862, Precision 0.91</strong>로 최고 성능 달성</li>
+              <li>파인튜닝으로 기존 대비 <strong>약 7% 추가 성능 향상</strong>, <strong>22 FPS 이상</strong> 실시간 추론 확보</li>
+              <li>모델 선택 → 데이터 증강 → 비동기 파이프라인까지 End-to-End 시스템 완성, 임상 환경 적용 가능성 검증</li>
+            </ul>
           </div>
         </div>
       </div>
     ),
-    highlights: ["기하학적 왜곡 증강", "구조적 가지치기 최적화", "22 FPS 엣지 추론", "캡스톤 대상"],
+    highlights: ["9개 모델 비교·mAP 0.862", "600→2,100장 데이터 증강", "비동기 추론 파이프라인", "캡스톤 금상"],
     tags: ["Python", "PyTorch", "RF-DETR", "Computer Vision"],
     gradient: "from-blue-500/10 to-indigo-500/10",
     videoUrl: "https://www.youtube.com/embed/n6xKcYq7bWE",
@@ -232,7 +238,7 @@ const projects: ProjectType[] = [
   {
     icon: Eye,
     title: "유방암 검출 비지도학습 AI 설계",
-    description: "유방암 데이터셋을 활용하여 프레임워크의 저수준 API를 제어해 암세포의 미세한 특징을 스스로 군집화하고 탐지하도록 설계한 비지도학습 파이프라인입니다.",
+    description: "정상 데이터만으로 학습된 VAE에 고정 임계값 적용 시 오탐률이 급증하는 문제를 발견하고, 재구성 오차의 통계적 분포를 분석해 동적 임계값 이진화 알고리즘을 직접 설계하여 Dice 0.8325 → 0.9094로 향상시킨 비지도학습 이상 탐지 시스템입니다.",
     longDescription: (
       <div className="space-y-6 text-base text-foreground/90">
         <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
@@ -260,7 +266,8 @@ const projects: ProjectType[] = [
             <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
           </h4>
           <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">프레임워크 블랙박스 의존의 한계:</strong> 기존 라이브러리가 제공하는 블랙박스 형태의 기본 손실 함수만으로는 암세포 특유의 미세한 픽셀 이질감을 돋보이게 유도하고 학습시키는 데 구조적인 한계가 있었습니다.</li>
+            <li><strong className="text-foreground/80">고정 임계값의 오탐률 급증:</strong> 정상 데이터만으로 학습된 모델에 고정된 임계값을 일괄 적용하자, 영상마다 다르게 나타나는 기저 노이즈 차이로 오탐률이 급증했습니다. 단순한 하이퍼파라미터 튜닝만으로는 해결에 명확한 한계가 있었습니다.</li>
+            <li><strong className="text-foreground/80">프레임워크 블랙박스 의존의 한계:</strong> 기존 라이브러리의 기본 손실 함수만으로는 암세포 특유의 미세한 픽셀 이질감을 학습시키는 데 구조적인 한계가 있었습니다.</li>
           </ul>
         </div>
 
@@ -269,7 +276,8 @@ const projects: ProjectType[] = [
             <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
           </h4>
           <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">저수준 API 제어 및 로직 커스텀:</strong> 프레임워크의 저수준 API를 활용해 모델의 밑단 로직을 직접 제어했습니다. 분포 오차와 재구성 오차의 텐서 가중치를 데이터 특성에 맞게 세밀하게 조작하는 손실 함수를 설계했습니다.</li>
+            <li><strong className="text-foreground/80">동적 임계값 이진화 알고리즘 설계:</strong> 재구성 오차 데이터의 통계적 분포를 직접 분석했습니다. 각 영상의 오차 평균과 표준편차를 도출하고, 이를 기반으로 기준선이 영상마다 유동적으로 변하는 동적 임계값 수식을 알고리즘에 직접 설계했습니다.</li>
+            <li><strong className="text-foreground/80">저수준 API 제어 및 손실 함수 커스텀:</strong> 프레임워크의 저수준 API를 활용해 분포 오차와 재구성 오차의 텐서 가중치를 데이터 특성에 맞게 세밀하게 조작하는 커스텀 손실 함수를 설계했습니다.</li>
             <li><strong className="text-foreground/80">정확도의 함정 검증:</strong> 98%라는 비정상적인 조기 정확도가 도출되었을 때 이에 안주하지 않고, 편향된 데이터 공간을 전수 조사하여 평가 로직의 오류를 바로잡았습니다.</li>
           </ul>
         </div>
@@ -279,14 +287,16 @@ const projects: ProjectType[] = [
             <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
           </h4>
           <div className="p-4 rounded-xl bg-violet-500/5 border border-violet-500/10 ml-4">
-            <p className="text-sm leading-relaxed text-foreground/80">
-              겉보기 성능에 의존하지 않고 정상 데이터와 이상 데이터 간의 경계를 명확히 학습하도록 유도하여, 치명적인 배포 리스크를 사전에 차단하고 실질적인 모델 탐지력을 고도화하는 데이터 검증 역량을 확보했습니다.
-            </p>
+            <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
+              <li>동적 임계값 적용 후 병변이 비교적 큰 케이스에서 <strong>Dice 0.9094</strong> 달성 (적용 전 <strong>0.8325</strong> 대비 유의미한 향상)</li>
+              <li>겉보기 성능에 의존하지 않고 정상·이상 데이터 간 경계를 명확히 학습시켜 치명적인 배포 리스크를 사전에 차단</li>
+              <li>영상 데이터 특성 분석과 이상 탐지 역량은 헬스케어 품질 검증·이상 프레임 탐지에도 동일하게 전이 가능</li>
+            </ul>
           </div>
         </div>
       </div>
     ),
-    highlights: ["로우레벨 모델 제어", "정확도의 함정 검파", "창의혁신 DNA 동상"],
+    highlights: ["동적 임계값 알고리즘 설계", "Dice 0.8325 → 0.9094", "로우레벨 API 제어"],
     tags: ["Python", "TensorFlow", "VAE", "Unsupervised Learning"],
     gradient: "from-violet-500/10 to-purple-500/10",
     images: [
@@ -297,6 +307,77 @@ const projects: ProjectType[] = [
     ],
     githubUrl: "https://github.com/anjin0910-afk/vae-breast-cancer-anomaly",
     hasAwards: true,
+  },
+  {
+    icon: RefreshCw,
+    title: "CycleGAN 기반 CT→MRI 의료 영상 변환 모델",
+    description: "표준 CycleGAN 아키텍처를 직접 수정하여 의료 영상의 지역적 패턴 학습을 강화한 CT→MRI 변환 모델입니다. PatchGAN 적용과 Residual Block 확장으로 변환 품질을 개선하고 SSIM·PSNR로 정량 검증했습니다.",
+    longDescription: (
+      <div className="space-y-6 text-base text-foreground/90">
+        <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <div><strong className="text-foreground">기간:</strong> 학부 전공 수업 팀 프로젝트</div>
+            <div className="md:col-span-2">
+              <strong className="text-foreground">역할:</strong> 모델 아키텍처 수정 및 학습 파이프라인 구축<br />
+              <span className="text-foreground/80 mt-1 inline-block">PatchGAN Discriminator 도입과 Residual Block 확장을 주도하고, 1,100장 이상의 CT/MRI 데이터 전처리 및 학습 파이프라인 전반을 설계했습니다.</span>
+            </div>
+            <div className="md:col-span-2 mt-1"><strong className="text-foreground">기술 스택:</strong> Python, PyTorch, CycleGAN, PatchGAN, NumPy, Matplotlib</div>
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
+          </h4>
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            MRI는 CT보다 풍부한 연부조직 정보를 제공하지만, 비용이 높고 촬영 시간이 길어 접근성이 제한됩니다. CT 영상을 MRI로 변환하는 생성 모델을 통해 의료 비용 절감과 방사선 노출 감소 가능성을 탐색하고자 했습니다.
+          </p>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
+          </h4>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li><strong className="text-foreground/80">글로벌 패턴 학습의 한계:</strong> 표준 CycleGAN의 Discriminator는 이미지 전체를 단일 판별값으로 평가해, 의료 영상이 요구하는 세밀한 지역적 텍스처 변환에 취약했습니다.</li>
+            <li><strong className="text-foreground/80">모델 표현력 부족:</strong> 기본 9개의 Residual Block으로는 CT와 MRI 간의 복잡한 도메인 격차를 충분히 학습하지 못해 변환 이미지의 디테일이 흐릿했습니다.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
+          </h4>
+          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
+            <li><strong className="text-foreground/80">PatchGAN Discriminator 적용:</strong> 이미지 전체가 아닌 N×N 패치 단위로 진위를 판별하도록 Discriminator를 교체했습니다. 모델이 전역적 구조뿐 아니라 지역적 텍스처 패턴까지 정밀하게 학습하도록 유도했습니다.</li>
+            <li><strong className="text-foreground/80">Residual Block 확장 (9→12개):</strong> Generator의 Residual Block 수를 늘려 피처 추출 및 도메인 간 매핑 능력을 강화하고, 변환 이미지의 선명도를 향상시켰습니다.</li>
+            <li><strong className="text-foreground/80">데이터 전처리 및 학습 파이프라인 구축:</strong> 1,100장 이상의 CT/MRI 쌍 데이터를 정규화·리사이징 전처리하고, 안정적인 GAN 학습을 위한 파이프라인을 직접 설계했습니다.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
+          </h4>
+          <div className="p-4 rounded-xl bg-rose-500/5 border border-rose-500/10 ml-4">
+            <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
+              <li>PatchGAN 도입 및 Residual Block 확장으로 기존 대비 <strong>Loss 감소</strong> 및 변환 이미지 품질 향상 확인</li>
+              <li><strong>SSIM·PSNR</strong> 측정을 통한 정량적 품질 검증으로 아키텍처 수정의 효과를 객관적으로 입증</li>
+              <li>CT→MRI 변환 모델을 통해 의료 비용 절감 및 방사선 노출 감소 가능성 제시</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    ),
+    highlights: ["PatchGAN Discriminator 적용", "Residual Block 9→12 확장", "SSIM·PSNR 정량 검증"],
+    tags: ["Python", "PyTorch", "CycleGAN", "PatchGAN", "Medical Imaging"],
+    gradient: "from-rose-500/10 to-pink-500/10",
+    images: [
+      { src: "/images/ct.png", caption: "Phase 1: 학습 데이터 품질 기준 설계 — 동일 축(Axial) 뇌 단면 슬라이스만 선별하고 불량 품질·오정렬 데이터를 직접 필터링하여 1,100장 이상의 정제 데이터셋 구성" },
+      { src: "/images/loss.png", caption: "Phase 2: 학습 초기(epoch 0→2) Loss 수렴 과정 — Discriminator Loss와 Generator Loss가 안정적으로 감소하며 모델이 MRI 도메인 패턴을 학습하는 과정 시각화" },
+      { src: "/images/final.png", caption: "Phase 3: 최종 변환 결과 및 정량 평가 — SSIM 0.27~0.55, PSNR 12~15dB 측정. CycleGAN 비쌍(Unpaired) 학습 특성상 동일 슬라이스 재현보다 MRI 도메인 스타일 변환 자체를 학습하며, 아키텍처 수정(PatchGAN·Residual Block 확장)의 효과를 SSIM·PSNR로 객관적으로 검증" },
+    ],
+    hasAwards: false,
   }
 ];
 
