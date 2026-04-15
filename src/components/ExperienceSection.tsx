@@ -76,13 +76,13 @@ const ExperienceSection = () => {
           </div>
         </ScrollAnimator>
 
-        <div className="relative ml-6 border-l-2 border-primary/15 pl-10 flex flex-col gap-6">
+        <div className="relative ml-6 pl-10 flex flex-col gap-6" style={{ borderLeft: '3px solid hsl(var(--primary) / 0.30)' }}>
           {experiences.map((exp, i) => (
             <ScrollAnimator key={i}>
               <div className="relative">
                 {/* Timeline icon */}
-                <div className="absolute -left-[calc(2.5rem+17px)] top-6 w-8 h-8 rounded-lg bg-background border-2 border-primary/20 flex items-center justify-center">
-                  <exp.icon size={14} className="text-primary" />
+                <div className="absolute -left-[calc(2.5rem+17px)] top-6 w-8 h-8 rounded-lg bg-background flex items-center justify-center" style={{ border: '2.5px solid hsl(var(--primary) / 0.45)', boxShadow: '0 0 0 3px hsl(var(--primary) / 0.08)' }}>
+                  <exp.icon size={15} className="text-primary" strokeWidth={2.2} />
                 </div>
 
                 <div className="minimal-card p-6">

@@ -184,16 +184,68 @@
     background: var(--gradient-primary);
   }
 
-  /* Tags */
+  /* Tags - generic (for other use cases) */
   .tag {
-    @apply text-xs px-3 py-1.5 font-medium rounded-full transition-colors duration-200;
+    @apply text-xs px-3 py-1.5 font-medium rounded-full;
     background: hsl(var(--primary) / 0.06);
     color: hsl(var(--primary));
     border: 1px solid hsl(var(--primary) / 0.1);
+    cursor: default;
+    user-select: none;
   }
 
-  .tag:hover {
-    background: hsl(var(--primary) / 0.12);
+  /* Tech stack tags - static, clearly non-clickable */
+  .tech-tag {
+    @apply text-xs px-3 py-1.5 font-medium rounded-full;
+    background: hsl(var(--muted));
+    color: hsl(var(--muted-foreground));
+    border: 1px solid hsl(var(--border));
+    cursor: default;
+    user-select: none;
+  }
+
+  /* Competence Section — card */
+  .competence-card {
+    @apply relative bg-card rounded-2xl p-6 flex flex-col h-full transition-all duration-300;
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  .competence-card:hover {
+    border-color: hsl(var(--primary) / 0.35);
+    box-shadow: 0 8px 32px hsl(var(--primary) / 0.10), 0 0 0 1px hsl(var(--primary) / 0.12);
+    transform: translateY(-3px);
+  }
+
+  /* Competence pill tags */
+  .competence-tag {
+    @apply text-[11px] font-semibold px-2.5 py-0.5 rounded-full;
+    cursor: default;
+    user-select: none;
+  }
+
+  .competence-tag--blue {
+    background: hsl(220 70% 50% / 0.10);
+    color: hsl(220 70% 45%);
+    border: 1px solid hsl(220 70% 50% / 0.18);
+  }
+
+  .competence-tag--indigo {
+    background: hsl(243 75% 59% / 0.10);
+    color: hsl(243 75% 50%);
+    border: 1px solid hsl(243 75% 59% / 0.18);
+  }
+
+  .competence-tag--emerald {
+    background: hsl(160 60% 45% / 0.10);
+    color: hsl(160 60% 35%);
+    border: 1px solid hsl(160 60% 45% / 0.20);
+  }
+
+  .competence-tag--purple {
+    background: hsl(270 60% 55% / 0.10);
+    color: hsl(270 60% 45%);
+    border: 1px solid hsl(270 60% 55% / 0.18);
   }
 
   /* Section backgrounds */
@@ -262,5 +314,38 @@
   .float-decoration {
     @apply absolute rounded-full opacity-30 blur-3xl pointer-events-none;
     background: var(--gradient-primary);
+  }
+}
+
+/* ── Certificate Modal — Glassmorphism styles ─────────────────────────────── */
+
+/* Frosted glass panel */
+.cert-modal-panel {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 32px 64px rgba(0, 0, 0, 0.18),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.70);
+}
+
+/* X button — rotates 90° and turns primary on hover */
+.cert-modal-close:hover {
+  color: hsl(var(--primary));
+  background: hsl(var(--primary) / 0.08);
+  transform: rotate(90deg);
+}
+
+/* Modal entrance animation — scale-up + fade */
+@keyframes cert-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }

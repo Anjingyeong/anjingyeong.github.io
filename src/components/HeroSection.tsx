@@ -43,7 +43,7 @@ const HeroSection = () => {
       <div className="container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center max-w-6xl mx-auto">
           {/* Text Content (Left side on desktop) */}
-          <div className="order-2 lg:order-1">
+          <div className="order-2 lg:order-2">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-6">
               <Sparkles size={14} className="text-primary" />
               <span className="text-sm font-medium text-primary">반갑습니다</span>
@@ -68,10 +68,10 @@ const HeroSection = () => {
             </div>
             
             <div className="flex flex-wrap gap-2 mb-10 relative z-20">
-              <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Python · PyTorch</span>
-              <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">Spring Boot · JPA</span>
-              <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">React · TS</span>
-              <span className="px-3 py-1 text-xs md:text-sm font-semibold rounded-md bg-primary/10 text-primary border border-primary/20">MySQL · WebSockets</span>
+              <span className="tech-tag">Python · PyTorch</span>
+              <span className="tech-tag">Spring Boot · JPA</span>
+              <span className="tech-tag">React · TS</span>
+              <span className="tech-tag">MySQL · WebSockets</span>
             </div>
 
             <div className="flex gap-3 flex-wrap relative z-20">
@@ -85,8 +85,8 @@ const HeroSection = () => {
           </div>
 
           {/* Profile Image (Right side on desktop) */}
-          <div className="flex justify-center lg:justify-end order-1 lg:order-2">
-            <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-[22rem] lg:h-[22rem] rounded-full border-2 border-primary/20 overflow-hidden shadow-2xl ring-8 ring-primary/5 group">
+          <div className="flex justify-center lg:justify-start order-1 lg:order-1">
+            <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-[22rem] lg:h-[22rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: '0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)' }}>
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <img
                 src="/profile.jpg"

@@ -51,16 +51,16 @@ const SkillsSection = () => {
             <ScrollAnimator key={i}>
               <div className="minimal-card h-full overflow-hidden">
                 <div className={`bg-gradient-to-br ${cat.color} p-6 pb-4`}>
-                  <div className="icon-container mb-4">
-                    <cat.icon size={20} />
-                  </div>
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 flex-shrink-0" style={{ background: 'hsl(var(--primary) / 0.15)', boxShadow: 'inset 0 0 0 1.5px hsl(var(--primary) / 0.25)' }}>
+                      <cat.icon size={22} className="text-primary" strokeWidth={2.2} />
+                    </div>
                   <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">{cat.title}</h3>
                 </div>
                 <div className="p-6 pt-4">
                   <ul className="space-y-3">
                     {cat.skills.map((skill) => (
                       <li key={skill} className="text-muted-foreground text-sm flex items-center gap-2.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary/60 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
                         {skill}
                       </li>
                     ))}

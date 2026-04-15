@@ -162,7 +162,7 @@ const projects: ProjectType[] = [
   },
   {
     icon: Microscope,
-    title: "의료 영상 실시간 병변 검출 시스템 (Capstone)",
+    title: "딥러닝 모델을 활용한 의료 영상 실시간 병변 검출 시스템",
     description: "RF-DETR 논문을 직접 읽고 9개 아키텍처를 비교 실험해 Deformable Cross-Attention 구조를 선택, 학습 데이터 600→2,100장 증강과 비동기 추론 파이프라인까지 End-to-End로 구축한 대장 내시경 실시간 용종 검출 시스템입니다.",
     longDescription: (
       <div className="space-y-6 text-base text-foreground/90">
@@ -229,6 +229,7 @@ const projects: ProjectType[] = [
     videoUrl: "https://www.youtube.com/embed/n6xKcYq7bWE",
     githubUrl: "https://github.com/anjin0910-afk/RF-DETR-project",
     images: [
+      { src: "/images/모델사용.jpg", caption: "🔬 9개 모델 성능 비교 실험 — RF-DETR이 mAP@50 0.870, Precision 0.900으로 YOLO·Transformer 계열 전체 중 1위 달성" },
       { src: "/images/rf_detr_aug.png", caption: "다양한 장 내 환경 모사를 위한 Elastic Deform 및 Grid Distortion 데이터 증강 기법 적용" },
       { src: "/images/rf_detr_gold.jpg", caption: "🏆 금상 (대상) — 제17회 건양대학교 캡스톤디자인 경진대회" },
       { src: "/images/rf_detr_bronze.jpg", caption: "🏆 동상 — 전국 공학교육혁신 컨소시엄 창의적 종합설계 경진대회" }
@@ -237,7 +238,7 @@ const projects: ProjectType[] = [
   },
   {
     icon: Eye,
-    title: "유방암 검출 비지도학습 AI 설계",
+    title: "생성형 AI를 활용한 유방암 검출 비지도학습 AI 설계",
     description: "정상 데이터만으로 학습된 VAE에 고정 임계값 적용 시 오탐률이 급증하는 문제를 발견하고, 재구성 오차의 통계적 분포를 분석해 동적 임계값 이진화 알고리즘을 직접 설계하여 Dice 0.8325 → 0.9094로 향상시킨 비지도학습 이상 탐지 시스템입니다.",
     longDescription: (
       <div className="space-y-6 text-base text-foreground/90">
@@ -402,8 +403,17 @@ const ProjectsSection = () => {
           {projects.map((project, i) => (
             <ScrollAnimator key={i}>
               <div
-                className="minimal-card-accent group cursor-pointer h-full transition-transform hover:-translate-y-1"
+                className="minimal-card-accent group cursor-pointer flex flex-col h-full"
+                style={{ transition: "transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease" }}
                 onClick={() => setSelectedProject(project)}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 20px 48px rgba(0,0,0,0.13), 0 0 0 1px hsl(220 70% 50% / 0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "";
+                }}
               >
                 {/* Gradient header area */}
                 <div className={`bg-gradient-to-br ${project.gradient} p-8 pb-6`}>
@@ -411,29 +421,31 @@ const ProjectsSection = () => {
                     <div className="icon-container">
                       <project.icon size={22} />
                     </div>
-                    <ArrowUpRight size={18} className="text-muted-foreground group-hover:text-primary transition-colors" />
+                    <ArrowUpRight size={20} strokeWidth={2.5} className="text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
                   <h3 className="text-lg font-semibold text-foreground leading-snug">{project.title}</h3>
                 </div>
 
                 {/* Content */}
-                <div className="p-8 pt-5">
+                <div className="p-8 pt-5 flex flex-col flex-1 justify-between">
                   <p className="text-muted-foreground text-sm leading-relaxed mb-5">{project.description}</p>
 
-                  {/* Highlights */}
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    {project.highlights.map((h) => (
-                      <span key={h} className="inline-flex items-center gap-1 text-xs font-semibold text-primary bg-primary/8 px-2.5 py-1 rounded-md">
-                        ✦ {h}
-                      </span>
-                    ))}
-                  </div>
+                  <div>
+                    {/* Highlights */}
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {project.highlights.map((h) => (
+                        <span key={h} className="inline-flex items-center gap-1 text-xs font-semibold text-primary bg-primary/8 px-2.5 py-1 rounded-md">
+                          ✦ {h}
+                        </span>
+                      ))}
+                    </div>
 
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 pt-4 border-t border-border">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="tag">{tag}</span>
-                    ))}
+                    {/* Tags - static, non-clickable */}
+                    <div className="flex flex-wrap gap-2 pt-4 border-t border-border">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="tech-tag">{tag}</span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

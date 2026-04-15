@@ -77,8 +77,7 @@ const ContactSection = () => {
                     onChange={handleChange}
                     required
                     placeholder="홍길동"
-                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all duration-300"
-                  />
+                    className="w-full px-4 py-3 rounded-xl text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all duration-300" style={{ background: '#F9FAFB', border: '1.5px solid #CBD5E1' }}/>
                 </div>
                 <div>
                   <label htmlFor="from_email" className="block text-sm font-medium text-muted-foreground mb-2">
@@ -92,8 +91,7 @@ const ContactSection = () => {
                     onChange={handleChange}
                     required
                     placeholder="example@email.com"
-                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all duration-300"
-                  />
+                    className="w-full px-4 py-3 rounded-xl text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all duration-300" style={{ background: '#F9FAFB', border: '1.5px solid #CBD5E1' }}/>
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-muted-foreground mb-2">
@@ -107,8 +105,7 @@ const ContactSection = () => {
                     required
                     rows={5}
                     placeholder="프로젝트 문의 또는 협업 관련 내용을 자유롭게 작성해주세요."
-                    className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all duration-300 resize-none"
-                  />
+                    className="w-full px-4 py-3 rounded-xl text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all duration-300 resize-none" style={{ background: '#F9FAFB', border: '1.5px solid #CBD5E1' }}/>
                 </div>
                 <button
                   type="submit"

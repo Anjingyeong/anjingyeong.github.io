@@ -24,13 +24,13 @@ const AboutSection = () => {
           <ScrollAnimator className="md:col-span-2">
             <div className="minimal-card p-8 md:p-10">
               <h3 className="text-lg font-semibold mb-5 text-foreground">개발자 소개</h3>
-              <p className="text-muted-foreground leading-[1.8] mb-4">
+              <p className="leading-[1.8] mb-4" style={{ color: '#4A4A4A' }}>
                 안녕하세요. 데이터의 가치를 실제 서비스로 구현해 내는 엔지니어 안진경입니다.
               </p>
-              <p className="text-muted-foreground leading-[1.8] mb-4">
+              <p className="leading-[1.8] mb-4" style={{ color: '#4A4A4A' }}>
                 의공학을 전공하며 딥러닝과 데이터 분석을 깊이 있게 탐구했습니다. 하지만 '아무리 뛰어난 AI 모델도 안정적인 웹 시스템이 뒷받침되지 않으면 사용자에게 닿을 수 없다'는 것을 깨닫고, 모델을 프로덕션 환경에 배포하는 풀스택 엔지니어링으로 영역을 넓혔습니다.
               </p>
-              <p className="text-muted-foreground leading-[1.8]">
+              <p className="leading-[1.8]" style={{ color: '#4A4A4A' }}>
                 저는 단순히 코드가 '작동하는 것'에 만족하지 않습니다. 에러 이면의 진짜 원인을 파악하기 위해 네트워크 흐름과 백엔드 구조를 집요하게 추적합니다. 대규모 트래픽이나 복잡한 비즈니스 로직(에스크로, 실시간 통신 등) 앞에서도 멈추지 않는, 신뢰할 수 있는 서비스를 구축하는 데 주력하고 있습니다.
               </p>
 
