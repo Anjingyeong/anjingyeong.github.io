@@ -33,45 +33,58 @@ const projects: ProjectType[] = [
 
         <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Situation
           </h4>
           <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-            <strong className="text-foreground/90">SK 쉴더스 지능형 애플리케이션 개발 과정 중 진행한 심화 프로젝트:</strong><br />
-            대규모 트래픽 환경에서 프론트엔드와 백엔드가 어떻게 유기적으로 맞물려야 안정적인 서비스를 제공할 수 있는지 시뮬레이션하는 데 목적을 두었습니다. 조장으로서 서비스 전체 아키텍처를 설계하며, 실시간성 데이터 처리와 시스템 안정성을 확보하는 훈련에 집중했습니다.
+            KBO 티켓 양도 서비스에서는 판매자와 구매자의 거래 상태가 실시간으로 맞아야 했습니다. 특히 에스크로 흐름이 포함되어 있어 상태 전이가 꼬이면 결제, 취소, 거래 완료 과정에서 데이터 불일치가 발생할 수 있었습니다.<br />
+            초기 구조에서는 클라이언트가 상태를 반복 조회하는 방식이었고, 사용자가 늘어날수록 불필요한 API 요청과 DB 조회가 늘어날 수 있는 문제가 있었습니다.
           </p>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
+            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Task
           </h4>
           <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">전체 시스템의 병목 현상:</strong> 실시간 채팅과 에스크로 결제가 동시에 일어날 때, 프론트엔드의 잦은 요청이 백엔드와 DB에 막대한 부하를 주어 서비스 전체가 느려질 위험을 식별했습니다.</li>
-            <li><strong className="text-foreground/80">인증 무결성과 사용자 경험의 충돌:</strong> 보안을 강화하면서도 페이지 이동 시 흐름이 끊기지 않는 매끄러운 사용자 경험을 확보해야 하는 설계상의 과제가 있었습니다.</li>
+            <li>에스크로 거래 상태를 명확한 단계로 정의하기</li>
+            <li>판매자/구매자/티켓/거래 상태 간의 DB 관계 설계하기</li>
+            <li>상태 변경이 발생했을 때 프론트엔드 화면이 즉시 갱신되도록 만들기</li>
+            <li>React 프론트엔드와 Spring Boot 백엔드의 인증 및 API 응답 흐름 맞추기</li>
           </ul>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Action
           </h4>
           <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">풀스택 최적화 파이프라인 설계:</strong> 백엔드에 Redis와 WebSocket을 도입해 DB 부하를 줄이고, 프론트엔드에는 비동기 상태 관리 로직을 적용해 서버 데이터 변경이 화면에 즉시 반영되도록 전체 파이프라인을 설계했습니다.</li>
-            <li><strong className="text-foreground/80">하이브리드 보안 및 라우팅 제어:</strong> 클라이언트 사이드의 무상태 통신 효율을 유지하면서, 서버 사이드(SSR) 권한 검증이 필요한 경로에는 HttpOnly Cookie를 브릿징하여 보안성과 성능의 균형을 맞췄습니다.</li>
-            <li><strong className="text-foreground/80">통합 트랜잭션 관리:</strong> 조장으로서 프론트엔드와 백엔드 간의 데이터 ACID 특성이 유지되도록 예외 처리 및 낙관적 업데이트 로직 전반을 조율했습니다.</li>
+            <li>에스크로 거래 흐름을 등록, 요청, 승인, 결제, 완료/취소 단계로 나누고 각 상태 전이에 필요한 DB 관계를 설계했습니다.</li>
+            <li>Spring Boot와 JPA 기반으로 거래 상태 변경 API를 구현하고, 상태 변경 시 관련 클라이언트에 이벤트가 전달되도록 WebSocket/STOMP 구조를 적용했습니다.</li>
+            <li>React 화면에서 거래 상태가 바뀔 때마다 전체 데이터를 다시 조회하는 방식 대신, 서버 이벤트를 받아 필요한 화면만 갱신하도록 연동했습니다.</li>
+            <li>JWT 기반 인증 흐름을 구성하고, 프론트엔드 라우팅과 백엔드 권한 응답이 맞지 않아 발생하던 접근 제어 문제를 확인하며 수정했습니다.</li>
           </ul>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
             <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
           </h4>
           <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10 ml-4">
             <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li>서비스 전체의 데이터 흐름을 설계하는 아키텍트로서, 팀원들의 파트를 조율하며 마감 기한 내에 안정적인 시스템 시뮬레이션을 완료했습니다.</li>
-              <li>백엔드 최적화가 프론트엔드 성능 향상으로 이어지는 유기적인 풀스택 개발 프로세스를 주도했습니다.</li>
+              <li>반복 조회 중심의 상태 확인 방식을 이벤트 기반 Push 구조로 바꾸어 불필요한 요청을 줄였습니다.</li>
+              <li>거래 상태 변경이 프론트엔드에 바로 반영되도록 만들어 실시간 서비스에 가까운 사용자 경험을 구현했습니다.</li>
+              <li>금전 거래가 포함된 도메인에서 상태 전이, 데이터 무결성, 인증 흐름이 왜 중요한지 직접 경험했습니다.</li>
             </ul>
           </div>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-purple-500 rounded-full inline-block"></span> Learned
+          </h4>
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            이 프로젝트를 통해 단순히 API를 만드는 것보다, 상태가 바뀌는 순서와 실패 케이스를 먼저 설계하는 것이 중요하다는 점을 배웠습니다. 특히 실시간 기능은 WebSocket을 붙이는 것보다, 어떤 이벤트를 언제 누구에게 보낼지 정하는 일이 더 중요했습니다.
+          </p>
         </div>
       </div>
     ),
@@ -104,44 +117,57 @@ const projects: ProjectType[] = [
 
         <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Situation
           </h4>
           <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-            <strong className="text-foreground/90">SK 쉴더스 지능형 애플리케이션 개발 과정 중 진행한 기초 프로젝트:</strong><br />
-            외부 데이터 수집부터 프론트엔드 서빙까지의 전 과정을 경험하며 데이터 파이프라인의 기초를 다졌습니다. 실제 상용 서비스 수준의 방대한 데이터 스크래핑 환경을 가정하고 시스템의 가용성을 테스트하는 데 집중했습니다.
+            금융 데이터를 외부 사이트에서 수집해 투자 지표와 시각화 결과를 제공하는 대시보드였습니다. 초기에는 사용자가 화면을 요청할 때마다 외부 데이터를 직접 수집하는 구조였고, 외부 사이트 응답 지연이나 차단이 발생하면 화면 렌더링까지 늦어지는 문제가 있었습니다.
           </p>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
+            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Task
           </h4>
           <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">데이터 수집 지연에 따른 UX 저하:</strong> 외부 사이트 데이터를 실시간으로 스크래핑하여 출력할 경우, 수집 과정의 지연이 프론트엔드 렌더링을 멈추게 하거나 타임아웃을 유발하는 구조적 병목이 예상되었습니다.</li>
+            <li>외부 데이터 수집 로직을 사용자 화면 요청에서 분리하기</li>
+            <li>수집한 데이터를 MySQL에 저장하고 재사용할 수 있게 만들기</li>
+            <li>Streamlit 화면은 내부 DB를 기준으로 빠르게 렌더링되도록 구성하기</li>
+            <li>설문 기반 투자 성향과 알고리즘 결과를 화면 흐름에 맞게 연결하기</li>
           </ul>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Action
           </h4>
           <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">엔드 투 엔드(End-to-End) 데이터 설계:</strong> 스크래핑-백엔드 캐싱-프론트엔드 시각화로 이어지는 데이터의 흐름을 직접 설계하고 구현했습니다.</li>
-            <li><strong className="text-foreground/80">비동기 스케줄링 기반 수집 최적화:</strong> 서버에서 주기적으로 스크래핑을 수행하고 메모리에 데이터를 캐싱하는 비동기 CRON 스케줄러를 구축하여 클라이언트 요청과의 의존성을 분리했습니다.</li>
-            <li><strong className="text-foreground/80">데이터 기반 대시보드 구현:</strong> 서버에 최적화되어 저장된 데이터를 프론트엔드에서 즉시 호출하도록 설계하여, 외부 서버 상태와 무관한 쾌적한 렌더링 환경을 조성했습니다.</li>
+            <li>BeautifulSoup4와 pykrx를 활용해 필요한 금융 데이터를 수집하는 파이프라인을 구현했습니다.</li>
+            <li>사용자 요청 시점마다 외부 사이트를 호출하지 않도록, 백그라운드에서 주기적으로 데이터를 수집하고 MySQL에 저장하는 구조로 변경했습니다.</li>
+            <li>Streamlit 화면은 외부 사이트가 아니라 내부 DB를 조회하도록 구성해, 외부 응답 지연이 사용자 화면에 직접 영향을 주지 않게 했습니다.</li>
+            <li>설문 입력값, 위험 성향 점수, 추천 결과가 이어지는 흐름을 Streamlit session_state로 관리했습니다.</li>
           </ul>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
             <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
           </h4>
           <div className="p-4 rounded-xl bg-orange-500/5 border border-orange-500/10 ml-4">
             <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li>팀 내 데이터 수집과 서빙 전반을 책임지며, 1주일이라는 짧은 기간 내에 안정적인 데이터 파이프라인 시뮬레이션을 완료했습니다.</li>
-              <li>외부 지연 요소를 구조적으로 차단하는 설계를 통해 시스템 가용성을 높이는 풀스택 개발 역량을 증명했습니다.</li>
+              <li>데이터 수집, 저장, 화면 렌더링 흐름을 분리해 대시보드 응답 안정성을 높였습니다.</li>
+              <li>외부 사이트 상태에 따라 화면이 직접 지연되는 문제를 줄였습니다.</li>
+              <li>간단한 MVP라도 데이터 수집 계층과 서비스 계층을 분리해야 유지보수가 쉬워진다는 점을 배웠습니다.</li>
             </ul>
           </div>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-purple-500 rounded-full inline-block"></span> Learned
+          </h4>
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            이 프로젝트에서는 빠르게 결과물을 보여주는 것도 중요했지만, 외부 의존성을 그대로 사용자 요청에 연결하면 서비스 품질이 쉽게 흔들린다는 점을 경험했습니다. 이후 백엔드 프로젝트에서도 요청 흐름과 비동기 작업을 분리하는 관점을 더 신경 쓰게 됐습니다.
+          </p>
         </div>
       </div>
     ),
@@ -179,47 +205,58 @@ const projects: ProjectType[] = [
 
         <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Situation
           </h4>
           <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-            학부 캡스톤 디자인으로 진행한 프로젝트로, 엣지 디바이스 환경에서의 상용화를 목표로 실시간 의료 영상 검출 AI 모델을 최적화했습니다. (교내 캡스톤 대회 금상 및 공학교육 컨소시엄 경진대회 동상)
+            대장 내시경 영상에서 용종을 실시간으로 검출하는 프로젝트였습니다. 의료 영상은 조명 변화, 반사, 장벽의 움직임 때문에 일반 이미지보다 검출 난도가 높았습니다. 또한 실제 활용을 고려하면 정확도뿐 아니라 추론 속도도 중요했습니다.<br />
+            초기에는 CenterNet과 RetinaNet의 장점을 결합한 커스텀 모델을 시도했지만, 제한된 데이터와 의료 영상 특성 때문에 기대한 정확도가 나오지 않았습니다.
           </p>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
+            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Task
           </h4>
           <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">내시경 특화 탐지 환경의 복합 과제:</strong> 내시경 특유의 움직임 노이즈와 불규칙한 조명 환경에서 소형 병변까지 안정적으로 탐지하려면, 지역적 특징을 넘어 전역적 문맥을 함께 처리하는 모델 구조가 필요했습니다.</li>
-            <li><strong className="text-foreground/80">소형 병변 데이터 부족:</strong> 소형 병변 샘플이 절대적으로 부족하다는 것을 데이터 분포 분석으로 확인했고, 이로 인한 Recall 저하와 과적합 리스크가 컸습니다.</li>
-            <li><strong className="text-foreground/80">추론 파이프라인 UI 멈춤 현상:</strong> PyQt5 UI와 딥러닝 추론을 같은 스레드에서 실행하자 화면 멈춤과 FPS 급감이 발생했습니다.</li>
+            <li>커스텀 모델 실패 원인 분석하기</li>
+            <li>의료 영상에 적합한 객체 탐지 모델 선택하기</li>
+            <li>부족한 라벨링 데이터를 보완할 증강 전략 적용하기</li>
+            <li>실시간 추론이 가능한 수준으로 파이프라인 최적화하기</li>
           </ul>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Action
           </h4>
           <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">논문 기반 모델 선택 및 비교 검증:</strong> RF-DETR 논문을 직접 읽고 Deformable Cross-Attention 구조의 전역 문맥 처리 능력을 선택 근거로 삼았습니다. 이를 검증하기 위해 YOLO 계열부터 Transformer 기반까지 총 <strong>9개 모델</strong>을 동일한 Kvasir 데이터셋으로 학습·비교했고, RF-DETR이 <strong>mAP@50 0.862, Precision 0.91</strong>로 최고 성능을 기록했습니다.</li>
-            <li><strong className="text-foreground/80">의료 데이터 특화 증강:</strong> Elastic Deformation과 Grid Distortion을 적용해 학습 데이터를 <strong>600장에서 2,100장</strong>으로 확장했습니다. Recall이 유의미하게 개선되었고, 파인튜닝으로 성능을 추가로 약 7% 향상시켰습니다.</li>
-            <li><strong className="text-foreground/80">비동기 추론 파이프라인 구축:</strong> 추론 스레드와 UI 업데이트 스레드를 분리하는 비동기 처리를 구현해 화면 멈춤 문제를 해결했습니다. 병변 감지 시 OpenCV로 프레임을 캡처하고 탐지 결과를 자동 녹화·저장하는 I/O 로직까지 완성했습니다.</li>
-            <li><strong className="text-foreground/80">구조적 가지치기:</strong> 모델 결과 기여도가 낮은 가중치를 제거하는 Pruning으로 연산량을 최적화하여 엣지 환경 실시간 추론을 달성했습니다.</li>
+            <li>초기 커스텀 모델 실험 결과를 분석한 뒤, 구조를 새로 만드는 방식보다 검증된 객체 탐지 모델을 의료 데이터에 맞게 파인튜닝하는 방향으로 전환했습니다.</li>
+            <li>RF-DETR 기반 파인튜닝 파이프라인을 구성하고, 대장 내시경 영상의 특성을 반영한 데이터 증강을 적용했습니다.</li>
+            <li>단순 회전/반전뿐 아니라 Grid Distortion, Elastic Deform 계열의 증강을 사용해 장벽 왜곡과 점막 형태 변화를 모델이 학습할 수 있도록 했습니다.</li>
+            <li>OpenCV 기반 전처리와 추론 결과 확인 과정을 반복하며, 오탐과 미탐 케이스를 비교했습니다.</li>
           </ul>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
             <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
           </h4>
           <div className="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 ml-4">
             <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li>9개 모델 비교 실험에서 RF-DETR이 <strong>mAP@50 0.862, Precision 0.91</strong>로 최고 성능 달성</li>
-              <li>파인튜닝으로 기존 대비 <strong>약 7% 추가 성능 향상</strong>, <strong>22 FPS 이상</strong> 실시간 추론 확보</li>
-              <li>모델 선택 → 데이터 증강 → 비동기 파이프라인까지 End-to-End 시스템 완성, 임상 환경 적용 가능성 검증</li>
+              <li>기존 베이스라인 대비 mAP를 약 7%p 개선했습니다.</li>
+              <li>실시간 추론 가능성을 확인했고, 프로젝트 결과로 교내 캡스톤디자인 경진대회 대상/금상과 전국 경진대회 동상을 수상했습니다.</li>
+              <li>모델 구조 자체를 새로 만드는 것보다, 문제 상황에 맞는 모델 선택과 데이터 중심 개선이 더 효과적일 수 있다는 점을 배웠습니다.</li>
             </ul>
           </div>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-purple-500 rounded-full inline-block"></span> Learned
+          </h4>
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            처음 시도한 모델이 실패했을 때, 단순히 더 복잡한 모델을 만드는 방향으로 가지 않고 문제를 다시 정의한 것이 중요했습니다. 의료 영상에서는 모델의 새로움보다 데이터 특성과 평가 기준에 맞는 안정적인 개선이 더 중요하다는 점을 배웠습니다.
+          </p>
         </div>
       </div>
     ),
@@ -255,45 +292,58 @@ const projects: ProjectType[] = [
 
         <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Situation
           </h4>
           <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-            유방암 데이터셋을 활용하여 암세포의 미세한 특징을 스스로 군집화하고 탐지하는 비지도학습 기반의 AI 모델 설계 프로젝트입니다.(2024 DNA 공학혁신상 수상)
+            초음파 영상에서 유방암 병변을 검출하는 프로젝트였습니다. 의료 데이터는 라벨링 비용이 높고, 모든 병변 케이스를 충분히 확보하기 어렵다는 문제가 있었습니다.<br />
+            정답 라벨이 충분하지 않은 상황에서 병변 후보 영역을 찾기 위해, 정상 조직 이미지를 기준으로 이상 패턴을 탐지하는 비지도 학습 접근을 선택했습니다.
           </p>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
+            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Task
           </h4>
           <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">고정 임계값의 오탐률 급증:</strong> 정상 데이터만으로 학습된 모델에 고정된 임계값을 일괄 적용하자, 영상마다 다르게 나타나는 기저 노이즈 차이로 오탐률이 급증했습니다. 단순한 하이퍼파라미터 튜닝만으로는 해결에 명확한 한계가 있었습니다.</li>
-            <li><strong className="text-foreground/80">프레임워크 블랙박스 의존의 한계:</strong> 기존 라이브러리의 기본 손실 함수만으로는 암세포 특유의 미세한 픽셀 이질감을 학습시키는 데 구조적인 한계가 있었습니다.</li>
+            <li>정상 조직 이미지를 학습하는 VAE 모델 구성하기</li>
+            <li>입력 영상과 재구성 영상의 차이를 이용해 이상 후보 영역 찾기</li>
+            <li>노이즈를 줄이기 위한 임계값 처리와 후처리 로직 만들기</li>
+            <li>결과를 시각적으로 확인할 수 있는 형태로 출력하기</li>
           </ul>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Action
           </h4>
           <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">동적 임계값 이진화 알고리즘 설계:</strong> 재구성 오차 데이터의 통계적 분포를 직접 분석했습니다. 각 영상의 오차 평균과 표준편차를 도출하고, 이를 기반으로 기준선이 영상마다 유동적으로 변하는 동적 임계값 수식을 알고리즘에 직접 설계했습니다.</li>
-            <li><strong className="text-foreground/80">저수준 API 제어 및 손실 함수 커스텀:</strong> 프레임워크의 저수준 API를 활용해 분포 오차와 재구성 오차의 텐서 가중치를 데이터 특성에 맞게 세밀하게 조작하는 커스텀 손실 함수를 설계했습니다.</li>
-            <li><strong className="text-foreground/80">정확도의 함정 검증:</strong> 98%라는 비정상적인 조기 정확도가 도출되었을 때 이에 안주하지 않고, 편향된 데이터 공간을 전수 조사하여 평가 로직의 오류를 바로잡았습니다.</li>
+            <li>TensorFlow 기반 VAE 모델을 구성해 정상 조직 이미지의 분포를 학습하도록 했습니다.</li>
+            <li>입력 이미지와 모델이 재구성한 이미지의 차이를 계산해 Reconstruction Error Map을 만들었습니다.</li>
+            <li>단순 고정 임계값만으로는 노이즈가 많이 남는 문제가 있어, 이미지 내 픽셀 분포를 기준으로 동적 임계값을 조정하는 후처리 로직을 적용했습니다.</li>
+            <li>병변 후보 영역을 시각화하고, 결과 이미지를 비교하며 오탐 영역을 줄이는 방향으로 반복 개선했습니다.</li>
           </ul>
         </div>
 
-        <div>
+        <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
             <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
           </h4>
           <div className="p-4 rounded-xl bg-violet-500/5 border border-violet-500/10 ml-4">
             <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li>동적 임계값 적용 후 병변이 비교적 큰 케이스에서 <strong>Dice 0.9094</strong> 달성 (적용 전 <strong>0.8325</strong> 대비 유의미한 향상)</li>
-              <li>겉보기 성능에 의존하지 않고 정상·이상 데이터 간 경계를 명확히 학습시켜 치명적인 배포 리스크를 사전에 차단</li>
-              <li>영상 데이터 특성 분석과 이상 탐지 역량은 헬스케어 품질 검증·이상 프레임 탐지에도 동일하게 전이 가능</li>
+              <li>라벨이 부족한 의료 영상 환경에서 비지도 학습 기반 이상 탐지 가능성을 확인했습니다.</li>
+              <li>Dice Coefficient 기준 약 90% 수준의 분할 성능을 목표로 파이프라인을 개선했습니다.</li>
+              <li>프로젝트 결과로 산업통상자원부 장관 주관 공학혁신상을 수상했습니다.</li>
             </ul>
           </div>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-purple-500 rounded-full inline-block"></span> Learned
+          </h4>
+          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            이 프로젝트를 통해 AI 모델 성능은 모델 구조만으로 결정되지 않고, 데이터 전처리와 후처리 기준에 크게 영향을 한다는 점을 배웠습니다. 특히 의료 영상에서는 작은 노이즈도 결과 해석에 영향을 주기 때문에, 결과를 시각적으로 확인하고 임계값을 조정하는 과정이 중요했습니다.
+          </p>
         </div>
       </div>
     ),

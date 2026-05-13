@@ -25,14 +25,36 @@ const AboutSection = () => {
             <div className="minimal-card p-8 md:p-10">
               <h3 className="text-lg font-semibold mb-5 text-foreground">개발자 소개</h3>
               <p className="leading-[1.8] mb-4" style={{ color: '#4A4A4A' }}>
-                안녕하세요. 데이터의 가치를 실제 서비스로 구현해 내는 엔지니어 안진경입니다.
+                의공학을 전공하며 영상처리, 딥러닝, 의료 AI 프로젝트를 경험했고, 이후 웹 서비스 개발로 범위를 넓혀 백엔드와 풀스택 역량을 쌓고 있습니다.
               </p>
               <p className="leading-[1.8] mb-4" style={{ color: '#4A4A4A' }}>
-                의공학을 전공하며 딥러닝과 데이터 분석을 깊이 있게 탐구했습니다. 하지만 '아무리 뛰어난 AI 모델도 안정적인 웹 시스템이 뒷받침되지 않으면 사용자에게 닿을 수 없다'는 것을 깨닫고, 모델을 프로덕션 환경에 배포하는 풀스택 엔지니어링으로 영역을 넓혔습니다.
+                AI 프로젝트에서는 데이터 전처리, 모델 학습, 성능 개선, 실험 실패 후 피벗을 경험했습니다. 웹 프로젝트에서는 Spring Boot, JPA, MySQL, React를 활용해 실시간 상태 동기화, 인증 흐름, 데이터 파이프라인 문제를 해결했습니다.
               </p>
-              <p className="leading-[1.8]" style={{ color: '#4A4A4A' }}>
-                저는 단순히 코드가 '작동하는 것'에 만족하지 않습니다. 에러 이면의 진짜 원인을 파악하기 위해 네트워크 흐름과 백엔드 구조를 집요하게 추적합니다. 대규모 트래픽이나 복잡한 비즈니스 로직(에스크로, 실시간 통신 등) 앞에서도 멈추지 않는, 신뢰할 수 있는 서비스를 구축하는 데 주력하고 있습니다.
+              <p className="leading-[1.8] mb-6" style={{ color: '#4A4A4A' }}>
+                현재는 백엔드와 풀스택 개발을 중심으로, AI와 보안 도메인 이해를 함께 활용할 수 있는 개발자를 목표로 준비하고 있습니다.
               </p>
+
+              <div className="mt-8 pt-6 border-t border-border">
+                <h4 className="text-sm font-semibold mb-3 text-primary uppercase tracking-wide">Career Direction</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    Spring Boot 기반 백엔드 개발
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    React 기반 풀스택 서비스 개발
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    AI 모델 또는 데이터 파이프라인이 포함된 서비스 개발
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    인증, 권한, 데이터 보호가 중요한 보안 연계 서비스 개발
+                  </li>
+                </ul>
+              </div>
 
               <div className="flex gap-3 mt-8 pt-6 border-t border-border">
                 <a href="https://github.com/anjin0910-afk" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300">

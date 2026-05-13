@@ -11,27 +11,27 @@ interface SkillCategory {
 
 const skillCategories: SkillCategory[] = [
   {
-    title: "AI & Deep Learning",
-    icon: Brain,
-    skills: ["Python / NumPy / pandas", "TensorFlow / PyTorch", "CNN, RNN, GAN, VAE", "Computer Vision (DETR, YOLO)", "CycleGAN / Medical Imaging"],
+    title: "Backend & Database",
+    icon: Database,
+    skills: ["Spring Boot / Spring Data JPA", "Node.js / REST API", "WebSocket / STOMP", "MySQL / SQL"],
     color: "from-blue-500/10 to-blue-600/5",
   },
   {
-    title: "Biomedical Domain",
-    icon: Database,
-    skills: ["의료 영상 데이터 분석", "병변 검출 및 영역 분할", "의료 데이터 특화 증강 (Elastic, Grid)", "비지도 학습 기반 이상 탐지", "임상 소프트웨어 워크플로우 설계"],
-    color: "from-indigo-500/10 to-indigo-600/5",
-  },
-  {
-    title: "Web Full-stack",
+    title: "Frontend",
     icon: BarChart3,
-    skills: ["React / TypeScript", "Node.js / Express 기반 서버 구축", "RESTful API 파이프라인 설계", "MySQL 및 관계형 데이터베이스", "JWT 인증 프로세스 및 웹소켓"],
+    skills: ["React / TypeScript", "JavaScript / HTML / CSS", "Tailwind CSS", "Streamlit"],
     color: "from-emerald-500/10 to-teal-600/5",
   },
   {
-    title: "Tools & DevOps",
+    title: "AI & Data",
+    icon: Brain,
+    skills: ["Python / PyTorch / TensorFlow", "OpenCV / RF-DETR / VAE", "BeautifulSoup4 / pykrx", "Seaborn"],
+    color: "from-indigo-500/10 to-indigo-600/5",
+  },
+  {
+    title: "Tools",
     icon: Wrench,
-    skills: ["Git / GitHub 버전 관리", "Google Colab 환경 구축", "OpenCV 실시간 영상 처리", "Streamlit 데이터 대시보드 구축", "데이터 수집 및 스크래핑 파이프라인"],
+    skills: ["Git / GitHub"],
     color: "from-purple-500/10 to-purple-600/5",
   },
 ];
