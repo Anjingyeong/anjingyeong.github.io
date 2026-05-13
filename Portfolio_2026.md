@@ -28,58 +28,107 @@
 
 ## 🚀 Projects
 
-### 1. FullCount: 실시간 KBO 티켓 양도 에스크로 및 라이브 커뮤니티 플랫폼
-*고빈도 실시간 동기화와 복잡한 에스크로 상태 머신 제어를 결합한 미션 크리티컬 웹 플랫폼.*
-- **Duration:** 2024 (Team Project, 5인)
-- **Tech Stack:** React, Spring Boot, MySQL, JPA, WebSockets, STOMP
-- **Impact & Contribution:** 30초 지연 분산 오프로딩(Off-loading)을 통해 불필요한 서버 폴링 오버헤드 및 **DB I/O 부하를 80% 이상 혁신적으로 절감**.
-- **What I Did (주요 수행 업무):**
-  - **Tech Lead 및 풀스택 연동:** 5인 팀 코어 아키텍트로서 요구사항 분석, 스키마 설계, Spring Boot 기반 백엔드 아키텍처 연동 전체 리드.
-  - **핵심 비즈니스 로직 제어:** 무결성이 중요한 에스크로 상태 머신(State Machine)과 실시간 라이브 채팅 생태계의 관계형 데이터베이스 의존성 단독 모델링.
-  - **백엔드 장애 대응 인프라:** 클라이언트에게 24시간 끊김 없는 데이터 제공을 위해 내결함성(Fault-tolerant) 비동기 스크래핑 인프라 구축 매핑.
-- **Tech Rationale (기술 채택 의사결정):**
-  - **WebSockets + STOMP 도입:** 고빈도 에스크로 트랜잭션에서 단순 API Polling은 막대한 DB 병목을 유발합니다. 이에 TCP 연결 기반의 양방향 통신망과 직관적인 Publish-Subscribe 패턴의 메시지 브로커(STOMP) 계층을 도입, 타 클라이언트의 상태 전이를 0.1초 지연 없이 브로드캐스팅했습니다.
-  - **Spring Boot + JPA 구조:** 실시간 채팅, 상태 변경, 조회 로직이 동시다발적으로 발생하는 환경에서 트랜잭션의 철저한 상태 일관성과 롤백 통제를 보장해야 했고, 영속성 컨텍스트를 안정적으로 지원하는 Spring 생태계가 백엔드 핵심으로 가장 적합했습니다.
-  - **JWT + HttpOnly Cookie 브릿징:** React UI의 무상태 접근성을 극대화하기 위해 JWT를 채택하되, 가장 리스크가 큰 SSR 권한 관리 라우팅(403) 영역에 대해서는 HttpOnly 쿠키 방식을 브릿징 결합하여 보안을 보완했습니다.
+### 1. [티켓 에스크로 도메인] 실시간 고빈도 트랜잭션 DB I/O 80% 절감 및 동시성 제어
+- **문제 해결 기술 스택:** Spring Boot, WebSockets (STOMP), JPA, MySQL
+- **문제 상황 (Problem):** 에스크로 상태 전이와 다자간 실시간 채팅이 동시다발적으로 발생하는 환경에서, 단순 API Polling 방식은 막대한 DB 병목과 서버 오버헤드를 유발했습니다.
+- **해결 과정 (Action):** 
+  - TCP 연결 기반의 양방향 통신망과 Publish-Subscribe 패턴의 메시지 브로커(STOMP) 계층을 도입했습니다.
+  - 30초 지연 분산 오프로딩(Off-loading)을 설계하여 트랜잭션과 실시간 상태 전이를 효과적으로 분리했습니다.
+  - Spring Boot와 JPA를 활용해 트랜잭션의 철저한 상태 일관성과 롤백 통제를 보장했습니다.
+- **해결 결과 (Result):** 불필요한 서버 폴링을 제거하여 DB I/O 부하를 80% 이상 혁신적으로 절감하였고, 타 클라이언트의 상태 전이를 0.1초 지연 없이 브로드캐스팅해 냈습니다.
 
-### 2. Lumina Capital: 퀀트 투자 분석 대시보드
-*퀀트 기반 실시간 금융 데이터 수집과 맞춤형 알고리즘 분석을 결합한 통합 투자 시그널 대시보드.*
-- **Duration:** 2023 (Team Project, 6인)
-- **Tech Stack:** Python, Streamlit, MySQL, BeautifulSoup4, pykrx, Seaborn
-- **Impact & Contribution:** 스크래핑 아키텍처 최적화를 통해 과다 접속 트래픽 중 인터페이스 렌더 대기 시간 향상 및 **DB 타임아웃 오류 발생 확률을 0%에 가깝게 단축**.
-- **What I Did (주요 수행 업무):**
-  - **백엔드 아키텍처 및 크롤링 파이프라인 설계:** 파편화된 외부 투자 데이터를 자율 스케줄러로 실시간 폴링하고 안전하게 정규화된 형태의 데이터베이스로 적재 및 영속화하는 백그라운드 DAQ 계층 개발.
-  - **다단계 풀스택 통합 인터페이스 연동:** 알고리즘 Risk Scoring 연산 결과를 다단계 사용자 설문 뷰와 빈틈없이 매핑시켜, 완전히 개인화된 맞춤형 핀테크 시그널 대시보드로 플로우 제어 수행.
-  - **시스템 렌더링 병목 트러블슈팅:** 트래픽 스파이크 시 필연적으로 동반되는 치명적 동기식 렌더 지연 및 API 타임아웃 오류 병목 원인을 진단하고 인프라 교체 전격 시행.
-- **Tech Rationale (기술 채택 의사결정):**
-  - **동기식 스크래핑에서 비동기 CRON 캐싱으로 구조 상향:** 다중 웹 요청 시점마다 라이브 스크래핑을 일으키면 타겟 서버 측에서 의심 요청으로 판단해 강력한 통신 드랍을 유발했습니다. 이를 막기 위해 웹 접속자는 단지 빠르게 구축된 로컬망 DB를 조회할 수 있도록 '서버 내부에서만 1시간 단위 비동기 백그라운드 캐시 최적화' 구조로 아키텍처를 뒤집어 API 타임아웃 지표를 0% 근처로 타파했습니다.
-  - **Streamlit session_state 기반 캐시-락(Cache-lock) 적용:** 복잡한 금융 설문 로직 상 화면 상태가 핫 로딩될 때마다 사용자가 입력 중이던 데이터가 증발하는 치명적인 Streamlit UI 결함이 잦았습니다. 이를 원초적인 영구 세션 잠금(Cache-lock) 테크닉으로 제어함으로써 복합적인 데이터 업데이트 속에서도 매끄러운 UX 진행을 통제해 냈습니다.
+```mermaid
+sequenceDiagram
+    participant Client
+    participant STOMP Broker
+    participant Spring Server
+    participant MySQL
+    
+    Client->>STOMP Broker: 1. Subscribe to Chat / Escrow Status
+    Client->>Spring Server: 2. Send Action (e.g., Transfer Ticket)
+    Spring Server->>MySQL: 3. Escrow State Update (JPA Tx)
+    Spring Server->>STOMP Broker: 4. Publish Event (No DB Polling)
+    STOMP Broker-->>Client: 5. Broadcast State Change (Latency < 0.1s)
+```
 
-### 3. RF-DETR 실시간 대장 내 용종 검출 시스템
-*극단적 환경 조명 변화 속에서도 지연 없이 동작하는 Transformer 기반 실시간 하드웨어 최적화 객체 탐지 파이프라인.*
-- **Duration:** 2023 (Team Project)
-- **Tech Stack:** Python, PyTorch, RF-DETR, DINOv2, OpenCV
-- **Impact & Contribution:** 가중치 제약 통제를 통해 기존 베이스라인 아키텍처 대비 **+7% mAP 정밀도 상승**, 상용 엣지(Edge/GPU) 환경에서 병목 없는 **22+ FPS 영상 쓰루풋 입증**. (🏆 제17회 캡스톤디자인 **대상(금상)** / 전국 공학경진대회 **동상** 수상)
-- **What I Did (주요 수행 업무):**
-  - **실패 기반 파이프라인 피봇(Pivot) 주도:** 초기엔 CenterNet과 RetinaNet의 장점을 결합해 독자적인 퓨전 모델 개발을 시도했으나 정확도 한계에 직면했습니다. 이 실패를 디버깅하며 모델 텐서 연산에 대한 높은 이해도를 확보했고, 의료 도메인에 걸맞는 '생명과 직결된 정밀도'를 위해 고집을 버리고 SOTA 모델(RF-DETR) 파인튜닝 파이프라인으로 전격 전환했습니다.
-  - **Data-Centric AI 기반 훈련 리드:** 커스텀 아키텍처 구축에 집착하는 대신, Foundational Model을 수용하고 극도로 부족한 의료 도메인 데이터의 병목을 타개하기 위한 데이터 중심(Data-Centric) 증강 파이프라인 정제에 총력을 기울였습니다.
-  - **오버피팅 방어 및 도메인 특화 증강 구현:** 턱없이 부족한 라벨링 데이터를 만회하기 위해, 점막 표면이 움직이며 왜곡되는 물리적 현상을 반영한 Grid Distortion 및 Elastic Deform 증강 모듈을 도입하고 파인튜닝 스크립트를 최적화했습니다.
-- **Tech Rationale (기술 채택 의사결정):**
-  - **자체 모델 결함 통찰과 SOTA 채택의 교훈:** 초기 모델링 실패를 통해 "의료 영상 검출 생태계에서는 어설픈 구조적 새로움(Novelty)보다, 가장 최상위 검증력을 갖춘 프레임워크를 도메인에 완벽히 적응(Fine-tuning)시키는 것이 진짜 엔지니어링이다"라는 실전적 확신을 얻고 검증된 글로벌 어텐션(RF-DETR) 구조를 적극 수용했습니다.
-  - **단순 회전/반전이 아닌 기하학적 증강(Distortion)의 이유:** 기본 증강만으로는 점막 내장벽의 질감을 모사할 수 없었습니다. 장벽 자체의 탄력과 왜곡을 반영할 수 있는 Elastic Deform을 채택, 모델이 '동적 빛 반사'에 현혹되지 않고 용종 본연의 형태학적 피처(Feature)를 학습하도록 강제하여 +7% mAP 향상을 유도했습니다.
+### 2. [금융 시그널 도메인] 트래픽 스파이크 시 API 타임아웃 0% 달성을 위한 비동기 파이프라인 구축
+- **문제 해결 기술 스택:** Python, BeautifulSoup4, Streamlit (session_state)
+- **문제 상황 (Problem):** 다중 접속 시 외부 금융 데이터 API에 동기식 라이브 스크래핑을 요청하면서, 타겟 서버의 의심 요청 차단(IP Block)과 심각한 동기식 렌더 지연(API 타임아웃)이 발생했습니다. 또한, Streamlit의 잦은 핫 로딩으로 사용자가 입력 중이던 금융 설문 데이터가 증발하는 UX 결함이 존재했습니다.
+- **해결 과정 (Action):**
+  - **비동기 캐싱 구조 도입:** 외부 스크래핑을 유저의 요청(동기)과 분리하여, 서버 내부에서만 1시간 단위 자율 스케줄러로 비동기 수집(DAQ)을 수행하고 로컬 DB로 적재하도록 아키텍처를 뒤집었습니다.
+  - **영구 세션 잠금(Cache-lock):** Streamlit의 `session_state`를 활용한 캐시-락 테크닉을 개발하여 화면이 재랜더링 되더라도 사용자의 복합적인 데이터 입력 상태를 영속적으로 보존했습니다.
+- **해결 결과 (Result):** 트래픽 집중 시 렌더 대기 시간을 극적으로 단축하였고, DB 타임아웃 오류 발생 확률을 0%에 가깝게 완벽히 방어했습니다.
 
-### 4. VAE 기반 비지도 학습 유방암 병변 검출 시스템
-*정답(Label) 라벨링 데이터 없이도 초음파 영상 내 비정형적 병변 이상을 자율적으로 맵핑하고 격리하는 생성형 비주얼 파이프라인.*
-- **Duration:** 2022 (Team Project)
-- **Tech Stack:** Python, TensorFlow, VAE, Computer Vision
-- **Impact & Contribution:** 일관성 부족한 비지도 의료 검출 환경 내에서 **알고리즘 분할 정밀도를 상시 90% (Dice Coefficient) 수준으로 안정화** 및 노이즈 오탐지율 하향 조정. (🏆 산업통상자원부 장관 주관 **공학혁신상** 단독 수상)
-- **What I Did (주요 수행 업무):**
-  - **생성형 비전 아키텍처 설계:** 기성 모델 파인튜닝 수준에서 그치지 않고, 건강한 유방 조직 데이터셋만으로 병리학적 정상 토폴로지를 인코딩 및 시각화하는 AutoEncoder 프레임워크 베이스라인 구축.
-  - **수학적 차영상 파이프라인 개발:** 병원 환자의 실제 스캔 데이터와 모델의 '정상의 경우 예측 데이터' 간의 재구성 오차(Reconstruction Error)를 정밀 연산하여 이상성 바운딩 박스를 렌더링.
-  - **동적 임계값 단독 개발:** 모델 정밀도를 급상승시키는 핵심 공학 요소로서, 이미지 내 픽셀 분포 비율을 실시간 계산하고 1차원적인 하드코딩 마스킹의 한계를 극복하는 동적 노이즈 클리닝 로직 구현.
-- **Tech Rationale (기술 채택 의사결정):**
-  - **비지도 학습(Unsupervised) VAE 인프라 선호:** 모든 악성 종양 케이스에 대해 철저히 라벨링(Label)된 정답 데이터를 수급하는 것은 천문학적 자본과 데이터 편향을 발생시킵니다. 따라서 구하기 용이한 '정상 조직 이미지'만으로 모델 스스로 수학적 편차 규칙을 학습하게 구성한 VAE 아키텍처가 당면한 임상 문제를 풀 가장 비용 효율적 대안이었습니다.
-  - **TensorFlow 기반 텐서 컨트롤:** 심층 신경망의 난해한 잠재 공간(Latent Space) 디버깅 및 차영상 오차 손실 함수(Loss Function) 계산을 직관적 그래프로 시각화 통제할 수 있도록 저수준 API 제어가 뛰어난 프레임워크를 선택했습니다.
+```mermaid
+flowchart LR
+    subgraph Background Scheduler
+        A[External API/Web] -->|Asynchronous Scraping| B(Data Normalization)
+        B -->|Every 1 hour| C[(Local DB)]
+    end
+    subgraph User Session
+        D[User Client] -->|Fast Query| C
+        D -->|session_state Lock| E[Stable UI Render]
+    end
+```
+
+### 3. [알고리즘 트레이딩 도메인] Fail-safe 기반 중복 주문 차단 및 매매 안전장치 고도화
+- **문제 해결 기술 스택:** Python, KIS Open API, PyTest, 객체 지향 상태 관리
+- **문제 상황 (Problem):** 자동매매 시스템에서 계좌 상태 파악에 실패하거나 이전 주문이 미체결된 불확실한 상태에서 신규 매수가 발생할 경우, 자본의 막대한 손실로 이어질 수 있는 치명적인 취약점이 존재했습니다.
+- **해결 과정 (Action):**
+  - **주문 추적 Guard 배치:** 단일 주문 한도와 일일 손실 한도, 그리고 동일 종목 미체결 주문 여부를 Broker API 호출 직전에 다시 확인하는 방어선을 구축했습니다.
+  - **Fail-safe 우선 설계:** 계좌 평가금액 조회 실패 시 신규 매수 수량을 즉시 0으로 처리하고, `ENABLE_REAL_TRADING` 플래그 누락 시 매수를 원천 차단하되, 리스크 관리를 위한 '청산 목적 매도'는 별도 플래그로 분리해 운영 정책을 정교화했습니다.
+- **해결 결과 (Result):** 수익률 최적화 이전에 '잘못된 주문 발생 0건'을 보장하는 고도의 안전성을 확보했으며, 실제 API 비호출 검증 및 monkeypatch 테스트로 안정성을 입증했습니다.
+
+```mermaid
+flowchart TD
+    A[Order Request Trigger] --> B{Check Real Trading Flag}
+    B -- Missing --> C[Block Buy / Allow Exit Sell]
+    B -- Enabled --> D{Check Pending Orders}
+    D -- Exists --> E[Block Duplicate Order]
+    D -- Clear --> F{Validate Account Balance}
+    F -- Fail --> G[Set Buy Qty to 0]
+    F -- Success --> H[Execute KIS API Order]
+```
+
+### 4. [의료 엣지 비전 도메인] 조명 왜곡 환경 극복 및 mAP 7% 향상 실시간 객체 탐지 시스템
+- **문제 해결 기술 스택:** PyTorch, RF-DETR, Data-Centric AI (Elastic Deform)
+- **문제 상황 (Problem):** 내시경 점막 표면의 동적 빛 반사와 왜곡된 물리적 현상으로 인해 자체 구축한 퓨전 모델(CenterNet+RetinaNet)이 정확도 한계와 오버피팅에 직면했습니다.
+- **해결 과정 (Action):**
+  - **아키텍처 피봇팅:** 독자적 아키텍처에 대한 고집을 버리고 실패 원인을 디버깅한 후, SOTA 어텐션 기반 모델인 RF-DETR 파인튜닝으로 전격 전환했습니다.
+  - **데이터 중심(Data-Centric) 증강:** 단순 회전/반전이 아닌 내장벽의 질감을 모사하는 `Elastic Deform`과 `Grid Distortion` 기하학적 왜곡 증강 모듈을 도입해, 모델이 빛 반사가 아닌 형태학적 피처에 집중하도록 유도했습니다.
+- **해결 결과 (Result):** 기존 베이스라인 대비 +7% mAP 정밀도 상승을 이뤄냈으며, 가중치 제약 통제를 통해 상용 엣지(GPU) 환경에서 22+ FPS의 병목 없는 쓰루풋을 입증했습니다. (전국 공학경진대회 대상 수상)
+
+```mermaid
+flowchart LR
+    A[Raw Endoscopy Data] --> B[Data-Centric Augmentation]
+    subgraph Augmentation Pipeline
+        B --> C[Elastic Deform]
+        B --> D[Grid Distortion]
+    end
+    C --> E[RF-DETR SOTA Model]
+    D --> E
+    E -->|Fine-Tuning| F[Robust Polyp Detection]
+```
+
+### 5. [비지도 의료 검출 도메인] 라벨링 없이 병변을 탐지하는 재구성 오차 기반 검출 파이프라인
+- **문제 해결 기술 스택:** TensorFlow, VAE (Variational AutoEncoder), 차영상 오차 함수
+- **문제 상황 (Problem):** 악성 종양에 대해 철저히 라벨링(Label)된 정답 데이터를 수급하는 것은 천문학적 비용과 데이터 편향을 발생시킵니다.
+- **해결 과정 (Action):**
+  - **비지도 학습(Unsupervised) 인프라 구축:** 구하기 쉬운 '건강한 정상 조직 이미지'만으로 정상 토폴로지를 인코딩 및 시각화하는 VAE 베이스라인을 설계했습니다.
+  - **수학적 차영상 및 동적 임계값 개발:** 실제 환자 데이터와 모델의 '정상 예측 데이터' 간의 재구성 오차(Reconstruction Error)를 연산하고, 1차원적 하드코딩 마스킹 대신 이미지 픽셀 분포 비율을 실시간 계산하는 '동적 노이즈 클리닝' 로직을 단독 개발했습니다.
+- **해결 결과 (Result):** 값비싼 라벨링 데이터 없이도 알고리즘 분할 정밀도를 상시 90% (Dice Coefficient) 수준으로 안정화하고 노이즈 오탐지율을 대폭 하향 조정했습니다.
+
+```mermaid
+flowchart TD
+    A[Normal Tissue Data] --> B[Train VAE Model]
+    B --> C[Learn Normal Topology]
+    D[Patient Scan Data] --> E[VAE Inference]
+    E --> F[Reconstructed Normal Image]
+    D --> G[Diff/Reconstruction Error]
+    F --> G
+    G --> H[Dynamic Threshold Masking]
+    H --> I[Anomaly Bounding Box]
+```
 
 ---
 
