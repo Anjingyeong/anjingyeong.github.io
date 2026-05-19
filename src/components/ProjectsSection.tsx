@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ScrollAnimator from "./ScrollAnimator";
-import { Microscope, Eye, LineChart, ArrowUpRight, X, Server, ShieldCheck } from "lucide-react";
+import { Microscope, Eye, LineChart, ArrowUpRight, X, Server, RefreshCw } from "lucide-react";
 import Mermaid from "./Mermaid";
 
 type ProjectType = {
@@ -179,80 +179,99 @@ const projects: ProjectType[] = [
     hasAwards: false,
   },
   {
-    icon: ShieldCheck,
-    title: "[알고리즘 트레이딩 도메인] Fail-safe 기반 중복 주문 차단 및 매매 안전장치 고도화",
-    description: "불확실한 상태에서의 신규 매수를 막아 자본 손실 취약점을 해결하고, 주문 직전 방어선(Guard) 구축으로 '잘못된 주문 0건'을 보장하는 자동매매 안전 시스템 프로젝트입니다.",
+    icon: RefreshCw,
+    title: "CycleGAN 기반 CT→MRI 의료 영상 변환 모델",
+    description: "표준 CycleGAN 아키텍처를 직접 수정하여 의료 영상의 지역적 패턴 학습을 강화한 CT→MRI 변환 모델입니다. PatchGAN 적용과 Residual Block 확장으로 변환 품질을 개선하고 SSIM·PSNR로 정량 검증했습니다.",
     longDescription: (
       <div className="space-y-6 text-base text-foreground/90">
         <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div className="md:col-span-2"><strong className="text-foreground">문제 해결 기술 스택:</strong> Python, KIS Open API, PyTest, 객체 지향 상태 관리</div>
+            <div><strong className="text-foreground">기간:</strong> 학부 전공 수업 팀 프로젝트</div>
+            <div className="md:col-span-2">
+              <strong className="text-foreground">역할:</strong> 모델 아키텍처 수정 및 학습 파이프라인 구축<br />
+              <span className="text-foreground/80 mt-1 inline-block">PatchGAN Discriminator 도입과 Residual Block 확장을 주도하고, 1,100장 이상의 CT/MRI 데이터 전처리 및 학습 파이프라인 전반을 설계했습니다.</span>
+            </div>
+            <div className="md:col-span-2 mt-1"><strong className="text-foreground">기술 스택:</strong> Python, PyTorch, CycleGAN, PatchGAN, NumPy, Matplotlib</div>
           </div>
         </div>
 
         <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Problem (문제 상황)
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
           </h4>
           <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-            자동매매 시스템에서 계좌 상태 파악에 실패하거나 이전 주문이 미체결된 불확실한 상태에서 신규 매수가 발생할 경우, 자본의 막대한 손실로 이어질 수 있는 치명적인 취약점이 존재했습니다.
+            MRI는 CT보다 풍부한 연부조직 정보를 제공하지만, 비용이 높고 촬영 시간이 길어 접근성이 제한됩니다. CT 영상을 MRI로 변환하는 생성 모델을 통해 의료 비용 절감과 방사선 노출 감소 가능성을 탐색하고자 했습니다.
           </p>
         </div>
 
-        <div className="mb-6">
+        <div>
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Action (해결 과정)
+            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
+          </h4>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li><strong className="text-foreground/80">글로벌 패턴 학습의 한계:</strong> 표준 CycleGAN의 Discriminator는 이미지 전체를 단일 판별값으로 평가해, 의료 영상이 요구하는 세밀한 지역적 텍스처 변환에 취약했습니다.</li>
+            <li><strong className="text-foreground/80">모델 표현력 부족:</strong> 기본 9개의 Residual Block으로는 CT와 MRI 간의 복잡한 도메인 격차를 충분히 학습하지 못해 변환 이미지의 디테일이 흐릿했습니다.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
           </h4>
           <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong>주문 추적 Guard 배치:</strong> 단일 주문 한도와 일일 손실 한도, 그리고 동일 종목 미체결 주문 여부를 Broker API 호출 직전에 다시 확인하는 방어선을 구축했습니다.</li>
-            <li><strong>Fail-safe 우선 설계:</strong> 계좌 평가금액 조회 실패 시 신규 매수 수량을 즉시 0으로 처리하고, <code>ENABLE_REAL_TRADING</code> 플래그 누락 시 매수를 원천 차단하되 '청산 목적 매도'는 별도 허용 플래그로 분리했습니다.</li>
+            <li><strong className="text-foreground/80">PatchGAN Discriminator 적용:</strong> 이미지 전체가 아닌 N×N 패치 단위로 진위를 판별하도록 Discriminator를 교체했습니다. 모델이 전역적 구조뿐 아니라 지역적 텍스처 패턴까지 정밀하게 학습하도록 유도했습니다.</li>
+            <li><strong className="text-foreground/80">Residual Block 확장 (9→12개):</strong> Generator의 Residual Block 수를 늘려 피처 추출 및 도메인 간 매핑 능력을 강화하고, 변환 이미지의 선명도를 향상시켰습니다.</li>
+            <li><strong className="text-foreground/80">데이터 전처리 및 학습 파이프라인 구축:</strong> 1,100장 이상의 CT/MRI 쌍 데이터를 정규화·리사이징 전처리하고, 안정적인 GAN 학습을 위한 파이프라인을 직접 설계했습니다.</li>
           </ul>
         </div>
 
         <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result (해결 결과)
+            <span className="w-1.5 h-6 bg-indigo-500 rounded-full inline-block"></span> Architecture Flow
           </h4>
-          <div className="p-4 rounded-xl bg-cyan-500/5 border border-cyan-500/10 ml-4">
+          <Mermaid chart={`flowchart TD
+    classDef data fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e293b
+    classDef model fill:#fdf4ff,stroke:#d946ef,stroke-width:2px,color:#701a75
+    classDef loss fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#14532d
+
+    CT(Input CT Scan):::data --> Enc[Encoder]:::model
+    
+    subgraph Gen [Generator: CT to MRI]
+        Enc --> Res[12x Residual Blocks]:::model
+        Res --> Dec[Decoder]:::model
+    end
+    
+    Dec --> FakeMRI(Generated MRI):::data
+    RealMRI(Real MRI):::data --> Disc
+    FakeMRI --> Disc{PatchGAN<br/>Discriminator}:::model
+    
+    Disc -->|N×N Patch 판별| AdvLoss(Adversarial Loss):::loss
+    
+    style Gen fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px`} />
+        </div>
+
+        <div>
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
+          </h4>
+          <div className="p-4 rounded-xl bg-rose-500/5 border border-rose-500/10 ml-4">
             <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li>수익률 최적화 이전에 '잘못된 주문 발생 0건'을 보장하는 고도의 안전성을 확보했습니다.</li>
-              <li>실제 API 비호출 검증 및 monkeypatch 테스트로 설계의 안정성을 입증했습니다.</li>
+              <li>PatchGAN 도입 및 Residual Block 확장으로 기존 대비 <strong>Loss 감소</strong> 및 변환 이미지 품질 향상 확인</li>
+              <li><strong>SSIM·PSNR</strong> 측정을 통한 정량적 품질 검증으로 아키텍처 수정의 효과를 객관적으로 입증</li>
+              <li>CT→MRI 변환 모델을 통해 의료 비용 절감 및 방사선 노출 감소 가능성 제시</li>
             </ul>
           </div>
         </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-indigo-500 rounded-full inline-block"></span> Guard Flow
-          </h4>
-          <Mermaid chart={`flowchart TD
-    classDef node fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e293b
-    classDef error fill:#fef2f2,stroke:#ef4444,stroke-width:2px,color:#7f1d1d
-    classDef success fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#14532d
-
-    A(🚀 Order Request Trigger):::node --> B{🛡️ 1. Real Trading Flag?}:::node
-    
-    B -- Missing/False --> C(🚫 Block Buy & Allow Exit Sell Only):::error
-    B -- Enabled --> D{🛡️ 2. Check Pending Orders}:::node
-    
-    D -- Exists --> E(🚫 Block Duplicate Order):::error
-    D -- Clear --> F{🛡️ 3. Account Balance Check}:::node
-    
-    F -- API Fail/Timeout --> G(🚫 Set Buy Qty to 0):::error
-    F -- Success --> H(✅ Execute KIS API Order):::success
-    
-    subgraph Guard [Fail-safe Guard Pipeline]
-        B
-        D
-        F
-    end
-    style Guard fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px`} />
-        </div>
       </div>
     ),
-    highlights: ["Fail-safe 설계", "중복 주문 차단", "실전투자 Kill Switch"],
-    tags: ["Python", "KIS Open API", "PyTest", "Risk Control"],
-    gradient: "from-cyan-500/10 to-blue-500/10",
+    highlights: ["PatchGAN Discriminator 적용", "Residual Block 9→12 확장", "SSIM·PSNR 정량 검증"],
+    tags: ["Python", "PyTorch", "CycleGAN", "PatchGAN", "Medical Imaging"],
+    gradient: "from-rose-500/10 to-pink-500/10",
+    images: [
+      { src: "/images/ct.png", caption: "Phase 1: 학습 데이터 품질 기준 설계 — 동일 축(Axial) 뇌 단면 슬라이스만 선별하고 불량 품질·오정렬 데이터를 직접 필터링하여 1,100장 이상의 정제 데이터셋 구성" },
+      { src: "/images/loss.png", caption: "Phase 2: 학습 초기(epoch 0→2) Loss 수렴 과정 — Discriminator Loss와 Generator Loss가 안정적으로 감소하며 모델이 MRI 도메인 패턴을 학습하는 과정 시각화" },
+      { src: "/images/final.png", caption: "Phase 3: 최종 변환 결과 및 정량 평가 — SSIM 0.27~0.55, PSNR 12~15dB 측정. CycleGAN 비쌍(Unpaired) 학습 특성상 동일 슬라이스 재현보다 MRI 도메인 스타일 변환 자체를 학습하며, 아키텍처 수정(PatchGAN·Residual Block 확장)의 효과를 SSIM·PSNR로 객관적으로 검증" },
+    ],
     hasAwards: false,
   },
   {
