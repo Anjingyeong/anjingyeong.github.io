@@ -54,11 +54,11 @@ const PortfolioPrint = () => {
             </div>
           </div>
           <div className="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap gap-2 text-xs font-semibold text-slate-500">
-            <span># React</span> &middot;
-            <span># Spring Boot</span> &middot;
-            <span># PyTorch</span> &middot;
-            <span># Computer Vision</span> &middot;
-            <span># Real-Time Monitoring</span>
+            <span>React</span> &middot;
+            <span>Spring Boot</span> &middot;
+            <span>PyTorch</span> &middot;
+            <span>Computer Vision</span> &middot;
+            <span>Real-Time Monitoring</span>
           </div>
         </div>
 
@@ -82,7 +82,7 @@ const PortfolioPrint = () => {
                 <li>React, TypeScript</li>
                 <li>JavaScript, HTML/CSS</li>
                 <li>Tailwind CSS</li>
-                <li>Streamlit UI</li>
+                <li>Streamlit</li>
               </ul>
             </div>
             <div className="print-card">
@@ -100,7 +100,7 @@ const PortfolioPrint = () => {
                 <li>Python, PyTorch</li>
                 <li>TensorFlow, VAE</li>
                 <li>RF-DETR, OpenCV</li>
-                <li>Data-Centric Aug.</li>
+                <li>Data Augmentation</li>
               </ul>
             </div>
             <div className="print-card">
@@ -152,7 +152,7 @@ const PortfolioPrint = () => {
               <ul className="print-bullet-list">
                 <li>공학혁신상 (2024 창의혁신 DNA 산학협력)</li>
                 <li>금상 (2025 캡스톤디자인 경진대회)</li>
-                <li>동상 (성균관대학교 컨소시엄 창의적 종합설계 경진대회, 2025)</li>
+                <li>동상 (2025 성균관대학교 컨소시엄 창의적 종합설계 경진대회)</li>
               </ul>
             </div>
             <div>
@@ -206,7 +206,7 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Result / Outcome</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                고정 cam1~cam4 구조를 cameraLoginId 기반으로 개선하여 동적 카메라 등록 흐름에 대응했습니다.
+                고정 cam1~cam4 구조를 cameraLoginId 기반으로 개선하여 동적 카메라 등록 흐름에 대응했습니다. RTSP &rarr; AI 추론 &rarr; MQTT &rarr; Spring Boot &rarr; WebSocket으로 이어지는 이벤트 전달 흐름을 정리하고 연동 검증했습니다.
               </p>
             </div>
           </div>
