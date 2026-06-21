@@ -358,6 +358,8 @@
     print-color-adjust: exact !important;
     text-shadow: none !important;
     box-shadow: none !important;
+    transition: none !important;
+    animation: none !important;
   }
   
   /* Hide web-only elements */
@@ -378,10 +380,26 @@
   body {
     background: #ffffff !important;
     color: #0f172a !important;
-    font-size: 11pt !important;
-    line-height: 1.4 !important;
+    font-size: 8.2pt !important;
+    line-height: 1.35 !important;
   }
 
+  /* Compact section headers */
+  .section-header {
+    margin-bottom: 0.4rem !important;
+    display: block !important;
+  }
+  .section-header h2 {
+    font-size: 11pt !important;
+    font-weight: bold !important;
+    margin-bottom: 2px !important;
+  }
+  .section-header::after {
+    height: 1.5px !important;
+    width: 30px !important;
+    bottom: -2px !important;
+  }
+  
   /* Force elements that use scroll animator (fade-in-up) to be fully visible */
   .fade-in-up,
   .visible,
@@ -399,20 +417,288 @@
     margin: 0 !important;
   }
 
-  /* Prevent page breaks inside cards/entries */
+  /* Spacing adjustments for print */
+  section {
+    padding-top: 0.6rem !important;
+    padding-bottom: 0.6rem !important;
+    margin: 0 !important;
+    page-break-inside: auto;
+  }
+
+  /* Card padding reset */
   .minimal-card,
   .minimal-card-accent,
-  .competence-card,
-  li {
+  .competence-card {
+    padding: 10px !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
     page-break-inside: avoid;
     break-inside: avoid;
   }
 
-  /* Spacing adjustments for print */
-  section {
-    padding-top: 1.5rem !important;
-    padding-bottom: 1.5rem !important;
-    page-break-inside: auto;
+  /* ── 1. Hero Section ── */
+  #home {
+    min-height: 0 !important;
+    height: auto !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    background: none !important;
+  }
+  #home .grid {
+    display: grid !important;
+    grid-template-columns: 80px 1fr !important;
+    gap: 15px !important;
+    align-items: center !important;
+  }
+  #home .order-1 { order: 1 !important; }
+  #home .order-2 { order: 2 !important; }
+  #home .relative.w-48 {
+    width: 70px !important;
+    height: 70px !important;
+    margin: 0 !important;
+  }
+  #home .inline-flex { display: none !important; }
+  #home h1 {
+    font-size: 13pt !important;
+    margin-bottom: 2px !important;
+  }
+  #home p {
+    font-size: 9pt !important;
+    margin-bottom: 2px !important;
+  }
+  #home .text-base {
+    font-size: 8pt !important;
+    margin-bottom: 4px !important;
+    margin-top: 4px !important;
+  }
+  #home .flex-wrap {
+    margin-bottom: 0 !important;
+  }
+
+  /* ── 2. Projects Section (3 projects in 1 row) ── */
+  #projects .grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  #projects .icon-container {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 6px !important;
+    margin-bottom: 4px !important;
+  }
+  #projects .icon-container svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  #projects .bg-gradient-to-br {
+    padding: 10px !important;
+    background: none !important;
+  }
+  #projects .p-8 {
+    padding: 10px !important;
+    padding-top: 2px !important;
+  }
+  #projects h3 {
+    font-size: 9pt !important;
+  }
+  #projects p {
+    font-size: 7.8pt !important;
+    margin-bottom: 6px !important;
+  }
+  #projects .flex-wrap {
+    margin-bottom: 4px !important;
+    gap: 3px !important;
+  }
+  #projects .flex-wrap span {
+    font-size: 7pt !important;
+    padding: 2px 4px !important;
+  }
+  #projects .border-t {
+    padding-top: 4px !important;
+    margin-top: 4px !important;
+  }
+  #projects svg { display: none !important; } /* Hide arrow indicators */
+
+  /* ── 3. Skills Section (4 categories in 1 row) ── */
+  #skills .grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  #skills .bg-gradient-to-br {
+    padding: 10px !important;
+    background: none !important;
+  }
+  #skills .w-11 {
+    display: none !important;
+  }
+  #skills h3 {
+    font-size: 8.5pt !important;
+  }
+  #skills .p-6 {
+    padding: 10px !important;
+    padding-top: 2px !important;
+  }
+  #skills ul {
+    margin-top: 4px !important;
+  }
+  #skills li {
+    font-size: 7.8pt !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* ── 4. Experience Section (2 columns of timeline items) ── */
+  #experience [style*="border-left"] {
+    border-left: none !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  #experience .absolute {
+    display: none !important;
+  }
+  #experience .minimal-card {
+    padding: 10px !important;
+    height: 100% !important;
+  }
+  #experience h3 {
+    font-size: 8.5pt !important;
+  }
+  #experience .text-primary\/80 {
+    font-size: 7.8pt !important;
+  }
+  #experience .text-mono {
+    font-size: 7.5pt !important;
+    padding: 1px 4px !important;
+  }
+  #experience p {
+    font-size: 7.8pt !important;
+    margin-top: 2px !important;
+  }
+
+  /* ── 5. Competence Section (2x2 layout, smaller badges) ── */
+  #competence p[style*="margin-top"] {
+    display: none !important;
+  }
+  #competence .grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    margin-top: 4px !important;
+  }
+  #competence .competence-card {
+    padding: 10px !important;
+    height: 100% !important;
+  }
+  #competence img {
+    width: 40px !important;
+    height: 40px !important;
+    margin-bottom: 6px !important;
+  }
+  #competence h3 {
+    font-size: 8.5pt !important;
+  }
+  #competence p {
+    font-size: 7.8pt !important;
+  }
+  #competence .text-primary {
+    display: none !important; /* Hide view cert link */
+  }
+  #competence .mt-auto {
+    margin-top: 4px !important;
+    padding-top: 4px !important;
+  }
+
+  /* ── 6. About Section (side-by-side, no social links) ── */
+  #about .grid {
+    display: grid !important;
+    grid-template-columns: 2.2fr 1fr !important;
+    gap: 10px !important;
+  }
+  #about .minimal-card {
+    padding: 12px !important;
+  }
+  #about p {
+    font-size: 8pt !important;
+    margin-bottom: 4px !important;
+  }
+  #about .mt-8 {
+    margin-top: 6px !important;
+    padding-top: 6px !important;
+  }
+  #about h4 {
+    font-size: 8pt !important;
+    margin-bottom: 2px !important;
+  }
+  #about li {
+    font-size: 7.8pt !important;
+  }
+  #about .flex.gap-3.mt-8 {
+    display: none !important;
+  }
+  #about .space-y-5 {
+    margin-top: 0 !important;
+  }
+  #about .space-y-5 li {
+    margin-bottom: 6px !important;
+  }
+  #about .w-8 {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  #about .w-8 svg {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  /* ── 7. Contact Section (compact info card only) ── */
+  #contact {
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+  }
+  #contact .grid {
+    display: block !important;
+  }
+  #contact .md\:col-span-2 {
+    width: 100% !important;
+  }
+  #contact .minimal-card {
+    padding: 10px !important;
+    background: #f8fafc !important;
+  }
+  #contact .icon-container {
+    display: none !important;
+  }
+  #contact h3 {
+    font-size: 8.5pt !important;
+    margin-bottom: 2px !important;
+  }
+  #contact p {
+    font-size: 7.8pt !important;
+    margin-bottom: 4px !important;
+  }
+  #contact .space-y-3 {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 15px !important;
+    margin-top: 4px !important;
+  }
+  #contact .space-y-3 a {
+    margin: 0 !important;
+    font-size: 8pt !important;
+  }
+  #contact .w-9 {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  #contact .w-9 svg {
+    width: 10px !important;
+    height: 10px !important;
   }
 
   /* Avoid orphan headers */
@@ -421,4 +707,5 @@
     break-after: avoid;
   }
 }
+
 

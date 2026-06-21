@@ -320,7 +320,7 @@ const ProjectsSection = () => {
           </div>
         </ScrollAnimator>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 print:hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
           {projects.map((project, i) => (
             <ScrollAnimator key={i}>
               <div
@@ -374,50 +374,7 @@ const ProjectsSection = () => {
           ))}
         </div>
 
-        {/* Print-Only Project Details Flow (visible only when printing) */}
-        <div className="hidden print:block space-y-12 mt-12">
-          {projects.map((project, i) => (
-            <div key={i} className="page-break-before-always border-t border-border pt-8 first:border-0 first:pt-0">
-              <div className="flex items-center gap-4 mb-6">
-                <div className={`p-3 rounded-xl bg-gradient-to-br ${project.gradient}`}>
-                  <project.icon size={32} className="text-foreground" />
-                </div>
-                <h3 className="text-2xl font-bold">{project.title}</h3>
-              </div>
-              
-              {project.longDescription && (
-                <div className="mb-8 rounded-xl border border-border bg-card/50 p-6">
-                  {project.longDescription}
-                </div>
-              )}
-              
-              {project.images && project.images.length > 0 && (
-                <div className="space-y-6 mt-6">
-                  <h4 className="text-lg font-semibold flex items-center gap-2">
-                    <span className="w-1.5 h-6 bg-primary rounded-full inline-block"></span>
-                    {project.hasAwards ? "프로젝트 갤러리 및 수상 내역" : "프로젝트 갤러리"}
-                  </h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    {project.images.map((img, idx) => (
-                      <div key={idx} className="flex flex-col gap-2 page-break-inside-avoid">
-                        <div className="rounded-xl overflow-hidden border border-border bg-muted/20 p-2">
-                          <img
-                            src={img.src}
-                            alt={img.caption}
-                            className="w-full h-auto object-contain max-h-[30vh] rounded-lg"
-                          />
-                        </div>
-                        <p className="text-center text-xs text-foreground/80 font-medium">
-                          {img.caption}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+
 
         {/* Modal Overlay */}
         {selectedProject && (
