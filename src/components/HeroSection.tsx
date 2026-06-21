@@ -99,7 +99,7 @@ const HeroSection = () => {
       </div>
 
       <button
-        onClick={() => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" })}
+        onClick={() => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-primary transition-colors animate-bounce"
       >
         <ArrowDown size={20} />
