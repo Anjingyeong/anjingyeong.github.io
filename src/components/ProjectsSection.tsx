@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ScrollAnimator from "./ScrollAnimator";
-import { Microscope, Eye, LineChart, ArrowUpRight, X, Server, RefreshCw } from "lucide-react";
+import { Microscope, Eye, ArrowUpRight, X, Shield } from "lucide-react";
 import Mermaid from "./Mermaid";
 
 type ProjectType = {
@@ -19,300 +19,59 @@ type ProjectType = {
 
 const projects: ProjectType[] = [
   {
-    icon: Server,
-    title: "[티켓 에스크로 도메인] 실시간 고빈도 트랜잭션 DB I/O 80% 절감 및 동시성 제어",
-    description: "에스크로 상태 전이와 다자간 실시간 채팅이 동시다발적으로 발생하는 환경에서, STOMP 기반 메시지 브로커를 도입하여 불필요한 API Polling을 제거하고 DB I/O 부하를 80% 절감한 프로젝트입니다.",
-    longDescription: (
-      <div className="space-y-6 text-base text-foreground/90">
-        <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div className="md:col-span-2"><strong className="text-foreground">문제 해결 기술 스택:</strong> Spring Boot, WebSockets (STOMP), JPA, MySQL</div>
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Problem (문제 상황)
-          </h4>
-          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-            에스크로 상태 전이와 다자간 실시간 채팅이 동시다발적으로 발생하는 환경에서, 단순 API Polling 방식은 막대한 DB 병목과 서버 오버헤드를 유발했습니다.
-          </p>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Action (해결 과정)
-          </h4>
-          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li>TCP 연결 기반의 양방향 통신망과 Publish-Subscribe 패턴의 메시지 브로커(STOMP) 계층을 도입했습니다.</li>
-            <li>30초 지연 분산 오프로딩(Off-loading)을 설계하여 트랜잭션과 실시간 상태 전이를 효과적으로 분리했습니다.</li>
-            <li>Spring Boot와 JPA를 활용해 트랜잭션의 철저한 상태 일관성과 롤백 통제를 보장했습니다.</li>
-          </ul>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result (해결 결과)
-          </h4>
-          <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10 ml-4">
-            <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li>불필요한 서버 폴링을 제거하여 DB I/O 부하를 80% 이상 혁신적으로 절감하였습니다.</li>
-              <li>타 클라이언트의 상태 전이를 0.1초 지연 없이 브로드캐스팅해 냈습니다.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-indigo-500 rounded-full inline-block"></span> Architecture Sequence
-          </h4>
-          <Mermaid chart={`sequenceDiagram
-    autonumber
-    
-    participant Client as Client (Web/App)
-    participant Broker as STOMP Broker (WS)
-    participant Spring as Spring Boot Server
-    participant DB as MySQL (JPA)
-
-    rect rgb(241, 245, 249)
-        note right of Client: 1. TCP/WebSocket 연결 유지
-        Client->>Broker: Subscribe /topic/escrow/{id}
-    end
-    
-    rect rgb(248, 250, 252)
-        Client->>Spring: Send Transaction
-        Spring->>DB: UPDATE Escrow State
-        DB-->>Spring: Tx Commit
-        
-        note right of Spring: 2. No DB Polling, Broadcast Event
-        Spring->>Broker: Publish Event (Escrow Transferred)
-    end
-    
-    rect rgb(241, 245, 249)
-        Broker-->>Client: Broadcast State Change (Latency < 0.1s)
-        note right of Client: 3. UI 즉시 렌더링
-    end`} />
-        </div>
-      </div>
-    ),
-    highlights: ["DB I/O 80% 절감", "STOMP 브로커 연동", "지연시간 < 0.1초"],
-    tags: ["Spring Boot", "WebSockets", "JPA", "MySQL"],
-    gradient: "from-emerald-500/10 to-teal-500/10",
-    githubUrl: "https://github.com/Rookies5-MiniPj2-Team5",
-    images: [
-      { src: "https://github.com/user-attachments/assets/6bb97012-44c6-451d-9990-97fee92362c9", caption: "에스크로 기반 안전한 1:1 티켓 양도 및 거래 상태 관리" },
-      { src: "https://github.com/user-attachments/assets/56a4fab8-effd-448b-9f43-319d185d548a", caption: "WebSocket · STOMP 기반 실시간 1:1 및 그룹 채팅" }
-    ],
-    hasAwards: false,
-  },
-  {
-    icon: LineChart,
-    title: "[금융 시그널 도메인] 트래픽 스파이크 시 API 타임아웃 0% 달성을 위한 비동기 파이프라인 구축",
-    description: "동기식 스크래핑으로 인한 타겟 서버 차단과 렌더 지연을 해결하기 위해 자율 스케줄러 기반 비동기 수집 파이프라인과 Cache-lock을 적용한 프로젝트입니다.",
-    longDescription: (
-      <div className="space-y-6 text-base text-foreground/90">
-        <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div className="md:col-span-2"><strong className="text-foreground">문제 해결 기술 스택:</strong> Python, BeautifulSoup4, Streamlit (session_state)</div>
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Problem (문제 상황)
-          </h4>
-          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-            다중 접속 시 외부 금융 데이터 API에 동기식 라이브 스크래핑을 요청하면서 타겟 서버의 IP Block과 심각한 API 타임아웃이 발생했습니다. 또한, Streamlit 핫 로딩으로 사용자의 데이터가 증발하는 결함이 있었습니다.
-          </p>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Action (해결 과정)
-          </h4>
-          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong>비동기 캐싱 구조 도입:</strong> 외부 스크래핑을 유저 요청(동기)과 분리하여, 자율 스케줄러를 통한 1시간 단위 비동기 수집(DAQ)을 수행하도록 아키텍처를 뒤집었습니다.</li>
-            <li><strong>영구 세션 잠금(Cache-lock):</strong> Streamlit의 <code>session_state</code>를 활용하여 화면이 재랜더링 되더라도 사용자의 데이터 입력 상태를 영속적으로 보존했습니다.</li>
-          </ul>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result (해결 결과)
-          </h4>
-          <div className="p-4 rounded-xl bg-orange-500/5 border border-orange-500/10 ml-4">
-            <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li>트래픽 집중 시 렌더 대기 시간을 극적으로 단축시켰습니다.</li>
-              <li>DB 타임아웃 오류 발생 확률을 0%에 가깝게 완벽히 방어했습니다.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-indigo-500 rounded-full inline-block"></span> Data Flow
-          </h4>
-          <Mermaid chart={`flowchart LR
-    subgraph Background [자율 스케줄러 비동기 수집]
-        Ext(🌐 External API) -->|1. Async Request| DAQ(⏱️ DAQ Scheduler)
-        DAQ -->|2. Data Normalization| DB[(🗄️ Local DB)]
-    end
-
-    subgraph UserSession [사용자 세션 영역]
-        User(👤 User Client) -->|3. Fast Query| DB
-        User -->|4. session_state| Lock(🔒 Cache-Lock Guard)
-    end
-    
-    style Background fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px
-    style UserSession fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px`} />
-        </div>
-      </div>
-    ),
-    highlights: ["API 타임아웃 0%", "비동기 캐싱 구조", "session_state 세션 락"],
-    tags: ["Python", "Streamlit", "BeautifulSoup4"],
-    gradient: "from-amber-500/10 to-orange-500/10",
-    images: [
-      { src: "/images/lumina_survey.png", caption: "사용자 페르소나를 측정하는 다단계 자동화 투자 프로파일링" },
-      { src: "/images/lumina_chart.png", caption: "시계열 캔들스틱 분석 및 가격 시각화 엔진" }
-    ],
-    githubUrl: "https://github.com/kimgeon0802/1team_mini_PJT",
-    hasAwards: false,
-  },
-  {
-    icon: RefreshCw,
-    title: "CycleGAN 기반 CT→MRI 의료 영상 변환 모델",
-    description: "표준 CycleGAN 아키텍처를 직접 수정하여 의료 영상의 지역적 패턴 학습을 강화한 CT→MRI 변환 모델입니다. PatchGAN 적용과 Residual Block 확장으로 변환 품질을 개선하고 SSIM·PSNR로 정량 검증했습니다.",
-    longDescription: (
-      <div className="space-y-6 text-base text-foreground/90">
-        <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div><strong className="text-foreground">기간:</strong> 학부 전공 수업 팀 프로젝트</div>
-            <div className="md:col-span-2">
-              <strong className="text-foreground">역할:</strong> 모델 아키텍처 수정 및 학습 파이프라인 구축<br />
-              <span className="text-foreground/80 mt-1 inline-block">PatchGAN Discriminator 도입과 Residual Block 확장을 주도하고, 1,100장 이상의 CT/MRI 데이터 전처리 및 학습 파이프라인 전반을 설계했습니다.</span>
-            </div>
-            <div className="md:col-span-2 mt-1"><strong className="text-foreground">기술 스택:</strong> Python, PyTorch, CycleGAN, PatchGAN, NumPy, Matplotlib</div>
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Project Background
-          </h4>
-          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-            MRI는 CT보다 풍부한 연부조직 정보를 제공하지만, 비용이 높고 촬영 시간이 길어 접근성이 제한됩니다. CT 영상을 MRI로 변환하는 생성 모델을 통해 의료 비용 절감과 방사선 노출 감소 가능성을 탐색하고자 했습니다.
-          </p>
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-rose-500 rounded-full inline-block"></span> Problem
-          </h4>
-          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
-            <li><strong className="text-foreground/80">글로벌 패턴 학습의 한계:</strong> 표준 CycleGAN의 Discriminator는 이미지 전체를 단일 판별값으로 평가해, 의료 영상이 요구하는 세밀한 지역적 텍스처 변환에 취약했습니다.</li>
-            <li><strong className="text-foreground/80">모델 표현력 부족:</strong> 기본 9개의 Residual Block으로는 CT와 MRI 간의 복잡한 도메인 격차를 충분히 학습하지 못해 변환 이미지의 디테일이 흐릿했습니다.</li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Solution
-          </h4>
-          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong className="text-foreground/80">PatchGAN Discriminator 적용:</strong> 이미지 전체가 아닌 N×N 패치 단위로 진위를 판별하도록 Discriminator를 교체했습니다. 모델이 전역적 구조뿐 아니라 지역적 텍스처 패턴까지 정밀하게 학습하도록 유도했습니다.</li>
-            <li><strong className="text-foreground/80">Residual Block 확장 (9→12개):</strong> Generator의 Residual Block 수를 늘려 피처 추출 및 도메인 간 매핑 능력을 강화하고, 변환 이미지의 선명도를 향상시켰습니다.</li>
-            <li><strong className="text-foreground/80">데이터 전처리 및 학습 파이프라인 구축:</strong> 1,100장 이상의 CT/MRI 쌍 데이터를 정규화·리사이징 전처리하고, 안정적인 GAN 학습을 위한 파이프라인을 직접 설계했습니다.</li>
-          </ul>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-indigo-500 rounded-full inline-block"></span> Architecture Flow
-          </h4>
-          <Mermaid chart={`flowchart TD
-    classDef data fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e293b
-    classDef model fill:#fdf4ff,stroke:#d946ef,stroke-width:2px,color:#701a75
-    classDef loss fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#14532d
-
-    CT(Input CT Scan):::data --> Enc[Encoder]:::model
-    
-    subgraph Gen [Generator: CT to MRI]
-        Enc --> Res[12x Residual Blocks]:::model
-        Res --> Dec[Decoder]:::model
-    end
-    
-    Dec --> FakeMRI(Generated MRI):::data
-    RealMRI(Real MRI):::data --> Disc
-    FakeMRI --> Disc{PatchGAN<br/>Discriminator}:::model
-    
-    Disc -->|N×N Patch 판별| AdvLoss(Adversarial Loss):::loss
-    
-    style Gen fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px`} />
-        </div>
-
-        <div>
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
-          </h4>
-          <div className="p-4 rounded-xl bg-rose-500/5 border border-rose-500/10 ml-4">
-            <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li>PatchGAN 도입 및 Residual Block 확장으로 기존 대비 <strong>Loss 감소</strong> 및 변환 이미지 품질 향상 확인</li>
-              <li><strong>SSIM·PSNR</strong> 측정을 통한 정량적 품질 검증으로 아키텍처 수정의 효과를 객관적으로 입증</li>
-              <li>CT→MRI 변환 모델을 통해 의료 비용 절감 및 방사선 노출 감소 가능성 제시</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    ),
-    highlights: ["PatchGAN Discriminator 적용", "Residual Block 9→12 확장", "SSIM·PSNR 정량 검증"],
-    tags: ["Python", "PyTorch", "CycleGAN", "PatchGAN", "Medical Imaging"],
-    gradient: "from-rose-500/10 to-pink-500/10",
-    images: [
-      { src: "/images/ct.png", caption: "Phase 1: 학습 데이터 품질 기준 설계 — 동일 축(Axial) 뇌 단면 슬라이스만 선별하고 불량 품질·오정렬 데이터를 직접 필터링하여 1,100장 이상의 정제 데이터셋 구성" },
-      { src: "/images/loss.png", caption: "Phase 2: 학습 초기(epoch 0→2) Loss 수렴 과정 — Discriminator Loss와 Generator Loss가 안정적으로 감소하며 모델이 MRI 도메인 패턴을 학습하는 과정 시각화" },
-      { src: "/images/final.png", caption: "Phase 3: 최종 변환 결과 및 정량 평가 — SSIM 0.27~0.55, PSNR 12~15dB 측정. CycleGAN 비쌍(Unpaired) 학습 특성상 동일 슬라이스 재현보다 MRI 도메인 스타일 변환 자체를 학습하며, 아키텍처 수정(PatchGAN·Residual Block 확장)의 효과를 SSIM·PSNR로 객관적으로 검증" },
-    ],
-    hasAwards: false,
-  },
-  {
     icon: Microscope,
-    title: "[의료 엣지 비전 도메인] 조명 왜곡 환경 극복 및 mAP 7% 향상 실시간 객체 탐지 시스템",
+    title: "[의료 엣지 비전 도메인] RF-DETR 기반 실시간 대장 내 용종 검출 시스템",
     description: "내장벽의 점막 왜곡을 보완하기 위해 Data-Centric 증강(Elastic Deform)과 SOTA 아키텍처 피봇팅을 단행해 엣지 환경에서 실시간 22+ FPS를 달성한 비전 파이프라인입니다.",
     longDescription: (
       <div className="space-y-6 text-base text-foreground/90">
         <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div className="md:col-span-2"><strong className="text-foreground">문제 해결 기술 스택:</strong> PyTorch, RF-DETR, Data-Centric AI (Elastic Deform)</div>
+            <div><strong className="text-foreground">기간:</strong> 2025.03 ~ 2025.11</div>
+            <div className="md:col-span-2"><strong className="text-foreground">역할:</strong> 모델 실험, 데이터 증강 파이프라인 설계, 모델 경량화 및 추론 검증</div>
+            <div className="md:col-span-2"><strong className="text-foreground">기술 스택:</strong> Python, PyTorch, RF-DETR, DINOv2, OpenCV</div>
           </div>
         </div>
 
         <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Problem (문제 상황)
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Situation / Problem
           </h4>
-          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-            내시경 점막 표면의 동적 빛 반사와 왜곡된 물리적 현상으로 인해, 자체 구축한 퓨전 모델(CenterNet+RetinaNet)이 정확도 한계와 오버피팅에 직면했습니다.
-          </p>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Action (해결 과정)
-          </h4>
-          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong>아키텍처 피봇팅:</strong> 독자적 구조 설계에 대한 집착을 버리고, 검증된 SOTA 어텐션 기반 모델인 RF-DETR 파인튜닝으로 전격 전환했습니다.</li>
-            <li><strong>Data-Centric AI:</strong> 단순 회전/반전이 아닌, 내장벽의 질감을 모사하는 <code>Elastic Deform</code>과 <code>Grid Distortion</code> 등의 기하학적 증강 모듈을 전격 도입하여 형태학적 피처 학습을 유도했습니다.</li>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li>대장 내시경 영상은 조명 변화, 반사광, 장벽 왜곡, 병변 형태 다양성으로 인해 일반 객체 탐지 모델만으로는 용종 검출 정확도가 낮아지는 문제가 있었습니다.</li>
+            <li>실제 의료 환경 적용을 고려하면 고성능 서버가 아닌 <strong>Edge 환경</strong>에서도 실시간 추론이 가능해야 했기 때문에, 정확도와 속도를 동시에 확보해야 했습니다.</li>
           </ul>
         </div>
 
         <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result (해결 결과)
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Approach / Task
+          </h4>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li>단순히 더 큰 모델을 사용하는 방식이 아니라, 의료 영상의 비정형 왜곡은 데이터 단계에서 보완하고, Edge 제약은 모델 경량화로 해결하는 방향을 선택했습니다.</li>
+            <li><strong>PyTorch</strong>, <strong>RF-DETR</strong>, <strong>DINOv2</strong> 기반 특징 표현을 활용해 파인튜닝 실험을 수행했습니다.</li>
+          </ul>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-orange-500 rounded-full inline-block"></span> Action
+          </h4>
+          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
+            <li>내시경 시야 변화와 장벽 굴곡을 반영하기 위해 <strong>Grid Distortion</strong>, <strong>Elastic Deform</strong> 기반 기하학적 데이터 증강 파이프라인을 설계했습니다.</li>
+            <li>Edge 환경의 연산 리소스 제약을 고려해 <strong>Structural Pruning</strong>을 적용하여 불필요한 파라미터와 연산량을 줄였습니다.</li>
+            <li><strong>OpenCV</strong> 기반 후처리 및 추론 시각화 흐름을 구성해 실제 영상 입력에서 탐지 결과를 검증했습니다.</li>
+          </ul>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
           </h4>
           <div className="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 ml-4">
             <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li>기존 베이스라인 대비 +7% mAP 정밀도 상승을 이뤄냈습니다.</li>
-              <li>가중치 제약 통제를 통해 엣지 환경에서 병목 없는 22+ FPS 영상 쓰루풋을 입증했습니다. (🏆 제17회 캡스톤디자인 대상 수상)</li>
+              <li>베이스라인 대비 <strong>mAP 약 7%p 개선</strong>.</li>
+              <li>저사양 Edge 환경에서 <strong>22 FPS 이상</strong>의 실시간 추론 성능 확보.</li>
+              <li>제17회 건양대학교 캡스톤디자인 경진대회 <strong>금상</strong>, 전국 공학교육혁신 컨소시엄 창의적 종합설계 경진대회 <strong>동상</strong> 수상.</li>
             </ul>
           </div>
         </div>
@@ -346,56 +105,71 @@ const projects: ProjectType[] = [
         </div>
       </div>
     ),
-    highlights: ["mAP 7% 향상", "Data-Centric 증강", "22+ FPS 추론", "캡스톤 대상"],
+    highlights: ["mAP 약 7%p 개선", "22+ FPS 추론", "건양대 금상 수상"],
     tags: ["PyTorch", "RF-DETR", "Data-Centric AI", "Computer Vision"],
     gradient: "from-blue-500/10 to-indigo-500/10",
     videoUrl: "https://www.youtube.com/embed/n6xKcYq7bWE",
     githubUrl: "https://github.com/anjin0910-afk/RF-DETR-project",
     images: [
       { src: "/images/rf_detr_aug.png", caption: "다양한 장 내 환경 모사를 위한 Elastic Deform 및 Grid Distortion 데이터 증강 기법 적용" },
-      { src: "/images/rf_detr_gold.jpg", caption: "🏆 금상 (대상) — 제17회 건양대학교 캡스톤디자인 경진대회" }
+      { src: "/images/rf_detr_gold.jpg", caption: "🏆 금상 — 제17회 건양대학교 캡스톤디자인 경진대회" }
     ],
     hasAwards: true,
   },
   {
     icon: Eye,
-    title: "[비지도 의료 검출 도메인] 라벨링 없이 병변을 탐지하는 재구성 오차 기반 검출 파이프라인",
+    title: "[비지도 의료 검출 도메인] VAE 기반 비지도 학습 유방암 병변 검출 시스템",
     description: "라벨링 데이터 부재라는 한계를 극복하기 위해, 정상 조직 데이터 기반 VAE 설계 및 수학적 재구성 오차 동적 마스킹을 개발한 비지도 검출 시스템입니다.",
     longDescription: (
       <div className="space-y-6 text-base text-foreground/90">
         <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-            <div className="md:col-span-2"><strong className="text-foreground">문제 해결 기술 스택:</strong> TensorFlow, VAE (Variational AutoEncoder), 차영상 오차 함수</div>
+            <div><strong className="text-foreground">기간:</strong> 2024.03 ~ 2024.10</div>
+            <div className="md:col-span-2"><strong className="text-foreground">역할:</strong> 이상 탐지 파이프라인 설계, 커스텀 손실 함수 구현, 재구성 오차 기반 후처리</div>
+            <div className="md:col-span-2"><strong className="text-foreground">기술 스택:</strong> Python, TensorFlow, VAE (Variational AutoEncoder), 차영상 오차 함수</div>
           </div>
         </div>
 
         <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Problem (문제 상황)
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Situation / Problem
           </h4>
-          <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-            의료 환경에서 악성 종양에 대해 철저히 라벨링(Label)된 정답 데이터를 대량 수급하는 것은 천문학적 자본과 데이터 편향을 발생시킵니다.
-          </p>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Action (해결 과정)
-          </h4>
-          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
-            <li><strong>비지도 학습 인프라 구축:</strong> 구하기 쉬운 '건강한 정상 조직 이미지'만으로 정상 토폴로지를 인코딩 및 시각화하는 VAE 프레임워크를 설계했습니다.</li>
-            <li><strong>수학적 차영상 및 동적 임계값:</strong> 환자 데이터와 모델의 '정상 예측 결과' 간의 재구성 오차(Reconstruction Error)를 연산하고, 1차원적 하드코딩 마스킹 대신 픽셀 분포 비율을 실시간 계산하는 '동적 노이즈 클리닝' 로직을 자체 개발했습니다.</li>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li>유방 초음파 영상은 전문가가 병변 경계를 직접 주석 처리해야 하므로 라벨링 비용이 높고, 충분한 정답 데이터를 확보하기 어려웠습니다.</li>
+            <li>병변과 정상 조직의 차이가 미세해 단순 분류나 일반적인 지도학습 segmentation 방식만으로는 안정적인 병변 후보 검출에 한계가 있었습니다.</li>
           </ul>
         </div>
 
         <div className="mb-6">
           <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result (해결 결과)
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Approach / Task
+          </h4>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li>병변 라벨을 대량으로 확보하는 방식 대신, 정상 조직 분포를 먼저 학습한 뒤 정상 패턴에서 벗어나는 영역을 병변 후보로 탐지하는 <strong>비지도 이상 탐지</strong> 방식으로 문제를 재정의했습니다.</li>
+            <li><strong>TensorFlow</strong> 저수준 API를 활용해 <strong>β-VAE</strong> 기반 학습 구조를 설계했습니다.</li>
+          </ul>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-orange-500 rounded-full inline-block"></span> Action
+          </h4>
+          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
+            <li>정상 조직 영상을 잠재 공간으로 압축한 뒤 복원하는 <strong>β-VAE</strong> 학습 파이프라인을 구성했습니다.</li>
+            <li>정상 분포를 제어하는 <strong>KLD</strong> 항과 이미지 재구성 품질을 결정하는 <strong>MSE</strong> 항의 균형이 병변 검출 성능에 중요하다고 판단하여, 두 손실 항의 텐서 가중치를 조절하는 <strong>커스텀 Loss Function</strong>을 구현했습니다.</li>
+            <li>입력 이미지와 재구성 이미지의 차이를 계산해 <strong>Reconstruction Error Map</strong>을 생성했습니다.</li>
+            <li>영상별 밝기와 노이즈 편차를 보정하기 위해 <strong>Dynamic Threshold</strong> 기반 후처리 로직을 적용했습니다.</li>
+          </ul>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
           </h4>
           <div className="p-4 rounded-xl bg-violet-500/5 border border-violet-500/10 ml-4">
             <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li>값비싼 라벨링 데이터 없이도 알고리즘 분할 정밀도를 상시 90% (Dice Coefficient) 수준으로 안정화했습니다.</li>
-              <li>노이즈 오탐지율을 대폭 하향 조정하며, 비지도 의료 검출의 가능성을 입증하여 공학혁신상을 수상했습니다.</li>
+              <li>라벨이 없는 환경에서도 <strong>Dice Coefficient 약 90% 수준</strong>의 병변 분할 및 검출 성능 달성.</li>
+              <li>산업통상자원부 장관 주관 <strong>공학혁신상</strong> 수상.</li>
             </ul>
           </div>
         </div>
@@ -444,6 +218,88 @@ const projects: ProjectType[] = [
     ],
     githubUrl: "https://github.com/anjin0910-afk/vae-breast-cancer-anomaly",
     hasAwards: true,
+  },
+  {
+    icon: Shield,
+    title: "[지능형 관제 도메인] SK쉴더스 AI 기반 스마트 안전 관제 시스템",
+    description: "CCTV 실시간 스트림(RTSP)에서 AI가 이상행동을 감지하고, MQTT와 WebSocket으로 실시간 경보를 전송하는 지능형 안전 관제 시스템입니다.",
+    longDescription: (
+      <div className="space-y-6 text-base text-foreground/90">
+        <div className="bg-muted/30 p-4 rounded-xl border border-border/50">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <div><strong className="text-foreground">기간:</strong> 2026.05 ~ 2026.07 (예정)</div>
+            <div className="md:col-span-2"><strong className="text-foreground">역할:</strong> 시스템 아키텍처 통합, RTSP 기반 AI 추론 파이프라인 연동, MQTT·WebSocket 이벤트 흐름 설계, Hermes agent·Codex 기반 개발 워크플로우 개선</div>
+            <div className="md:col-span-2"><strong className="text-foreground">기술 스택:</strong> Python, FastAPI, Docker, MQTT, WebSockets, RTSP, Hermes Agent, Codex</div>
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-slate-500 rounded-full inline-block"></span> Situation / Problem
+          </h4>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li>해당 프로젝트는 <strong>RTSP</strong> 기반 CCTV 영상을 실시간으로 수신하고, AI 모델이 낙상·실신 등 이상행동을 감지하면 <strong>MQTT</strong>를 통해 백엔드로 이벤트를 전달한 뒤, 프론트엔드 대시보드와 알림 시스템에서 즉시 표시하는 구조입니다.</li>
+            <li>프론트엔드, 백엔드, AI 추론 서버, <strong>Docker</strong> 기반 실행 환경이 함께 맞물려야 했기 때문에 API 계약, 포트 구성, 실시간 이벤트 흐름, 배포 환경을 동시에 고려해야 했습니다.</li>
+            <li>5인 팀 프로젝트 특성상 반복적인 Boilerplate 코드, Dockerfile 및 Docker Compose 구성, API 연동 초안, 문서 정리에 시간이 많이 소요되어 핵심 서비스 품질 개선에 집중하기 어려운 병목이 있었습니다.</li>
+          </ul>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-blue-500 rounded-full inline-block"></span> Approach / Task
+          </h4>
+          <ul className="list-disc pl-8 space-y-2 text-muted-foreground">
+            <li>저는 팀 내에서 시스템 아키텍처와 연동 흐름을 정리하는 통합자 역할을 맡아, AI 추론 결과가 실제 서비스 이벤트로 이어지는 흐름을 구조화했습니다.</li>
+            <li><strong>Hermes agent</strong>와 <strong>Codex</strong>를 단순 코드 생성 도구가 아니라, 작업 목표와 검증 기준을 명확히 정의하는 AI 기반 개발 협업 도구로 활용했습니다.</li>
+          </ul>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-orange-500 rounded-full inline-block"></span> Action
+          </h4>
+          <ul className="list-disc pl-8 space-y-3 text-muted-foreground">
+            <li>기능 수정이나 구조 개선 작업을 요청할 때 <strong><code>/goal</code> 기반 프롬프트 구조</strong>를 사용해 작업 목표, 완료 기준, 제약 조건, 검증 명령을 명확히 정의했습니다.</li>
+            <li>AI가 생성한 코드는 그대로 반영하지 않고, <strong>RTSP 입력 흐름</strong>, <strong>MQTT 이벤트 전달 구조</strong>, <strong>WebSocket 실시간 알림 구조</strong>, API 계약, 테스트 결과와 충돌하지 않는지 검토한 뒤 적용했습니다.</li>
+            <li>반복 구현과 초기 설정은 AI 에이전트를 통해 효율화하고, 팀은 동적 카메라 등록 구조, 실시간 알림 흐름, 비동기 이벤트 처리, 배포 안정화처럼 서비스 품질에 직접 영향을 주는 핵심 아키텍처 설계에 집중할 수 있도록 했습니다.</li>
+            <li>이 과정에서 API 계약을 명확히 정리하고, 인프라 설정 병목을 줄여 프론트엔드·백엔드·AI 추론 서버 간 연동 오류를 줄이는 방향으로 개발 흐름을 개선했습니다.</li>
+          </ul>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-emerald-500 rounded-full inline-block"></span> Result
+          </h4>
+          <div className="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 ml-4">
+            <ul className="list-disc pl-4 space-y-2 text-sm leading-relaxed text-foreground/80">
+              <li>반복 구현과 초기 인프라 설정에 투입되는 시간을 줄이고, 5인 팀이 핵심 서비스 품질 개선에 집중할 수 있는 개발 흐름을 만들었습니다.</li>
+              <li><strong>RTSP → AI 추론 → MQTT 이벤트 → 백엔드 저장/브로드캐스트 → WebSocket 알림</strong>으로 이어지는 실시간 관제 파이프라인을 안정적으로 설계·검증하고 있습니다.</li>
+              <li>생성형 AI를 단순 질의응답 도구가 아니라, 요구사항 정의·검증 기준·코드 리뷰가 결합된 개발 워크플로우로 활용한 경험을 쌓고 있습니다.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <h4 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-indigo-500 rounded-full inline-block"></span> Event Flow
+          </h4>
+          <Mermaid chart={`flowchart LR
+    C(CCTV Stream - RTSP) -->|1. Real-time Frame| AI(🧠 AI Inference Server)
+    AI -->|2. Behavior Detected| MQTT(📡 MQTT Broker)
+    MQTT -->|3. Publish Event| BE(⚙️ Backend Server)
+    BE -->|4. Push Broadcast| WS(💬 WebSocket Client)
+    WS -->|5. Instant Alert| Alert(🚨 Security Dashboard)
+    
+    style AI fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style MQTT fill:#fff7ed,stroke:#ea580c,stroke-width:2px
+    style WS fill:#fdf4ff,stroke:#d946ef,stroke-width:2px`} />
+        </div>
+      </div>
+    ),
+    highlights: ["RTSP 실시간 추론", "MQTT/WebSocket 연동", "AI 에이전트 협업"],
+    tags: ["FastAPI", "Docker", "MQTT", "WebSockets", "RTSP"],
+    gradient: "from-blue-600/10 to-indigo-600/10",
+    hasAwards: false,
   }
 ];
 
