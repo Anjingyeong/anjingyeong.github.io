@@ -69,7 +69,7 @@ const PortfolioPrint = () => {
           <h2 className="print-section-title">Profile Summary</h2>
           <div className="text-slate-700 leading-relaxed text-sm">
             <p>
-              의공학 기반의 의료 AI/컴퓨터 비전 개발 경험과 React, Spring Boot 기반의 웹 풀스택 역량을 결합하여, AI 추론 모델을 실제 서비스 아키텍처에 안정적으로 매핑하고 서빙하는 풀스택 엔지니어를 지향합니다. 반복적인 개발 환경 구성을 자동화하여 핵심 비즈니스 아키텍처 병목을 해결하고 데이터 지연을 제어하는 인프라 설계에 주력합니다.
+              의공학 기반의 의료 AI/컴퓨터 비전 개발 경험과 React, Spring Boot 기반 웹 풀스택 역량을 결합해, AI 모델이 실제 서비스 화면과 백엔드 이벤트 흐름 안에서 동작하는 구조를 구현하는 개발자를 지향합니다. 실시간 데이터 흐름, API 연동, 알림 파이프라인을 안정적으로 연결하는 데 관심이 있습니다.
             </p>
           </div>
         </div>
@@ -136,7 +136,7 @@ const PortfolioPrint = () => {
                 <li>CCTV 실시간 비디오 스트림(RTSP) 수신 및 AI 이상행동 감지 이벤트 처리</li>
                 <li>FastAPI/AI 추론 결과 감지 이벤트를 MQTT 브로커를 통해 Spring Boot 백엔드로 비동기 전달</li>
                 <li>백엔드 인입 이벤트를 WebSocket을 활용해 프론트엔드 대시보드 알림으로 실시간 표출</li>
-                <li>AI 에이전트(Hermes/Codex) 프롬프트 및 검증 루프 설계로 Boilerplate 환경 구축 시간 획기적 단축</li>
+                <li>AI 에이전트(Hermes/Codex) 기반 goal 프롬프트로 작업 범위, 검증 기준, 반복 구현 흐름을 표준화</li>
               </ul>
             </div>
 
@@ -172,9 +172,9 @@ const PortfolioPrint = () => {
               </p>
               <ul className="print-bullet-list">
                 <li>정상 초음파 패턴 학습 및 입력-재구성 오차 기반 비지도 학습 이상 탐지 파이프라인 설계</li>
-                <li>정상 분포(KLD)와 재구성(MSE) 텐서 가중치 조절을 지원하는 커스텀 손실 함수(Loss) 단독 설계</li>
+                <li>KLD와 MSE 손실 항의 가중치를 조절하는 커스텀 손실 함수 구현</li>
                 <li>Reconstruction Error Map 및 픽셀 분포 실시간 조절을 위한 Dynamic Threshold 후처리 알고리즘 설계</li>
-                <li>라벨링 데이터가 부족한 환경에서 Dice Coefficient 약 90% 수준의 검출 정밀도 달성 및 공학혁신상 수상</li>
+                <li>라벨링 데이터가 부족한 환경에서 Dice Coefficient 약 90% 수준의 병변 분할 및 검출 성능 달성 및 공학혁신상 수상</li>
               </ul>
             </div>
           </div>
@@ -264,7 +264,7 @@ const PortfolioPrint = () => {
               <h3 className="text-xs font-bold text-slate-800">건양대학교 (Konyang University)</h3>
               <p className="text-[7.8pt] text-slate-500 font-semibold">의공학 학사 (Biomedical Engineering | Bachelor's Degree)</p>
             </div>
-            <span className="text-xs text-slate-500 font-mono">2026년 졸업 예정</span>
+            <span className="text-xs text-slate-500 font-mono">2026년 졸업</span>
           </div>
         </div>
 
@@ -275,7 +275,7 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-xs font-bold text-slate-800 mb-1">Awards (수상 내역)</h4>
               <ul className="print-bullet-list">
-                <li>공학혁신상 (산업통상자원부 장관 주관 / 2024 창의혁신 DNA 산학협력, 2024)</li>
+                <li>공학혁신상 (2024 창의혁신 DNA 산학협력)</li>
                 <li>금상 (2025 캡스톤디자인 경진대회, 2025)</li>
                 <li>동상 (성균관대학교 컨소시엄 창의적 종합설계 경진대회, 2025)</li>
               </ul>
@@ -283,9 +283,9 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-xs font-bold text-slate-800 mb-1">Certifications (역량 인증)</h4>
               <ul className="print-bullet-list">
-                <li>의공학 전문 실무역량 (ABEEK 공학인증 우수, 2023)</li>
-                <li>우수 소프트웨어 활용역량 (건양대학교 의공학심화 인증, 2023)</li>
-                <li>정보처리기사 (필기 합격, 한국산업인력공단)</li>
+                <li>의공학 전문 실무역량 (ABEEK 공학인증 우수)</li>
+                <li>우수 소프트웨어 활용역량 (건양대학교 의공학심화 인증)</li>
+                <li>정보처리기사 필기 합격</li>
               </ul>
             </div>
           </div>
