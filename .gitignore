@@ -30,3 +30,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Temporary developer scripts & drafts
+cover_letter_draft.txt
+vms_holdings_portfolio.md
+vms_holdings_portfolio_clean.txt
+vms_holdings_portfolio_v2.md
+fix_projects.py
+fix_projects.js
+fix_projects.cjs
+update_projects.py
+reorder.py
+test.js
