@@ -66,7 +66,7 @@ const Header = () => {
             </button>
           ))}
           <a
-            href="/print"
+            href="/#/print"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 px-3 py-1.5 rounded-full transition-colors"
@@ -93,7 +93,7 @@ const Header = () => {
             </button>
           ))}
           <a
-            href="/print"
+            href="/#/print"
             target="_blank"
             rel="noopener noreferrer"
             className="text-center text-sm font-semibold text-primary bg-primary/10 py-2 rounded-xl mt-2"
