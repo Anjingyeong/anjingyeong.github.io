@@ -28,7 +28,7 @@ const PortfolioPrint = () => {
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-                안진경 <span className="text-slate-400 font-normal">| Jin Kyoung Ahn</span>
+                안진경 <span className="text-slate-400 font-normal">| An Jin Gyeong</span>
               </h1>
               <p className="text-sky-600 font-semibold text-sm mt-1 uppercase tracking-wide">
                 Full-Stack & AI Application Developer
@@ -208,13 +208,13 @@ const PortfolioPrint = () => {
               <div>
                 <h4 className="text-xs font-bold text-sky-600 mb-1">1) Problem (문제 상황)</h4>
                 <p className="text-[8.2pt] text-slate-700 leading-relaxed">
-                  CCTV 실시간 영상 스트림(RTSP) 데이터를 실시간 분석하고 이벤트를 유실 없이 표출해야 했습니다. 다중 컨테이너 및 비동기 이벤트 스트림 흐름에서 발생하는 셋업 병목 및 통신 연동 지연 문제가 존재했습니다.
+                  CCTV 실시간 영상 스트림(RTSP) 데이터를 분석하고, 감지 이벤트를 안정적으로 표출해야 했습니다. 다중 컨테이너 및 비동기 이벤트 스트림 흐름에서 발생하는 셋업 병목 및 통신 연동 지연 문제가 존재했습니다.
                 </p>
               </div>
               <div>
                 <h4 className="text-xs font-bold text-sky-600 mb-1">2) Role (수행 역할)</h4>
                 <p className="text-[8.2pt] text-slate-700 leading-relaxed">
-                  시스템 아키텍처 통합 설계 및 RTSP 영상 AI 추론 결과 전송 파이프라인 연동을 담당했습니다. 백엔드와 프론트엔드를 연결하는 MQTT 브로커 수신 및 WebSocket 실시간 알림 파이프라인 흐름을 설계했습니다.
+                  RTSP 영상 AI 추론 결과 전송 파이프라인 연동과 백엔드/프론트엔드 실시간 알림 흐름 정리를 담당했습니다. MQTT 브로커 수신 및 WebSocket 기반 알림 전달 흐름을 연결했습니다.
                 </p>
               </div>
             </div>
@@ -250,7 +250,7 @@ const PortfolioPrint = () => {
               </div>
               <p className="text-[7.8pt] text-sky-600 font-semibold mb-1">SK쉴더스 / AI Application Trainee</p>
               <p className="text-[8pt] text-slate-700 leading-relaxed">
-                AI 기반 스마트 애플리케이션 설계 및 산학협력 프로젝트를 진행 중입니다. 지능형 시스템 설계, 보안 관점이 적용된 아키텍처 수립, RTSP/MQTT 연계 실시간 관제 시스템 파이프라인 개발 등 백엔드와 풀스택 실무 역량을 함양하고 있습니다.
+                AI 기반 스마트 애플리케이션 설계 및 산학협력 프로젝트를 진행 중입니다. 지능형 시스템 설계, RTSP/MQTT 연계 실시간 관제 시스템 파이프라인 개발, 백엔드와 프론트엔드 연동 경험을 쌓고 있습니다.
               </p>
             </div>
           </div>

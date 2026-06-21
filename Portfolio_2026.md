@@ -1,4 +1,4 @@
-# 안진경 (Jin Kyoung Ahn)
+# 안진경 (An Jin Gyeong)
 **Data-Driven Full-Stack Engineer**
 📧 Email: anjin0910@gmail.com | 🐙 GitHub: [github.com/Anjingyeong](https://github.com/Anjingyeong)
 

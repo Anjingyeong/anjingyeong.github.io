@@ -1,4 +1,4 @@
-# 안진경 (Jin Kyoung Ahn) | Developer Portfolio
+# 안진경 (An Jin Gyeong) | Developer Portfolio
 
 React, TypeScript, Tailwind CSS 기반 개인 개발 포트폴리오 웹사이트입니다.
 

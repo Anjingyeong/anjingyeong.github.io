@@ -1,4 +1,4 @@
-# 안진경 (Jin Kyoung Ahn)
+# 안진경 (An Jin Gyeong)
 
 **Backend / Full-Stack Developer | AI 경험을 가진 주니어 개발자**
 
