@@ -349,3 +349,76 @@
     transform: scale(1) translateY(0);
   }
 }
+
+/* ── Print Styles (PDF Export) ────────────────────────────────────────────── */
+@media print {
+  /* Reset background and text rendering */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Hide web-only elements */
+  header,
+  footer,
+  .minimal-btn,
+  .minimal-btn-primary,
+  .minimal-btn-secondary,
+  .cert-modal-panel,
+  .float-decoration,
+  .section-divider,
+  button,
+  form,
+  .print\:hidden {
+    display: none !important;
+  }
+  
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Force elements that use scroll animator (fade-in-up) to be fully visible */
+  .fade-in-up,
+  .visible,
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  /* Layout adjustments for A4 print */
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Prevent page breaks inside cards/entries */
+  .minimal-card,
+  .minimal-card-accent,
+  .competence-card,
+  li {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Spacing adjustments for print */
+  section {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    page-break-inside: auto;
+  }
+
+  /* Avoid orphan headers */
+  h1, h2, h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+}
+
