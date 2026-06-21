@@ -109,7 +109,7 @@ const projects: ProjectType[] = [
     tags: ["PyTorch", "RF-DETR", "Data-Centric AI", "Computer Vision"],
     gradient: "from-blue-500/10 to-indigo-500/10",
     videoUrl: "https://www.youtube.com/embed/n6xKcYq7bWE",
-    githubUrl: "https://github.com/anjingyeong/RF-DETR-project",
+    githubUrl: "https://github.com/Anjingyeong/RF-DETR-project",
     images: [
       { src: "/images/rf_detr_aug.png", caption: "다양한 장 내 환경 모사를 위한 Elastic Deform 및 Grid Distortion 데이터 증강 기법 적용" },
       { src: "/images/rf_detr_gold.jpg", caption: "🏆 금상 — 제17회 건양대학교 캡스톤디자인 경진대회" }
@@ -216,7 +216,7 @@ const projects: ProjectType[] = [
       { src: "/images/vae_result.png", caption: "최종 바운딩 박스 생성 및 수치적 신뢰도 스코어링" },
       { src: "/images/vae_award.jpg", caption: "🏆 공학혁신상 (창의혁신 DNA 산학협력 우수사례)" }
     ],
-    githubUrl: "https://github.com/anjingyeong/vae-breast-cancer-anomaly",
+    githubUrl: "https://github.com/Anjingyeong/vae-breast-cancer-anomaly",
     hasAwards: true,
   },
   {

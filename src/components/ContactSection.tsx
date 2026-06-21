@@ -3,9 +3,9 @@ import emailjs from "@emailjs/browser";
 import ScrollAnimator from "./ScrollAnimator";
 import { Github, Mail, MessageCircle, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
-const EMAILJS_SERVICE_ID = "service_fzjt1eh";
-const EMAILJS_TEMPLATE_ID = "template_28s6apn";
-const EMAILJS_PUBLIC_KEY = "JkKEzpqeLoBpr4VBY";
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 
@@ -25,6 +25,13 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formRef.current) return;
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      console.warn("EmailJS credentials are not configured. Please set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY in your environment variables.");
+      setStatus("error");
+      alert("이메일 전송 구성이 필요합니다. 환경변수 설정을 완료해 주세요.");
+      return;
+    }
 
     setStatus("sending");
 
@@ -166,7 +173,7 @@ const ContactSection = () => {
                     anjin0910@gmail.com
                   </a>
                   <a
-                    href="https://github.com/anjingyeong"
+                    href="https://github.com/Anjingyeong"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
@@ -174,7 +181,7 @@ const ContactSection = () => {
                     <div className="w-9 h-9 rounded-lg bg-primary/8 flex items-center justify-center flex-shrink-0">
                       <Github size={16} className="text-primary" />
                     </div>
-                    github.com/anjingyeong
+                    github.com/Anjingyeong
                   </a>
                 </div>
               </div>

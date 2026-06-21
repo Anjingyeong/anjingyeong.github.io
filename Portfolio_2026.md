@@ -1,6 +1,6 @@
 # 안진경 (Jin Kyoung Ahn)
 **Data-Driven Full-Stack Engineer**
-📧 Email: anjin0910@gmail.com | 🐙 GitHub: [github.com/anjingyeong](https://github.com/anjingyeong)
+📧 Email: anjin0910@gmail.com | 🐙 GitHub: [github.com/Anjingyeong](https://github.com/Anjingyeong)
 
 ---
 

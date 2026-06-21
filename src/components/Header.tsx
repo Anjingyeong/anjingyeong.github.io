@@ -3,11 +3,12 @@ import { Menu, X } from "lucide-react";
 
 const navItems = [
   { label: "01. 홈", href: "#home" },
-  { label: "02. 소개", href: "#about" },
-  { label: "03. 프로젝트", href: "#projects" },
-  { label: "04. 기술", href: "#skills" },
-  { label: "05. 경력", href: "#experience" },
-  { label: "06. 연락", href: "#contact" },
+  { label: "02. 프로젝트", href: "#projects" },
+  { label: "03. 기술", href: "#skills" },
+  { label: "04. 경력", href: "#experience" },
+  { label: "05. 인증", href: "#competence" },
+  { label: "06. 소개", href: "#about" },
+  { label: "07. 연락", href: "#contact" },
 ];
 
 const Header = () => {

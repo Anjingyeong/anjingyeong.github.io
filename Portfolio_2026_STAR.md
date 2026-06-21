@@ -3,7 +3,7 @@
 **Backend / Full-Stack Developer | AI 경험을 가진 주니어 개발자**
 
 - Email: anjin0910@gmail.com
-- GitHub: https://github.com/anjingyeong
+- GitHub: https://github.com/Anjingyeong
 - Portfolio: https://anjingyeong.github.io/
 
 ---

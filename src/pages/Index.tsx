@@ -16,11 +16,11 @@ const Index = () => {
       <main className="relative z-10">
         <HeroSection />
         <div className="section-divider" />
-        <AboutSection />
-        <CompetenceSection />
         <ProjectsSection />
         <SkillsSection />
         <ExperienceSection />
+        <CompetenceSection />
+        <AboutSection />
         <ContactSection />
       </main>
       <footer className="relative z-10 border-t border-border py-8 text-center text-xs text-muted-foreground" style={{ background: "var(--gradient-hero)" }}>
