@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, Github, Globe, Linkedin, ExternalLink } from "lucide-react";
+import { Mail, Github, Globe } from "lucide-react";
 import "@/styles/print.css";
 
 const PortfolioPrint = () => {
@@ -51,10 +51,6 @@ const PortfolioPrint = () => {
                 <a href="https://anjingyeong.github.io" target="_blank" rel="noopener noreferrer">
                   anjingyeong.github.io
                 </a>
-              </div>
-              <div className="flex items-center justify-end gap-1.5 text-xs">
-                <Linkedin size={12} className="text-sky-600" />
-                <span className="text-slate-500">linkedin.com</span>
               </div>
             </div>
           </div>
@@ -159,7 +155,7 @@ const PortfolioPrint = () => {
                 <li>대장 내장벽 점막 왜곡 보정을 위한 Grid Distortion, Elastic Deform 기반 기하학적 데이터 증강 적용</li>
                 <li>Edge GPU 연산 제약 극복을 위한 Structural Pruning 모델 경량화 도입</li>
                 <li>베이스라인 모델 대비 평균 검출 정밀도(mAP) 약 7%p 개선 및 저사양 Edge GPU 22+ FPS 확보</li>
-                <li>건양대학교 캡스톤디자인 금상/대상 및 전국 공학교육혁신 컨소시엄 종합설계 경진대회 동상 수상</li>
+                <li>2025 캡스톤디자인 경진대회 금상 및 성균관대학교 컨소시엄 창의적 종합설계 경진대회 동상 수상</li>
               </ul>
             </div>
 
@@ -178,7 +174,7 @@ const PortfolioPrint = () => {
                 <li>정상 초음파 패턴 학습 및 입력-재구성 오차 기반 비지도 학습 이상 탐지 파이프라인 설계</li>
                 <li>정상 분포(KLD)와 재구성(MSE) 텐서 가중치 조절을 지원하는 커스텀 손실 함수(Loss) 단독 설계</li>
                 <li>Reconstruction Error Map 및 픽셀 분포 실시간 조절을 위한 Dynamic Threshold 후처리 알고리즘 설계</li>
-                <li>라벨링 데이터가 부족한 환경에서 Dice Coefficient 약 90% 수준의 검출 정밀도 달성 및 장관상 수상</li>
+                <li>라벨링 데이터가 부족한 환경에서 Dice Coefficient 약 90% 수준의 검출 정밀도 달성 및 공학혁신상 수상</li>
               </ul>
             </div>
           </div>
@@ -230,23 +226,13 @@ const PortfolioPrint = () => {
               </div>
             </div>
 
-            <div className="print-grid-2 gap-4">
-              <div>
-                <h4 className="text-xs font-bold text-sky-600 mb-1">4) Technical Contribution (핵심 기술 기여)</h4>
-                <ul className="print-bullet-list">
-                  <li><strong>동적 카메라 등록 구조 개선:</strong> 고정 4채널 구조(cam1~cam4)에서 확장 가능한 `cameraLoginId` 식별자 매핑 구조로 아키텍처 전면 개선</li>
-                  <li><strong>비동기 이벤트 파이프라인 구현:</strong> RTSP 프레임 캡처, MQTT 감지 푸시, WebSocket 실시간 브로드캐스팅 데이터 지연 제어</li>
-                  <li><strong>AI 개발 워크플로우 가속:</strong> Hermes Agent/Codex 기반의 Goal 프롬프트 표준 설계를 활용해 환경 셋업 시간을 대폭 감축하고 비즈니스 아키텍처 성능 개선에 리소스 집중</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-sky-600 mb-1">5) Result & Outcome (결과 및 성과)</h4>
-                <ul className="print-bullet-list">
-                  <li>RTSP &rarr; AI &rarr; MQTT &rarr; Spring Boot &rarr; WebSocket으로 이어지는 지연 시간 최소화 기반 실시간 관제 이벤트 스트림 안정화 설계 검증 완료</li>
-                  <li>다중 가상화 컨테이너 통합으로 유기적인 데이터 셋업 보장</li>
-                  <li>생성형 AI를 보일러플레이트 자동화 및 코드 리뷰 단계에 유연하게 활용하는 최신 협업 프로세스 성공적 도입</li>
-                </ul>
-              </div>
+            <div>
+              <h4 className="text-xs font-bold text-sky-600 mb-1">4) Technical Contribution & Results (주요 기여 및 검증 결과)</h4>
+              <ul className="print-bullet-list">
+                <li>RTSP &rarr; AI 추론 &rarr; MQTT &rarr; Spring Boot &rarr; WebSocket으로 이어지는 실시간 이벤트 전달 흐름 정리 및 연동 검증</li>
+                <li>고정 cam1~cam4 구조를 cameraLoginId 기반 구조로 개선하여 동적 카메라 등록 흐름에 대응</li>
+                <li>Codex/Hermes 기반 goal 프롬프트를 활용해 작업 범위, 검증 명령, 제약 조건을 표준화</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -289,9 +275,9 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-xs font-bold text-slate-800 mb-1">Awards (수상 내역)</h4>
               <ul className="print-bullet-list">
-                <li>공학혁신상 (산업통상자원부 장관 주관, 2023) - VAE 병변 검출</li>
-                <li>대상/금상 (제17회 건양대 캡스톤디자인 경진대회, 2023) - RF-DETR 검출</li>
-                <li>동상 (전국 공학교육혁신 컨소시엄 설계 경진대회, 2023) - RF-DETR 검출</li>
+                <li>공학혁신상 (산업통상자원부 장관 주관 / 2024 창의혁신 DNA 산학협력, 2024)</li>
+                <li>금상 (2025 캡스톤디자인 경진대회, 2025)</li>
+                <li>동상 (성균관대학교 컨소시엄 창의적 종합설계 경진대회, 2025)</li>
               </ul>
             </div>
             <div>
