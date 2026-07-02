@@ -1,0 +1,1 @@
+﻿PASS: Markdown fences balanced and no secret-like assignments found

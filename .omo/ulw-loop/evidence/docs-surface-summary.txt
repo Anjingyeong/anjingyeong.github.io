@@ -1,0 +1,11 @@
+﻿
+File                                  Lines H1                                         
+----                                  ----- --                                         
+portfolio-summary-2026-ai-engineer.md    88 # 2026 AI Engineer Portfolio Summary       
+smart-safety-ai-case-study.md           125 # Smart Safety AI Case Study               
+llm-wiki-rag-case-study.md               97 # LLM Wiki / Evidence Wiki / RAG Case Study
+project-star-rn-stories.md              106 # Project STAR-RN Stories                  
+project-selection-matrix.md              68 # Project Selection Matrix                 
+
+
+
