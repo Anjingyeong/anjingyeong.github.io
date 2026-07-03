@@ -1,0 +1,327 @@
+﻿import type { ElementType } from "react";
+import { BarChart2, Brain, Microscope, Search, Shield, Zap } from "lucide-react";
+
+export type ProjectBadge = "Main" | "Supporting";
+
+export type ProjectDetail = {
+  readonly title: string;
+  readonly body?: string;
+  readonly items?: readonly string[];
+  readonly diagram?: string;
+  readonly image?: string;
+  readonly imageAlt?: string;
+};
+
+export type Project = {
+  readonly icon: ElementType;
+  readonly badge: ProjectBadge;
+  readonly title: string;
+  readonly description: string;
+  readonly highlights: readonly string[];
+  readonly tags: readonly string[];
+  readonly gradient: string;
+  readonly githubUrl?: string;
+  readonly details: readonly ProjectDetail[];
+};
+
+export const projects: readonly Project[] = [
+  {
+    icon: Shield,
+    badge: "Main",
+    title: "스마트 안전 관제 시스템",
+    description:
+      "CCTV 관제 상황에서 낙상·위험 행동을 빠르게 포착하고, 이벤트 증거와 알림 흐름을 대시보드까지 연결하는 AI 관제 보조 시스템입니다.",
+    highlights: ["대표 프로젝트", "실시간 영상 AI", "이벤트 증거 설계"],
+    tags: ["Computer Vision", "YOLO Pose", "LSTM", "MQTT", "WebSocket", "React"],
+    gradient: "from-rose-500/10 to-orange-500/10",
+    details: [
+      {
+        title: "한 줄 소개",
+        body: "영상 AI 탐지 결과가 운영자가 판단할 수 있는 알림과 증거로 이어지도록, 모델 추론과 이벤트 전달 구조를 함께 설계한 프로젝트입니다.",
+      },
+      {
+        title: "문제 배경",
+        body: "CCTV를 사람이 계속 지켜보는 방식은 사고 순간을 놓치기 쉽고, 단순 탐지 결과만으로는 관제자가 왜 알림이 발생했는지 확인하기 어렵습니다.",
+      },
+      {
+        title: "아키텍처 파이프라인",
+        diagram: `flowchart LR
+    CCTV[CCTV / RTSP Stream] --> AI[AI Inference Server]
+    AI --> Pose[YOLO Pose Keypoints]
+    Pose --> Seq[LSTM Behavior Classifier]
+    Seq --> Event[Event Metadata]
+    Event --> MQTT[MQTT Broker]
+    MQTT --> Backend[Backend Event API]
+    Backend --> WS[WebSocket Broadcast]
+    WS --> Dashboard[Monitoring Dashboard]
+    Event --> Evidence[frameId / timestamp / evidence chain]`,
+      },
+      {
+        title: "주요 역할",
+        items: [
+          "실시간 영상 입력, AI 추론, 이벤트 발행, 대시보드 알림으로 이어지는 전체 흐름을 정리했습니다.",
+          "탐지 결과가 frameId와 timestamp 같은 증거 단서와 함께 전달되도록 데이터 흐름을 설계했습니다.",
+          "오탐과 미탐을 줄이기 위한 threshold, tracker 상태, hard negative 분석 방향을 문서화했습니다.",
+        ],
+      },
+      {
+        title: "기술 접근",
+        items: [
+          "YOLO Pose 기반 자세 추정과 시계열 판단 모델을 조합하는 구조를 중심으로 실험 방향을 잡았습니다.",
+          "MQTT와 WebSocket을 이용해 추론 이벤트가 관제 화면까지 지연 없이 전달되는 흐름을 설계했습니다.",
+          "AI 모델 성능뿐 아니라 알림의 근거, 재현 가능한 로그, 운영 안정성을 함께 고려했습니다.",
+        ],
+      },
+      {
+        title: "결과와 개선점",
+        body: "프로젝트의 핵심 가치는 모델 하나를 만드는 데 그치지 않고, 실시간 관제 환경에서 AI 판단이 화면·알림·증거 흐름으로 연결되는 구조를 제시한 점입니다. 세부 성능 지표는 Git 기록과 실험 로그 확인 후 보강할 예정입니다.",
+      },
+      {
+        title: "배운 점",
+        body: "실시간 AI 서비스에서는 정확도만큼 이벤트 동기화, 설명 가능한 증거, 운영자가 신뢰할 수 있는 알림 흐름이 중요하다는 점을 배웠습니다.",
+      },
+    ],
+  },
+  {
+    icon: Brain,
+    badge: "Main",
+    title: "LLM Wiki · RAG 기반 프로젝트 지식 시스템",
+    description:
+      "실험 기록, 오류 해결, 의사결정 근거를 검색 가능한 지식 자산으로 정리해 포트폴리오와 면접 답변의 근거로 활용하는 RAG 프로젝트입니다.",
+    highlights: ["보조 대표 프로젝트", "Evidence Wiki", "RAG 설계"],
+    tags: ["RAG", "Vector Search", "BM25", "Hybrid Search", "Python", "Knowledge Management"],
+    gradient: "from-violet-500/10 to-fuchsia-500/10",
+    details: [
+      {
+        title: "한 줄 소개",
+        body: "프로젝트 과정에서 생기는 실험 기록과 문제 해결 과정을 나중에 다시 찾을 수 있는 Evidence Wiki로 정리하고, RAG 검색 구조와 연결한 지식 관리 프로젝트입니다.",
+      },
+      {
+        title: "문제 배경",
+        body: "AI 프로젝트는 최종 코드만으로 설명하기 어렵습니다. 모델 선택 이유, 실패한 실험, 오류 해결 기록이 흩어지면 포트폴리오나 면접에서 근거 있게 설명하기가 어려워집니다.",
+      },
+      {
+        title: "지식 파이프라인 아키텍처",
+        diagram: `flowchart TD
+    Raw[Raw Notes / Screenshots / Logs] --> Normalize[Document Normalization]
+    Normalize --> Meta[Metadata: project / status / source / date]
+    Meta --> Index[Search Index]
+    Index --> RAG[RAG Portfolio Assistant]
+    RAG --> Answer[Answer with Sources]
+    Answer --> Portfolio[Portfolio / Interview Stories]`,
+      },
+      {
+        title: "주요 역할",
+        items: [
+          "프로젝트별 기록을 source, 날짜, 의사결정 근거와 함께 남기는 문서 구조를 설계했습니다.",
+          "키워드 검색과 벡터 검색을 함께 고려한 하이브리드 검색 구조를 정리했습니다.",
+          "답변이 단순 요약에 머물지 않고 출처와 연결되도록 RAG 활용 방식을 설계했습니다.",
+        ],
+      },
+      {
+        title: "기술 접근",
+        items: [
+          "실험 기록, 오류 해결, 회고를 문서 단위로 정규화해 검색 가능한 단위로 분리했습니다.",
+          "BM25와 Vector Search를 함께 사용하는 검색 흐름을 설계하고, 재랭킹과 GraphRAG는 고도화 방향으로 정리했습니다.",
+          "포트폴리오 문서와 이력서 문장을 작성할 때 근거 자료로 다시 참조할 수 있도록 구성했습니다.",
+        ],
+      },
+      {
+        title: "결과와 개선점",
+        body: "흩어진 프로젝트 기록을 면접 답변과 포트폴리오 문장의 근거 자산으로 전환했습니다. 이후에는 실제 검색 품질 평가와 답변 근거 추적 로그를 더 촘촘히 보강할 수 있습니다.",
+      },
+      {
+        title: "배운 점",
+        body: "AI Engineer 포트폴리오에서는 결과물뿐 아니라 실험 근거와 의사결정 기록을 관리하는 능력도 중요한 경쟁력이 된다는 점을 확인했습니다.",
+      },
+    ],
+  },
+  {
+    icon: Search,
+    badge: "Supporting",
+    title: "LLM Wiki Hybrid RAG 검색 고도화",
+    description:
+      "LLM Wiki 문서 검색 시스템을 단순 Vector Search에서 Metadata Filtering, BM25, Vector Search, RRF 기반 Hybrid RAG 구조로 고도화했습니다. 정확한 코드 식별자와 운영 키워드 검색을 보완하고, LLM context에 문서 출처와 섹션 정보를 포함해 답변 근거 추적성을 높였습니다.",
+    highlights: ["Hybrid RAG", "Metadata Filtering", "RRF", "Cloudflare Workers"],
+    tags: ["RAG", "Vector Search", "BM25", "TypeScript", "Cloudflare", "LLM"],
+    gradient: "from-sky-500/10 to-blue-500/10",
+    details: [
+      {
+        title: "문제 배경",
+        body: "프로젝트 문서가 증가하면서 단순 벡터 검색만으로는 cameraLoginId, frameId, MQTT, YOLO26n 같은 정확한 코드 식별자와 운영 키워드를 안정적으로 찾기 어려운 문제가 있었습니다.",
+      },
+      {
+        title: "개선 방향",
+        body: "이를 해결하기 위해 LLM Wiki 문서 검색 구조를 Metadata Filtering, BM25 Keyword Search, Vector Search, RRF 기반 결과 병합 구조로 고도화했습니다.",
+      },
+      {
+        title: "Hybrid Search 파이프라인",
+        diagram: `flowchart LR
+    Query[Search Query] --> MetaFilter[Metadata Filtering]
+    MetaFilter --> BM25[BM25 Keyword Search]
+    MetaFilter --> Vector[Vector Search]
+    BM25 --> RRF[RRF Reciprocal Rank Fusion]
+    Vector --> RRF
+    RRF --> Context[LLM Context with Title / Category / Section]`,
+      },
+      {
+        title: "구현 내용",
+        items: [
+          "문서별 title, category, updatedAt, summary, tags, order, sourcePath, sectionTitle metadata를 RAG chunk에 포함해 검색 결과의 출처와 문맥을 추적할 수 있도록 개선했습니다.",
+          "최종 LLM context에 문서 제목, 카테고리, 섹션, 수정일, source path, 본문 chunk를 함께 전달해 답변 근거 확인이 가능하도록 구성했습니다.",
+          "GraphRAG나 Elasticsearch 같은 무거운 인프라 없이 기존 Cloudflare Pages/Workers 기반 정적 배포 구조와 호환되는 lightweight Hybrid RAG 구조로 구현했습니다.",
+        ],
+      },
+      {
+        title: "검증 결과",
+        body: "npm test, npm run lint, npm run build, 샘플 질의 검색 검증, HTTP /api/rag/ask QA를 통해 동작을 검증했습니다.",
+      },
+    ],
+  },
+  {
+    icon: Microscope,
+    badge: "Supporting",
+    title: "RF-DETR 기반 대장 내 용종 검출",
+    description:
+      "대장 내시경 영상의 왜곡과 조명 변화를 데이터 증강으로 보완하고, RF-DETR 기반 탐지 모델을 경량화 관점에서 개선한 의료 비전 프로젝트입니다.",
+    highlights: ["mAP 개선", "22+ FPS", "의료 영상 증강"],
+    tags: ["PyTorch", "RF-DETR", "DINOv2", "OpenCV", "Structural Pruning"],
+    gradient: "from-blue-500/10 to-indigo-500/10",
+    githubUrl: "https://github.com/Anjingyeong/RF-DETR-project",
+    details: [
+      {
+        title: "프로젝트 소개",
+        body: "대장 내시경 영상에서 용종 후보를 빠르게 찾기 위해 RF-DETR 기반 객체 탐지 모델을 학습하고, 의료 영상 특성에 맞는 데이터 증강과 추론 속도 개선을 적용했습니다.",
+      },
+      {
+        title: "파이프라인 아키텍처",
+        diagram: `flowchart LR
+    A[Raw Endoscopy Data] --> B[Data-Centric Augmentation]
+    subgraph Augmentation Pipeline
+        B --> C[Elastic Deform]
+        B --> D[Grid Distortion]
+    end
+    C --> E[RF-DETR SOTA Model]
+    D --> E
+    E -->|Fine-Tuning| F[Robust Polyp Detection]`,
+      },
+      {
+        title: "데이터 증강 실험 결과",
+        image: "/images/rf_detr_aug.png",
+        imageAlt: "RF-DETR 데이터 증강 파이프라인 시각화",
+      },
+      {
+        title: "주요 작업",
+        items: [
+          "Grid Distortion과 Elastic Deform으로 내시경 영상의 왜곡 패턴을 학습 데이터에 반영했습니다.",
+          "Structural Pruning을 적용해 저사양 환경에서도 추론 속도를 확보하는 방향으로 개선했습니다.",
+          "OpenCV 기반 후처리와 시각화로 탐지 결과를 반복 검증했습니다.",
+        ],
+      },
+      {
+        title: "성과",
+        body: "기존 포트폴리오 기준 mAP 약 7%p 개선과 22 FPS 이상 추론을 달성했으며, 관련 경진대회 수상 경험으로 이어졌습니다.",
+      },
+      {
+        title: "배운 점",
+        body: "의료 비전에서는 모델 구조만큼 데이터 특성에 맞춘 증강과 평가 기준 설계가 중요하다는 점을 배웠습니다.",
+      },
+    ],
+  },
+  {
+    icon: BarChart2,
+    badge: "Supporting",
+    title: "VAE 기반 유방 초음파 이상 탐지",
+    description:
+      "라벨이 부족한 의료 영상 문제를 비지도 이상 탐지로 재정의하고, 재구성 오차와 동적 임계값으로 병변 후보를 찾은 프로젝트입니다.",
+    highlights: ["비지도 이상 탐지", "Dynamic Threshold", "공학혁신상"],
+    tags: ["TensorFlow", "VAE", "Anomaly Detection", "Custom Loss", "Computer Vision"],
+    gradient: "from-violet-500/10 to-purple-500/10",
+    githubUrl: "https://github.com/Anjingyeong/vae-breast-cancer-anomaly",
+    details: [
+      {
+        title: "프로젝트 소개",
+        body: "전문 라벨 확보가 어려운 유방 초음파 영상에서 정상 패턴을 먼저 학습하고, 정상에서 벗어나는 영역을 이상 후보로 찾는 방식으로 접근했습니다.",
+      },
+      {
+        title: "이상 탐지 파이프라인",
+        diagram: `flowchart TD
+    A[Normal Tissue Data] --> B[Train VAE Model]
+    B --> C[Learn Normal Topology]
+    D[Patient Scan Data] --> E[VAE Inference]
+    E --> F[Reconstructed Normal Image]
+    D --> G[Diff/Reconstruction Error Map]
+    F --> G
+    G --> H[Dynamic Threshold Masking]
+    H --> I[Anomaly Bounding Box]`,
+      },
+      {
+        title: "재구성 오차 및 차영상 검출 결과",
+        image: "/images/vae_diff.png",
+        imageAlt: "VAE 차영상 및 병변 검출 시각화",
+      },
+      {
+        title: "주요 작업",
+        items: [
+          "VAE 기반 재구성 모델을 구성하고 KLD와 MSE를 조합한 손실 함수를 설계했습니다.",
+          "입력 이미지와 재구성 이미지의 차이를 Reconstruction Error Map으로 변환했습니다.",
+          "영상마다 다른 밝기와 노이즈 편차를 줄이기 위해 Dynamic Threshold 후처리를 적용했습니다.",
+        ],
+      },
+      {
+        title: "성과",
+        body: "기존 포트폴리오 기준 Dice Coefficient 약 90% 수준을 달성했고, 공학혁신상 수상 경험으로 이어졌습니다.",
+      },
+      {
+        title: "배운 점",
+        body: "라벨이 부족한 문제에서는 지도학습 성능 경쟁보다 문제를 다시 정의하고 평가 방식을 세우는 역량이 중요했습니다.",
+      },
+    ],
+  },
+  {
+    icon: Zap,
+    badge: "Supporting",
+    title: "FullCount · KBO 티켓 에스크로 서비스",
+    description:
+      "에스크로 거래 상태를 WebSocket/STOMP 이벤트로 동기화하고, Polling 구조의 DB 부하를 줄인 실시간 거래 서비스 프로젝트입니다.",
+    highlights: ["실시간 상태 동기화", "DB I/O 절감", "JWT 인증"],
+    tags: ["Spring Boot", "JPA", "MySQL", "WebSocket", "STOMP", "React"],
+    gradient: "from-green-500/10 to-emerald-500/10",
+    githubUrl: "https://github.com/Rookies5-MiniPj2-Team5",
+    details: [
+      {
+        title: "프로젝트 소개",
+        body: "KBO 티켓 거래에서 판매자와 구매자의 거래 상태가 실시간으로 맞물리도록 에스크로 상태 전이와 이벤트 전달 구조를 구현한 풀스택 프로젝트입니다.",
+      },
+      {
+        title: "실시간 이벤트 흐름",
+        diagram: `sequenceDiagram
+    participant Client
+    participant STOMP Broker
+    participant Spring Server
+    participant MySQL
+    Client->>STOMP Broker: 1. Subscribe to Chat / Escrow Status
+    Client->>Spring Server: 2. Send Action (e.g., Transfer Ticket)
+    Spring Server->>MySQL: 3. Escrow State Update (JPA Tx)
+    Spring Server->>STOMP Broker: 4. Publish Event (No DB Polling)
+    STOMP Broker-->>Client: 5. Broadcast State Change (Latency < 0.1s)`,
+      },
+      {
+        title: "주요 작업",
+        items: [
+          "에스크로 거래 상태 전이를 고려한 DB 모델을 설계했습니다.",
+          "API Polling 방식의 부하를 줄이기 위해 WebSocket/STOMP 기반 이벤트 Push 구조로 전환했습니다.",
+          "JWT 인증 흐름과 React-Spring Boot 권한 응답을 맞추며 사용자 상태 동기화를 구현했습니다.",
+        ],
+      },
+      {
+        title: "성과",
+        body: "기존 포트폴리오 기준 Polling 대비 DB I/O를 약 80% 줄였고, 거래 상태 변경이 프론트엔드에 실시간 반영되는 흐름을 만들었습니다.",
+      },
+      {
+        title: "배운 점",
+        body: "AI 프로젝트를 서비스로 연결하려면 백엔드 이벤트 구조와 프론트엔드 상태 동기화 경험이 함께 필요하다는 점을 익혔습니다.",
+      },
+    ],
+  },
+];

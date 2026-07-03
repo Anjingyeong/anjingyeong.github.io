@@ -26,7 +26,29 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
           src={detail.image}
           alt={detail.imageAlt || detail.title}
           className="max-h-96 w-full rounded-lg object-contain"
+          onError={(e) => {
+            (e.target as HTMLImageElement).alt = `[이미지 로드 실패: ${detail.image}]`;
+          }}
         />
+      </div>
+    ) : null}
+    {detail.images && detail.images.length > 0 ? (
+      <div className="mt-4 space-y-4">
+        {detail.images.map((img, idx) => (
+          <div key={idx} className="flex flex-col gap-2">
+            <div className="overflow-hidden rounded-xl border border-border bg-muted/20 p-2 flex items-center justify-center">
+              <img
+                src={img.src}
+                alt={img.caption}
+                className="max-h-[70vh] w-full rounded-lg object-contain"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).alt = `[이미지 로드 실패: ${img.src}]`;
+                }}
+              />
+            </div>
+            <p className="text-center text-sm font-medium text-foreground/80">{img.caption}</p>
+          </div>
+        ))}
       </div>
     ) : null}
   </section>
