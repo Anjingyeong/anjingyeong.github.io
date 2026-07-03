@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ArrowDown, Sparkles } from "lucide-react";
 
 const HeroSection = () => {
-  const fullText = "Full-Stack Software Engineer";
+  const fullText = "AI Engineer";
   const [displayText, setDisplayText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [typingDone, setTypingDone] = useState(false);
@@ -46,11 +46,11 @@ const HeroSection = () => {
           <div className="order-2 lg:order-2">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-6">
               <Sparkles size={14} className="text-primary" />
-              <span className="text-sm font-medium text-primary">반갑습니다</span>
+              <span className="text-sm font-medium text-primary">Applied AI Engineer</span>
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 text-foreground leading-[1.3] tracking-tight break-keep">
-              도메인의 한계를 넘나들며<br className="hidden md:block" /> 비즈니스에 최적화된 서비스를 연결합니다.
+              모델 추론부터 실시간 파이프라인까지,<br className="hidden md:block" /> 현장에서 안정적으로 동작하는 AI를 만듭니다.
             </h1>
 
             <p className="text-lg md:text-xl font-mono mb-6">
@@ -62,16 +62,16 @@ const HeroSection = () => {
 
             <div className="text-base text-muted-foreground mb-8 max-w-xl leading-relaxed space-y-4 relative z-20">
               <p>
-                데이터 파이프라인부터 확장 가능한 대규모 웹 인프라, 직관적 UI까지. 
-                프론트/백엔드의 기술적 경계를 두지 않고, 예외 상황에서도 멈추지 않는 견고한 프로덕션을 설계합니다.
+                의공학적 사고를 바탕으로 실시간 영상 AI, Data-Centric 모델링, Hybrid RAG 검색 고도화를 수행했습니다. 
+                단일 모델 성능에 그치지 않고 RTSP, MQTT, WebSocket, 백엔드 연동을 통해 AI 판단이 관제 화면과 실제 운영 흐름까지 신뢰성 있게 연결되는 구조를 설계합니다.
               </p>
             </div>
             
             <div className="flex flex-wrap gap-2 mb-10 relative z-20">
-              <span className="tech-tag">Python · PyTorch</span>
-              <span className="tech-tag">Spring Boot · JPA</span>
-              <span className="tech-tag">React · TS</span>
-              <span className="tech-tag">MySQL · WebSockets</span>
+              <span className="tech-tag">PyTorch · OpenCV · YOLO</span>
+              <span className="tech-tag">Hybrid RAG · BM25 · Vector Search</span>
+              <span className="tech-tag">FastAPI · RTSP · MQTT · WebSocket</span>
+              <span className="tech-tag">React · TypeScript</span>
             </div>
 
             <div className="flex gap-3 flex-wrap relative z-20">

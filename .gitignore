@@ -43,3 +43,4 @@ fix_projects.cjs
 update_projects.py
 reorder.py
 test.js
+.omo/
