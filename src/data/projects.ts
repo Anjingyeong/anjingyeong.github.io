@@ -1,5 +1,5 @@
 import type { ElementType } from "react";
-import { BarChart2, Brain, Microscope, Search, Shield, Zap } from "lucide-react";
+import { BarChart2, Brain, Microscope, Shield } from "lucide-react";
 
 export type ProjectBadge = "Main" | "Supporting";
 
@@ -30,7 +30,7 @@ export const projects: readonly Project[] = [
     badge: "Main",
     title: "스마트 안전 관제 시스템",
     description:
-      "CCTV 관제 상황에서 낙상·위험 행동을 빠르게 포착하고, 이벤트 증거와 알림 흐름을 대시보드까지 연결하는 AI 관제 보조 시스템입니다.",
+      "CCTV 관제 상황에서 낙상·위험 행동을 빠르게 포착하고, 이벤트 증거와 알림 흐름을 대시보드까지 연결하는 실시간 AI 관제 보조 시스템입니다.",
     highlights: ["대표 프로젝트", "실시간 영상 AI", "이벤트 증거 설계"],
     tags: ["Computer Vision", "YOLO Pose", "LSTM", "MQTT", "WebSocket", "React"],
     gradient: "from-rose-500/10 to-orange-500/10",
@@ -83,104 +83,8 @@ export const projects: readonly Project[] = [
     ],
   },
   {
-    icon: Brain,
-    badge: "Main",
-    title: "LLM Wiki · RAG 기반 프로젝트 지식 시스템",
-    description:
-      "실험 기록, 오류 해결, 의사결정 근거를 검색 가능한 지식 자산으로 정리해 포트폴리오와 면접 답변의 근거로 활용하는 RAG 프로젝트입니다.",
-    highlights: ["보조 대표 프로젝트", "Evidence Wiki", "RAG 설계"],
-    tags: ["RAG", "Vector Search", "BM25", "Hybrid Search", "Python", "Knowledge Management"],
-    gradient: "from-violet-500/10 to-fuchsia-500/10",
-    details: [
-      {
-        title: "한 줄 소개",
-        body: "프로젝트 과정에서 생기는 실험 기록과 문제 해결 과정을 나중에 다시 찾을 수 있는 Evidence Wiki로 정리하고, RAG 검색 구조와 연결한 지식 관리 프로젝트입니다.",
-      },
-      {
-        title: "문제 배경",
-        body: "AI 프로젝트는 최종 코드만으로 설명하기 어렵습니다. 모델 선택 이유, 실패한 실험, 오류 해결 기록이 흩어지면 포트폴리오나 면접에서 근거 있게 설명하기가 어려워집니다.",
-      },
-      {
-        title: "지식 파이프라인 아키텍처",
-        diagram: `flowchart TD
-    Raw[Raw Notes / Screenshots / Logs] --> Normalize[Document Normalization]
-    Normalize --> Meta[Metadata: project / status / source / date]
-    Meta --> Index[Search Index]
-    Index --> RAG[RAG Portfolio Assistant]
-    RAG --> Answer[Answer with Sources]
-    Answer --> Portfolio[Portfolio / Interview Stories]`,
-      },
-      {
-        title: "주요 역할",
-        items: [
-          "프로젝트별 기록을 source, 날짜, 의사결정 근거와 함께 남기는 문서 구조를 설계했습니다.",
-          "키워드 검색과 벡터 검색을 함께 고려한 하이브리드 검색 구조를 정리했습니다.",
-          "답변이 단순 요약에 머물지 않고 출처와 연결되도록 RAG 활용 방식을 설계했습니다.",
-        ],
-      },
-      {
-        title: "기술 접근",
-        items: [
-          "실험 기록, 오류 해결, 회고를 문서 단위로 정규화해 검색 가능한 단위로 분리했습니다.",
-          "BM25와 Vector Search를 함께 사용하는 검색 흐름을 설계하고, 재랭킹과 GraphRAG는 고도화 방향으로 정리했습니다.",
-          "포트폴리오 문서와 이력서 문장을 작성할 때 근거 자료로 다시 참조할 수 있도록 구성했습니다.",
-        ],
-      },
-      {
-        title: "결과와 개선점",
-        body: "흩어진 프로젝트 기록을 면접 답변과 포트폴리오 문장의 근거 자산으로 전환했습니다. 이후에는 실제 검색 품질 평가와 답변 근거 추적 로그를 더 촘촘히 보강할 수 있습니다.",
-      },
-      {
-        title: "배운 점",
-        body: "AI Engineer 포트폴리오에서는 결과물뿐 아니라 실험 근거와 의사결정 기록을 관리하는 능력도 중요한 경쟁력이 된다는 점을 확인했습니다.",
-      },
-    ],
-  },
-  {
-    icon: Search,
-    badge: "Supporting",
-    title: "LLM Wiki Hybrid RAG 검색 고도화",
-    description:
-      "LLM Wiki 문서 검색 시스템을 단순 Vector Search에서 Metadata Filtering, BM25, Vector Search, RRF 기반 Hybrid RAG 구조로 고도화했습니다. 정확한 코드 식별자와 운영 키워드 검색을 보완하고, LLM context에 문서 출처와 섹션 정보를 포함해 답변 근거 추적성을 높였습니다.",
-    highlights: ["Hybrid RAG", "Metadata Filtering", "RRF", "Cloudflare Workers"],
-    tags: ["RAG", "Vector Search", "BM25", "TypeScript", "Cloudflare", "LLM"],
-    gradient: "from-sky-500/10 to-blue-500/10",
-    details: [
-      {
-        title: "문제 배경",
-        body: "프로젝트 문서가 증가하면서 단순 벡터 검색만으로는 cameraLoginId, frameId, MQTT, YOLO26n 같은 정확한 코드 식별자와 운영 키워드를 안정적으로 찾기 어려운 문제가 있었습니다.",
-      },
-      {
-        title: "개선 방향",
-        body: "이를 해결하기 위해 LLM Wiki 문서 검색 구조를 Metadata Filtering, BM25 Keyword Search, Vector Search, RRF 기반 결과 병합 구조로 고도화했습니다.",
-      },
-      {
-        title: "Hybrid Search 파이프라인",
-        diagram: `flowchart LR
-    Query[Search Query] --> MetaFilter[Metadata Filtering]
-    MetaFilter --> BM25[BM25 Keyword Search]
-    MetaFilter --> Vector[Vector Search]
-    BM25 --> RRF[RRF Reciprocal Rank Fusion]
-    Vector --> RRF
-    RRF --> Context[LLM Context with Title / Category / Section]`,
-      },
-      {
-        title: "구현 내용",
-        items: [
-          "문서별 title, category, updatedAt, summary, tags, order, sourcePath, sectionTitle metadata를 RAG chunk에 포함해 검색 결과의 출처와 문맥을 추적할 수 있도록 개선했습니다.",
-          "최종 LLM context에 문서 제목, 카테고리, 섹션, 수정일, source path, 본문 chunk를 함께 전달해 답변 근거 확인이 가능하도록 구성했습니다.",
-          "GraphRAG나 Elasticsearch 같은 무거운 인프라 없이 기존 Cloudflare Pages/Workers 기반 정적 배포 구조와 호환되는 lightweight Hybrid RAG 구조로 구현했습니다.",
-        ],
-      },
-      {
-        title: "검증 결과",
-        body: "npm test, npm run lint, npm run build, 샘플 질의 검색 검증, HTTP /api/rag/ask QA를 통해 동작을 검증했습니다.",
-      },
-    ],
-  },
-  {
     icon: Microscope,
-    badge: "Supporting",
+    badge: "Main",
     title: "RF-DETR 기반 대장 내 용종 검출",
     description:
       "대장 내시경 영상의 왜곡과 조명 변화를 데이터 증강으로 보완하고, RF-DETR 기반 탐지 모델을 경량화 관점에서 개선한 의료 비전 프로젝트입니다.",
@@ -230,7 +134,7 @@ export const projects: readonly Project[] = [
   },
   {
     icon: BarChart2,
-    badge: "Supporting",
+    badge: "Main",
     title: "VAE 기반 유방 초음파 이상 탐지",
     description:
       "라벨이 부족한 의료 영상 문제를 비지도 이상 탐지로 재정의하고, 재구성 오차와 동적 임계값으로 병변 후보를 찾은 프로젝트입니다.",
@@ -279,48 +183,49 @@ export const projects: readonly Project[] = [
     ],
   },
   {
-    icon: Zap,
+    icon: Brain,
     badge: "Supporting",
-    title: "FullCount · KBO 티켓 에스크로 서비스",
+    title: "LLM Wiki · RAG 기반 프로젝트 지식 및 하이브리드 검색 시스템",
     description:
-      "에스크로 거래 상태를 WebSocket/STOMP 이벤트로 동기화하고, Polling 구조의 DB 부하를 줄인 실시간 거래 서비스 프로젝트입니다.",
-    highlights: ["실시간 상태 동기화", "DB I/O 절감", "JWT 인증"],
-    tags: ["Spring Boot", "JPA", "MySQL", "WebSocket", "STOMP", "React"],
-    gradient: "from-green-500/10 to-emerald-500/10",
-    githubUrl: "https://github.com/Rookies5-MiniPj2-Team5",
+      "실험 기록, 트러블슈팅, 의사결정 근거를 검색 가능한 지식 자산으로 전환하고, BM25, Vector Search, Metadata Filtering, RRF 기반 Hybrid RAG 구조로 고도화한 프로젝트입니다.",
+    highlights: ["Evidence Wiki", "Hybrid RAG", "Metadata Filtering", "Cloudflare Workers"],
+    tags: ["RAG", "Vector Search", "BM25", "Hybrid Search", "TypeScript", "Cloudflare", "LLM"],
+    gradient: "from-violet-500/10 to-fuchsia-500/10",
     details: [
       {
-        title: "프로젝트 소개",
-        body: "KBO 티켓 거래에서 판매자와 구매자의 거래 상태가 실시간으로 맞물리도록 에스크로 상태 전이와 이벤트 전달 구조를 구현한 풀스택 프로젝트입니다.",
+        title: "한 줄 소개",
+        body: "프로젝트 과정의 실험 기록과 의사결정 근거를 Evidence Wiki로 구조화하고, 키워드 검색과 벡터 검색을 결합한 하이브리드 RAG 검색 엔진으로 고도화한 지식 관리 시스템입니다.",
       },
       {
-        title: "실시간 이벤트 흐름",
-        diagram: `sequenceDiagram
-    participant Client
-    participant STOMP Broker
-    participant Spring Server
-    participant MySQL
-    Client->>STOMP Broker: 1. Subscribe to Chat / Escrow Status
-    Client->>Spring Server: 2. Send Action (e.g., Transfer Ticket)
-    Spring Server->>MySQL: 3. Escrow State Update (JPA Tx)
-    Spring Server->>STOMP Broker: 4. Publish Event (No DB Polling)
-    STOMP Broker-->>Client: 5. Broadcast State Change (Latency < 0.1s)`,
+        title: "문제 배경",
+        body: "AI 프로젝트는 최종 코드만으로 설명하기 어렵습니다. 모델 선택 이유, 실패한 실험, 오류 해결 기록이 흩어지면 다시 활용하기 어려우며, 단순 벡터 검색만으로는 cameraLoginId, frameId, MQTT, YOLO26n 같은 정확한 코드 식별자와 운영 키워드를 안정적으로 찾지 못하는 문제가 있었습니다.",
       },
       {
-        title: "주요 작업",
+        title: "하이브리드 검색 파이프라인",
+        diagram: `flowchart LR
+    Query[Search Query] --> MetaFilter[Metadata Filtering]
+    MetaFilter --> BM25[BM25 Keyword Search]
+    MetaFilter --> Vector[Vector Search]
+    BM25 --> RRF[RRF Reciprocal Rank Fusion]
+    Vector --> RRF
+    RRF --> Context[LLM Context with Title / Category / Section]`,
+      },
+      {
+        title: "주요 역할 및 고도화 내용",
         items: [
-          "에스크로 거래 상태 전이를 고려한 DB 모델을 설계했습니다.",
-          "API Polling 방식의 부하를 줄이기 위해 WebSocket/STOMP 기반 이벤트 Push 구조로 전환했습니다.",
-          "JWT 인증 흐름과 React-Spring Boot 권한 응답을 맞추며 사용자 상태 동기화를 구현했습니다.",
+          "개발 기록을 문서 단위로 정규화하고 title, category, updatedAt, summary, tags, order, sourcePath, sectionTitle 메타데이터를 RAG 청크에 포함해 출처와 문맥을 추적할 수 있도록 개선했습니다.",
+          "단순 Vector Search 구조에서 BM25 Keyword Search, Vector Search, Metadata Filtering, RRF(Reciprocal Rank Fusion) 기반 결과 병합 구조로 고도화했습니다.",
+          "최종 LLM context에 문서 제목, 카테고리, 섹션, 수정일, source path, 본문 chunk를 함께 전달해 답변 근거 확인이 가능하도록 구성했습니다.",
+          "GraphRAG나 Elasticsearch 같은 무거운 인프라 없이 기존 Cloudflare Pages/Workers 기반 정적 배포 구조와 호환되는 lightweight Hybrid RAG 구조로 구현했습니다.",
         ],
       },
       {
-        title: "성과",
-        body: "기존 포트폴리오 기준 Polling 대비 DB I/O를 약 80% 줄였고, 거래 상태 변경이 프론트엔드에 실시간 반영되는 흐름을 만들었습니다.",
+        title: "결과 및 검증",
+        body: "exact keyword 검색 정확도 및 LLM 답변의 출처/섹션 추적성을 향상시켰으며, npm test, npm run lint, npm run build, 샘플 질의 5종 검색 검증, HTTP /api/rag/ask QA를 통해 동작을 검증했습니다.",
       },
       {
         title: "배운 점",
-        body: "AI 프로젝트를 서비스로 연결하려면 백엔드 이벤트 구조와 프론트엔드 상태 동기화 경험이 함께 필요하다는 점을 익혔습니다.",
+        body: "AI Engineer 포트폴리오에서는 모델 자체뿐 아니라 실험 근거와 의사결정 기록을 자산화하고, 서비스 환경 및 도메인 특성에 맞는 검색 파이프라인을 설계하는 역량이 중요하다는 점을 확인했습니다.",
       },
     ],
   },
