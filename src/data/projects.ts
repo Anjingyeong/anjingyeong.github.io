@@ -7,6 +7,9 @@ export type ProjectDetail = {
   readonly title: string;
   readonly body?: string;
   readonly items?: readonly string[];
+  readonly diagram?: string;
+  readonly image?: string;
+  readonly imageAlt?: string;
 };
 
 export type Project = {
@@ -39,6 +42,19 @@ export const projects: readonly Project[] = [
       {
         title: "문제 배경",
         body: "CCTV를 사람이 계속 지켜보는 방식은 사고 순간을 놓치기 쉽고, 단순 탐지 결과만으로는 관제자가 왜 알림이 발생했는지 확인하기 어렵습니다.",
+      },
+      {
+        title: "아키텍처 파이프라인",
+        diagram: `flowchart LR
+    CCTV[CCTV / RTSP Stream] --> AI[AI Inference Server]
+    AI --> Pose[YOLO Pose Keypoints]
+    Pose --> Seq[LSTM Behavior Classifier]
+    Seq --> Event[Event Metadata]
+    Event --> MQTT[MQTT Broker]
+    MQTT --> Backend[Backend Event API]
+    Backend --> WS[WebSocket Broadcast]
+    WS --> Dashboard[Monitoring Dashboard]
+    Event --> Evidence[frameId / timestamp / evidence chain]`,
       },
       {
         title: "주요 역할",
@@ -85,6 +101,16 @@ export const projects: readonly Project[] = [
         body: "AI 프로젝트는 최종 코드만으로 설명하기 어렵습니다. 모델 선택 이유, 실패한 실험, 오류 해결 기록이 흩어지면 포트폴리오나 면접에서 근거 있게 설명하기가 어려워집니다.",
       },
       {
+        title: "지식 파이프라인 아키텍처",
+        diagram: `flowchart TD
+    Raw[Raw Notes / Screenshots / Logs] --> Normalize[Document Normalization]
+    Normalize --> Meta[Metadata: project / status / source / date]
+    Meta --> Index[Search Index]
+    Index --> RAG[RAG Portfolio Assistant]
+    RAG --> Answer[Answer with Sources]
+    Answer --> Portfolio[Portfolio / Interview Stories]`,
+      },
+      {
         title: "주요 역할",
         items: [
           "프로젝트별 기록을 source, 날짜, 의사결정 근거와 함께 남기는 문서 구조를 설계했습니다.",
@@ -129,6 +155,16 @@ export const projects: readonly Project[] = [
         body: "이를 해결하기 위해 LLM Wiki 문서 검색 구조를 Metadata Filtering, BM25 Keyword Search, Vector Search, RRF 기반 결과 병합 구조로 고도화했습니다.",
       },
       {
+        title: "Hybrid Search 파이프라인",
+        diagram: `flowchart LR
+    Query[Search Query] --> MetaFilter[Metadata Filtering]
+    MetaFilter --> BM25[BM25 Keyword Search]
+    MetaFilter --> Vector[Vector Search]
+    BM25 --> RRF[RRF Reciprocal Rank Fusion]
+    Vector --> RRF
+    RRF --> Context[LLM Context with Title / Category / Section]`,
+      },
+      {
         title: "구현 내용",
         items: [
           "문서별 title, category, updatedAt, summary, tags, order, sourcePath, sectionTitle metadata를 RAG chunk에 포함해 검색 결과의 출처와 문맥을 추적할 수 있도록 개선했습니다.",
@@ -156,6 +192,23 @@ export const projects: readonly Project[] = [
       {
         title: "프로젝트 소개",
         body: "대장 내시경 영상에서 용종 후보를 빠르게 찾기 위해 RF-DETR 기반 객체 탐지 모델을 학습하고, 의료 영상 특성에 맞는 데이터 증강과 추론 속도 개선을 적용했습니다.",
+      },
+      {
+        title: "파이프라인 아키텍처",
+        diagram: `flowchart LR
+    A[Raw Endoscopy Data] --> B[Data-Centric Augmentation]
+    subgraph Augmentation Pipeline
+        B --> C[Elastic Deform]
+        B --> D[Grid Distortion]
+    end
+    C --> E[RF-DETR SOTA Model]
+    D --> E
+    E -->|Fine-Tuning| F[Robust Polyp Detection]`,
+      },
+      {
+        title: "데이터 증강 실험 결과",
+        image: "/images/rf_detr_aug.png",
+        imageAlt: "RF-DETR 데이터 증강 파이프라인 시각화",
       },
       {
         title: "주요 작업",
@@ -191,6 +244,23 @@ export const projects: readonly Project[] = [
         body: "전문 라벨 확보가 어려운 유방 초음파 영상에서 정상 패턴을 먼저 학습하고, 정상에서 벗어나는 영역을 이상 후보로 찾는 방식으로 접근했습니다.",
       },
       {
+        title: "이상 탐지 파이프라인",
+        diagram: `flowchart TD
+    A[Normal Tissue Data] --> B[Train VAE Model]
+    B --> C[Learn Normal Topology]
+    D[Patient Scan Data] --> E[VAE Inference]
+    E --> F[Reconstructed Normal Image]
+    D --> G[Diff/Reconstruction Error Map]
+    F --> G
+    G --> H[Dynamic Threshold Masking]
+    H --> I[Anomaly Bounding Box]`,
+      },
+      {
+        title: "재구성 오차 및 차영상 검출 결과",
+        image: "/images/vae_diff.png",
+        imageAlt: "VAE 차영상 및 병변 검출 시각화",
+      },
+      {
         title: "주요 작업",
         items: [
           "VAE 기반 재구성 모델을 구성하고 KLD와 MSE를 조합한 손실 함수를 설계했습니다.",
@@ -222,6 +292,19 @@ export const projects: readonly Project[] = [
       {
         title: "프로젝트 소개",
         body: "KBO 티켓 거래에서 판매자와 구매자의 거래 상태가 실시간으로 맞물리도록 에스크로 상태 전이와 이벤트 전달 구조를 구현한 풀스택 프로젝트입니다.",
+      },
+      {
+        title: "실시간 이벤트 흐름",
+        diagram: `sequenceDiagram
+    participant Client
+    participant STOMP Broker
+    participant Spring Server
+    participant MySQL
+    Client->>STOMP Broker: 1. Subscribe to Chat / Escrow Status
+    Client->>Spring Server: 2. Send Action (e.g., Transfer Ticket)
+    Spring Server->>MySQL: 3. Escrow State Update (JPA Tx)
+    Spring Server->>STOMP Broker: 4. Publish Event (No DB Polling)
+    STOMP Broker-->>Client: 5. Broadcast State Change (Latency < 0.1s)`,
       },
       {
         title: "주요 작업",

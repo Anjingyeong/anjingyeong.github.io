@@ -2,6 +2,7 @@ import { useState, type KeyboardEvent, type ReactNode } from "react";
 import { ArrowUpRight, Github, X } from "lucide-react";
 import { projects, type Project, type ProjectDetail } from "@/data/projects";
 import ScrollAnimator from "./ScrollAnimator";
+import Mermaid from "./Mermaid";
 
 const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) => (
   <section className="space-y-2">
@@ -13,6 +14,20 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
           <li key={item}>{item}</li>
         ))}
       </ul>
+    ) : null}
+    {detail.diagram ? (
+      <div className="mt-4">
+        <Mermaid chart={detail.diagram} />
+      </div>
+    ) : null}
+    {detail.image ? (
+      <div className="mt-4 overflow-hidden rounded-xl border border-border bg-muted/30 p-2">
+        <img
+          src={detail.image}
+          alt={detail.imageAlt || detail.title}
+          className="max-h-96 w-full rounded-lg object-contain"
+        />
+      </div>
     ) : null}
   </section>
 );
