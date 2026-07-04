@@ -1,6 +1,7 @@
 import type { ElementType } from "react";
 import { BarChart2, Brain, Microscope, Shield } from "lucide-react";
 
+// allow: SIZE_OK - portfolio project data table kept together to preserve card/modal ordering.
 export type ProjectBadge = "Main" | "Supporting";
 
 export type ProjectGalleryImage = {
@@ -70,15 +71,15 @@ export const projects: readonly Project[] = [
         items: [
           "RTSP → MediaMTX → AI 추론 서버 → MQTT safety/events → FastAPI → WebSocket → 대시보드 파이프라인 구조 설계.",
           "탐지 결과가 frameId, timestamp, cameraLoginId, confidence 같은 증거 단서와 함께 전달되도록 Evidence Chain 데이터 흐름을 설계했습니다.",
-          "YOLO Pose 기반 자세 추정 + LSTM 시계열 행동 분류(낙상·실신) 구조를 설계하고 실험 방향을 정리했습니다.",
-          "오탐과 미탐을 줄이기 위한 threshold, ByteTracker 상태, hard negative 분석 방향을 문서화했습니다.",
+          "YOLO Pose 기반 자세 추정 + ByteTrack 추적 + LSTM 시계열 행동 분류(낙상·실신) 구조를 프로젝트 AI 파트의 핵심 흐름으로 정리했습니다.",
+          "오탐과 미탐을 줄이기 위한 hard negative 후보, faint reinforcement, threshold sweep, tracker 상태 분석 방향을 문서화했습니다.",
         ],
       },
       {
         title: "기술 접근",
         items: [
           "영상 스트림과 이벤트 메타데이터를 같은 경로로 처리하면 overlay 동기화와 알림 상태 관리가 복잡해집니다. MQTT는 event metadata 전파, WebSocket은 대시보드 알림을 담당하도록 분리해 운영 안정성을 높였습니다.",
-          "관제 이벤트는 '감지됨'만으로 충분하지 않습니다. frameId · timestamp · cameraId · eventType · confidence 같은 증거가 함께 남아야 오탐/미탐 분석과 사후 검증이 가능합니다.",
+          "관제 이벤트는 '감지됨'만으로 충분하지 않습니다. incidentAt · frameId · timestamp · cameraId · eventType · severity · confidence 같은 증거가 함께 남아야 오탐/미탐 분석과 사후 검증이 가능합니다.",
           "Hermes Agent · Codex를 목표 · 완료 기준 · 제약 조건 · 검증 명령을 포함한 /goal 구조로 활용해 반복 설정을 자동화했습니다.",
         ],
       },
@@ -261,15 +262,16 @@ export const projects: readonly Project[] = [
       {
         title: "주요 역할 및 고도화 내용",
         items: [
-          "개발 기록을 문서 단위로 정규화하고 title, category, updatedAt, summary, tags, order, sourcePath, sectionTitle 메타데이터를 RAG 청크에 포함해 출처와 문맥을 추적할 수 있도록 개선했습니다.",
-          "단순 Vector Search 구조에서 BM25 Keyword Search, Vector Search, Metadata Filtering, RRF(Reciprocal Rank Fusion) 기반 결과 병합 구조로 고도화했습니다.",
-          "최종 LLM context에 문서 제목, 카테고리, 섹션, 수정일, source path, 본문 chunk를 함께 전달해 답변 근거 확인이 가능하도록 구성했습니다.",
-          "GraphRAG나 Elasticsearch 같은 무거운 인프라 없이 기존 Cloudflare Pages/Workers 기반 정적 배포 구조와 호환되는 lightweight Hybrid RAG 구조로 구현했습니다.",
+          "개발 기록을 문서 단위로 정규화하고 title, category, updatedAt, summary, tags, order, sourcePath, sectionTitle 메타데이터를 RAG 청크에 포함해 출처와 문맥을 추적할 수 있도록 정리했습니다.",
+          "사고 기록과 이벤트 문서는 incidentAt, cameraId, eventType, severity를 함께 색인해 '언제 어떤 사고가 났는지'를 필터링할 수 있는 구조로 점검했습니다.",
+          "단순 Vector Search 구조에서 BM25 Keyword Search, Vector Search, Metadata Filtering, RRF(Reciprocal Rank Fusion) 기반 결과 병합 구조로 고도화하는 방향을 유지했습니다.",
+          "최종 LLM context에는 문서 제목, 카테고리, 섹션, 수정일, source path, 본문 chunk를 함께 전달해 답변 근거 확인이 가능하도록 설계했습니다.",
+          "GraphRAG는 문서 관계와 규모가 충분해진 뒤의 확장 후보로만 두고, 현재는 Cloudflare Pages/Workers 기반 정적 배포와 맞는 lightweight Hybrid RAG 구조를 우선했습니다.",
         ],
       },
       {
         title: "결과 및 검증",
-        body: "exact keyword 검색 정확도 및 LLM 답변의 출처/섹션 추적성을 향상시켰으며, npm test, npm run lint, npm run build, 샘플 질의 5종 검색 검증, HTTP /api/rag/ask QA를 통해 동작을 검증했습니다.",
+        body: "search-index와 rag-vector-index를 정적 JSON으로 생성해 배포 경로 문제를 줄였고, npm test, npm run lint, npm run build, wiki:index 명령으로 색인 생성과 포트폴리오 회귀를 함께 검증하는 구조를 마련했습니다.",
       },
       {
         title: "배운 점",
