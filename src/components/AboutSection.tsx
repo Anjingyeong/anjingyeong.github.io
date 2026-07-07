@@ -12,11 +12,11 @@ const infoItems = [
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-24 md:py-32">
+    <div className="py-24 md:py-32">
       <div className="container">
         <ScrollAnimator>
           <div className="section-header">
-            <h2>소개</h2>
+            <h2>About Me</h2>
           </div>
         </ScrollAnimator>
 
@@ -25,13 +25,13 @@ const AboutSection = () => {
             <div className="minimal-card p-8 md:p-10">
               <h3 className="text-lg font-semibold mb-5 text-foreground">AI Engineer 소개</h3>
               <p className="leading-[1.8] mb-4" style={{ color: '#4A4A4A' }}>
-                의공학을 전공하며 영상처리, 딥러닝, 의료 AI 프로젝트를 경험했고, 이후 실시간 관제 시스템과 Hybrid RAG 기반 지식 관리 시스템으로 AI 엔지니어링 역량을 확장하고 있습니다.
+                의공학 기반의 의료 AI 프로젝트 경험을 바탕으로, 현재는 AI 모델의 추론 결과를 실제 서비스와 연결하는 엔지니어링에 집중하고 있습니다.
               </p>
               <p className="leading-[1.8] mb-4" style={{ color: '#4A4A4A' }}>
-                단순 모델 성능을 넘어 Data-Centric 증강, Custom Loss 설계, Dynamic Threshold 후처리, Evidence Chain 기반 이벤트 파이프라인 설계까지 end-to-end 흐름을 다뤄왔습니다. RTSP, MQTT, WebSocket을 활용해 AI 추론 결과가 관제 화면까지 신뢰성 있게 연결되는 구조를 직접 설계했습니다.
+                <strong className="font-semibold text-foreground">RF-DETR 기반 용종 검출 프로젝트</strong>에서 <strong className="font-semibold text-foreground">mAP@50 86.2%, 22+ FPS</strong>의 실시간 추론 성능을 확보했고, <strong className="font-semibold text-foreground">VAE 기반 비지도 병변 검출 프로젝트</strong>에서는 라벨 데이터 부족 문제를 <strong className="font-semibold text-foreground">Anomaly Detection</strong>과 <strong className="font-semibold text-foreground">Dynamic Threshold 후처리</strong>로 해결했습니다.
               </p>
               <p className="leading-[1.8] mb-6" style={{ color: '#4A4A4A' }}>
-                현재는 SK쉴더스 AI 부트캠프에서 지능형 관제 시스템 프로젝트를 수행 중이며, AI 모델의 추론 결과가 실제 서비스 흐름과 안정적으로 연결되는 Production-ready AI 개발에 집중하고 있습니다.
+                최근에는 <strong className="font-semibold text-foreground">SK쉴더스 부트캠프</strong>에서 <strong className="font-semibold text-foreground">RTSP &rarr; AI 추론 &rarr; MQTT &rarr; WebSocket &rarr; 관제 대시보드</strong>로 이어지는 지능형 관제 시스템을 개발하며, 모델 개발을 넘어 실제 운영 환경에 연결되는 AI 서비스를 구현하고 있습니다.
               </p>
 
               <div className="mt-8 pt-6 border-t border-border">
@@ -43,11 +43,11 @@ const AboutSection = () => {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                    Data-Centric 의료 AI (RF-DETR 증강, VAE 이상 탐지, 커스텀 Loss)
+                    Data-Centric 의료 AI (RF-DETR 증강, VAE 전처리·후처리)
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                    Hybrid RAG 검색 고도화 (BM25 + Vector Search + RRF + Metadata Filtering)
+                    검색 기반 지식 관리 (BM25 + Vector Search + RRF + Metadata Filtering)
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
@@ -93,7 +93,7 @@ const AboutSection = () => {
           </ScrollAnimator>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

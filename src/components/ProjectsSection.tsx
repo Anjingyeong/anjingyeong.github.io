@@ -4,14 +4,27 @@ import { projects, type Project, type ProjectDetail } from "@/data/projects";
 import ScrollAnimator from "./ScrollAnimator";
 import Mermaid from "./Mermaid";
 
+const renderInlineText = (text: string): ReactNode[] =>
+  text.split(/(\*\*[^*]+\*\*)/g).map((part, index) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={`${part}-${index}`} className="font-semibold text-foreground">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+
+    return part;
+  });
+
 const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) => (
   <section className="space-y-2">
     <h4 className="text-lg font-semibold text-foreground">{detail.title}</h4>
-    {detail.body ? <p className="text-sm leading-relaxed text-muted-foreground">{detail.body}</p> : null}
+    {detail.body ? <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(detail.body)}</p> : null}
     {detail.items ? (
       <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
         {detail.items.map((item) => (
-          <li key={item}>{item}</li>
+          <li key={item}>{renderInlineText(item)}</li>
         ))}
       </ul>
     ) : null}
@@ -61,6 +74,12 @@ const ProjectsSection = () => {
     if (event.key === "Escape") setSelectedProject(null);
   };
 
+  const openProjectFromKeyboard = (event: KeyboardEvent<HTMLDivElement>, project: Project) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    setSelectedProject(project);
+  };
+
   const mainProjects = projects.filter((project) => project.badge === "Main");
   const supportingProjects = projects.filter((project) => project.badge === "Supporting");
 
@@ -68,8 +87,11 @@ const ProjectsSection = () => {
     <ScrollAnimator key={project.title}>
       <div
         className="minimal-card-accent group flex h-full cursor-pointer flex-col"
+        role="button"
+        tabIndex={0}
         style={{ transition: "transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease" }}
         onClick={() => setSelectedProject(project)}
+        onKeyDown={(event) => openProjectFromKeyboard(event, project)}
         onMouseEnter={(event) => {
           event.currentTarget.style.transform = "translateY(-6px)";
           event.currentTarget.style.boxShadow =
@@ -103,10 +125,19 @@ const ProjectsSection = () => {
             </div>
           </div>
           <h3 className="text-lg font-semibold leading-snug text-foreground">{project.title}</h3>
+          {project.heroImage ? (
+            <div className="mt-5 overflow-hidden rounded-lg border border-border bg-card/70">
+              <img
+                src={project.heroImage.src}
+                alt={project.heroImage.caption}
+                className="aspect-[16/9] w-full object-cover"
+              />
+            </div>
+          ) : null}
         </div>
 
         <div className="flex flex-1 flex-col justify-between p-8 pt-5">
-          <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
+          <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{renderInlineText(project.description)}</p>
           <div>
             <div className="mb-5 flex flex-wrap gap-2">
               {project.highlights.map((highlight) => (
@@ -136,7 +167,7 @@ const ProjectsSection = () => {
       <div className="container relative">
         <ScrollAnimator>
           <div className="section-header">
-            <h2>프로젝트</h2>
+            <h2>Projects</h2>
           </div>
         </ScrollAnimator>
 
@@ -175,7 +206,7 @@ const ProjectsSection = () => {
               <button
                 className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 onClick={() => setSelectedProject(null)}
-                aria-label="Close modal"
+                aria-label="프로젝트 상세 닫기"
               >
                 <X size={24} />
               </button>
@@ -210,6 +241,10 @@ const ProjectsSection = () => {
                   </a>
                 ) : null}
               </div>
+
+              <p className="mb-6 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                {renderInlineText(selectedProject.description)}
+              </p>
 
               <div className="mb-8 space-y-6 overflow-hidden rounded-xl border border-border bg-card/50 p-6 md:p-8">
                 {selectedProject.details.map((detail) => (

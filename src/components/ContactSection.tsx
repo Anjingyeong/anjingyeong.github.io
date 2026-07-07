@@ -29,7 +29,6 @@ const ContactSection = () => {
     if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
       console.warn("EmailJS credentials are not configured. Please set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY in your environment variables.");
       setStatus("error");
-      alert("이메일 전송 구성이 필요합니다. 환경변수 설정을 완료해 주세요.");
       return;
     }
 
@@ -45,7 +44,8 @@ const ContactSection = () => {
       setStatus("success");
       setFormData({ from_name: "", from_email: "", message: "" });
       setTimeout(() => setStatus("idle"), 4000);
-    } catch {
+    } catch (error) {
+      if (!(error instanceof Error)) throw error;
       setStatus("error");
       setTimeout(() => setStatus("idle"), 4000);
     }
@@ -59,7 +59,7 @@ const ContactSection = () => {
       <div className="container relative z-10">
         <ScrollAnimator>
           <div className="section-header">
-            <h2>연락하기</h2>
+            <h2>Contact</h2>
           </div>
         </ScrollAnimator>
 
@@ -84,7 +84,7 @@ const ContactSection = () => {
                     onChange={handleChange}
                     required
                     placeholder="홍길동"
-                    className="w-full px-4 py-3 rounded-xl text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all duration-300" style={{ background: '#F9FAFB', border: '1.5px solid #CBD5E1' }}/>
+                    className="w-full rounded-xl border border-border bg-muted/30 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"/>
                 </div>
                 <div>
                   <label htmlFor="from_email" className="block text-sm font-medium text-muted-foreground mb-2">
@@ -98,7 +98,7 @@ const ContactSection = () => {
                     onChange={handleChange}
                     required
                     placeholder="example@email.com"
-                    className="w-full px-4 py-3 rounded-xl text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all duration-300" style={{ background: '#F9FAFB', border: '1.5px solid #CBD5E1' }}/>
+                    className="w-full rounded-xl border border-border bg-muted/30 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"/>
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-muted-foreground mb-2">
@@ -112,7 +112,7 @@ const ContactSection = () => {
                     required
                     rows={5}
                     placeholder="프로젝트 문의 또는 협업 관련 내용을 자유롭게 작성해주세요."
-                    className="w-full px-4 py-3 rounded-xl text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all duration-300 resize-none" style={{ background: '#F9FAFB', border: '1.5px solid #CBD5E1' }}/>
+                    className="w-full resize-none rounded-xl border border-border bg-muted/30 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all duration-300 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/30"/>
                 </div>
                 <button
                   type="submit"
@@ -127,12 +127,12 @@ const ContactSection = () => {
                   ) : status === "success" ? (
                     <>
                       <CheckCircle2 size={16} />
-                      전송 완료!
+                      전송 완료
                     </>
                   ) : status === "error" ? (
                     <>
                       <AlertCircle size={16} />
-                      전송 실패 — 다시 시도해주세요
+                      전송 실패 - 이메일 또는 GitHub 링크를 이용해 주세요
                     </>
                   ) : (
                     <>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Kvasir Dataset and RF-DETR training pipeline</title>
+  <desc id="desc">A diagram showing Kvasir Dataset split into train, validation, and test sets, then augmented with Elastic Deformation and Grid Distortion before RF-DETR fine-tuning and evaluation.</desc>
+  <rect width="1280" height="720" fill="#f8fbff"/>
+  <text x="86" y="92" fill="#172033" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800">Dataset and Training Pipeline</text>
+  <text x="86" y="128" fill="#64748b" font-family="Inter, Arial, sans-serif" font-size="18">Kvasir Dataset · RF-DETR fine-tuning · experiment-setting comparison</text>
+  <g font-family="Inter, Arial, sans-serif">
+    <rect x="86" y="190" width="206" height="120" rx="20" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="122" y="244" fill="#172033" font-size="23" font-weight="800">Kvasir Dataset</text>
+    <text x="122" y="275" fill="#64748b" font-size="16">colon polyp images</text>
+
+    <path d="M302 250h82" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <path d="M372 236l18 14-18 14" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="400" y="172" width="236" height="156" rx="20" fill="#eef4ff" stroke="#bfdbfe"/>
+    <text x="438" y="214" fill="#1d4ed8" font-size="22" font-weight="800">Split</text>
+    <rect x="438" y="235" width="160" height="24" rx="12" fill="#2563eb"/>
+    <rect x="438" y="267" width="88" height="24" rx="12" fill="#7c3aed"/>
+    <rect x="438" y="299" width="88" height="24" rx="12" fill="#0f766e"/>
+    <text x="610" y="254" fill="#334155" font-size="15">Train 60%</text>
+    <text x="538" y="286" fill="#334155" font-size="15">Validation 20%</text>
+    <text x="538" y="318" fill="#334155" font-size="15">Test 20%</text>
+
+    <path d="M648 250h82" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <path d="M718 236l18 14-18 14" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="746" y="150" width="260" height="200" rx="22" fill="#ffffff" stroke="#ddd6fe"/>
+    <text x="782" y="194" fill="#5b21b6" font-size="22" font-weight="800">Augmentation</text>
+    <rect x="782" y="224" width="188" height="38" rx="12" fill="#f3e8ff" stroke="#c4b5fd"/>
+    <text x="802" y="249" fill="#4c1d95" font-size="16" font-weight="700">Elastic Deformation</text>
+    <rect x="782" y="278" width="188" height="38" rx="12" fill="#e0f2fe" stroke="#7dd3fc"/>
+    <text x="812" y="303" fill="#075985" font-size="16" font-weight="700">Grid Distortion</text>
+
+    <path d="M1018 250h82" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <path d="M1088 236l18 14-18 14" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="86" y="430" width="1098" height="148" rx="24" fill="#172033"/>
+    <text x="126" y="482" fill="#f8fafc" font-size="25" font-weight="800">RF-DETR + DINOv2 Fine-tuning</text>
+    <text x="126" y="520" fill="#cbd5e1" font-size="17">Deformable Cross Attention for small and irregular lesion candidates</text>
+    <rect x="828" y="462" width="302" height="70" rx="18" fill="#eff6ff"/>
+    <text x="858" y="491" fill="#1d4ed8" font-size="18" font-weight="800">Evaluation</text>
+    <text x="858" y="518" fill="#334155" font-size="16">about 7% improvement vs baseline setting</text>
+  </g>
+</svg>

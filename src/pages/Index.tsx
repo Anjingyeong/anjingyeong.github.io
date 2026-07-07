@@ -15,12 +15,12 @@ const Index = () => {
       <Header />
       <main className="relative z-10">
         <HeroSection />
+        <AboutSection />
         <div className="section-divider" />
         <ProjectsSection />
         <SkillsSection />
         <ExperienceSection />
         <CompetenceSection />
-        <AboutSection />
         <ContactSection />
       </main>
       <footer className="relative z-10 border-t border-border py-8 text-center text-xs text-muted-foreground" style={{ background: "var(--gradient-hero)" }}>

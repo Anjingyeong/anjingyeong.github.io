@@ -5,7 +5,7 @@
 ## 1. 이력서 요약 (Resume Summary)
 
 - **실시간 비전 파이프라인과 서비스 흐름을 함께 다루는 AI 엔지니어**입니다. 의공학적 분석 사고를 바탕으로 단일 모델 성능(mAP, Dice Coefficient)에 그치지 않고, RTSP/MQTT/WebSocket과 같은 실시간 파이프라인 및 백엔드/프론트엔드 연동을 통해 AI 결과가 실제 관제 화면과 서비스 운영으로 이어지는 구조를 설계해 왔습니다.
-- **Data-Centric AI 및 실용적 기술 고도화를 지향**합니다. 의료 컴퓨터 비전 프로젝트에서 Grid Distortion/Elastic Deform 기반 데이터 증강과 Structural Pruning/Dynamic Threshold 후처리를 적용해 엣지 환경 추론속도(22+ FPS)와 이상 탐지 정확도를 확보했습니다.
+- **Data-Centric AI 및 실용적 기술 고도화를 지향**합니다. 의료 컴퓨터 비전 프로젝트에서 Grid Distortion/Elastic Deform 기반 데이터 증강과 Dynamic Threshold 후처리를 적용해 의료영상 입력 조건 변화에 대응하는 탐지 흐름을 구축했습니다.
 - **지식 자산화 및 RAG 검색 고도화 경험**을 통해 프로젝트 실험 기록, 오류 해결, 의사결정 근거를 Evidence Wiki 구조로 체계화했습니다. Metadata Filtering, BM25, Vector Search, RRF 기반 Hybrid RAG 구조를 Cloudflare Pages/Workers 호환 lightweight 아키텍처로 구현하여 exact keyword 검색 품질과 답변 출처 추적성을 높였습니다.
 - 사람의 생명과 직결되는 의료 AI 및 사람의 안전을 보조하는 스마트 관제 시스템 프로젝트를 경험하며, **안정적이고 신뢰 가능한 AI 서비스 구축**에 깊은 관심을 가지고 있습니다.
 
@@ -15,7 +15,7 @@
 
 ### 📌 AI / Computer Vision
 - **YOLO Pose & LSTM 기반 행동 판단:** RTSP CCTV 실시간 스트림 환경에서 사람의 keypoint를 추출하고 시간 흐름에 따른 낙상·실신 이상행동 판단 파이프라인 설계 및 추론 흐름 구성.
-- **RF-DETR & DINOv2 객체 탐지:** 대장 내시경 영상의 왜곡 및 반사광 문제를 극복하기 위해 SOTA 비전 백본 파인튜닝과 엣지 장비 탑재용 경량화(Structural Pruning) 수행.
+- **RF-DETR & DINOv2 객체 탐지:** Kvasir 대장 내 용종 이미지를 **Train 70% / Validation 20% / Test 10%**로 분할하고, 의료영상 도메인에 맞게 RF-DETR 모델을 fine-tuning.
 - **VAE 기반 비지도 이상 탐지 (Anomaly Detection):** 주석 라벨이 부족한 유방 초음파 환경에서 정상 데이터 분포를 학습하고 차영상 Reconstruction Error Map 및 Dynamic Threshold 후처리를 적용해 병변 영역 분할.
 
 ### 📌 Data / Experiment Management
@@ -64,8 +64,8 @@
   - **[Hybrid RAG 고도화]** 단순 벡터 검색 방식에서 Metadata Filtering, BM25 Keyword Search, Vector Search, Reciprocal Rank Fusion(RRF) 기반 결과 병합 구조로 고도화.
   - **[Metadata 구조화]** 문서 청크마다 `title`, `category`, `updatedAt`, `summary`, `tags`, `order`, `sourcePath`, `sectionTitle` 메타데이터를 정규화하여 포함.
   - **[LLM Context 증강]** 최종 LLM Prompt Context에 문서 제목, 카테고리, 섹션, 수정일, source path, 본문 chunk text를 정교하게 맵핑해 답변 근거 추적성 확보 및 환각 방지.
-  - **[Lightweight 아키텍처]** GraphRAG나 Elasticsearch 같은 무거운 외부 서버 없이 Cloudflare Pages/Workers 기반 정적 배포 환경과 호환되는 lightweight 구조 구현.
-  - **[자동화 검증]** `npm test` (Vitest), `npm run lint` (ESLint), `npm run build`, 샘플 질의 5종 검색 검증, HTTP `/api/rag/ask` QA 검증 수행.
+  - **[Lightweight 아키텍처]** 대규모 문서 관계 분석이나 Elasticsearch 같은 무거운 외부 서버 없이 Cloudflare Pages/Workers 기반 정적 배포 환경과 호환되는 lightweight 구조로 정리.
+  - **[자동화 검증]** `npm test` (Vitest), `npm run lint` (ESLint), `npm run build`, `npm run wiki:index` 명령으로 정적 검색 인덱스와 포트폴리오 회귀를 검증.
 - **성과 및 검증:**
   - 정확한 코드 식별자 및 키워드 검색 정확도 향상 및 LLM 답변의 출처/섹션 추적성 확보.
   - `npm test` 100% PASS, `npm run build` 성공 및 정적 에셋 패키징 완료.
@@ -73,42 +73,42 @@
 - **이력서 Bullet:**
   - 단순 Vector Search의 키워드 누락 한계를 해결하기 위해 BM25, Vector Search, Metadata Filtering, RRF를 결합한 Hybrid RAG 검색 파이프라인 구현
   - RAG 청크 단위에 title, category, sourcePath, sectionTitle 등 8종 메타데이터를 구조화하여 LLM 답변의 출처 추적성 확보 및 exact keyword(`cameraLoginId`, `MQTT` 등) 검색 품질 보완
-  - 별도 전용 검색 서버(Elasticsearch 등) 없이 Cloudflare Pages/Workers 환경과 호환되는 lightweight 하이브리드 검색 구조 구축 및 `/api/rag/ask` QA 검증 완료
+  - 별도 전용 검색 서버(Elasticsearch 등) 없이 Cloudflare Pages/Workers 환경과 호환되는 lightweight 하이브리드 검색 구조로 정리하고 정적 인덱스 생성 검증 완료
 
 ---
 
 ### 3) RF-DETR 기반 실시간 대장 내 용종 검출 시스템
-- **프로젝트 개요:** 대장 내시경 영상의 왜곡과 광원 반사를 보완하고, RF-DETR 기반 모델을 엣지 컴퓨팅 환경에 맞게 경량화한 의료 비전 프로젝트.
-- **담당 역할:** 데이터 증강 파이프라인 구축, RF-DETR+DINOv2 파인튜닝, Structural Pruning 및 추론속도 최적화.
+- **프로젝트 개요:** Kvasir 대장 내 용종 데이터를 활용해 RF-DETR 기반 모델을 fine-tuning하고, OpenCV GUI에서 카메라·영상 파일 입력을 지원한 의료 비전 프로젝트.
+- **담당 역할:** 데이터 전처리, **Train 70% / Validation 20% / Test 10%** 분할 구성, RF-DETR 모델 학습 및 fine-tuning, 후보 모델/FPS 비교.
 - **문제 상황:** 내시경 영상 특유의 기하학적 장벽 왜곡과 빛 반사로 인해 기존 모델의 정확도가 정체되고 오버피팅 발생. 임상 엣지 환경에서 실시간 추론 속도 확보 필요.
 - **주요 구현:**
-  - Albumentations 및 OpenCV 기반 `Grid Distortion`, `Elastic Deform` 증강 기파을 적용하여 장벽 형태학적 변화 데이터 학습 유도.
-  - RF-DETR 탐지 모델과 DINOv2 비전 백본 조합 파인튜닝.
-  - 메모리 제약 극복을 위해 `Structural Pruning`을 적용하고 OpenCV 후처리 및 실시간 추론 시각화 연동.
+  - Kvasir 대장 내 용종 데이터를 학습/검증/평가 용도로 분리하고, 의료영상 입력 조건에 맞게 전처리.
+  - `Elastic Deformation`, `Grid Distortion` 증강을 적용해 점막 변형, 조명 변화, 화면 왜곡 상황을 학습 데이터에 반영.
+  - RF-DETR 탐지 모델을 fine-tuning하고 OpenCV 기반 검출 결과 시각화 흐름과 연결.
 - **성과 및 검증:**
-  - 베이스라인 대비 mAP(평균 정밀도) 약 7%p 향상 및 엣지 GPU 환경에서 22+ FPS 실시간 추론 속도 달성.
-  - 🏆 제17회 건양대학교 캡스톤디자인 경진대회 금상/대상 & 전국 공학교육혁신 컨소시엄 동상 수상.
-- **사용 기술:** Python, PyTorch, RF-DETR, DINOv2, OpenCV, Albumentations, Structural Pruning
+  - 최고 성능 mAP@50 86.2% (베이스라인 대비 약 7%p 개선) 및 22+ FPS 실시간 추론 성능을 확인.
+  - 🏆 제17회 건양대학교 캡스톤디자인 경진대회 금상 및 전국 공학교육혁신 컨소시엄 동상 수상.
+- **사용 기술:** Python, PyTorch, RF-DETR, DINOv2, OpenCV, Kvasir Dataset, Data Augmentation
 - **이력서 Bullet:**
-  - 내시경 영상의 기하학적 변형에 강건하도록 Grid Distortion 및 Elastic Deform 기반 Data-Centric 증강 파이프라인을 구축해 mAP 약 7%p 개선
-  - Structural Pruning 기법과 OpenCV 후처리 최적화를 적용하여 상용 엣지 디바이스 환경에서 22 FPS 이상의 실시간 추론 성능 확보 (캡스톤디자인 경진대회 대상 수상)
+  - Kvasir 대장 내 용종 데이터를 **Train 70% / Validation 20% / Test 10%**로 분할하고 RF-DETR 모델을 fine-tuning
+  - Elastic Deformation, Grid Distortion 기반 증강과 후보 모델/FPS 비교를 통해 의료영상 입력 조건에서의 탐지 안정성을 점검
 
 ---
 
 ### 4) VAE 기반 비지도 유방 초음파 이상 탐지 시스템
 - **프로젝트 개요:** 정밀 주석 라벨 수급이 어려운 의료 초음파 영상 문제를 정상 데이터 중심의 비지도 이상 탐지(Anomaly Detection)로 재정의하여 병변 영역을 분할한 프로젝트.
-- **담당 역할:** VAE 아키텍처 설계, 커스텀 Loss 함수 구현, Reconstruction Error Map 및 Dynamic Threshold 후처리 로직 개발.
+- **담당 역할:** 유방 초음파 데이터 전처리, Reconstruction Error Map 생성, Dynamic Threshold 후처리 알고리즘 개발.
 - **문제 상황:** 전문의 주석 비용으로 인한 지도학습 라벨 데이터 부족 및 초음파 영상 특유의 음영 노이즈와 환자별 밝기 편차.
 - **주요 구현:**
-  - 정상 조직 데이터만 학습하는 VAE(Variational AutoEncoder) 구조 구축.
-  - TensorFlow 저수준 API를 활용해 KLD(분산 오차)와 MSE(재구성 오차) 가중치를 조절하는 Custom Loss Function 구현.
+  - 정상 조직 데이터만 학습하는 VAE(Variational AutoEncoder) 기반 비지도 이상 탐지 흐름을 프로젝트에 적용.
+  - VAE 학습에 사용되는 MSE 재구성 오차와 KLD 잠재 공간 정규화 항의 역할을 이해하고, 후처리 단계의 기준 설계에 반영.
   - 차영상 Reconstruction Error Map 생성 후 픽셀 분포 비율을 실시간 계산하는 `Dynamic Threshold` 후처리 알고리즘 개발.
 - **성과 및 검증:**
   - 별도 병변 라벨 없이도 Dice Coefficient 기준 최대 90% 수준의 병변 분할 정밀도 달성.
   - 🏆 2024 창의혁신 DNA 산학협력 공학혁신상 (산업통상자원부 장관 주관) 수상.
-- **사용 기술:** Python, TensorFlow, VAE, OpenCV, Custom Loss, Dynamic Threshold
+- **사용 기술:** Python, TensorFlow, VAE, OpenCV, Reconstruction Error, Dynamic Threshold
 - **이력서 Bullet:**
-  - 의료 영상의 라벨 부족 한계를 극복하기 위해 정상 패턴 학습 기반 VAE 비지도 이상 탐지(Anomaly Detection) 모델 및 KLD+MSE 커스텀 손실 함수 구현
+  - 의료 영상의 라벨 부족 한계를 극복하기 위해 정상 패턴 학습 기반 VAE 비지도 이상 탐지(Anomaly Detection) 흐름 적용
   - 차영상 Reconstruction Error Map과 환자별 노이즈 편차를 보정하는 Dynamic Threshold 후처리 알고리즘을 개발하여 Dice Coefficient 90% 수준 달성 (공학혁신상 수상)
 
 ---
@@ -121,7 +121,7 @@
   - DB I/O 부하를 80% 절감하고, 상태 변경 브로드캐스팅 지연 시간을 0.1초 이내로 단축.
 - **사용 기술:** Spring Boot, JPA, MySQL, WebSocket, STOMP, React, JWT
 - **이력서 Bullet:**
-  - HTTP API Polling 방식을 STOMP/WebSocket 기반 Pub-Sub 이벤트 전달 구조로 전환하여 DB I/O 부하 80% 절감 및 실시간 상태 동기화 처리
+  - HTTP API Polling 방식을 STOMP/WebSocket 기반 Pub-Sub 이벤트 전달 구조로 전환했으며, DB I/O 80% 절감 수치는 제출 전 원본 측정 자료 확인 필요
 
 ---
 
@@ -142,18 +142,18 @@
 ### 🔹 LLM Wiki / Hybrid RAG 문서 검색 시스템
 - 단순 Vector Search의 키워드 누락 한계를 보완하고자 Metadata Filtering, BM25 Keyword Search, Vector Search, RRF를 결합한 Hybrid RAG 파이프라인 구축
 - 청크 단위에 title, category, sourcePath, sectionTitle 등 8종 메타데이터를 정규화하여 포함하고 exact keyword(`cameraLoginId`, `MQTT` 등) 검색 정확도 및 LLM 답변의 출처 추적성 확보
-- GraphRAG/Elasticsearch 등 무거운 인프라 없이 Cloudflare Pages/Workers 호환 lightweight 구조로 구현하고, Vitest 테스트 및 HTTP `/api/rag/ask` QA 검증 완료
+- 대규모 문서 관계 분석이나 Elasticsearch 등 무거운 인프라 없이 Cloudflare Pages/Workers 호환 lightweight 구조로 정리하고, Vitest 테스트 및 정적 인덱스 생성 검증 완료
 
 ### 🔹 RF-DETR 기반 실시간 대장 내 용종 검출 시스템
-- 내시경 영상 특유의 광원 반사와 기하학적 왜곡을 보완하기 위해 Grid Distortion 및 Elastic Deform 기반 Data-Centric 증강 파이프라인을 도입하여 mAP 약 7%p 개선
-- Structural Pruning 경량화 기법과 OpenCV 후처리 시각화를 연동하여 상용 엣지(GPU) 환경에서 22 FPS 이상의 실시간 추론 속도 확보 (캡스톤디자인 경진대회 대상 수상)
+- 내시경 영상 특유의 광원 반사와 기하학적 왜곡을 보완하기 위해 Grid Distortion 및 Elastic Deform 기반 Data-Centric 증강 파이프라인을 도입하여 최고 성능 mAP@50 86.2% (약 7%p 개선) 및 22+ FPS 실시간 추론 성능 확보
+- Kvasir 대장 내 용종 데이터를 Train 70% / Validation 20% / Test 10%로 분할하고 RF-DETR 모델을 fine-tuning하여 최고 성능 mAP@50 86.2% (약 7%p 개선) 및 22+ FPS 실시간 추론 확인
 
 ### 🔹 VAE 기반 비지도 유방 초음파 이상 탐지 시스템
-- 정밀 라벨 데이터 부족 문제를 해결하기 위해 정상 조직 데이터 기반 VAE 비지도 이상 탐지 모델 및 KLD+MSE 커스텀 손실 함수 구현
+- 정밀 라벨 데이터 부족 문제를 해결하기 위해 정상 조직 데이터 기반 VAE 비지도 이상 탐지 흐름을 적용하고 유방 초음파 데이터 전처리를 담당
 - 차영상 Reconstruction Error Map과 환자별 노이즈 편차를 자동 보정하는 Dynamic Threshold 후처리를 적용하여 Dice Coefficient 90% 수준 달성 (산업통상자원부 장관 주관 공학혁신상 수상)
 
 ### 🔹 FullCount - 실시간 KBO 티켓 에스크로 서비스
-- API Polling 방식의 DB 병목을 해결하기 위해 WebSocket/STOMP 기반 메시지 브로커를 구축하여 DB I/O 부하 80% 절감 및 0.1초 이내 거래 상태 실시간 동기화 구현
+- API Polling 방식의 DB 병목을 해결하기 위해 WebSocket/STOMP 기반 메시지 브로커를 적용했으며, DB I/O 80% 절감 및 0.1초 이내 동기화 수치는 제출 전 원본 측정 자료 확인 필요
 
 ---
 
@@ -163,7 +163,7 @@
 - **소재:** 의공학을 전공하며 기술이 실제 사람의 건강과 안전에 미치는 영향을 고민해 왔습니다. 모델의 정밀도 지표만 높이는 것에 그치지 않고, RTSP, MQTT, WebSocket, 백엔드 API 연동을 통해 AI 결과가 관제자의 화면과 현장 대응으로 전달되는 파이프라인에 매력을 느꼈습니다. 실시간 관제 및 비전 AI 분야에서 신뢰 가능한 서비스를 만드는 데 기여하고 싶습니다.
 
 ### 2) 직무 역량: "도메인 데이터 특성에 맞춘 Data-Centric 문제 해결"
-- **소재:** 대장 내시경의 장벽 왜곡 문제에는 Grid Distortion/Elastic Deform 증강을, 초음파 영상의 라벨 부족에는 VAE 비지도 학습과 Dynamic Threshold 후처리를 적용했습니다. 모델 크기만 키우기보다 데이터 특성과 엣지 제약조건을 파악하여 적절한 후처리와 경량화를 조합하는 공학적 접근법을 강점으로 가지고 있습니다.
+- **소재:** 대장 내시경의 장벽 왜곡 문제에는 Elastic Deformation/Grid Distortion 증강을, 초음파 영상의 라벨 부족에는 VAE 비지도 학습과 Dynamic Threshold 후처리를 적용했습니다. 모델 크기만 키우기보다 데이터 특성과 평가 기준을 먼저 확인하는 공학적 접근법을 강점으로 가지고 있습니다.
 
 ### 3) 문제 해결 경험: "검색 한계를 Hybrid RAG와 Metadata 구조화로 돌파"
 - **소재:** LLM Wiki 구축 중 단순 벡터 검색이 `cameraLoginId` 같은 정확한 변수명이나 기술 키워드를 짚어내지 못하는 문제를 발견했습니다. BM25와 Vector Search를 RRF로 결합하고 청크에 8종 메타데이터를 정규화하여 exact keyword 검색 성능과 답변의 출처 추적성을 함께 개선했습니다.
@@ -199,8 +199,8 @@
    - `run_registered_cameras.py`, MQTT payload schema, OverlaySyncBuffer 세부 구현 코드가 실제 레포에 커밋되어 있는지 확인 및 깃허브 링크 보강이 권장됩니다.
 3. **프로젝트 수행 기간 및 참여 비율 [확인 필요]:**
    - SK쉴더스 부트캠프 팀 프로젝트의 정확한 팀원 수 및 본인의 코드 기여 비율(%)을 명시하면 채용담당자의 이해를 돕기 용이합니다.
-4. **Cloudflare Workers API QA 로그 [확인 필요]:**
-   - `/api/rag/ask` QA 검증 샘플 질의 5종의 실제 응답 렌더링 스크린샷이나 테스트 스크립트 결과를 포트폴리오 첨부 자료로 연결하면 설득력이 강화됩니다.
+4. **RAG 검색 품질 QA 로그 [확인 필요]:**
+   - 샘플 질의의 실제 검색 결과, source 추적 로그, 정적 인덱스 생성 결과를 포트폴리오 첨부 자료로 연결하면 설득력이 강화됩니다.
 
 ---
 *Document Location: `docs/resume/ai-engineer-resume.md`*

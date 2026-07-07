@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { ArrowDown, Sparkles } from "lucide-react";
+import { ArrowDown, Sparkles, Brain, Network, Cpu } from "lucide-react";
 
 const HeroSection = () => {
-  const fullText = "AI Engineer";
+  const fullText = "Computer Vision & Real-time AI Pipeline";
   const [displayText, setDisplayText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [typingDone, setTypingDone] = useState(false);
@@ -41,52 +41,104 @@ const HeroSection = () => {
       <div className="absolute top-1/2 left-1/4 w-1 h-1 rounded-full bg-primary/15 animate-pulse" style={{ animationDelay: "2s" }} />
 
       <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center max-w-6xl mx-auto">
           {/* Text Content (Left side on desktop) */}
-          <div className="order-2 lg:order-2">
+          <div className="order-2 lg:order-1 lg:col-span-7 pr-0 lg:pr-10">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-6">
               <Sparkles size={14} className="text-primary" />
-              <span className="text-sm font-medium text-primary">Applied AI Engineer</span>
+              <span className="text-sm font-medium text-primary">AI Engineer Portfolio</span>
             </div>
 
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 text-foreground leading-[1.3] tracking-tight break-keep">
-              모델 추론부터 실시간 파이프라인까지,<br className="hidden md:block" /> 현장에서 안정적으로 동작하는 AI를 만듭니다.
+            <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
+              AI 모델을 실제 서비스로 연결하는 엔지니어
             </h1>
 
-            <p className="text-lg md:text-xl font-mono mb-6">
+            <p className="text-base md:text-lg font-mono mb-6 text-primary font-semibold">
               <span className="bg-clip-text text-transparent" style={{ backgroundImage: "var(--gradient-primary)" }}>
                 {displayText}
               </span>
               <span className={`inline-block w-0.5 h-5 bg-primary ml-1 align-middle transition-opacity ${showCursor ? "opacity-100" : "opacity-0"}`} />
             </p>
 
-            <div className="text-base text-muted-foreground mb-8 max-w-xl leading-relaxed space-y-4 relative z-20">
-              <p>
-                의공학적 사고를 바탕으로 실시간 영상 AI, Data-Centric 모델링, Hybrid RAG 검색 고도화를 수행했습니다. 
-                단일 모델 성능에 그치지 않고 RTSP, MQTT, WebSocket, 백엔드 연동을 통해 AI 판단이 관제 화면과 실제 운영 흐름까지 신뢰성 있게 연결되는 구조를 설계합니다.
-              </p>
-            </div>
-            
-            <div className="flex flex-wrap gap-2 mb-10 relative z-20">
-              <span className="tech-tag">PyTorch · OpenCV · YOLO</span>
-              <span className="tech-tag">Hybrid RAG · BM25 · Vector Search</span>
-              <span className="tech-tag">FastAPI · RTSP · MQTT · WebSocket</span>
-              <span className="tech-tag">React · TypeScript</span>
+            <p className="text-base md:text-lg text-foreground/80 mb-8 leading-relaxed font-normal max-w-xl">
+              의공학 기반의 의료 AI 프로젝트 경험을 바탕으로, 모델 학습부터 실시간 추론, 이벤트 파이프라인, 관제 화면 연동까지 구현합니다.
+            </p>
+
+            {/* Accomplishments Bullet Points */}
+            <ul className="text-sm md:text-base text-muted-foreground mb-8 max-w-xl space-y-3.5 relative z-20 leading-[1.75] font-light">
+              <li className="flex items-start gap-2.5">
+                <span className="text-primary font-bold mt-0.5">•</span>
+                <span>
+                  <strong className="font-semibold text-foreground">[의료 AI]</strong> 모델 학습부터 실시간 추론, 관제 화면 연동까지 풀파이프라인 구축 경험
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="text-primary font-bold mt-0.5">•</span>
+                <span>
+                  <strong className="font-semibold text-foreground">[성능 최적화]</strong> RF-DETR 기반 용종 검출: <strong className="font-semibold text-primary">mAP@50 86.2%</strong>, <strong className="font-semibold text-primary">22+ FPS</strong> 달성
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <span className="text-primary font-bold mt-0.5">•</span>
+                <span>
+                  <strong className="font-semibold text-foreground">[데이터 처리]</strong> RTSP &rarr; MQTT &rarr; WebSocket으로 이어지는 실시간 지능형 관제 시스템 설계
+                </span>
+              </li>
+            </ul>
+
+            {/* Categorized Tech Stack Tags */}
+            <div className="space-y-3.5 mb-10 relative z-20 max-w-xl border-t border-border/60 pt-6">
+              <div className="flex items-center gap-3 text-sm">
+                <div className="flex items-center gap-1.5 font-semibold min-w-[100px] text-xs uppercase tracking-wider text-muted-foreground/80">
+                  <Brain size={14} className="text-primary/70" />
+                  <span>Model</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  <span className="tech-tag">RF-DETR</span>
+                  <span className="tech-tag">YOLO Pose</span>
+                  <span className="tech-tag">VAE</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 text-sm">
+                <div className="flex items-center gap-1.5 font-semibold min-w-[100px] text-xs uppercase tracking-wider text-muted-foreground/80">
+                  <Network size={14} className="text-primary/70" />
+                  <span>Pipeline</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  <span className="tech-tag">RTSP</span>
+                  <span className="tech-tag">MQTT</span>
+                  <span className="tech-tag">WebSocket</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 text-sm">
+                <div className="flex items-center gap-1.5 font-semibold min-w-[100px] text-xs uppercase tracking-wider text-muted-foreground/80">
+                  <Cpu size={14} className="text-primary/70" />
+                  <span>Stack</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  <span className="tech-tag">PyTorch</span>
+                  <span className="tech-tag">FastAPI</span>
+                  <span className="tech-tag">React</span>
+                  <span className="tech-tag">Spring Boot</span>
+                </div>
+              </div>
             </div>
 
             <div className="flex gap-3 flex-wrap relative z-20">
               <a href="#projects" className="minimal-btn-primary" onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}>
-                핵심 성과 보기
+                핵심 프로젝트 보기
               </a>
-              <a href="#about" className="minimal-btn-secondary" onClick={(e) => { e.preventDefault(); document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" }); }}>
-                개발자 소개
+              <a href="/print" target="_blank" rel="noopener noreferrer" className="minimal-btn-secondary">
+                PDF 제출용 보기
               </a>
             </div>
           </div>
 
-          {/* Profile Image (Right side on desktop) */}
-          <div className="flex justify-center lg:justify-start order-1 lg:order-1">
-            <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-[22rem] lg:h-[22rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: '0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)' }}>
+          {/* Profile Image (Right side on desktop, smaller with more margin) */}
+          <div className="flex justify-center lg:justify-end order-1 lg:order-2 lg:col-span-5">
+            <div className="relative w-32 h-32 md:w-40 md:h-40 lg:w-[13.5rem] lg:h-[13.5rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: '0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)' }}>
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <img
                 src="/profile.jpg"

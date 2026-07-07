@@ -39,7 +39,7 @@ const CompetenceSection = () => {
 
   return (
     <>
-      <section id="competence" className="py-24 md:py-32 section-alt">
+    <div className="pb-24 md:pb-32 pt-12 md:pt-16 section-alt">
         <div className="container">
           <ScrollAnimator>
             <div className="section-header">
@@ -226,7 +226,7 @@ const CompetenceSection = () => {
 
           </div>
         </div>
-      </section>
+      </div>
 
       {/* ══════════════════════════════════════════════════════════════════════
           Certificate Modal — Logic is preserved. Only styling has changed.

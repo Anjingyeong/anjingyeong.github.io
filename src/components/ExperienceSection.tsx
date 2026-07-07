@@ -21,18 +21,18 @@ const experiences: Experience[] = [
   },
   {
     title: "성균관대학교 컨소시엄 창의적 종합설계 경진대회",
-    award: "🏆 동상",
+    award: "동상",
     company: "산업통상자원부 / 공학교육혁신센터",
     period: "2025.11",
-    description: "RF-DETR 기반 실시간 대장 용종 검출 시스템을 단독 개발. 의료 AI 적용 가능성과 임상 활용성을 인정받아 동상을 수상했습니다.",
+    description: "RF-DETR 기반 실시간 대장 용종 검출 보조 프로토타입을 개발했습니다. 의료영상 객체 탐지, GUI 시각화, 사용 흐름 설계 경험을 바탕으로 동상을 수상했습니다.",
     icon: Trophy,
   },
   {
     title: "2025 캡스톤디자인 경진대회",
-    award: "🏆 금상",
+    award: "금상",
     company: "건양대학교",
     period: "2025.03 – 2025.10",
-    description: "Transformer 기반 시계열 의료영상 객체 탐지 모델 개발. 기존 대비 mAP +7%, 22 FPS 실시간 추론 성능을 달성해 금상을 수상했습니다.",
+    description: "RF-DETR 기반 의료영상 객체 탐지 모델을 Kvasir 데이터에 맞게 fine-tuning하고 OpenCV GUI로 확장했습니다. 실험 설정 기준 성능 개선과 구현 완성도를 인정받아 금상을 수상했습니다.",
     icon: Award,
   },
   {
@@ -58,17 +58,17 @@ const experiences: Experience[] = [
   },
   {
     title: "2024 창의혁신 DNA 산학협력",
-    award: "🏆 공학혁신상",
+    award: "공학혁신상",
     company: "산업통상자원부 / 공학교육혁신센터",
     period: "2024.03 – 2024.10",
-    description: "VAE 기반 유방암 병변 검출 프로토타입 개발 주도. 병변 복잡도별 Dice score 40~90%를 달성해 초음파 노이즈 환경에서의 모델 강건성을 입증, 공학혁신상을 수상했습니다.",
+    description: "VAE 기반 유방 초음파 이상 탐지 프로토타입을 개발했습니다. 재구성 오차와 동적 임계값 후처리로 라벨 부족 문제를 다룬 점을 인정받아 공학혁신상을 수상했습니다.",
     icon: Award,
   },
 ];
 
 const ExperienceSection = () => {
   return (
-    <section id="experience" className="section-alt py-24 md:py-32">
+    <section id="experience" className="section-alt pt-24 md:pt-32 pb-12 md:pb-16">
       <div className="container">
         <ScrollAnimator>
           <div className="section-header">

@@ -25,7 +25,7 @@
 
 - YOLO Pose 기반 keypoint 추출과 LSTM 시계열 행동 분류 구조를 이상행동 탐지 파이프라인의 핵심 설계로 정리. 단, Git 구현 검증 전에는 "구현 완료"로 단정하지 않음.
 - Recall, Precision, F1, FP, FN, latency, FPS는 실험 로그 확보 전까지 이력서에 수치로 기재하지 않음.
-- Langfuse/observability, VLM/Agentic 기능은 향후 확장 후보로만 표현.
+- Langfuse/observability 및 고도화 AI 기능은 향후 확장 후보로만 표현.
 
 ## LLM Wiki / Evidence Wiki / RAG
 
@@ -44,7 +44,7 @@
 ### 보수적 표현
 
 - Optional re-ranking은 고도화 후보로 표현.
-- GraphRAG는 문서 관계와 규모가 커졌을 때의 향후 확장 후보로만 표현.
+- 문서 관계 분석 고도화는 문서 관계와 규모가 커졌을 때의 향후 확장 후보로만 표현.
 - 실제 검색 인덱스 코드 전체와 배포 환경은 추가 검증 필요로 남김.
 
 ## RF-DETR 실시간 용종 검출
@@ -54,12 +54,12 @@
 - 대장 내시경 영상의 조명 변화, 반사광, 장벽 왜곡 문제를 Data-centric 객체 탐지 문제로 재정의.
 - Grid Distortion, Elastic Deform 기반 데이터 증강 파이프라인으로 의료 영상 왜곡을 학습 단계에 반영.
 - RF-DETR + DINOv2 기반 파인튜닝 및 OpenCV 기반 실시간 추론 시각화 구성.
-- 기존 자료 기준 mAP 약 7%p 개선, 22 FPS 이상 Edge 추론 성능 확보.
+- Kvasir Dataset을 Train 70% / Validation 20% / Test 10%로 분할하고, 실험 설정 기준 약 7% 성능 개선을 확인.
 - 제17회 건양대학교 캡스톤디자인 경진대회 금상/대상 및 전국 공학교육혁신 컨소시엄 동상 수상.
 
 ### 중간 표현
 
-- Structural Pruning을 적용해 Edge 환경의 연산 제약에 대응.
+- 후보 모델/FPS 비교를 통해 의료영상 입력 조건에서의 탐지 안정성을 점검.
 - 의료 영상 문제에서 모델 체급 확대보다 데이터 특성 기반 개선이 더 효과적이라는 판단 도출.
 
 ### 보수적 표현
@@ -72,7 +72,7 @@
 
 - 라벨링 비용이 높은 유방 초음파 환경을 정상 조직 기반 비지도 이상 탐지 문제로 재정의.
 - VAE 기반 정상 분포 학습 후 Reconstruction Error Map으로 병변 후보 영역 추출.
-- KLD/MSE 균형을 조정하는 커스텀 손실 함수와 Dynamic Threshold 후처리 적용.
+- MSE/KLD 손실 구조를 이해하고, Reconstruction Error Map과 Dynamic Threshold 후처리 기준 설계에 반영.
 - 로컬 README 기준 max 90% Dice Coefficient 달성, 2024 창의혁신 DNA 산학협력 공학혁신상 수상.
 
 ### 중간 표현

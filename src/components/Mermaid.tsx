@@ -15,12 +15,15 @@ export const Mermaid: React.FC<MermaidProps> = ({ chart }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     const renderChart = async () => {
       if (containerRef.current && chart) {
         try {
           containerRef.current.innerHTML = '';
           const id = `mermaid-${Math.random().toString(36).substring(7)}`;
           const { svg } = await mermaid.render(id, chart);
+          if (!isMounted || !containerRef.current) return;
           containerRef.current.innerHTML = svg;
         } catch (error) {
           console.error('Mermaid rendering failed:', error);
@@ -32,6 +35,10 @@ export const Mermaid: React.FC<MermaidProps> = ({ chart }) => {
     };
     
     renderChart();
+
+    return () => {
+      isMounted = false;
+    };
   }, [chart]);
 
   return (

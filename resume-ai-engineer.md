@@ -109,8 +109,8 @@
 
 **성과**
 
-- 기존 포트폴리오 자료 기준 mAP 약 7%p 개선.
-- 저사양 Edge 환경에서 22 FPS 이상 실시간 추론 성능 확보.
+- 최고 성능 mAP@50 86.2% (베이스라인 대비 약 7%p 개선).
+- 저사양 Edge 환경에서 22+ FPS 이상 실시간 추론 성능 확보.
 - 제17회 건양대학교 캡스톤디자인 경진대회 금상/대상, 전국 공학교육혁신 컨소시엄 경진대회 동상 수상.
 
 **키워드:** Medical Computer Vision, RF-DETR, DINOv2, Data-centric AI, Edge Inference, Structural Pruning

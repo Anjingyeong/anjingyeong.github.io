@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Automatic recording and patient-folder storage structure</title>
+  <desc id="desc">A diagram showing patient information, lesion detection for more than four seconds, automatic recording, status message output, and patient-based folder storage.</desc>
+  <rect width="1280" height="720" fill="#fbfcff"/>
+  <text x="92" y="94" fill="#172033" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800">Auto Recording and Patient Storage</text>
+  <text x="92" y="130" fill="#64748b" font-family="Inter, Arial, sans-serif" font-size="18">Patient metadata keeps inspection videos organized after a 4-second lesion detection trigger.</text>
+  <g font-family="Inter, Arial, sans-serif">
+    <rect x="96" y="206" width="250" height="132" rx="22" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="128" y="252" fill="#172033" font-size="22" font-weight="800">Patient Input</text>
+    <text x="128" y="286" fill="#64748b" font-size="17">ID · name · inspection date</text>
+    <text x="128" y="316" fill="#2563eb" font-size="16" font-weight="700">KV-2026-017</text>
+
+    <path d="M360 272h94" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <path d="M442 258l18 14-18 14" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="474" y="184" width="280" height="176" rx="24" fill="#eef4ff" stroke="#bfdbfe"/>
+    <text x="510" y="232" fill="#1d4ed8" font-size="22" font-weight="800">Detection Timer</text>
+    <text x="510" y="268" fill="#334155" font-size="17">lesion bounding box persists</text>
+    <rect x="510" y="292" width="188" height="42" rx="21" fill="#dbeafe" stroke="#93c5fd"/>
+    <text x="552" y="319" fill="#1d4ed8" font-size="18" font-weight="800">4.0 seconds</text>
+
+    <path d="M768 272h94" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+    <path d="M850 258l18 14-18 14" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <rect x="882" y="206" width="282" height="132" rx="22" fill="#ffffff" stroke="#bbf7d0"/>
+    <text x="916" y="252" fill="#166534" font-size="22" font-weight="800">Auto Recording</text>
+    <text x="916" y="286" fill="#64748b" font-size="17">clip saved with patient key</text>
+    <rect x="916" y="306" width="118" height="14" rx="7" fill="#22c55e"/>
+
+    <rect x="190" y="448" width="900" height="126" rx="24" fill="#172033"/>
+    <text x="232" y="496" fill="#f8fafc" font-size="23" font-weight="800">Status Message</text>
+    <text x="232" y="532" fill="#cbd5e1" font-size="18">Recording started · patient folder: KV-2026-017 / 2026-07-04</text>
+    <rect x="760" y="478" width="278" height="58" rx="16" fill="#f8fafc"/>
+    <text x="790" y="514" fill="#172033" font-size="17" font-weight="800">/records/KV-2026-017/</text>
+  </g>
+</svg>

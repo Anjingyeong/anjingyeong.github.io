@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
-  { label: "01. 홈", href: "#home" },
-  { label: "02. 프로젝트", href: "#projects" },
-  { label: "03. 기술", href: "#skills" },
-  { label: "04. 경력", href: "#experience" },
-  { label: "05. 인증", href: "#competence" },
-  { label: "06. 소개", href: "#about" },
-  { label: "07. 연락", href: "#contact" },
+  { label: "Home", href: "#home" },
+  { label: "Projects", href: "#projects" },
+  { label: "Skills", href: "#skills" },
+  { label: "Awards & Experience", href: "#experience" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const Header = () => {
@@ -46,7 +44,7 @@ const Header = () => {
       style={{ height: "var(--header-height)" }}
     >
       <div className="container flex items-center justify-between h-full">
-        <span className="text-lg font-bold text-foreground tracking-tight font-mono">&lt;안진경의 포트폴리오&gt;</span>
+        <span className="text-lg font-bold text-foreground tracking-tight font-sans">An Jin Gyeong</span>
 
         <nav className="hidden md:flex gap-6 items-center">
           {navItems.map((item) => (

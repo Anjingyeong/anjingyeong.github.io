@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">RF-DETR real-time colonoscopy lesion detection GUI</title>
+  <desc id="desc">A prototype OpenCV GUI showing a colonoscopy frame with bounding boxes, patient fields, input controls, status messages, and automatic recording state.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#eef4ff"/>
+      <stop offset="0.55" stop-color="#f8fbff"/>
+      <stop offset="1" stop-color="#f3efff"/>
+    </linearGradient>
+    <linearGradient id="scope" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#513235"/>
+      <stop offset="0.45" stop-color="#c47a6d"/>
+      <stop offset="1" stop-color="#f2b098"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="22" flood-color="#1d2b4f" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect x="72" y="58" width="1136" height="604" rx="28" fill="#ffffff" stroke="#d8e2f2" filter="url(#shadow)"/>
+  <rect x="72" y="58" width="1136" height="62" rx="28" fill="#172033"/>
+  <rect x="72" y="94" width="1136" height="26" fill="#172033"/>
+  <text x="108" y="98" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">RF-DETR Colonoscopy Assistant</text>
+  <text x="108" y="147" fill="#64748b" font-family="Inter, Arial, sans-serif" font-size="16">OpenCV GUI · Webcam / External Camera / Video File</text>
+
+  <rect x="108" y="176" width="742" height="416" rx="22" fill="#111827"/>
+  <ellipse cx="479" cy="384" rx="292" ry="169" fill="url(#scope)"/>
+  <path d="M219 364c62-105 172-150 321-142 97 6 185 45 228 106-58-42-131-52-211-39-92 15-162 58-238 72-45 8-79 8-100 3z" fill="#e3a292" opacity="0.78"/>
+  <path d="M274 465c68 49 172 62 292 32 63-16 123-49 167-88-41 82-133 131-250 139-92 6-163-19-209-83z" fill="#7b403e" opacity="0.68"/>
+  <circle cx="548" cy="348" r="48" fill="#f8c5a6" opacity="0.92"/>
+  <circle cx="548" cy="348" r="22" fill="#b8575b"/>
+  <rect x="486" y="286" width="124" height="124" rx="12" fill="none" stroke="#38bdf8" stroke-width="6"/>
+  <rect x="621" y="432" width="86" height="74" rx="10" fill="none" stroke="#a78bfa" stroke-width="5"/>
+  <text x="486" y="274" fill="#e0f2fe" font-family="JetBrains Mono, Consolas, monospace" font-size="19" font-weight="700">polyp 0.91</text>
+  <text x="621" y="423" fill="#ede9fe" font-family="JetBrains Mono, Consolas, monospace" font-size="17" font-weight="700">polyp 0.74</text>
+
+  <rect x="108" y="606" width="742" height="28" rx="14" fill="#eaf2ff"/>
+  <circle cx="131" cy="620" r="7" fill="#2563eb"/>
+  <text x="150" y="625" fill="#1e3a8a" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="600">Status: lesion detected for 4.2s · auto recording started</text>
+
+  <rect x="884" y="176" width="288" height="416" rx="22" fill="#f8fafc" stroke="#d8e2f2"/>
+  <text x="910" y="217" fill="#172033" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Patient Information</text>
+  <text x="910" y="254" fill="#64748b" font-family="Inter, Arial, sans-serif" font-size="14">Patient ID</text>
+  <rect x="910" y="264" width="236" height="42" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="930" y="291" fill="#334155" font-family="JetBrains Mono, Consolas, monospace" font-size="16">KV-2026-017</text>
+  <text x="910" y="337" fill="#64748b" font-family="Inter, Arial, sans-serif" font-size="14">Input Source</text>
+  <rect x="910" y="347" width="112" height="38" rx="10" fill="#dbeafe" stroke="#93c5fd"/>
+  <text x="936" y="371" fill="#1d4ed8" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700">Camera</text>
+  <rect x="1034" y="347" width="112" height="38" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="1063" y="371" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700">Video</text>
+  <text x="910" y="424" fill="#64748b" font-family="Inter, Arial, sans-serif" font-size="14">Detection Summary</text>
+  <rect x="910" y="438" width="236" height="82" rx="14" fill="#ffffff" stroke="#d8e2f2"/>
+  <text x="930" y="467" fill="#172033" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">2 candidates</text>
+  <text x="930" y="496" fill="#64748b" font-family="Inter, Arial, sans-serif" font-size="15">max confidence 0.91</text>
+  <rect x="910" y="540" width="236" height="38" rx="19" fill="#dcfce7" stroke="#86efac"/>
+  <circle cx="933" cy="559" r="7" fill="#16a34a"/>
+  <text x="952" y="565" fill="#166534" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700">Recording to patient folder</text>
+</svg>

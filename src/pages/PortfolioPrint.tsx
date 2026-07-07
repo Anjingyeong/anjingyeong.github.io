@@ -68,7 +68,8 @@ const PortfolioPrint = () => {
           <p className="text-[8.5pt] text-slate-700 leading-relaxed">
             의공학 기반의 의료 AI/컴퓨터 비전 개발 경험과 React, Spring Boot 기반 웹 풀스택 역량을 결합해,
             AI 모델이 실제 서비스 화면과 백엔드 이벤트 흐름 안에서 동작하는 구조를 구현하는 개발자를 지향합니다.
-            실시간 데이터 흐름, API 연동, 알림 파이프라인을 안정적으로 연결하는 데 관심이 있습니다.
+            <strong> Train/Val/Test 분할, Dynamic Threshold 후처리, RTSP-MQTT-WebSocket 연동</strong>처럼
+            실시간 데이터 흐름과 알림 파이프라인을 안정적으로 연결하는 데 관심이 있습니다.
           </p>
         </div>
 
@@ -221,7 +222,7 @@ const PortfolioPrint = () => {
             <span className="text-xs text-slate-500 font-mono">2025.03 – 2025.11</span>
           </div>
           <p className="text-[7.5pt] text-slate-500 font-semibold mb-1.5">
-            Python, PyTorch, RF-DETR, DINOv2, OpenCV
+            Python, PyTorch, RF-DETR, DINOv2, OpenCV, Kvasir Dataset
           </p>
           <div className="print-grid-3 gap-x-4">
             <div>
@@ -233,13 +234,13 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Role / Contribution</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                Grid Distortion, Elastic Deform 기반 데이터 증강과 Structural Pruning 기반 모델 경량화를 적용했습니다.
+                Kvasir Dataset을 Train 70% / Validation 20% / Test 10%로 분할하고, RF-DETR 학습과 fine-tuning을 담당했습니다.
               </p>
             </div>
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Result / Outcome</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                베이스라인 대비 mAP 약 7%p 개선, Edge GPU 22+ FPS 확보. 2025 캡스톤디자인 경진대회 금상 · 성균관대 컨소시엄 동상.
+                mAP@50 86.2% (베이스라인 대비 약 7%p 개선) 및 22+ FPS 실시간 추론 달성. 건양대 금상 · 전국 컨소시엄 동상.
               </p>
             </div>
           </div>
@@ -266,7 +267,7 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Role / Contribution</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                VAE 기반 비지도 이상 탐지 파이프라인을 구성하고, KLD·MSE 커스텀 손실 함수와 Dynamic Threshold 후처리를 구현했습니다.
+                유방 초음파 데이터 전처리와 Reconstruction Error Map 생성, Dynamic Threshold 후처리 알고리즘 개발을 담당했습니다.
               </p>
             </div>
             <div>

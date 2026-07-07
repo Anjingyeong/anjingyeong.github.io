@@ -42,7 +42,7 @@ const SkillsSection = () => {
       <div className="container">
         <ScrollAnimator>
           <div className="section-header">
-            <h2>핵심 기술 역량</h2>
+            <h2>Skills</h2>
           </div>
         </ScrollAnimator>
 
