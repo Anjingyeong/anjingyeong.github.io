@@ -1,206 +1,137 @@
-# AI 엔지니어 프로젝트 중심 이력서 (AI Engineer Resume Draft)
+# RTSP 기반 실시간 AI 안전관리 시스템을 구현한 융합보안 개발자 (An Jin Gyeong)
+
+- Email: anjin0910@gmail.com
+- GitHub: https://github.com/Anjingyeong
+- Portfolio: https://anjingyeong.github.io
 
 ---
 
-## 1. 이력서 요약 (Resume Summary)
+## 1. 프로필 요약 (Profile Summary)
 
-- **실시간 비전 파이프라인과 서비스 흐름을 함께 다루는 AI 엔지니어**입니다. 의공학적 분석 사고를 바탕으로 단일 모델 성능(mAP, Dice Coefficient)에 그치지 않고, RTSP/MQTT/WebSocket과 같은 실시간 파이프라인 및 백엔드/프론트엔드 연동을 통해 AI 결과가 실제 관제 화면과 서비스 운영으로 이어지는 구조를 설계해 왔습니다.
-- **Data-Centric AI 및 실용적 기술 고도화를 지향**합니다. 의료 컴퓨터 비전 프로젝트에서 Grid Distortion/Elastic Deform 기반 데이터 증강과 Dynamic Threshold 후처리를 적용해 의료영상 입력 조건 변화에 대응하는 탐지 흐름을 구축했습니다.
-- **지식 자산화 및 RAG 검색 고도화 경험**을 통해 프로젝트 실험 기록, 오류 해결, 의사결정 근거를 Evidence Wiki 구조로 체계화했습니다. Metadata Filtering, BM25, Vector Search, RRF 기반 Hybrid RAG 구조를 Cloudflare Pages/Workers 호환 lightweight 아키텍처로 구현하여 exact keyword 검색 품질과 답변 출처 추적성을 높였습니다.
-- 사람의 생명과 직결되는 의료 AI 및 사람의 안전을 보조하는 스마트 관제 시스템 프로젝트를 경험하며, **안정적이고 신뢰 가능한 AI 서비스 구축**에 깊은 관심을 가지고 있습니다.
+의공학 기반의 영상 AI 경험을 바탕으로 RTSP/CCTV 환경에서 실시간 이상행동 탐지 및 관제 이벤트 파이프라인을 구현했습니다. YOLO Pose, ByteTrack, LSTM을 활용한 행동 분석 모델을 구성하고, 추론 결과를 MQTT로 발행하여 Spring Boot 백엔드와 WebSocket, React 대시보드까지 연결하는 End-to-End 관제 구조를 설계했습니다. frameId/timestamp 기반 AI Payload와 OverlaySyncBuffer를 적용하여 영상 프레임과 탐지 오버레이의 정합성을 확보했으며, 다중 카메라 환경에서 worker 동적 할당과 stale stream 자동 복구 흐름을 구현했습니다. RF-DETR 객체 탐지와 VAE 비지도 이상탐지 프로젝트를 통해 오탐 제어, 데이터 증강, Dynamic Threshold 후처리 경험을 추가로 보유하고 있습니다.
 
 ---
 
 ## 2. 핵심 기술 역량 (Core Technical Competencies)
 
-### 📌 AI / Computer Vision
-- **YOLO Pose & LSTM 기반 행동 판단:** RTSP CCTV 실시간 스트림 환경에서 사람의 keypoint를 추출하고 시간 흐름에 따른 낙상·실신 이상행동 판단 파이프라인 설계 및 추론 흐름 구성.
-- **RF-DETR & DINOv2 객체 탐지:** Kvasir 대장 내 용종 이미지를 **Train 70% / Validation 20% / Test 10%**로 분할하고, 의료영상 도메인에 맞게 RF-DETR 모델을 fine-tuning.
-- **VAE 기반 비지도 이상 탐지 (Anomaly Detection):** 주석 라벨이 부족한 유방 초음파 환경에서 정상 데이터 분포를 학습하고 차영상 Reconstruction Error Map 및 Dynamic Threshold 후처리를 적용해 병변 영역 분할.
+### 📌 실시간 RTSP/CCTV 관제 파이프라인
+- **CCTV 기반 이상행동 탐지:** RTSP 스트림에서 YOLO26n-pose로 사람의 bbox와 17개 COCO keypoint를 추출하고, ByteTrack으로 track별 연속성을 유지하며, LSTM으로 낙상·실신 등 시계열 이상행동을 분류하는 AI 추론 파이프라인을 구성함.
+- **모델 선택 근거:** 6개 YOLO pose 모델을 downstream LSTM 기준으로 비교하고, 실신 미탐 방지(Faint Recall 우선) 정책에 따라 yolo26n-pose(Faint Recall 0.750877, FN 142로 최저)를 선택함.
+- **스트림 중계 및 worker 상태 관리:** MediaMTX 기반 RTSP 스트림 프록시, 카메라 채널별 독립 worker 동적 할당, stale stream 감지 및 재시작 흐름을 구현함.
 
-### 📌 Data / Experiment Management
-- **도메인 특화 데이터 증강 (Data-Centric):** Albumentations, OpenCV 기반 Grid Distortion 및 Elastic Deform 기법을 활용하여 내시경 장벽 왜곡과 형태학적 피처 학습 유도.
-- **오탐/미탐 (FP/FN) 분석 및 평가:** Precision, Recall, F1-Score, mAP, Dice Coefficient 지표 분석을 통해 threshold 정책을 검토하고, 승인된 real error 후보 기반 hard negative 재학습 파이프라인 설계.
-- **Evidence-Based Knowledge Management:** 실험 노이즈와 파라미터 변경 기록을 정규화하고 metadata(title, category, updatedAt, summary, tags, order, sourcePath, sectionTitle)를 포함한 chunk로 지식 자산화.
+### 📌 관제 이벤트 전송 및 프레임 동기화
+- **프레임-오버레이 정합성:** RTSP Reader/Inference 스레드를 분리하고 Bounded CameraFrameQueue(drop-old, maxsize=3)를 도입하여 다중 카메라 환경의 프레임 지연 누적을 차단함.
+- **동기화 메타데이터 설계:** frameId, capturedAtMs, processedAtMs, publishedAtMs를 AI Payload에 포함(schemaVersion 1.1)하고, cameraLoginId별 독립 OverlaySyncBuffer/FrameSyncBuffer를 구현하여 영상 프레임과 탐지 오버레이의 시간 동기화를 확보함.
+- **이벤트 메시징 연동:** MQTT `safety/events` topic으로 AI 이벤트를 발행하고, Spring Boot 백엔드에서 camera scope를 resolve한 뒤 WebSocket/STOMP로 관제 대시보드에 실시간 브로드캐스트하는 구조를 연동함.
 
-### 📌 Backend / Streaming / Infrastructure
-- **실시간 스트리밍 & 이벤트 아키텍처:** RTSP 영상 스트림 수신, WebRTC/HLS 송출 구조 및 MQTT Publish-Subscribe 메시지 브로커를 활용한 AI 추론 payload 발행 및 WebSocket 대시보드 알림 연동.
-- **프레임 동기화 & Evidence Chain:** 영상 프레임과 추론 메타데이터 간 어긋남 방지를 위해 frameId, timestamp, OverlaySyncBuffer 개념 적용 및 추적성 확보.
-- **고성능 백엔드 연동:** Spring Boot, JPA, MySQL, STOMP 환경에서 API Polling 구조를 WebSocket Push 방식으로 전환하여 DB I/O 부하 절감 및 상태 동기화 구현.
+### 📌 탐지 모델 학습 및 오탐 제어
+- **데이터 증강:** Grid Distortion, Elastic Deformation을 활용하여 영상 도메인의 기하학적 왜곡과 조명 변화를 학습 데이터에 반영함.
+- **비지도 이상탐지:** VAE 기반 정상 패턴 학습, Reconstruction Error Map 생성, Dynamic Threshold 후처리로 라벨 부족 환경의 이상 탐지 구조를 설계함.
 
-### 📌 Frontend / Portfolio / Documentation
-- **대시보드 UI & 정적 배포 호환:** React, TypeScript, Tailwind CSS, Streamlit 기반 AI 분석 결과 시각화 및 정적 웹 배포 (Cloudflare Pages/Workers 호환).
-- **자동화 검증 & AI-Native Workflow:** Antigravity, Codex 등 AI 보조 도구를 활용하되 구현 제약과 검증 기준을 명확히 정의하고, Vitest, ESLint, npm build를 통한 코드 검증 프로세스 내재화.
+### 📌 웹서비스 배포 및 기본 접근 제어
+- JWT 인증/CORS 설정 기반 API 접근 통제, WebSocket/STOMP Pub-Sub 실시간 상태 동기화, Cloudflare Pages/Workers 환경 정적 배포 경험 보유.
 
 ---
 
-## 3. 주요 프로젝트 경험 (Key Project Experience)
+## 3. 주요 프로젝트 (Main Projects)
 
-### 1) AI 기반 스마트 안전 관제 시스템 (SK쉴더스 5기)
-- **프로젝트 개요:** RTSP 기반 CCTV 영상 스트림에서 낙상·위험 행동을 실시간으로 포착하고, MQTT/WebSocket 이벤트로 관제 대시보드까지 전달하는 AI 관제 보조 시스템 프로젝트.
-- **담당 역할:** AI 추론 파이프라인 및 이벤트 데이터 흐름 설계, 오탐/미탐 분석 관점 문서화, 실시간 파이프라인 계층 분리.
-- **문제 상황:** 관제자의 24시간 집중력 한계 및 기존 단순 탐지 알림의 근거 부족 문제. 영상 프레임과 이벤트 발행, UI 알림 시점이 일치하지 않아 오탐/미탐 원인 분석이 어려움.
-- **주요 구현:**
-  - **[구현 완료/설계]** RTSP 영상 입력 수신, FastAPI 기반 AI 추론 서버 방향 및 MQTT/WebSocket 기반 이벤트 브로드캐스트 전달 구조 구성.
-  - **[실험/검증 진행]** YOLO Pose 기반 keypoint 추출과 LSTM 시계열 행동 분류 판단 파이프라인 조합, ByteTrack 기반 다중 객체 추적 상태(`active_tracks`) 및 cameraLoginId 멀티 카메라 동시 처리 연동 [ByteTrack 세부 코드는 확인 필요].
-  - **[구현/개선 진행]** frameId, timestamp, OverlaySyncBuffer를 활용한 프레임 동기화 및 evidence chain 설계로 영상과 알림 간 시간차 보정.
-  - **[향후 계획/개선]** FP/FN 사례 수집 후 승인된 real error 후보 중심 hard negative 재학습 파이프라인, camera별 threshold 동적 적용 정책, Langfuse 기반 Observability 도입.
-- **성과 및 검증:**
-  - 실시간 영상 탐지 파이프라인을 단순 모델 작성을 넘어 "입력-추론-이벤트-대시보드"의 계층 구조로 재정의.
-  - *정량 성과(Precision/Recall/F1/FPS):* [확인 필요 - 로컬 실험 로그 및 repo 코드 추가 검증 후 보강 예정].
-- **사용 기술:** Python, FastAPI, Docker, RTSP, WebRTC, MQTT, WebSocket, YOLO Pose, LSTM, OpenCV, React
-- **이력서 Bullet:**
-  - RTSP 영상 스트림, YOLO Pose keypoint 추출, LSTM 시계열 분류를 연결하여 실시간 이상행동 관제 파이프라인 구성
-  - 영상 스트림과 이벤트 메타데이터 경로를 분리(MQTT/WebSocket)하여 관제 대시보드 알림 지연 최소화 및 시스템 가용성 확보
-  - frameId와 timestamp 기반 증거 연결(Evidence Chain) 및 OverlaySyncBuffer 구조를 설계하여 영상과 알림 간 프레임 동기화 개선
+### 1) RTSP 기반 실시간 AI 안전관리 및 관제 시스템
+**기간:** 2026.05 – 2026.07
+**소속:** SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기
+**도메인:** 융합보안 / 실시간 영상 관제 / 이상행동 탐지
 
----
+**문제**
+- 다수 CCTV를 동시에 감시하는 환경에서 관제자의 집중도에 의존하는 방식으로는 이상행동을 놓칠 구조적 위험이 컸음.
+- 단일 루프 구조에서 RTSP 디코딩·AI 추론·MQTT 전송이 순차 처리되면서 다중 카메라 운영 시 RTSP 버퍼에 과거 프레임이 누적되어 탐지 오버레이가 현재 화면과 수 초 이상 어긋나는 지연 문제가 발생함.
+- 백엔드 Java DTO의 엄격한 JSON 바인딩으로 인해 AI에서 발행한 frameId, capturedAtMs 등 동기화 메타데이터가 프론트엔드까지 전달되지 않고 중간에 유실되는 문제가 있었음.
+- 다중 카메라 환경에서 publisher 중복 실행, port 충돌, worker 과다 생성으로 인해 WebRTC 스트림이 멈추거나 HLS fallback으로 전환되는 불안정 상황이 발생함.
 
-### 2) LLM Wiki / Hybrid RAG 문서 검색 시스템
-- **프로젝트 개요:** 프로젝트 과정의 실험 기록, 트러블슈팅, 의사결정 근거를 검색 가능한 지식 자산으로 전환하고 답변 근거 추적성을 확보한 RAG 검색 고도화 프로젝트.
-- **담당 역할:** RAG 검색 아키텍처 설계, Hybrid Search 및 Metadata Filtering 구현, 검색 인덱스 정규화 및 검증.
-- **문제 상황:** 문서가 증가함에 따라 단순 Vector Search만으로는 `cameraLoginId`, `frameId`, `MQTT`, `YOLO26n`, `run_registered_cameras.py` 같은 exact keyword 및 특수 코드 식별자를 정확히 찾지 못하는 한계 발생.
-- **주요 구현:**
-  - **[Hybrid RAG 고도화]** 단순 벡터 검색 방식에서 Metadata Filtering, BM25 Keyword Search, Vector Search, Reciprocal Rank Fusion(RRF) 기반 결과 병합 구조로 고도화.
-  - **[Metadata 구조화]** 문서 청크마다 `title`, `category`, `updatedAt`, `summary`, `tags`, `order`, `sourcePath`, `sectionTitle` 메타데이터를 정규화하여 포함.
-  - **[LLM Context 증강]** 최종 LLM Prompt Context에 문서 제목, 카테고리, 섹션, 수정일, source path, 본문 chunk text를 정교하게 맵핑해 답변 근거 추적성 확보 및 환각 방지.
-  - **[Lightweight 아키텍처]** 대규모 문서 관계 분석이나 Elasticsearch 같은 무거운 외부 서버 없이 Cloudflare Pages/Workers 기반 정적 배포 환경과 호환되는 lightweight 구조로 정리.
-  - **[자동화 검증]** `npm test` (Vitest), `npm run lint` (ESLint), `npm run build`, `npm run wiki:index` 명령으로 정적 검색 인덱스와 포트폴리오 회귀를 검증.
-- **성과 및 검증:**
-  - 정확한 코드 식별자 및 키워드 검색 정확도 향상 및 LLM 답변의 출처/섹션 추적성 확보.
-  - `npm test` 100% PASS, `npm run build` 성공 및 정적 에셋 패키징 완료.
-- **사용 기술:** RAG, Vector Search, BM25, RRF, TypeScript, Node.js, Cloudflare Workers, Python, Vitest
-- **이력서 Bullet:**
-  - 단순 Vector Search의 키워드 누락 한계를 해결하기 위해 BM25, Vector Search, Metadata Filtering, RRF를 결합한 Hybrid RAG 검색 파이프라인 구현
-  - RAG 청크 단위에 title, category, sourcePath, sectionTitle 등 8종 메타데이터를 구조화하여 LLM 답변의 출처 추적성 확보 및 exact keyword(`cameraLoginId`, `MQTT` 등) 검색 품질 보완
-  - 별도 전용 검색 서버(Elasticsearch 등) 없이 Cloudflare Pages/Workers 환경과 호환되는 lightweight 하이브리드 검색 구조로 정리하고 정적 인덱스 생성 검증 완료
+**해결**
+- RTSP 입력 → MediaMTX → Python AI Worker → MQTT → Spring Boot → WebSocket → React 대시보드로 이어지는 End-to-End 실시간 관제 이벤트 파이프라인을 설계 및 구현함.
+- AI Worker 내에서 RTSP Reader 스레드와 Inference 스레드를 분리하고, Bounded CameraFrameQueue(maxsize=3, drop-old 정책)를 적용하여 추론 속도가 스트림 수신보다 느릴 때 과거 프레임이 누적되는 문제를 차단함.
+- YOLO26n-pose로 사람의 bbox와 17개 COCO keypoint를 추출하고, ByteTrack으로 프레임 간 동일 인물의 track을 유지하며, LSTM(sequence_length=30, stride=15, input_size=51)으로 시계열 이상행동을 분류하는 흐름을 구성함. 6개 pose 모델을 downstream LSTM 기준으로 비교하고, 실신 미탐 방지 정책에 따라 Faint Recall이 가장 높은 yolo26n-pose를 선택함.
+- AI Payload에 frameId, capturedAtMs, processedAtMs, publishedAtMs 타임스탬프를 포함(schemaVersion 1.1)하고, 백엔드 DTO를 확장하여 동기화 필드가 프론트엔드까지 전달되도록 개선함. cameraLoginId별 독립 OverlaySyncBuffer와 FrameSyncBuffer를 구현하여 capturedAtMs 기반 최근접 매칭으로 영상 프레임과 탐지 오버레이의 시간 정합성을 확보함.
+- MQTT `safety/events` payload에는 AI 판단 메타데이터만 담고, 사용자·기관 권한 scope는 Spring Boot 백엔드에서 cameraLoginId 기반으로 resolve하여 관제 대시보드에 WebSocket/STOMP로 브로드캐스트함.
+- WebRTC WHEP를 primary 관제 영상 경로로, HLS를 fallback으로 구성하여 저지연 관제 화면 재생 구조를 설계함. 카메라 채널별 독립 worker에 process allowlist를 적용하여 중복 실행과 port 충돌을 방지함.
+
+**결과**
+- LSTM 최종 검증(stratified source video split 기준 test 2,784개)에서 threshold 0.5 기준 Faint Recall 0.774547, F1 0.756179, Accuracy 0.773186을 달성함.
+- overlay-sync 계약 및 동작 시뮬레이션 테스트 44개가 모두 PASS하고, Backend Gradle 빌드와 Frontend TypeScript 빌드가 성공함.
+- 낙상·실신 등 이상행동 이벤트를 실시간으로 탐지하여 관제 대시보드 알림으로 전달하는 통합 파이프라인 동작을 검증함.
+- 특정 스트림 장애가 전체 관제 흐름에 영향을 주지 않도록 worker 상태를 채널별로 분리 관리하는 구조를 구현함.
+
+**사용 기술:** Python, Spring Boot, React, Mosquitto (MQTT), WebSocket/STOMP, MediaMTX, YOLO26n-pose, ByteTrack, LSTM, WebRTC, Docker
 
 ---
 
-### 3) RF-DETR 기반 실시간 대장 내 용종 검출 시스템
-- **프로젝트 개요:** Kvasir 대장 내 용종 데이터를 활용해 RF-DETR 기반 모델을 fine-tuning하고, OpenCV GUI에서 카메라·영상 파일 입력을 지원한 의료 비전 프로젝트.
-- **담당 역할:** 데이터 전처리, **Train 70% / Validation 20% / Test 10%** 분할 구성, RF-DETR 모델 학습 및 fine-tuning, 후보 모델/FPS 비교.
-- **문제 상황:** 내시경 영상 특유의 기하학적 장벽 왜곡과 빛 반사로 인해 기존 모델의 정확도가 정체되고 오버피팅 발생. 임상 엣지 환경에서 실시간 추론 속도 확보 필요.
-- **주요 구현:**
-  - Kvasir 대장 내 용종 데이터를 학습/검증/평가 용도로 분리하고, 의료영상 입력 조건에 맞게 전처리.
-  - `Elastic Deformation`, `Grid Distortion` 증강을 적용해 점막 변형, 조명 변화, 화면 왜곡 상황을 학습 데이터에 반영.
-  - RF-DETR 탐지 모델을 fine-tuning하고 OpenCV 기반 검출 결과 시각화 흐름과 연결.
-- **성과 및 검증:**
-  - 최고 성능 mAP@50 86.2% (베이스라인 대비 약 7%p 개선) 및 22+ FPS 실시간 추론 성능을 확인.
-  - 🏆 제17회 건양대학교 캡스톤디자인 경진대회 금상 및 전국 공학교육혁신 컨소시엄 동상 수상.
-- **사용 기술:** Python, PyTorch, RF-DETR, DINOv2, OpenCV, Kvasir Dataset, Data Augmentation
-- **이력서 Bullet:**
-  - Kvasir 대장 내 용종 데이터를 **Train 70% / Validation 20% / Test 10%**로 분할하고 RF-DETR 모델을 fine-tuning
-  - Elastic Deformation, Grid Distortion 기반 증강과 후보 모델/FPS 비교를 통해 의료영상 입력 조건에서의 탐지 안정성을 점검
+### 2) RF-DETR 기반 실시간 객체 탐지 시스템 (대장 내시경 용종 검출)
+**기간:** 2025.03 – 2025.11
+**도메인:** 실시간 객체 탐지 / 오탐 제어 / GUI 시각화
+**GitHub:** https://github.com/Anjingyeong/RF-DETR-project
+
+**문제**
+- 내시경 영상 특유의 조명 변화, 빛 반사, 화면 왜곡으로 인해 일반 탐지 모델 학습 시 오버피팅이 발생하고 탐지 정확도가 불안정했음.
+- 실시간 추론 보조 환경에서 일정 수준 이상의 FPS 처리 속도를 확보해야 했음.
+
+**해결**
+- 영상 도메인 왜곡을 데이터 수준에서 대응하기 위해 Grid Distortion 및 Elastic Deformation 기반 증강 파이프라인을 구축함.
+- RF-DETR + DINOv2 구조를 Kvasir 데이터셋에 맞게 파인튜닝하고, confidence threshold 조정을 통해 오탐·미탐 균형을 개선함.
+- OpenCV 기반 탐지 결과 시각화 GUI 클라이언트를 개발하여 실시간 입력 영상 위에 검출 결과를 오버레이함.
+
+**결과**
+- Kvasir 테스트 데이터셋 기준 mAP@50 86.2% 달성, 베이스라인 대비 7%p 정확도를 개선함.
+- 22+ FPS의 실시간 추론 속도를 확보하여 영상 스트림 기반 탐지 보조 흐름을 검증함.
+- 제17회 건양대학교 캡스톤디자인 경진대회 금상/대상, 전국 공학교육혁신 컨소시엄 동상 수상.
+
+**사용 기술:** Python, PyTorch, RF-DETR, DINOv2, OpenCV, Albumentations, Kvasir Dataset
 
 ---
 
-### 4) VAE 기반 비지도 유방 초음파 이상 탐지 시스템
-- **프로젝트 개요:** 정밀 주석 라벨 수급이 어려운 의료 초음파 영상 문제를 정상 데이터 중심의 비지도 이상 탐지(Anomaly Detection)로 재정의하여 병변 영역을 분할한 프로젝트.
-- **담당 역할:** 유방 초음파 데이터 전처리, Reconstruction Error Map 생성, Dynamic Threshold 후처리 알고리즘 개발.
-- **문제 상황:** 전문의 주석 비용으로 인한 지도학습 라벨 데이터 부족 및 초음파 영상 특유의 음영 노이즈와 환자별 밝기 편차.
-- **주요 구현:**
-  - 정상 조직 데이터만 학습하는 VAE(Variational AutoEncoder) 기반 비지도 이상 탐지 흐름을 프로젝트에 적용.
-  - VAE 학습에 사용되는 MSE 재구성 오차와 KLD 잠재 공간 정규화 항의 역할을 이해하고, 후처리 단계의 기준 설계에 반영.
-  - 차영상 Reconstruction Error Map 생성 후 픽셀 분포 비율을 실시간 계산하는 `Dynamic Threshold` 후처리 알고리즘 개발.
-- **성과 및 검증:**
-  - 별도 병변 라벨 없이도 Dice Coefficient 기준 최대 90% 수준의 병변 분할 정밀도 달성.
-  - 🏆 2024 창의혁신 DNA 산학협력 공학혁신상 (산업통상자원부 장관 주관) 수상.
-- **사용 기술:** Python, TensorFlow, VAE, OpenCV, Reconstruction Error, Dynamic Threshold
-- **이력서 Bullet:**
-  - 의료 영상의 라벨 부족 한계를 극복하기 위해 정상 패턴 학습 기반 VAE 비지도 이상 탐지(Anomaly Detection) 흐름 적용
-  - 차영상 Reconstruction Error Map과 환자별 노이즈 편차를 보정하는 Dynamic Threshold 후처리 알고리즘을 개발하여 Dice Coefficient 90% 수준 달성 (공학혁신상 수상)
+### 3) VAE 기반 비지도 이상탐지 및 Dynamic Threshold 후처리 (유방 초음파)
+**기간:** 2024.03 – 2024.10
+**도메인:** 비지도 Anomaly Detection / Dynamic Threshold / 이상 영역 시각화
+**GitHub:** https://github.com/Anjingyeong/vae-breast-cancer-anomaly
+
+**문제**
+- 의료 영상 데이터는 이상 라벨이 부족하여 지도학습 기반 분류 모델 적용이 어려운 환경이었음.
+- 환자별 영상 특성 편차로 인해 고정 threshold 방식으로는 오탐 빈도를 제어하기 어려웠음.
+
+**해결**
+- 정상 데이터 패턴만 학습하는 VAE 기반 비지도 이상탐지 구조로 문제를 재정의하여, 라벨 없이 이상 영역을 탐지하는 흐름을 설계함.
+- VAE Reconstruction Error Map을 생성하고, 개별 입력 영상의 노이즈 편차를 자동 보정하는 Dynamic Threshold 후처리 알고리즘을 개발하여 오탐 변동을 줄이는 구조를 구현함.
+- 이상 영역을 시각화하여 탐지 결과를 직관적으로 확인할 수 있는 출력 구조를 설계함.
+
+**결과**
+- Reconstruction Error 기반 이상 영역 탐지 흐름과 Dynamic Threshold 후처리를 결합하여 탐지 안정성을 확인함.
+- 2024 창의혁신 DNA 산학협력 공학혁신상 (산업통상자원부 장관 주관) 수상.
+
+**사용 기술:** Python, TensorFlow, VAE, OpenCV, Dynamic Threshold
 
 ---
 
-### 5) FullCount - 실시간 KBO 티켓 에스크로 서비스 (백엔드 연동)
-- **프로젝트 개요:** 에스크로 거래 상태 전이 및 다자간 실시간 거래를 보장하는 실시간 웹 서비스 구축 프로젝트.
-- **담당 역할:** 백엔드 도메인 설계, STOMP/WebSocket 이벤트 구조 구현, JPA 동시성 및 상태 일관성 제어.
-- **주요 구현 및 성과:**
-  - 기존 HTTP API Polling 방식의 DB 병목을 해결하기 위해 WebSocket/STOMP Pub-Sub 메시지 브로커 도입.
-  - DB I/O 부하를 80% 절감하고, 상태 변경 브로드캐스팅 지연 시간을 0.1초 이내로 단축.
-- **사용 기술:** Spring Boot, JPA, MySQL, WebSocket, STOMP, React, JWT
-- **이력서 Bullet:**
-  - HTTP API Polling 방식을 STOMP/WebSocket 기반 Pub-Sub 이벤트 전달 구조로 전환했으며, DB I/O 80% 절감 수치는 제출 전 원본 측정 자료 확인 필요
+## 4. 기타 구현 경험 (Additional Implementation Experience)
+
+웹서비스 개발 과정에서 아래 접근 제어 및 배포 경험을 쌓았으며, 관제 시스템 백엔드 연동 및 배포 환경 구성에 참고 역량으로 활용함.
+
+- Cloudflare Pages/Workers 환경에 lightweight 웹서비스를 배포하고, 환경변수 기반 인증키 분리 관리 구조를 적용함.
+- Spring Boot 환경에서 JWT 인증 필터와 CORS 설정을 구성하여 프론트엔드-백엔드 간 API 접근 제어 흐름을 일원화함.
+- HTTP API Polling 구조를 WebSocket/STOMP 기반 Pub-Sub Push 구조로 전환하여 실시간 상태 동기화를 구현함.
 
 ---
 
-### 6) 포트폴리오 웹사이트 (Portfolio Website)
-- **프로젝트 개요:** 개인 프로젝트 및 기술 역량을 직관적으로 전달하는 React/TypeScript 기반 개인 포트폴리오 웹 애플리케이션.
-- **주요 구현:** Card-Modal 팝업 구조, Vitest 단위 테스트 및 ESLint 검증 자동화, 정적 배포 구조 구축.
-- **사용 기술:** React, TypeScript, Tailwind CSS, Vite, Vitest
+## 5. 학력 및 교육 (Education & Training)
+
+- **건양대학교 의공학과 학사 졸업**
+- **SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기** (2026.05 - 2026.07)
+  - 실시간 영상 처리, 딥러닝, 풀스택 서비스 연동 및 물리보안 연계 관제 시스템 구축 실무 수행
 
 ---
 
-## 4. 프로젝트별 이력서 Bullet (채용 플랫폼 바로 붙여넣기용)
+## 6. 수상 및 자격 (Awards & Certificates)
 
-### 🔹 AI 기반 스마트 안전 관제 시스템
-- RTSP CCTV 영상 스트림 수신부터 YOLO Pose keypoint 추출, LSTM 시계열 분류, MQTT/WebSocket 알림 전송까지 이어지는 실시간 AI 관제 파이프라인 구성
-- 영상 스트림과 알림 메타데이터 경로를 분리하고, frameId/timestamp 기반 Evidence Chain 및 OverlaySyncBuffer를 도입해 실시간 영상과 경보 UI 간 동기화 문제 개선
-- FP/FN 오탐·미탐 사례 분석을 기반으로 승인된 real error 후보를 수집하고, hard negative 재학습 파이프라인 및 동적 threshold 적용 정책 수립
-
-### 🔹 LLM Wiki / Hybrid RAG 문서 검색 시스템
-- 단순 Vector Search의 키워드 누락 한계를 보완하고자 Metadata Filtering, BM25 Keyword Search, Vector Search, RRF를 결합한 Hybrid RAG 파이프라인 구축
-- 청크 단위에 title, category, sourcePath, sectionTitle 등 8종 메타데이터를 정규화하여 포함하고 exact keyword(`cameraLoginId`, `MQTT` 등) 검색 정확도 및 LLM 답변의 출처 추적성 확보
-- 대규모 문서 관계 분석이나 Elasticsearch 등 무거운 인프라 없이 Cloudflare Pages/Workers 호환 lightweight 구조로 정리하고, Vitest 테스트 및 정적 인덱스 생성 검증 완료
-
-### 🔹 RF-DETR 기반 실시간 대장 내 용종 검출 시스템
-- 내시경 영상 특유의 광원 반사와 기하학적 왜곡을 보완하기 위해 Grid Distortion 및 Elastic Deform 기반 Data-Centric 증강 파이프라인을 도입하여 최고 성능 mAP@50 86.2% (약 7%p 개선) 및 22+ FPS 실시간 추론 성능 확보
-- Kvasir 대장 내 용종 데이터를 Train 70% / Validation 20% / Test 10%로 분할하고 RF-DETR 모델을 fine-tuning하여 최고 성능 mAP@50 86.2% (약 7%p 개선) 및 22+ FPS 실시간 추론 확인
-
-### 🔹 VAE 기반 비지도 유방 초음파 이상 탐지 시스템
-- 정밀 라벨 데이터 부족 문제를 해결하기 위해 정상 조직 데이터 기반 VAE 비지도 이상 탐지 흐름을 적용하고 유방 초음파 데이터 전처리를 담당
-- 차영상 Reconstruction Error Map과 환자별 노이즈 편차를 자동 보정하는 Dynamic Threshold 후처리를 적용하여 Dice Coefficient 90% 수준 달성 (산업통상자원부 장관 주관 공학혁신상 수상)
-
-### 🔹 FullCount - 실시간 KBO 티켓 에스크로 서비스
-- API Polling 방식의 DB 병목을 해결하기 위해 WebSocket/STOMP 기반 메시지 브로커를 적용했으며, DB I/O 80% 절감 및 0.1초 이내 동기화 수치는 제출 전 원본 측정 자료 확인 필요
-
----
-
-## 5. 자기소개서 활용 가능 소재 (Cover Letter Ideas)
-
-### 1) 지원동기: "모델 개발에 머물지 않고 실서비스 흐름을 잇는 AI 엔지니어"
-- **소재:** 의공학을 전공하며 기술이 실제 사람의 건강과 안전에 미치는 영향을 고민해 왔습니다. 모델의 정밀도 지표만 높이는 것에 그치지 않고, RTSP, MQTT, WebSocket, 백엔드 API 연동을 통해 AI 결과가 관제자의 화면과 현장 대응으로 전달되는 파이프라인에 매력을 느꼈습니다. 실시간 관제 및 비전 AI 분야에서 신뢰 가능한 서비스를 만드는 데 기여하고 싶습니다.
-
-### 2) 직무 역량: "도메인 데이터 특성에 맞춘 Data-Centric 문제 해결"
-- **소재:** 대장 내시경의 장벽 왜곡 문제에는 Elastic Deformation/Grid Distortion 증강을, 초음파 영상의 라벨 부족에는 VAE 비지도 학습과 Dynamic Threshold 후처리를 적용했습니다. 모델 크기만 키우기보다 데이터 특성과 평가 기준을 먼저 확인하는 공학적 접근법을 강점으로 가지고 있습니다.
-
-### 3) 문제 해결 경험: "검색 한계를 Hybrid RAG와 Metadata 구조화로 돌파"
-- **소재:** LLM Wiki 구축 중 단순 벡터 검색이 `cameraLoginId` 같은 정확한 변수명이나 기술 키워드를 짚어내지 못하는 문제를 발견했습니다. BM25와 Vector Search를 RRF로 결합하고 청크에 8종 메타데이터를 정규화하여 exact keyword 검색 성능과 답변의 출처 추적성을 함께 개선했습니다.
-
-### 4) 협업/성장 경험: "실험 기록과 의사결정 근거의 지식 자산화"
-- **소재:** AI 프로젝트의 오탐 분석이나 파라미터 변경 이력이 흩어지면 팀 전체의 재검증 비용이 커진다는 점을 배웠습니다. 이를 위해 Evidence Wiki 구조를 도입하고 테스트/빌드 자동화 프로세스(`npm test`, `npm run lint`)를 구축해 팀이 신뢰할 수 있는 개발 기반을 마련했습니다.
-
----
-
-## 6. 면접 대비 예상 질문 및 답변 방향
-
-### ❓ Q1. 스마트 안전 관제 프로젝트에서 YOLO Pose와 LSTM을 선택한 이유는 무엇인가요?
-- **답변 방향:** 2D Bounding Box 기반 객체 탐지만으로는 낙상이나 실신과 같은 시간 흐름 기반의 자세 변화를 구분하기 어렵습니다. 따라서 1차적으로 YOLO Pose를 통해 관절 Keypoint 데이터로 차원을 축소하여 데이터 량을 줄인 후, 시계열 특징을 학습하는 LSTM에 전달함으로써 추론 부하를 줄이면서도 temporal pattern을 포착하도록 설계했습니다.
-
-### ❓ Q2. LLM Wiki에서 Vector Search만 사용하지 않고 BM25와 Metadata Filtering을 추가한 이유는 무엇인가요?
-- **답변 방향:** Dense Vector Embedding은 의미적 유사성(semantic similarity)을 잡는 데는 강하지만, `cameraLoginId`, `frameId`, `YOLO26n` 등 특수 코드 식별자나 exact keyword에 대한 가중치가 옅어지는 단점이 있습니다. 키워드 매칭에 강한 BM25와 카테고리/섹션 기반 Metadata Filtering을 적용하고 RRF로 상위 결과를 재조합함으로써 정확한 코드 키워드 탐색률을 대폭 끌어올렸습니다.
-
-### ❓ Q3. RF-DETR 프로젝트에서 mAP 향상을 위해 모델 구조 변경 대신 데이터 증강을 고집한 이유는 무엇인가요?
-- **답변 방향:** 내시경 영상의 왜곡은 모델의 표현력 부족이라기보다 훈련 데이터셋과 실제 렌즈 왜곡 간의 distribution shift에서 오는 문제였습니다. 엣지 디바이스의 제한된 파라미터 예산을 지키면서 성능을 올리기 위해 모델 파라미터를 키우는 대신 `Grid Distortion`과 `Elastic Deform` 기법으로 데이터 중심(Data-Centric) 접근을 선택했습니다.
-
-### ❓ Q4. VAE 이상 탐지에서 Dynamic Threshold 후처리가 필요했던 이유는 무엇인가요?
-- **답변 방향:** 초음파 영상은 환자마다 기기 음영 및 장기 밀도가 달라 일률적인 Fixed Threshold를 적용하면 오탐(False Positive)이 급증합니다. 따라서 차영상 오차 맵(Reconstruction Error Map)에서 전체 픽셀 값의 통계적 분포 비율을 실시간으로 계산하는 Dynamic Threshold를 적용하여 영상별 노이즈 편차를 적응적으로 보정했습니다.
-
----
-
-## 7. 추가 보완 필요 항목 ([확인 필요] 마크 정리)
-
-이력서를 최종 제출하기 전, 아래 항목들에 대한 레포지토리 코드 및 테스트 로그 확인이 필요합니다.
-
-1. **스마트 안전 관제 정량 수치 확인 [확인 필요]:**
-   - 현재 문서에는 Precision, Recall, F1-Score, FPS, Latency 수치가 미확정 상태로 명시되어 있습니다. AI 레포 및 추론 서버 실험 로그를 확인하여 객관적 측정치 입력이 필요합니다.
-2. **ByteTrack 및 MQTT/WebRTC 코드 검증 [확인 필요]:**
-   - `run_registered_cameras.py`, MQTT payload schema, OverlaySyncBuffer 세부 구현 코드가 실제 레포에 커밋되어 있는지 확인 및 깃허브 링크 보강이 권장됩니다.
-3. **프로젝트 수행 기간 및 참여 비율 [확인 필요]:**
-   - SK쉴더스 부트캠프 팀 프로젝트의 정확한 팀원 수 및 본인의 코드 기여 비율(%)을 명시하면 채용담당자의 이해를 돕기 용이합니다.
-4. **RAG 검색 품질 QA 로그 [확인 필요]:**
-   - 샘플 질의의 실제 검색 결과, source 추적 로그, 정적 인덱스 생성 결과를 포트폴리오 첨부 자료로 연결하면 설득력이 강화됩니다.
-
----
-*Document Location: `docs/resume/ai-engineer-resume.md`*
+- 공학혁신상 — 2024 창의혁신 DNA 산학협력 (산업통상자원부 장관 주관)
+- 금상/대상 — 제17회 건양대학교 캡스톤디자인 경진대회
+- 동상 — 전국 공학교육혁신 컨소시엄 창의적 종합설계 경진대회
+- 의공학 전문 실무역량 인증 (의공학회)
+- 우수 소프트웨어 활용역량 인증 (한국SW산업협회)
+- 정보처리기사 필기 합격

@@ -130,15 +130,12 @@ const HeroSection = () => {
               <a href="#projects" className="minimal-btn-primary" onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}>
                 핵심 프로젝트 보기
               </a>
-              <a href="/print" target="_blank" rel="noopener noreferrer" className="minimal-btn-secondary">
-                PDF 제출용 보기
-              </a>
             </div>
           </div>
 
-          {/* Profile Image (Right side on desktop, smaller with more margin) */}
+          {/* Profile Image (Right side on desktop, enlarged for better visual balance) */}
           <div className="flex justify-center lg:justify-end order-1 lg:order-2 lg:col-span-5">
-            <div className="relative w-32 h-32 md:w-40 md:h-40 lg:w-[13.5rem] lg:h-[13.5rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: '0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)' }}>
+            <div className="relative w-44 h-44 md:w-56 md:h-56 lg:w-[18rem] lg:h-[18rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: '0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)' }}>
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <img
                 src="/profile.jpg"

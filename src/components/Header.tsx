@@ -63,14 +63,6 @@ const Header = () => {
               />
             </button>
           ))}
-          <a
-            href="/#/print"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-semibold text-primary bg-primary/10 hover:bg-primary/20 px-3 py-1.5 rounded-full transition-colors"
-          >
-            PDF 제출용 보기
-          </a>
         </nav>
 
         <button className="md:hidden text-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
@@ -90,14 +82,6 @@ const Header = () => {
               {item.label}
             </button>
           ))}
-          <a
-            href="/#/print"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-center text-sm font-semibold text-primary bg-primary/10 py-2 rounded-xl mt-2"
-          >
-            PDF 제출용 보기
-          </a>
         </nav>
       )}
     </header>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>AI Security Resume - An Jin Gyeong</title>
+<style>
+@page { size: A4; margin: 10mm 11mm; }
+* { box-sizing: border-box; }
+body { margin: 0; color: #111827; font-family: "Malgun Gothic", "Apple SD Gothic Neo", Arial, sans-serif; font-size: 8.9pt; line-height: 1.34; }
+a { color: #111827; text-decoration: none; }
+h1 { margin: 0 0 2px; font-size: 15.5pt; line-height: 1.15; letter-spacing: 0; }
+h1 + p, h1 + p + p { margin-top: 0; }
+h2 { margin: 9px 0 4px; padding-bottom: 2px; border-bottom: 1px solid #d1d5db; font-size: 10.5pt; line-height: 1.2; color: #0f172a; }
+h3 { margin: 7px 0 2px; font-size: 9.6pt; line-height: 1.25; color: #111827; page-break-after: avoid; }
+p { margin: 2px 0 4px; }
+ul { margin: 2px 0 5px 15px; padding: 0; }
+li { margin: 1.4px 0; padding-left: 1px; }
+strong { font-weight: 700; }
+h2, h3, p, li { overflow-wrap: anywhere; }
+</style>
+</head>
+<body><h1>안진경 / An Jin Gyeong</h1>
+<p><strong>CCTV/RTSP 이상행동 탐지와 관제 시스템을 구현한 AI 융합보안 개발자</strong></p>
+<p>Email: anjin0910@gmail.com | GitHub: <a href="https://github.com/Anjingyeong">https://github.com/Anjingyeong</a> | Portfolio: <a href="https://anjingyeong.github.io">https://anjingyeong.github.io</a></p>
+<h2>Profile</h2>
+<p>의공학 기반 영상 AI 경험을 바탕으로 CCTV/RTSP 환경의 실시간 이상행동 탐지 및 관제 이벤트 파이프라인을 구현했습니다. YOLO26n-pose, ByteTrack, LSTM 기반 행동 분석 결과를 MQTT -&gt; Spring Boot -&gt; WebSocket -&gt; React Dashboard로 전달하는 End-to-End 구조를 연동했습니다. frameId/timestamp 기반 payload와 OverlaySyncBuffer를 적용해 영상 프레임과 탐지 오버레이의 정합성을 개선했으며, RF-DETR 객체 탐지와 VAE 비지도 이상탐지를 통해 오탐 제어 및 후처리 경험을 쌓았습니다.</p>
+<h2>Core Skills</h2>
+<ul>
+<li><strong>Real-time Video AI:</strong> RTSP/CCTV, MediaMTX, Python AI Worker, YOLO26n-pose, ByteTrack, LSTM</li>
+<li><strong>Event Pipeline:</strong> MQTT, Spring Boot, WebSocket/STOMP, React Dashboard</li>
+<li><strong>Frame Synchronization:</strong> frameId/timestamp payload, OverlaySyncBuffer, FrameSyncBuffer, Bounded Queue</li>
+<li><strong>Object Detection:</strong> RF-DETR, DINOv2, OpenCV, Albumentations, confidence threshold tuning</li>
+<li><strong>Anomaly Detection:</strong> VAE, Reconstruction Error Map, Dynamic Threshold</li>
+<li><strong>Backend &amp; Deployment:</strong> Java, Spring Boot, JWT, CORS, Cloudflare Pages/Workers, Docker</li>
+</ul>
+<h2>Projects</h2>
+<h3>CCTV/RTSP 기반 실시간 AI 안전관리 및 관제 시스템</h3>
+<p><strong>기간:</strong> 2026.05-2026.07 | <strong>소속:</strong> SK쉴더스 부트캠프 | <strong>역할:</strong> AI/Backend/Frontend | <strong>도메인:</strong> 융합보안, 실시간 영상 관제, 이상행동 탐지</p>
+<ul>
+<li>다중 CCTV 관제 환경에서 영상 프레임과 AI 탐지 오버레이의 시간 정합성을 맞추는 실시간 관제 파이프라인을 구현함.</li>
+<li>RTSP 입력 -&gt; MediaMTX -&gt; Python AI Worker -&gt; MQTT -&gt; Spring Boot -&gt; WebSocket -&gt; React Dashboard로 이어지는 이벤트 전달 구조를 연동함.</li>
+<li>YOLO26n-pose, ByteTrack, LSTM 기반으로 낙상·실신 등 시계열 이상행동 탐지 흐름을 구성함.</li>
+<li>6개 pose 모델을 downstream LSTM 기준으로 비교하고, 실신 미탐 방지를 위해 Faint Recall 우선 정책으로 YOLO26n-pose를 선택함.</li>
+<li>Reader/Inference 스레드 분리와 Bounded CameraFrameQueue(drop-old)를 적용해 다중 카메라 환경의 프레임 누적 문제를 완화함.</li>
+<li>frameId/timestamp 기반 payload와 OverlaySyncBuffer/FrameSyncBuffer를 설계해 영상 프레임과 탐지 오버레이의 시간 정합성을 개선함.</li>
+<li>LSTM 검증 기준 Faint Recall 0.774547, F1 0.756179, Accuracy 0.773186을 기록함.</li>
+<li>overlay-sync 계약 및 동작 시뮬레이션 테스트 44개 PASS로 프레임 동기화 동작을 검증함.</li>
+<li><strong>Tech:</strong> Python, Spring Boot, React, MQTT, WebSocket/STOMP, MediaMTX, YOLO26n-pose, ByteTrack, LSTM, Docker</li>
+</ul>
+<h3>RF-DETR 기반 실시간 객체 탐지 시스템</h3>
+<p><strong>기간:</strong> 2025.03-2025.11 | <strong>역할:</strong> AI | <strong>도메인:</strong> 대장 내시경 용종 검출, 실시간 객체 탐지, GUI 시각화</p>
+<ul>
+<li>Kvasir 데이터셋 기반으로 RF-DETR + DINOv2 구조를 파인튜닝하여 대장 내 용종 객체 탐지 모델을 구현함.</li>
+<li>Grid Distortion, Elastic Deformation 증강을 적용해 내시경 영상의 조명 변화, 반사, 기하학적 왜곡에 대응함.</li>
+<li>confidence threshold 조정을 통해 오탐·미탐 균형을 조정하고, OpenCV GUI에서 탐지 결과를 실시간 오버레이로 시각화함.</li>
+<li>Kvasir 테스트셋 기준 mAP@50 86.2%, 22+ FPS를 기록하고 캡스톤 및 공학교육혁신 경진대회 수상으로 결과를 검증함.</li>
+<li><strong>Tech:</strong> Python, PyTorch, RF-DETR, DINOv2, OpenCV, Albumentations</li>
+</ul>
+<h3>VAE 기반 비지도 이상탐지 및 Dynamic Threshold 후처리</h3>
+<p><strong>기간:</strong> 2024.03-2024.10 | <strong>역할:</strong> AI | <strong>도메인:</strong> 유방 초음파, 비지도 Anomaly Detection, 이상 영역 시각화</p>
+<ul>
+<li>이상 라벨 확보가 어려운 의료 영상 환경을 VAE 기반 비지도 이상탐지 문제로 재정의함.</li>
+<li>정상 데이터 분포를 학습한 뒤 Reconstruction Error Map을 생성하여 이상 후보 영역을 시각화함.</li>
+<li>입력 영상별 노이즈와 밝기 편차를 반영하는 Dynamic Threshold 후처리를 적용해 고정 threshold 방식의 오탐 변동 문제를 완화함.</li>
+<li>비지도 이상탐지와 후처리 알고리즘 설계 경험을 바탕으로 2024 창의혁신 DNA 산학협력 공학혁신상 수상.</li>
+<li><strong>Tech:</strong> Python, TensorFlow, VAE, OpenCV, Dynamic Threshold</li>
+</ul>
+<h2>Additional Experience</h2>
+<ul>
+<li>Cloudflare Pages/Workers 환경에서 웹서비스를 배포하고, 환경변수 기반 인증키 분리 관리 구조를 적용함.</li>
+<li>Spring Boot 환경에서 JWT 인증 필터와 CORS 설정을 구성하여 프론트엔드-백엔드 API 접근 제어 흐름을 구현함.</li>
+<li>HTTP polling 구조를 WebSocket/STOMP Pub-Sub 방식으로 전환하여 실시간 상태 동기화를 구현함.</li>
+</ul>
+<h2>Education</h2>
+<ul>
+<li>건양대학교 의공학과 학사</li>
+<li>SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기 (2026.05-2026.07)</li>
+</ul>
+<h2>Awards &amp; Certificates</h2>
+<ul>
+<li>2024 창의혁신 DNA 산학협력 공학혁신상</li>
+<li>제17회 건양대학교 캡스톤디자인 경진대회 금상/대상</li>
+<li>전국 공학교육혁신 컨소시엄 창의적 종합설계 경진대회 동상</li>
+<li>의공학 전문 실무역량 인증, 우수 소프트웨어 활용역량 인증</li>
+<li>정보처리기사 필기 합격</li>
+</ul></body>
+</html>
