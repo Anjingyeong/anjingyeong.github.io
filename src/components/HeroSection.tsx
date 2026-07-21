@@ -50,7 +50,7 @@ const HeroSection = () => {
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
-              AI 모델을 실제 서비스로 연결하는 엔지니어
+              모델 추론을 실시간 관제 서비스로 연결한 컴퓨터비전 AI 엔지니어
             </h1>
 
             <p className="text-base md:text-lg font-mono mb-6 text-primary font-semibold">
