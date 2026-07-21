@@ -28,6 +28,32 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
         ))}
       </ul>
     ) : null}
+    {detail.table ? (
+      <div className="mt-4 overflow-x-auto rounded-lg border border-border">
+        <table className="w-full text-left text-xs md:text-sm">
+          <thead className="border-b border-border bg-muted/50 font-semibold text-foreground">
+            <tr>
+              {detail.table.headers.map((h, idx) => (
+                <th key={idx} className="p-2.5 md:p-3">
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border text-muted-foreground">
+            {detail.table.rows.map((row, rIdx) => (
+              <tr key={rIdx} className="hover:bg-muted/20">
+                {row.map((cell, cIdx) => (
+                  <td key={cIdx} className="p-2.5 md:p-3">
+                    {renderInlineText(cell)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ) : null}
     {detail.diagram ? (
       <div className="mt-4">
         <Mermaid chart={detail.diagram} />
@@ -49,7 +75,7 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
       <div className="mt-4 space-y-4">
         {detail.images.map((img, idx) => (
           <div key={idx} className="flex flex-col gap-2">
-            <div className="overflow-hidden rounded-xl border border-border bg-muted/20 p-2 flex items-center justify-center">
+            <div className="flex items-center justify-center overflow-hidden rounded-xl border border-border bg-muted/20 p-2">
               <img
                 src={img.src}
                 alt={img.caption}

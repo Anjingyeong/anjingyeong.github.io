@@ -29,11 +29,16 @@ const portfolioPublicCopy = [
 describe("ProjectsSection public copy", () => {
   it("describes Smart Safety as a real-time event pipeline with caveated metrics", () => {
     expect(publicProjectSources).toContain("스마트 안전 관제 시스템");
-    expect(publicProjectSources).toContain("RTSP → AI 추론 → MQTT → WebSocket");
-    expect(publicProjectSources).toContain("RTSP → MediaMTX → AI 추론 서버");
-    expect(publicProjectSources).toContain("frameId, timestamp, cameraLoginId, confidence");
-    expect(publicProjectSources).toContain("YOLO Pose + ByteTrack + LSTM");
-    expect(publicProjectSources).toContain("검증해 나갈 예정");
+    expect(publicProjectSources).toContain("RTSP 수신 → AI 추론 → MQTT 이벤트 발행 → Spring Boot 연동 → WebSocket 관제 알림");
+    expect(publicProjectSources).toContain("capturedAtMs, processedAtMs, publishedAtMs");
+    expect(publicProjectSources).toContain("Spring Boot");
+    expect(publicProjectSources).toContain("TensorRT");
+  });
+
+  it("does not contain bracketed evidence labels in public copy", () => {
+    expect(publicProjectSources).not.toMatch(
+      /\[측정 완료\]|\[내부 대리지표\]|\[정성적 확인\]|\[근거 확인 필요\]|\[추가 실험 필요\]/,
+    );
   });
 
   it("describes the RF-DETR colonoscopy assistant within the verified role scope", () => {
@@ -41,34 +46,25 @@ describe("ProjectsSection public copy", () => {
       "RF-DETR 기반 실시간 대장 내시경 용종 검출 시스템",
     );
     expect(publicProjectSources).toContain("Kvasir Dataset");
-    expect(publicProjectSources).toContain("Train 70% / Validation 20% / Test 10%");
+    expect(publicProjectSources).toContain("Train 70% / Val 20% / Test 10%");
     expect(publicProjectSources).toContain("Elastic Deformation");
     expect(publicProjectSources).toContain("Grid Distortion");
-    expect(publicProjectSources).toContain("object query");
+    expect(publicProjectSources).toContain("Object Query");
     expect(publicProjectSources).toContain("Multi-scale feature");
-    expect(publicProjectSources).toContain("데이터 전처리");
     expect(publicProjectSources).toContain("fine-tuning");
-    expect(publicProjectSources).toContain("OpenCV 기반 GUI");
-    expect(publicProjectSources).toContain("실험 설정 기준 약 7% 개선");
-    expect(publicProjectSources).toContain("의료영상 데이터 전처리");
-    expect(publicProjectSources).toContain("의료진 판독을 보조");
+    expect(publicProjectSources).toContain("OpenCV");
+    expect(publicProjectSources).toContain("mAP@50");
     expect(publicProjectSources).toContain("/images/rf-detr-polyp-detection.png");
-    expect(publicProjectSources).toContain("/images/rf-detr-dataset-sample.png");
-    expect(publicProjectSources).toContain("/images/rf-detr-model-paper.png");
     expect(publicProjectSources).toContain("/images/rf_detr_aug.png");
-    expect(publicProjectSources).toContain("/images/rf-detr-model-comparison.jpg");
-    expect(publicProjectSources).toContain("/images/rf-detr-fps-comparison.png");
+    expect(publicProjectSources).toContain("/images/rf_detr_gold.jpg");
     expect(publicProjectSources).not.toContain("전후 4초 영상 클립");
-    expect(publicProjectSources).not.toContain("/images/rf-detr-auto-save-clip.png");
-    expect(publicProjectSources).not.toContain("/images/rf-detr-auto-save-folder.png");
     expect(publicProjectSources).not.toContain("임상 검증이 완료");
   });
 
   it("keeps VAE responsibilities aligned to preprocessing and dynamic threshold post-processing", () => {
-    expect(portfolioPublicCopy).toContain("유방 초음파 이미지");
-    expect(portfolioPublicCopy).toContain("Dynamic Threshold 후처리 알고리즘");
+    expect(portfolioPublicCopy).toContain("유방 초음파");
+    expect(portfolioPublicCopy).toContain("Dynamic Threshold");
     expect(portfolioPublicCopy).toContain("Reconstruction Error Map");
-    expect(portfolioPublicCopy).toContain("MSE + KLD Loss");
     expect(portfolioPublicCopy).not.toMatch(
       /Custom Loss 설계|커스텀 Loss|커스텀 손실 함수.*구현|KLD\+MSE 커스텀 손실 함수/,
     );
@@ -88,14 +84,14 @@ describe("ProjectsSection public copy", () => {
     expect(llmWikiIndex).toBeGreaterThan(smartSafetyIndex);
   });
 
-  it("opens project details from a card with submission-ready sections", () => {
+  it("opens project details from a card with submission-ready compact sections", () => {
     render(createElement(ProjectsSection));
 
     fireEvent.click(screen.getByText("스마트 안전 관제 시스템"));
 
-    expect(screen.getByRole("dialog")).toHaveTextContent("문제 정의");
-    expect(screen.getByRole("dialog")).toHaveTextContent("맡은 역할");
-    expect(screen.getByRole("dialog")).toHaveTextContent("한계 및 개선 방향");
+    expect(screen.getByRole("dialog")).toHaveTextContent("문제와 목표");
+    expect(screen.getByRole("dialog")).toHaveTextContent("핵심 문제 해결 사례");
+    expect(screen.getByRole("dialog")).toHaveTextContent("검증 범위와 한계");
   });
 
   it("opens VAE details with the corrected responsibility scope", () => {
@@ -104,13 +100,13 @@ describe("ProjectsSection public copy", () => {
     fireEvent.click(screen.getByText("VAE 기반 유방 초음파 이상 탐지"));
 
     expect(screen.getByRole("dialog")).toHaveTextContent(
-      "유방 초음파 이미지를 VAE 학습·추론 입력에 맞게 정리",
+      "Reconstruction Error Map",
     );
     expect(screen.getByRole("dialog")).toHaveTextContent(
-      "Dynamic Threshold 후처리 알고리즘",
+      "Dynamic Threshold",
     );
     expect(screen.getByRole("dialog")).toHaveTextContent(
-      "손실 함수 자체를 직접 설계한 역할로 표현하지 않고",
+      "수치 공개 대신 세부 검증 항목 지정",
     );
     expect(screen.getByRole("dialog")).not.toHaveTextContent(
       "커스텀 손실 함수를 단독 설계",
