@@ -84,7 +84,7 @@ export const projects: readonly Project[] = [
           headers: ["평가 지표 (Metric)", "적용 전 (PyTorch)", "적용 후 (TensorRT)", "개선 및 변화율"],
           rows: [
             ["평가 조건", "1,800 프레임 동일 영상", "1,800 프레임 동일 영상", "동일 영상 환경 테스트"],
-            ["평균 지연 (Mean Latency)", "7.022 ms", "3.839 ms", "45.3% 단축 (약 1.83배 지연 감소)"],
+            ["평균 지연 (Mean Latency)", "7.022 ms", "3.839 ms", "45.3% 단축 (지연시간 약 1.83배 감소)"],
             ["p95 지연 (p95 Latency)", "8.537 ms", "4.896 ms", "42.6% 단축"],
             ["처리 속도 (FPS)", "84.278 FPS", "119.544 FPS", "41.8% 증가 (약 1.42배 처리량 향상)"],
           ],
@@ -144,8 +144,8 @@ export const projects: readonly Project[] = [
       {
         title: "핵심 문제 해결 사례",
         items: [
-          "**데이터 분할 및 평가 기준 수립**: Kvasir Dataset을 Train 70% / Validation 20% / Test 10% 비율로 엄격히 분할하여 데이터 누수 없는 평가 기준을 마련했습니다.",
-          "**Data-Centric 증강 기법 적용**: 내시경 영상 특유의 관조 장벽 변형과 점막 질감 변화에 대응하기 위해, 비선형 조직 형태 변형(Elastic Deformation)과 국소적 기하학적 왜곡(Grid Distortion) 증강 파이프라인을 구축하여 형태학적 피처 학습을 유도했습니다.",
+          "**데이터 분할 및 평가 기준 수립**: Kvasir Dataset을 Train 70% / Validation 20% / Test 10% 비율로 엄격히 분할하여 평가 누수를 방지한 독립된 평가 기준을 마련했습니다.",
+          "**Data-Centric 증강 기법 적용**: 내시경 영상 특유의 대장 장벽 변형과 점막 질감 변화에 대응하기 위해, 비선형 조직 형태 변형(Elastic Deformation)과 국소적 기하학적 왜곡(Grid Distortion) 증강 파이프라인을 구축하여 형태학적 피처 학습을 유도했습니다.",
           "**RF-DETR 모델 선택 이유**: 용종은 크기와 비정형성이 다양하므로, Multi-scale feature extraction과 end-to-end Object Query 방식의 RF-DETR을 선택하여 별도의 앵커 튜닝 없이 작은 병변 검출 성능을 확보했습니다.",
           "**OpenCV GUI 연동**: 모델 추론 결과에 그치지 않고 외부 카메라 수신 및 영상 파일 재생 조건에서 bounding box 시각화와 환자 정보 입력을 지원하는 OpenCV GUI 프로토타입을 제작했습니다.",
         ],
@@ -156,13 +156,13 @@ export const projects: readonly Project[] = [
       },
       {
         title: "적용 전후 비교",
-        body: "Kvasir 테스트 데이터셋(10% split)에서 평가된 검출 정밀도 및 추론 속도 측정 결과입니다.",
+        body: "Kvasir 테스트 데이터셋(10% split)에서 평가된 검출 성능 및 추론 속도 측정 결과입니다.",
         table: {
           headers: ["평가 항목 (Metric)", "측정 결과", "조건 및 상세 설명"],
           rows: [
             ["데이터셋 분할", "Train 70% / Val 20% / Test 10%", "Kvasir Dataset 1,000장 기준 평가 분할"],
-            ["mAP@50 정밀도", "86.2%", "Kvasir 10% Test set 평가 수치"],
-            ["베이스라인 대비 정밀도", "mAP@50 약 +7%p 향상", "기본 퓨전/초기 모델 설정 대비 정밀도 비교"],
+            ["mAP@50 검출 성능", "86.2%", "Kvasir 10% Test set 평가 수치"],
+            ["베이스라인 대비 검출 성능", "mAP@50 약 +7%p 향상", "기본 퓨전/초기 모델 설정 대비 검출 성능 비교"],
             ["실시간 추론 속도", "22+ FPS", "OpenCV GUI 렌더링 및 디스플레이 포함 추론 속도"],
           ],
         },
