@@ -61,7 +61,7 @@ const HeroSection = () => {
             </p>
 
             <p className="text-base md:text-lg text-foreground/80 mb-8 leading-relaxed font-normal max-w-xl">
-              의공학 기반의 의료 AI 프로젝트 경험을 바탕으로, 모델 학습부터 실시간 추론, 이벤트 파이프라인, 관제 화면 연동까지 구현합니다.
+              모델 정확도만 높이는 데 그치지 않고, 트랙 단절과 프레임 적체로 판단이 늦어지는 원인을 추적해 입력 특징·트래킹·처리 구조를 함께 개선했습니다.
             </p>
 
             {/* Accomplishments Bullet Points */}
@@ -69,19 +69,19 @@ const HeroSection = () => {
               <li className="flex items-start gap-2.5">
                 <span className="text-primary font-bold mt-0.5">•</span>
                 <span>
-                  <strong className="font-semibold text-foreground">[의료 AI]</strong> 모델 학습부터 실시간 추론, 관제 화면 연동까지 풀파이프라인 구축 경험
+                  <strong className="font-semibold text-foreground">[행동 분석]</strong> 51D 관절 좌표를 54D 동작 특징으로 확장해 F1-score를 89.29%에서 93.49%로 개선
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <span className="text-primary font-bold mt-0.5">•</span>
                 <span>
-                  <strong className="font-semibold text-foreground">[성능 최적화]</strong> RF-DETR 기반 용종 검출: <strong className="font-semibold text-primary">mAP@50 86.2%</strong>, <strong className="font-semibold text-primary">22+ FPS</strong> 달성
+                  <strong className="font-semibold text-foreground">[트래킹]</strong> 낙상 자세 전환 중 발생하는 ID 단절을 재연결 후처리로 개선해 ID Switch를 8건에서 1건으로 감소
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <span className="text-primary font-bold mt-0.5">•</span>
                 <span>
-                  <strong className="font-semibold text-foreground">[데이터 처리]</strong> RTSP &rarr; MQTT &rarr; WebSocket으로 이어지는 실시간 지능형 관제 시스템 설계
+                  <strong className="font-semibold text-foreground">[실시간 처리]</strong> Bounded Queue와 Drop-old 정책으로 평균 처리 지연을 11.789ms에서 6.101ms로 48.2% 단축
                 </span>
               </li>
             </ul>
@@ -94,9 +94,9 @@ const HeroSection = () => {
                   <span>Model</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="tech-tag">RF-DETR</span>
                   <span className="tech-tag">YOLO Pose</span>
-                  <span className="tech-tag">VAE</span>
+                  <span className="tech-tag">ByteTrack</span>
+                  <span className="tech-tag">LSTM</span>
                 </div>
               </div>
 
@@ -119,9 +119,8 @@ const HeroSection = () => {
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   <span className="tech-tag">PyTorch</span>
-                  <span className="tech-tag">FastAPI</span>
-                  <span className="tech-tag">React</span>
-                  <span className="tech-tag">Spring Boot</span>
+                  <span className="tech-tag">OpenCV</span>
+                  <span className="tech-tag">TensorRT</span>
                 </div>
               </div>
             </div>
