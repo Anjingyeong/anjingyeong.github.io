@@ -58,7 +58,7 @@
 
   .print-page {
     width: 100% !important;
-    height: 273mm !important; /* height subtracting margins */
+    height: 267mm !important; /* height subtracting margins */
     padding: 0 !important;
     margin: 0 !important;
     border: none !important;
@@ -75,6 +75,14 @@
   .print-page:last-child {
     page-break-after: avoid;
     break-after: avoid;
+  }
+
+  .print-section {
+    margin-bottom: 4px !important;
+  }
+
+  .print-section-title {
+    margin-bottom: 3px !important;
   }
 
   * {

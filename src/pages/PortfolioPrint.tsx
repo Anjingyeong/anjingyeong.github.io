@@ -67,53 +67,20 @@ const PortfolioPrint = () => {
         <div className="print-section">
           <h2 className="print-section-title">Profile Summary</h2>
           <p className="text-[8.5pt] text-slate-700 leading-relaxed">
-            의공학 기반의 의료 AI/컴퓨터 비전 개발 경험과 React, Spring Boot 기반 웹 풀스택 역량을 결합해,
-            AI 모델이 실제 서비스 화면과 백엔드 이벤트 흐름 안에서 동작하는 구조를 구현하는 개발자를 지향합니다.
-            <strong> Train/Val/Test 분할, Dynamic Threshold 후처리, RTSP-MQTT-WebSocket 연동</strong>처럼
-            실시간 데이터 흐름과 알림 파이프라인을 안정적으로 연결하는 데 관심이 있습니다.
+            트랙 단절, 순간 자세 오탐, 프레임 적체를 모델 입력·트래킹·처리 구조의 문제로 분리해 개선한 신입 컴퓨터비전 엔지니어입니다.
+            의료영상 AI에서 시작해 CCTV 객체 추적·행동 분석과 실시간 관제 시스템까지 경험했습니다.
+            정확도뿐 아니라 지연과 서비스 전달까지 고려해 AI 결과를 관제 애플리케이션으로 연결하는 데 강점이 있습니다.
           </p>
         </div>
 
         {/* Core Skills */}
         <div className="print-section">
           <h2 className="print-section-title">Core Skills</h2>
-          <div className="print-grid-4">
-            <div className="print-card">
-              <h3 className="text-xs font-bold text-sky-600 mb-1.5 uppercase">Frontend</h3>
-              <ul className="print-bullet-list">
-                <li>React, TypeScript</li>
-                <li>JavaScript, HTML/CSS</li>
-                <li>Tailwind CSS</li>
-                <li>Streamlit</li>
-              </ul>
-            </div>
-            <div className="print-card">
-              <h3 className="text-xs font-bold text-sky-600 mb-1.5 uppercase">Backend</h3>
-              <ul className="print-bullet-list">
-                <li>Spring Boot</li>
-                <li>Spring Data JPA</li>
-                <li>REST API</li>
-                <li>WebSocket, STOMP</li>
-              </ul>
-            </div>
-            <div className="print-card">
-              <h3 className="text-xs font-bold text-sky-600 mb-1.5 uppercase">AI &amp; CV</h3>
-              <ul className="print-bullet-list">
-                <li>Python, PyTorch</li>
-                <li>TensorFlow, VAE</li>
-                <li>RF-DETR, OpenCV</li>
-                <li>Data Augmentation</li>
-              </ul>
-            </div>
-            <div className="print-card">
-              <h3 className="text-xs font-bold text-sky-600 mb-1.5 uppercase">Infra &amp; Data</h3>
-              <ul className="print-bullet-list">
-                <li>MySQL Database</li>
-                <li>MQTT Message Broker</li>
-                <li>RTSP Video Stream</li>
-                <li>Docker, Git / GitHub</li>
-              </ul>
-            </div>
+          <div className="space-y-1 text-[8.5pt] leading-relaxed text-slate-700">
+            <p><strong>Computer Vision:</strong> YOLO Pose, ByteTrack, RF-DETR, DINOv2, LSTM, VAE, OpenCV</p>
+            <p><strong>Modeling &amp; Optimization:</strong> PyTorch, TensorFlow, TensorRT, Data Augmentation, Threshold Tuning, Post-processing</p>
+            <p><strong>Real-time Video:</strong> RTSP, Frame Queue, MQTT, WebSocket, MJPEG, MediaMTX</p>
+            <p><strong>Development:</strong> Python, Java, Spring Boot, Docker</p>
           </div>
         </div>
 
@@ -124,7 +91,7 @@ const PortfolioPrint = () => {
             <h3 className="text-xs font-bold text-slate-800">
               SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기
             </h3>
-            <span className="text-xs text-slate-500 font-mono">2026.05 – 2026.07</span>
+            <span className="text-xs text-slate-500 font-mono">2026.01 - 2026.07</span>
           </div>
           <p className="text-[7.8pt] text-sky-600 font-semibold mb-1">SK쉴더스 / AI Application Development Trainee</p>
           <p className="text-[8pt] text-slate-700 leading-relaxed">
@@ -162,7 +129,6 @@ const PortfolioPrint = () => {
               <ul className="print-bullet-list">
                 <li>의공학 전문 실무역량 (ABEEK 공학인증 우수)</li>
                 <li>우수 소프트웨어 활용역량 (건양대학교 의공학심화 인증)</li>
-                <li>정보처리기사 필기 합격</li>
               </ul>
             </div>
           </div>
@@ -187,10 +153,13 @@ const PortfolioPrint = () => {
             <h3 className="text-sm font-bold text-slate-800">
               1. AI 기반 스마트 안전 관제 시스템 (SK쉴더스 5기)
             </h3>
-            <span className="text-xs text-slate-500 font-mono">2026.05 – 2026.07</span>
+            <span className="text-xs text-slate-500 font-mono">2026.05 - 2026.07</span>
           </div>
           <p className="text-[7.5pt] text-slate-500 font-semibold mb-1.5">
             FastAPI, Docker, MQTT, WebSocket, RTSP, Spring Boot, React, TypeScript
+          </p>
+          <p className="text-[7.5pt] text-slate-700 leading-relaxed mb-1.5">
+            행동 분석 정확도, 트랙 연속성, 프레임 처리 지연을 각각 측정하고 개선
           </p>
           <div className="print-grid-3 gap-x-4">
             <div>
@@ -202,15 +171,21 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Role / Contribution</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                RTSP 영상 AI 추론 결과 전송 파이프라인과 MQTT, Spring Boot, WebSocket 기반 알림 흐름을 연결했습니다.
+                담당 역할: 행동 분석 특징 설계, 트래킹·프레임 처리 개선, 추론 성능 비교 및 관제 연동
               </p>
             </div>
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Result / Outcome</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                고정 cam1~cam4 구조를 cameraLoginId 기반으로 개선하여 동적 카메라 등록 흐름에 대응했습니다. RTSP &rarr; AI 추론 &rarr; MQTT &rarr; Spring Boot &rarr; WebSocket으로 이어지는 이벤트 전달 흐름을 정리하고 연동 검증했습니다.
+                F1-score를 89.29%에서 93.49%로 높이고, FP 38.6% 감소, FN 38.9% 감소를 확인했습니다.
               </p>
             </div>
+          </div>
+          <div className="mt-2 space-y-1 text-[7.5pt] text-slate-700 leading-relaxed">
+            <p>모든 프레임을 보존하면 현재 상황 전달이 늦어진다고 판단해 최신 프레임 중심 처리 구조를 적용했습니다. 동일 다중 카메라 입력에서 측정한 프레임 처리 지연을 평균 11.789ms에서 6.101ms로 줄이고, 최악 카메라의 p95 지연을 14.719ms에서 7.159ms로 줄였습니다.</p>
+            <p>실시간 처리 비용을 고려해 외형 기반 Re-ID 대신 예측 위치·정규화 중심점 거리·후보 수 조건을 순차 적용했습니다. 그 결과 ID Switch를 8건에서 1건으로 줄이고, 동일 인물의 추적 유지 비율로 사용한 Track Coverage를 35.76%에서 49.70%로 높였습니다.</p>
+            <p>동일한 1,800프레임 영상에서 PyTorch와 TensorRT의 추론 지연과 처리량을 비교했습니다. 평균 추론 지연은 7.022ms에서 3.839ms로 감소했고, 처리량은 84.278 FPS에서 119.544 FPS로 증가했습니다.</p>
+            <p>Python AI Worker의 낙상·실신 이벤트를 MQTT로 전달하고, Spring Boot·WebSocket 기반 관제 화면에 연동했습니다.</p>
           </div>
         </div>
 
@@ -218,30 +193,33 @@ const PortfolioPrint = () => {
         <div className="print-section">
           <div className="flex justify-between items-baseline mb-1">
             <h3 className="text-sm font-bold text-slate-800">
-              2. RF-DETR 기반 실시간 대장 내 용종 검출 시스템
+              2. RF-DETR 기반 대장 내 용종 검출 애플리케이션
             </h3>
-            <span className="text-xs text-slate-500 font-mono">2025.03 – 2025.11</span>
+            <span className="text-xs text-slate-500 font-mono">2025.03 - 2025.11</span>
           </div>
           <p className="text-[7.5pt] text-slate-500 font-semibold mb-1.5">
             Python, PyTorch, RF-DETR, DINOv2, OpenCV, Kvasir Dataset
+          </p>
+          <p className="text-[7.5pt] text-slate-700 leading-relaxed mb-1.5">
+            데이터 증강과 bbox 정합성 검증으로 내시경 영상의 형태 편차에 대응한 용종 검출 프로젝트
           </p>
           <div className="print-grid-3 gap-x-4">
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Problem / Context</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                대장 내시경 환경에서 점막 왜곡과 실시간 추론 제약을 고려한 용종 검출이 필요했습니다.
+                대장 내시경 환경에서 점막 왜곡과 영상 입력 조건을 고려한 용종 검출이 필요했습니다.
               </p>
             </div>
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Role / Contribution</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                Kvasir Dataset을 Train 70% / Validation 20% / Test 10%로 분할하고, RF-DETR 학습과 fine-tuning을 담당했습니다.
+                Elastic Deformation과 Grid Distortion 적용 및 증강 후 bbox 정합성 검증을 담당했습니다.
               </p>
             </div>
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Result / Outcome</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                mAP@50 86.2% (베이스라인 대비 약 7%p 개선) 및 22+ FPS 실시간 추론 달성. 건양대 금상 · 전국 컨소시엄 동상.
+                팀 모델은 Kvasir 내부 테스트셋에서 mAP@50 86.2%를 기록했으며, OpenCV 기반 애플리케이션에서 영상·웹캠 입력의 탐지 결과를 시각화했습니다.
               </p>
             </div>
           </div>
@@ -253,16 +231,19 @@ const PortfolioPrint = () => {
             <h3 className="text-sm font-bold text-slate-800">
               3. VAE 기반 비지도 학습 유방암 병변 검출 시스템
             </h3>
-            <span className="text-xs text-slate-500 font-mono">2024.03 – 2024.10</span>
+            <span className="text-xs text-slate-500 font-mono">2024.03 - 2024.10</span>
           </div>
           <p className="text-[7.5pt] text-slate-500 font-semibold mb-1.5">
             Python, TensorFlow, VAE, Reconstruction Error, Dynamic Threshold
+          </p>
+          <p className="text-[7.5pt] text-slate-700 leading-relaxed mb-1.5">
+            라벨 부족 문제를 비지도 이상탐지로 재정의하고, 영상별 밝기와 노이즈에 따른 고정 임계값 편차를 줄이기 위해 이미지별 오차 분포 기반 Dynamic Threshold를 구현
           </p>
           <div className="print-grid-3 gap-x-4">
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Problem / Context</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                라벨링 데이터가 부족한 의료영상 환경에서 정상 패턴 학습 기반 병변 이상 탐지가 필요했습니다.
+                라벨링 데이터가 부족한 의료영상 환경에서 정상 패턴 학습 기반 이상 탐지가 필요했습니다.
               </p>
             </div>
             <div>
@@ -274,7 +255,7 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Result / Outcome</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                Dice Coefficient 약 90% 수준의 병변 분할 성능 달성. 2024 창의혁신 DNA 산학협력 공학혁신상 수상.
+                고정 임계값이 영상 밝기와 노이즈에 따라 달라지는 문제를 확인하고, 이미지별 오차 분포를 반영하는 Dynamic Threshold를 구현했습니다.
               </p>
             </div>
           </div>
