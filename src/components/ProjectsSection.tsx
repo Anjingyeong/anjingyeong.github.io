@@ -28,6 +28,20 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
         ))}
       </ul>
     ) : null}
+    {detail.groups ? (
+      <div className="space-y-4">
+        {detail.groups.map((group) => (
+          <div key={group.title}>
+            <h5 className="mb-2 text-sm font-semibold text-foreground">{group.title}</h5>
+            <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
+              {group.items.map((item) => (
+                <li key={item}>{renderInlineText(item)}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    ) : null}
     {detail.table ? (
       <div className="mt-4 overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-left text-xs md:text-sm">
@@ -59,6 +73,7 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
         <Mermaid chart={detail.diagram} />
       </div>
     ) : null}
+    {detail.note ? <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(detail.note)}</p> : null}
     {detail.image ? (
       <div className="mt-4 overflow-hidden rounded-xl border border-border bg-muted/30 p-2">
         <img
@@ -163,7 +178,7 @@ const ProjectsSection = () => {
         </div>
 
         <div className="flex flex-1 flex-col justify-between p-8 pt-5">
-          <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{renderInlineText(project.description)}</p>
+          <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{renderInlineText(project.summaryLine)}</p>
           <div>
             <div className="mb-5 flex flex-wrap gap-2">
               {project.highlights.map((highlight) => (
@@ -268,9 +283,37 @@ const ProjectsSection = () => {
                 ) : null}
               </div>
 
-              <p className="mb-6 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-                {renderInlineText(selectedProject.description)}
+              <p className="mb-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+                {renderInlineText(selectedProject.summaryLine)}
               </p>
+
+              {selectedProject.meta ? (
+                <div className="mb-6 grid gap-3 text-sm text-muted-foreground md:grid-cols-3">
+                  <div>
+                    <span className="mr-2 font-semibold text-foreground">기간</span>
+                    {selectedProject.meta.period}
+                  </div>
+                  <div>
+                    <span className="mr-2 font-semibold text-foreground">역할</span>
+                    {selectedProject.meta.role}
+                  </div>
+                  <div>
+                    <span className="mr-2 font-semibold text-foreground">서비스</span>
+                    {selectedProject.meta.service}
+                  </div>
+                </div>
+              ) : null}
+
+              <div className="mb-8 flex flex-col gap-2 md:flex-row md:flex-wrap">
+                {selectedProject.highlights.map((highlight) => (
+                  <span
+                    key={highlight}
+                    className="inline-flex items-center gap-1 rounded-md bg-primary/8 px-2.5 py-1 text-xs font-semibold text-primary"
+                  >
+                    {highlight}
+                  </span>
+                ))}
+              </div>
 
               <div className="mb-8 space-y-6 overflow-hidden rounded-xl border border-border bg-card/50 p-6 md:p-8">
                 {selectedProject.details.map((detail) => (

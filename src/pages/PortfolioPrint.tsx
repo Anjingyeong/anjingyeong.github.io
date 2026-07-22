@@ -31,7 +31,8 @@ const PortfolioPrint = () => {
                 안진경 <span className="text-slate-400 font-normal">| An Jin Gyeong</span>
               </h1>
               <p className="text-sky-600 font-semibold text-sm mt-1 uppercase tracking-wide">
-                Full-Stack &amp; AI Application Developer
+                실시간 영상 AI의 정확도와 지연을 함께 개선한 컴퓨터비전 엔지니어<br />
+                정답에도 유효시간이 있습니다.
               </p>
             </div>
             <div className="text-right space-y-1">
@@ -137,10 +138,10 @@ const PortfolioPrint = () => {
           <h2 className="print-section-title">Education</h2>
           <div className="flex justify-between items-baseline">
             <div>
-              <h3 className="text-xs font-bold text-slate-800">건양대학교 (Konyang University)</h3>
-              <p className="text-[7.8pt] text-slate-500 font-semibold">의공학 학사 (Biomedical Engineering | Bachelor's Degree)</p>
+              <h3 className="text-xs font-bold text-slate-800">건양대학교 의공학과 학사 | 2026.02 졸업</h3>
+              <p className="text-[7.8pt] text-slate-500 font-semibold"></p>
             </div>
-            <span className="text-xs text-slate-500 font-mono">2026년 졸업</span>
+            <span className="text-xs text-slate-500 font-mono"></span>
           </div>
         </div>
 

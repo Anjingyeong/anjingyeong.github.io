@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ArrowDown, Sparkles, Brain, Network, Cpu } from "lucide-react";
 
 const HeroSection = () => {
-  const fullText = "Computer Vision & Real-time AI Pipeline";
+  const fullText = "정답에도 유효시간이 있습니다.";
   const [displayText, setDisplayText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [typingDone, setTypingDone] = useState(false);
@@ -50,7 +50,7 @@ const HeroSection = () => {
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
-              모델 추론을 실시간 관제 서비스로 연결한 컴퓨터비전 AI 엔지니어
+              실시간 영상 AI의 정확도와 지연을 함께 개선한 컴퓨터비전 엔지니어
             </h1>
 
             <p className="text-base md:text-lg font-mono mb-6 text-primary font-semibold">

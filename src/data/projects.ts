@@ -18,7 +18,12 @@ export type ProjectDetail = {
   readonly title: string;
   readonly body?: string;
   readonly items?: readonly string[];
+  readonly groups?: readonly {
+    readonly title: string;
+    readonly items: readonly string[];
+  }[];
   readonly diagram?: string;
+  readonly note?: string;
   readonly image?: string;
   readonly imageAlt?: string;
   readonly images?: readonly ProjectGalleryImage[];
@@ -29,7 +34,13 @@ export type Project = {
   readonly icon: ElementType;
   readonly badge: ProjectBadge;
   readonly title: string;
+  readonly summaryLine: string;
   readonly description: string;
+  readonly meta?: {
+    readonly period: string;
+    readonly role: string;
+    readonly service: string;
+  };
   readonly heroImage?: ProjectGalleryImage;
   readonly highlights: readonly string[];
   readonly tags: readonly string[];
@@ -44,9 +55,15 @@ export const projects: readonly Project[] = [
     icon: Shield,
     badge: "Main",
     title: "스마트 안전 관제 시스템",
+    summaryLine: "낙상 시 끊기는 트랙과 늦어지는 관제 알림을 함께 개선한 실시간 영상 AI 시스템",
     description:
       "CCTV 영상에서 위험 상황(낙상·실신) 후보를 감지하고, **RTSP 수신부터 Spring Boot 백엔드 및 WebSocket 경보 전달까지** 연결한 실시간 AI 관제 보조 시스템입니다.",
-    highlights: ["실시간 이벤트 스트림", "상태 머신 후처리", "TensorRT 지연 단축"],
+    meta: {
+      period: "2026.05–2026.07",
+      role: "Pose·LSTM 추론, 행동 특징 설계, 트래킹 재연결, 프레임 처리 개선, 관제 인터페이스 연동",
+      service: "CCTV 기반 실시간 안전관제",
+    },
+    highlights: ["F1 89.29% → 93.49%", "ID Switch 8 → 1", "Mean Latency −48.2%"],
     tags: ["Computer Vision", "YOLO Pose", "LSTM", "MQTT", "WebSocket", "Spring Boot", "Docker"],
     gradient: "from-rose-500/10 to-orange-500/10",
     hasAwards: false,
@@ -68,20 +85,40 @@ export const projects: readonly Project[] = [
     MQTT --> Backend["⚙️ Spring Boot Backend\\nEvent Persistence"]
     Backend --> WS["💬 WebSocket\\nBroadcast"]
     WS --> Dashboard["🚨 Monitoring\\nDashboard"]`,
+        note: "설계 핵심: 모든 프레임을 보존하기보다 최신 상황을 대응 가능한 시간 안에 전달하도록 지연 누적을 줄이는 처리 구조를 선택했습니다.",
       },
       {
-        title: "핵심 문제 해결 사례",
+        title: "사례 1. 순간 자세 오탐",
         items: [
-          "**과거 프레임 누적으로 인한 알림 지연 (Drop-old Queue)**: 입력 속도가 추론 속도를 초과하여 큐에 오래된 프레임이 쌓이는 현상이 발생했습니다. 실시간 관제 환경에서는 모든 프레임을 순차 처리하는 것보다 현재 시점에 가까운 프레임을 보존하는 것이 중요하다고 판단하여, Bounded Queue와 Drop-old 프레임 폐기 정책을 도입했습니다. 또한 구간별 지연을 다면적으로 측정하기 위해 **capturedAtMs, processedAtMs, publishedAtMs** 타임스탬프 로깅 구조를 설계했습니다.",
-          "**낙상 자세 전환 중 트랙 ID 단절**: 사람이 서 있다가 넘어질 때 bounding box 형태와 중심점이 급변하여 단순 IoU 기반 매칭이 실패했습니다. 이를 보완하고자 IoU, 중심점 거리, 시간 간격을 결합한 Hard / Soft / Sole matching 및 트랙 재연결 로직을 설계했습니다. 자체 트랙 연속성 지표에서 약 19.7%의 개선을 확인했으나, 이를 단순 트래킹 정확도(MOTA/HOTA)로 확대 해석하지 않고 내부 대리지표로 관리했습니다.",
-          "**단일 LSTM 임계값의 순간 오탐**: 단일 확률 임계값 설정 시 프레임 노이즈로 인한 순간 오탐이 발생할 가능성이 있었습니다. 이를 방지하기 위해 6가지 규칙 기반 상태 머신 후처리를 정의했습니다. (낙상·실신 확률 threshold 0.6, 연속 이상 판정 2프레임, 누운 자세 유지 3프레임, 정상 복구 확인 4프레임, 동일 이벤트 쿨다운 10초, 트랙 손실 유예 1.5초. 영상 EOF/소스변경/재연결 시 tracker, sequence buffer, 상태 머신 초기화)",
+          "**문제**: 정적인 관절 좌표만으로는 낙상과 정상 동작의 시간적 변화를 충분히 구분하기 어려웠습니다.",
+          "**판단**: 모델을 교체하기보다 낙상 동작의 방향성과 속도를 입력 특징에 반영하는 것이 우선이라고 판단했습니다.",
+          "**해결**: 기존 51D 관절 좌표에 상체 기울기, 수직 하강량, 이동 속도를 추가해 54D 입력으로 확장하고, 상태 머신 후처리로 순간 오탐을 제어했습니다. 낙상·실신 threshold 0.6, 연속 이상 2프레임, 누운 자세 3프레임, 정상 복구 4프레임, 쿨다운 10초, 트랙 손실 유예 1.5초 규칙을 적용했습니다.",
+          "**결과**: 동일 LSTM과 테스트 조건에서 F1-score를 89.29%에서 93.49%로 높이고, FP와 FN을 각각 38.6%, 38.9% 줄였습니다.",
         ],
       },
       {
-        title: "적용 전후 비교",
-        body: "동일한 1,800프레임 영상 조건에서 PyTorch 기반 추론과 TensorRT 최적화 엔진 적용 결과를 측정 비교했습니다. (지연시간 단축 비율과 FPS 처리량 증가 비율을 명확히 구분하여 집계했습니다.)",
+        title: "사례 2. 낙상 중 트랙 ID 단절",
+        items: [
+          "**문제**: 사람이 서 있다가 넘어질 때 bbox 종횡비와 중심점이 급변해 기존 매칭이 실패했습니다.",
+          "**판단**: 외형 기반 Re-ID는 실시간 처리 비용과 구현 복잡도가 커 현재 시스템에는 과하다고 판단했습니다.",
+          "**해결**: 외형 임베딩을 사용하지 않고, 예측 위치·정규화 중심점 거리·후보 수를 순차 적용하는 재연결 후처리를 구현했습니다.",
+          "**결과**: 평가 영상에서 ID Switch를 8건에서 1건으로 줄이고, 평균 Track Coverage를 35.76%에서 49.70%로 높였습니다. 내부 트랙 연속성 대리지표도 약 19.7% 개선했습니다.",
+        ],
+      },
+      {
+        title: "사례 3. 프레임 적체와 지연",
+        items: [
+          "**문제**: 입력 속도가 추론 속도를 초과하면서 오래된 프레임이 누적되고 관제 판단이 늦어졌습니다.",
+          "**판단**: 실시간 관제에서는 모든 프레임을 순서대로 처리하는 것보다 최신 상황을 대응 가능한 시간 안에 전달하는 것이 중요하다고 판단했습니다.",
+          "**해결**: Reader와 Inference를 분리하고, Bounded Queue와 Drop-old 정책으로 오래된 프레임의 누적을 줄였으며 capturedAtMs·processedAtMs·publishedAtMs를 기록했습니다.",
+          "**결과**: 동일 다중 카메라 입력 조건에서 평균 처리 지연을 11.789ms에서 6.101ms로 48.2% 줄였고, 최악 카메라의 p95 지연을 14.719ms에서 7.159ms로 51.4% 줄였습니다.",
+        ],
+      },
+      {
+        title: "PyTorch 대비 TensorRT 추론 성능 비교 검증",
+        body: "동일한 1,800프레임 영상과 입력 조건에서 PyTorch 대비 TensorRT 추론 성능을 비교 검증했습니다.",
         table: {
-          headers: ["평가 지표 (Metric)", "적용 전 (PyTorch)", "적용 후 (TensorRT)", "개선 및 변화율"],
+          headers: ["평가 지표 (Metric)", "PyTorch", "TensorRT", "개선 및 변화율"],
           rows: [
             ["평가 조건", "1,800 프레임 동일 영상", "1,800 프레임 동일 영상", "동일 영상 환경 테스트"],
             ["평균 지연 (Mean Latency)", "7.022 ms", "3.839 ms", "45.3% 단축 (지연시간 약 1.83배 감소)"],
@@ -91,19 +128,41 @@ export const projects: readonly Project[] = [
         },
       },
       {
-        title: "검증 범위와 한계",
+        title: "담당 범위와 협업",
         items: [
-          "**TensorRT 동등성 및 트래커 영향**: TensorRT 변환 후 평균 지연시간을 단축했으나, FP16/INT8 양자화에 따른 원본 FP32 모델 대비 탐지 결과의 동등성과 트래커 단절에 미치는 영향은 별도 비교 검증 과제로 남겨두었습니다.",
-          "**표준 트래킹 성능 평가**: 트랙 유지력 약 19.7% 개선은 자체 연속성 대리지표 수치이며, ID Switch, Track Fragmentation, MOTA, HOTA 등 비전 분야 표준 지표는 후속 검증 항목으로 분류했습니다.",
-          "**다중 스트림 자원 검증**: 단일 카메라 RTSP 스트림 중심 검증을 수행했으며, 다중 카메라 RTSP 확장 시 CPU/GPU 자원 점유율 및 동시 지연 영향은 추가 검증이 필요합니다.",
+          "**직접 담당**: Pose·LSTM 추론, 54D 행동 특징 설계, 트래킹 재연결, 프레임 처리 개선, PyTorch–TensorRT 비교 검증",
+          "**연동 기여**: Python AI Worker에서 생성한 추론 결과와 이벤트를 MQTT를 통해 Spring Boot·WebSocket 기반 관제 흐름에 연결",
         ],
       },
       {
-        title: "이 경험으로 수행할 수 있게 된 기술 업무",
+        title: "검증 범위와 한계",
+        groups: [
+          {
+            title: "확인한 범위",
+            items: [
+              "54D 행동 특징 전후 성능 비교",
+              "트랙 재연결 전후 ID Switch 및 Track Coverage 비교",
+              "다중 카메라 입력 조건의 평균·p95 처리 지연 비교",
+              "동일 1,800프레임 영상의 PyTorch–TensorRT 추론 성능 비교",
+            ],
+          },
+          {
+            title: "후속 평가 과제",
+            items: [
+              "TensorRT 변환 전후 탐지 결과 동등성",
+              "IDF1, HOTA, MOTA 등 표준 트래킹 지표",
+              "다중 스트림 확장 시 CPU/GPU 자원 사용량",
+              "Track Fragmentation과 잘못된 재연결 평가",
+            ],
+          },
+        ],
+      },
+      {
+        title: "입사 후 기여할 수 있는 영역",
         items: [
-          "RTSP 영상 스트림 수신, Bounded Queue 프레임 폐기 및 구간별 타임스탬프 지연 추적 파이프라인 구축",
-          "규칙 기반 상태 머신(State Machine)을 활용한 시계열 AI 모델의 순간 오탐 방지 및 이벤트 쿨다운 설계",
-          "MQTT/WebSocket 기반 실시간 메시지 발행 및 Spring Boot 백엔드 연동 엔지니어링",
+          "RTSP 영상 입력과 Bounded Queue 기반 프레임 적체 제어",
+          "Pose·LSTM 행동 분석과 트래킹 후처리",
+          "MQTT·WebSocket·Spring Boot 기반 관제 인터페이스 연동",
         ],
       },
     ],
@@ -111,14 +170,20 @@ export const projects: readonly Project[] = [
   {
     icon: Microscope,
     badge: "Main",
-    title: "RF-DETR 기반 실시간 대장 내시경 용종 검출 시스템",
+    title: "RF-DETR 기반 대장 내시경 용종 검출 애플리케이션",
+    summaryLine: "데이터 증강과 bbox 정합성 검증으로 내시경 영상의 형태 편차에 대응한 용종 검출 프로젝트",
     description:
-      "Kvasir 용종 데이터를 **Train 70% / Val 20% / Test 10%**로 분할하고, Data-Centric 증강과 RF-DETR fine-tuning으로 OpenCV GUI 실시간 판독 보조 흐름을 구현한 프로젝트입니다.",
+      "Kvasir 용종 데이터를 **Train 70% / Val 20% / Test 10%**로 분할하고, Data-Centric 증강과 bbox 정합성 검증으로 영상·웹캠 입력 탐지 애플리케이션을 구현한 프로젝트입니다.",
+    meta: {
+      period: "2025.03–2025.11",
+      role: "데이터 증강 및 bbox 정합성 검증",
+      service: "대장 내시경 용종 검출 애플리케이션",
+    },
     heroImage: {
       src: "/images/rf-detr-polyp-detection.png",
       caption: "대장 내시경 용종 검출 대표 화면",
     },
-    highlights: ["Kvasir 7:2:1 Split", "mAP@50 86.2%", "Data-Centric 증강"],
+    highlights: ["mAP@50 86.2%", "Kvasir 7:2:1", "Data Augmentation"],
     tags: ["Python", "RF-DETR", "DINOv2", "OpenCV", "Kvasir Dataset", "Data Augmentation"],
     gradient: "from-blue-500/10 to-indigo-500/10",
     githubUrl: "https://github.com/Anjingyeong/RF-DETR-project",
@@ -126,7 +191,7 @@ export const projects: readonly Project[] = [
     details: [
       {
         title: "문제와 목표",
-        body: "대장 내시경 검사는 육안 판독 시 의사의 피로도와 숙련도에 따라 미세 용종을 놓칠 위험이 있습니다. 특히 비정형적이거나 크기가 작은 병변은 조기 발견이 어렵습니다. 본 프로젝트는 Kvasir 대장 내시경 데이터를 활용해 병변 검출 모델을 fine-tuning하고, 실시간 카메라 및 동영상 입력 환경에서 의료진의 판독을 보조하는 시스템을 구축하는 것을 목표로 했습니다.",
+        body: "대장 내시경 검사는 육안 판독 시 의사의 피로도와 숙련도에 따라 미세 용종을 놓칠 위험이 있습니다. 특히 비정형적이거나 크기가 작은 병변은 조기 발견이 어렵습니다. 본 프로젝트는 Kvasir 대장 내시경 데이터를 활용해 병변 검출 모델을 fine-tuning하고, 카메라·동영상 입력 환경에서 의료진의 판독을 보조하는 애플리케이션을 구축하는 것을 목표로 했습니다.",
       },
       {
         title: "시스템 플로우",
@@ -139,15 +204,15 @@ export const projects: readonly Project[] = [
     end
     Aug --> RF["RF-DETR + DINOv2\\nFine-tuning"]
     RF --> GUI["OpenCV GUI\\nReal-time Inference"]
-    GUI --> Result["Polyp Detection\\nmAP@50 86.2%"]`,
+    GUI --> Result["Video/Webcam Detection\\nmAP@50 86.2%"]`,
       },
       {
-        title: "핵심 문제 해결 사례",
+        title: "핵심 문제 해결",
         items: [
-          "**데이터 분할 및 평가 기준 수립**: Kvasir Dataset을 Train 70% / Validation 20% / Test 10% 비율로 엄격히 분할하여 평가 누수를 방지한 독립된 평가 기준을 마련했습니다.",
-          "**Data-Centric 증강 기법 적용**: 내시경 영상 특유의 대장 장벽 변형과 점막 질감 변화에 대응하기 위해, 비선형 조직 형태 변형(Elastic Deformation)과 국소적 기하학적 왜곡(Grid Distortion) 증강 파이프라인을 구축하여 형태학적 피처 학습을 유도했습니다.",
-          "**RF-DETR 모델 선택 이유**: 용종은 크기와 비정형성이 다양하므로, Multi-scale feature extraction과 end-to-end Object Query 방식의 RF-DETR을 선택하여 별도의 앵커 튜닝 없이 작은 병변 검출 성능을 확보했습니다.",
-          "**OpenCV GUI 연동**: 모델 추론 결과에 그치지 않고 외부 카메라 수신 및 영상 파일 재생 조건에서 bounding box 시각화와 환자 정보 입력을 지원하는 OpenCV GUI 프로토타입을 제작했습니다.",
+          "**문제**: 내시경 영상의 조명 변화와 병변 형태 편차로 인해 일반화가 어려웠습니다.",
+          "**판단**: 모델을 교체하기보다 데이터 다양성과 증강 후 bbox 정합성 확보를 우선했습니다.",
+          "**해결**: Elastic Deformation과 Grid Distortion을 적용하고, 변환된 bbox가 실제 용종 영역과 일치하는지 확인했습니다. RF-DETR fine-tuning과 OpenCV GUI의 카메라·영상 입력 연동도 구성했습니다.",
+          "**결과**: 팀 모델은 Kvasir 내부 테스트셋에서 mAP@50 86.2%를 기록했습니다.",
         ],
         images: [
           { src: "/images/rf-detr-polyp-detection.png", caption: "대장 내시경 용종 검출 시각화" },
@@ -163,7 +228,7 @@ export const projects: readonly Project[] = [
             ["데이터셋 분할", "Train 70% / Val 20% / Test 10%", "Kvasir Dataset 1,000장 기준 평가 분할"],
             ["mAP@50 검출 성능", "86.2%", "Kvasir 10% Test set 평가 수치"],
             ["베이스라인 대비 검출 성능", "mAP@50 약 +7%p 향상", "기본 퓨전/초기 모델 설정 대비 검출 성능 비교"],
-            ["실시간 추론 속도", "22+ FPS", "OpenCV GUI 렌더링 및 디스플레이 포함 추론 속도"],
+            ["추론 속도", "22+ FPS", "OpenCV GUI 렌더링 및 디스플레이 포함 처리 속도"],
           ],
         },
       },
@@ -184,7 +249,7 @@ export const projects: readonly Project[] = [
         items: [
           "의료/비전 데이터셋 분할(Train/Val/Test) 및 Geometric Data Augmentation 파이프라인 구축",
           "Object Detection 모델(RF-DETR) Fine-tuning 및 mAP 기반 정밀도 평가",
-          "OpenCV 기반 실시간 영상 프레임 전처리, Bounding Box 시각화 및 GUI 프로토타입 작성",
+          "OpenCV 기반 영상·웹캠 입력 탐지 및 Bounding Box 시각화 GUI 프로토타입 작성",
         ],
       },
     ],
@@ -193,9 +258,15 @@ export const projects: readonly Project[] = [
     icon: BarChart2,
     badge: "Main",
     title: "VAE 기반 유방 초음파 이상 탐지",
+    summaryLine: "라벨이 부족한 유방 초음파에서 정상 분포를 학습해 이상 후보를 시각화한 비지도 이상탐지 프로젝트",
     description:
       "라벨링 비용 문제를 정상 조직 분포를 학습하는 비지도 이상 탐지로 재정의하고, **Reconstruction Error Map**과 적응형 **Dynamic Threshold** 후처리를 개발한 프로젝트입니다.",
-    highlights: ["비지도 이상 탐지", "Reconstruction Error Map", "Dynamic Threshold"],
+    meta: {
+      period: "2024.03–2024.10",
+      role: "VAE 비지도 이상탐지 및 Dynamic Threshold 후처리",
+      service: "유방 초음파 이상 후보 영역 시각화",
+    },
+    highlights: ["Unsupervised", "Error Map", "Dynamic Threshold"],
     tags: ["TensorFlow", "VAE", "Anomaly Detection", "Reconstruction Error", "Dynamic Threshold", "Computer Vision"],
     gradient: "from-violet-500/10 to-purple-500/10",
     githubUrl: "https://github.com/Anjingyeong/vae-breast-cancer-anomaly",
@@ -218,11 +289,12 @@ export const projects: readonly Project[] = [
     Mask --> BBox["🎯 Anomaly Detection\\nCandidate Region"]`,
       },
       {
-        title: "핵심 문제 해결 사례",
+        title: "핵심 문제 해결",
         items: [
-          "**비지도 이상 탐지 문제 재정의**: 라벨링 데이터 부재를 극복하기 위해 정상 초음파 데이터만으로 VAE를 학습시키고, 잠재 공간(Latent Space)의 정상 분포 재구성 오차를 활용하는 파이프라인을 설계했습니다.",
-          "**Reconstruction Error Map 생성**: 입력 이미지와 VAE 재구성 이미지 간 픽셀 단위 차이를 계산하여 병변 후보 영역이 강조된 오차 맵을 추출했습니다.",
-          "**고정 임계값 한계 극복 (Dynamic Threshold)**: 초음파 영상 특유의 밝기 편차와 노이즈로 인해 고정 임계값 적용 시 False Positive(오탐)가 증가하는 현상이 있었습니다. 이를 완화하기 위해 영상별 픽셀 오차 분포를 반영하여 동적으로 임계값을 보정하는 후처리 로직을 개발했습니다.",
+          "**문제**: 병변 위치 라벨 확보가 제한적이었습니다.",
+          "**판단**: 지도학습 대신 정상 영상의 분포를 학습하는 비지도 이상탐지를 선택했습니다.",
+          "**해결**: VAE Reconstruction Error Map을 생성하고 이미지별 오차 분포 기반 Dynamic Threshold를 구현했습니다.",
+          "**결과**: 이상 후보 영역을 시각화하고, 영상별 밝기와 노이즈에 따라 고정 threshold의 오탐 수준이 달라지는 문제를 완화했습니다.",
         ],
         images: [
           { src: "/images/vae_diff.png", caption: "Reconstruction Error Map 기반 오차 시각화" },
@@ -267,6 +339,7 @@ export const projects: readonly Project[] = [
     icon: Brain,
     badge: "Supporting",
     title: "LLM Wiki · RAG 기반 프로젝트 지식 및 하이브리드 검색 시스템",
+    summaryLine: "프로젝트 문서와 사고 기록을 검색 가능한 정적 지식으로 구조화한 하이브리드 검색 시스템",
     description:
       "프로젝트 문서와 사고 기록을 정적 JSON 인덱스로 구조화하고, **8종 메타데이터**와 **BM25 + Vector + Metadata + RRF 4단계 검색 아키텍처**를 설계한 지식 관리 프로젝트입니다.",
     highlights: ["4단계 Hybrid Search", "8종 메타데이터", "정적 JSON 인덱스"],
