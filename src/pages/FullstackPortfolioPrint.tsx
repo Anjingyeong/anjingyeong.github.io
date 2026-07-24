@@ -4,7 +4,7 @@ import "@/styles/print.css";
 
 const projectRows = [
   {
-    title: "1. 마음이음 · 개인정보 최소 수집형 자가체크 웹서비스",
+    title: "1. 마음이음 · 개인정보 최소 수집형 자가체크 웹서비스 (https://maumium.pages.dev/)",
     stack: "약 2주 · 개인 프로젝트 · 1인 개발 · React · TypeScript · Vite · Cloudflare Pages · Workers · D1",
     body: "개인적인 문제의식에서 시작해 기획, 설계, 모바일 우선 화면, 위험도 계산 로직, Workers API, D1 저장, 관리자 통계, PDF 리포트와 배포까지 직접 완성했습니다.",
   },

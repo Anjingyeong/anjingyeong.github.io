@@ -46,6 +46,7 @@ export type Project = {
   readonly tags: readonly string[];
   readonly gradient: string;
   readonly githubUrl?: string;
+  readonly liveUrl?: string;
   readonly hasAwards?: boolean;
   readonly details: readonly ProjectDetail[];
 };
@@ -63,6 +64,10 @@ export const projects: readonly Project[] = [
       period: "2026.05–2026.07",
       role: "AI 파이프라인 설계, YOLO Pose 벤치마크, LSTM 행동 분류, 실시간 추론·후처리, MQTT 연동",
       service: "실시간 영상 AI 관제 시스템",
+    },
+    heroImage: {
+      src: "/images/smart-safety/dashboard-and-search.jpg",
+      caption: "실시간 영상 분석 결과와 위험 이벤트를 확인하는 스마트 안전 관제 대시보드",
     },
     highlights: ["YOLO Pose 벤치마크", "LSTM 행동 분류", "MQTT 이벤트 연동"],
     tags: ["Python", "PyTorch", "YOLO26n-pose", "LSTM", "OpenCV", "RTSP", "MQTT"],
@@ -88,17 +93,79 @@ export const projects: readonly Project[] = [
         body: "Python · PyTorch · YOLO26n-pose · LSTM · OpenCV · RTSP · MQTT",
       },
       {
-        title: "핵심 구현",
-        items: [
-          "**1. 실제 판단 성능을 기준으로 모델을 선택했습니다.**\n\nYOLO 모델의 FPS만 비교하지 않고, 추출된 관절 시퀀스를 LSTM에 입력했을 때의 Faint Recall, F1-score와 반복 학습 안정성을 기준으로 YOLO26n-pose를 최종 선정했습니다.",
-          "**2. 불균형 데이터를 고려한 평가 파이프라인을 구성했습니다.**\n\nNormal 데이터가 압도적으로 많은 환경에서 클래스 균형 샘플링, 임계값별 성능 비교와 반복 시드 평가를 적용해 우연한 결과가 아닌 재현 가능한 모델 선택 근거를 만들었습니다.",
-          "**3. 순간 예측을 실제 위험 이벤트로 변환했습니다.**\n\n17개 관절의 좌표와 신뢰도를 시계열로 구성하고, 연속 위험 판단 횟수와 카메라별 cooldown을 적용해 순간적인 오탐이 바로 경보로 이어지지 않도록 설계했습니다.",
-          "**4. 운영 중 발생하는 문제를 관찰할 수 있게 만들었습니다.**\n\n프레임 번호, 관절 검출 수, 생성된 시퀀스, 예측 확률과 이벤트 발생 수를 기록하고, 영상 위 오버레이와 디버그 로그를 통해 탐지 누락과 지연 원인을 추적할 수 있도록 구성했습니다.",
+        title: "AI 판단 파이프라인",
+        body: "RTSP 영상에서 YOLO26n-pose로 사람의 17개 관절을 추출하고, 시계열 특징을 LSTM으로 분석해 위험 이벤트를 생성했습니다. 단일 프레임의 자세만 판단하지 않고 하강, 쓰러짐, 누움으로 이어지는 시간적 변화를 분석했습니다.",
+        images: [
+          {
+            src: "/images/smart-safety/ai-pipeline.jpg",
+            caption: "RTSP 영상에서 위험 이벤트까지 이어지는 AI 판단 파이프라인",
+          },
         ],
       },
       {
-        title: "파이프라인",
-        body: "RTSP 영상 → YOLO26n-pose 사람·관절 검출 → 관절 시퀀스 생성 → LSTM Normal/Faint 분류 → 연속 판단·임계값·cooldown 후처리 → MQTT 위험 이벤트 발행",
+        title: "낙상 구간의 트래킹 단절 문제 해결",
+        items: [
+          "**문제**: 낙상 순간 자세와 Bounding Box 형태가 급변하면서 ByteTrack ID가 끊기고, 동일 인물의 LSTM 입력 시퀀스가 분리되었습니다.",
+          "**판단**: 단순히 매칭 범위를 넓히면 서로 다른 인물이 잘못 연결될 수 있어, 확실한 매칭과 제한적인 재연결을 분리해야 한다고 판단했습니다.",
+          "**구현**: IoU와 중심점 거리를 활용한 Hard Match, frame gap·center ratio·velocity를 활용한 Soft Relink, Sole Candidate Match와 Grace Period를 적용했습니다.",
+          "**결과**: 자체 평가 기준 Track 연속성과 재연결 품질을 약 19.7% 개선했습니다.",
+        ],
+        images: [
+          {
+            src: "/images/smart-safety/tracking-recovery.png",
+            caption: "낙상 구간의 ID 단절을 보완한 트래킹 재연결 전략",
+          },
+        ],
+      },
+      {
+        title: "51D에서 54D로 확장한 행동 특징",
+        body: "17개 관절의 좌표와 신뢰도로 구성한 51차원 입력에 center_drop, velocity, torso_angle을 추가해 낙상 전이 정보를 직접 표현했습니다.",
+        images: [
+          {
+            src: "/images/smart-safety/model-performance.jpg",
+            caption: "51D 대비 54D 특징 확장 모델 성능 비교",
+          },
+        ],
+        table: {
+          headers: ["평가 지표", "51D 모델", "최종 54D 모델", "개선"],
+          rows: [
+            ["Accuracy", "89.20%", "93.45%", "+4.25%p"],
+            ["Precision", "88.10%", "92.80%", "+4.70%p"],
+            ["Recall", "90.50%", "94.20%", "+3.70%p"],
+            ["F1-score", "89.29%", "93.49%", "+4.20%p"],
+            ["False Positive", "132건", "81건", "38.6% 감소"],
+            ["False Negative", "108건", "66건", "38.9% 감소"],
+          ],
+        },
+      },
+      {
+        title: "TensorRT 기반 실시간 추론 최적화",
+        body: "동일한 카메라 입력 조건에서 PyTorch와 TensorRT 추론을 비교하고, 모델 추론뿐 아니라 전체 처리 지연과 Dropped Frame을 함께 측정했습니다.",
+        images: [
+          {
+            src: "/images/smart-safety/inference-optimization.jpg",
+            caption: "PyTorch와 TensorRT 적용 전후 추론 지연 비교",
+          },
+        ],
+        table: {
+          headers: ["검증 항목", "PyTorch", "TensorRT", "개선"],
+          rows: [
+            ["YOLO 평균 지연", "9.454ms", "4.723ms", "50.0% 감소"],
+            ["최악 카메라 p95 지연", "14.719ms", "7.159ms", "51.4% 감소"],
+            ["전체 처리 지연", "11.789ms", "6.101ms", "48.2% 감소"],
+            ["Dropped Frames", "40건", "34건", "15.0% 감소"],
+          ],
+        },
+        note: "End-to-End 알림 지연은 평균 20.9ms, 최대 27ms로 측정되었습니다.",
+      },
+      {
+        title: "이벤트 후처리 및 운영 관찰",
+        items: [
+          "**불균형 데이터 고려**: Normal 데이터가 압도적으로 많은 환경에서 클래스 균형 샘플링, 임계값별 성능 비교와 반복 시드 평가를 적용해 재현 가능한 모델 선택 근거를 만들었습니다.",
+          "**순간 예측의 위험 이벤트 변환**: 17개 관절 좌표를 시계열로 구성하고, 연속 위험 판단 횟수와 카메라별 cooldown을 적용해 순간적 오탐이 경보로 이어지지 않도록 설계했습니다.",
+          "**운영 문제 추적 가능성**: 프레임 번호, 관절 검출 수, 생성 시퀀스, 예측 확률과 이벤트 발생 수를 기록하고, 영상 위 오버레이와 디버그 로그로 탐지 누락과 지연 원인을 추적 가능하게 구성했습니다.",
+          "**실제 서비스 이벤트 변환**: 모델 추론 결과를 MQTT·WebSocket·Spring Boot 기반 관제 시스템으로 연결해 실제 운영 서비스 이벤트로 전환했습니다.",
+        ],
       },
       {
         title: "이 프로젝트로 보여주는 역량",

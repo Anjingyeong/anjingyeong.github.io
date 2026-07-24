@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 import AboutSection from "@/components/AboutSection";
 import Header from "@/components/Header";
 import ProjectsSection from "@/components/ProjectsSection";
+import { projects } from "@/data/projects";
 import { fullstackProjects } from "@/data/fullstackProjects";
 import FullstackPortfolioPrint from "@/pages/FullstackPortfolioPrint";
 
@@ -88,5 +89,23 @@ describe("full-stack portfolio", () => {
     expect(resume).not.toContain("직접 구현한 것으로 표현하지 않습니다");
     expect(resume).toContain("건양대학교 의공학과 학사, 2026.02 졸업");
     expect(resume).toContain("SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기, 2026.05–2026.07");
+  });
+
+  it("connects smart safety project visual assets correctly for both AI and Full-Stack pages", () => {
+    const aiSmartSafety = projects.find((p) => p.title.includes("실시간 이상행동 탐지"));
+    const fullstackSmartSafety = fullstackProjects.find((p) => p.title.includes("AI 이벤트 수신부터 사고 검색"));
+
+    expect(aiSmartSafety?.heroImage?.src).toBe("/images/smart-safety/dashboard-and-search.jpg");
+    expect(fullstackSmartSafety?.heroImage?.src).toBe("/images/smart-safety/dashboard-and-search.jpg");
+
+    const aiImageSources = aiSmartSafety?.details.flatMap((d) => d.images?.map((i) => i.src) ?? []) ?? [];
+    const fullstackImageSources = fullstackSmartSafety?.details.flatMap((d) => d.images?.map((i) => i.src) ?? []) ?? [];
+
+    expect(aiImageSources).toContain("/images/smart-safety/tracking-recovery.png");
+    expect(fullstackImageSources).toContain("/images/smart-safety/incident-merge-before-after.svg");
+
+    [...aiImageSources, ...fullstackImageSources].forEach((src) => {
+      expect(src).toMatch(/^\/images\/smart-safety\//);
+    });
   });
 });

@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+  <title>실시간 이벤트와 증거 이벤트를 originalEventId 기준 하나의 사고로 병합한 전후 비교</title>
+  <desc>실시간 경보와 증거 데이터를 하나의 Incident로 병합한 데이터 정합성 개선 전후 비교 다이어그램</desc>
+
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+
+    <!-- Before Panel Gradient -->
+    <linearGradient id="beforeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#451A03" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#7F1D1D" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <!-- After Panel Gradient -->
+    <linearGradient id="afterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#064E3B" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#065F46" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <!-- Middle Process Gradient -->
+    <linearGradient id="procGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1B4B" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#312E81" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Arrow Marker Red -->
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#EF4444"/>
+    </marker>
+
+    <!-- Arrow Marker Blue -->
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38BDF8"/>
+    </marker>
+
+    <!-- Arrow Marker Green -->
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981"/>
+    </marker>
+  </defs>
+
+  <!-- Main Container Card -->
+  <rect width="1600" height="900" rx="20" fill="url(#bgGradient)" stroke="#334155" stroke-width="2"/>
+
+  <!-- Main Title -->
+  <text x="800" y="70" text-anchor="middle" fill="#F8FAFC" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="800" letter-spacing="-0.5">
+    실시간 사고 데이터 정합성 개선: originalEventId 기반 Incident 병합 구조
+  </text>
+  <text x="800" y="105" text-anchor="middle" fill="#94A3B8" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500">
+    분리 발생하던 실시간 경보와 미디어 증거 이벤트를 하나의 Incident 카드로 통합
+  </text>
+
+  <!-- LEFT PANEL: BEFORE (Red/Orange Theme) -->
+  <g transform="translate(60, 140)">
+    <rect width="420" height="700" rx="16" fill="url(#beforeGrad)" stroke="#B91C1C" stroke-width="2" filter="url(#shadow)"/>
+    
+    <!-- Title Badge -->
+    <rect x="24" y="24" width="372" height="48" rx="8" fill="#7F1D1D"/>
+    <text x="210" y="55" text-anchor="middle" fill="#FCA5A5" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">
+      Before · 이벤트 분리 (중복 사고 생성)
+    </text>
+
+    <!-- Event A Box -->
+    <g transform="translate(24, 96)">
+      <rect width="372" height="120" rx="12" fill="#1E293B" stroke="#EF4444" stroke-width="1.5"/>
+      <circle cx="36" cy="36" r="14" fill="#EF4444"/>
+      <text x="36" y="41" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="bold">1</text>
+      <text x="64" y="34" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="16" font-weight="700">실시간 이벤트 A</text>
+      <text x="64" y="56" fill="#FCA5A5" font-family="monospace" font-size="14">eventId = fall-001</text>
+      <text x="24" y="92" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="13">🚨 WebSocket 실시간 감지 알림 즉시 발행</text>
+    </g>
+
+    <!-- Arrow down to Card 1 -->
+    <line x1="210" y1="216" x2="210" y2="246" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowRed)"/>
+
+    <!-- Incident Card 1 -->
+    <g transform="translate(48, 252)">
+      <rect width="324" height="64" rx="8" fill="#451A03" stroke="#F97316" stroke-width="1.5"/>
+      <text x="162" y="38" text-anchor="middle" fill="#FED7AA" font-family="system-ui, sans-serif" font-size="15" font-weight="700">❌ DB &amp; 화면: 사고 카드 1 (경보만 포함)</text>
+    </g>
+
+    <!-- Event B Box -->
+    <g transform="translate(24, 348)">
+      <rect width="372" height="120" rx="12" fill="#1E293B" stroke="#EF4444" stroke-width="1.5"/>
+      <circle cx="36" cy="36" r="14" fill="#EF4444"/>
+      <text x="36" y="41" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="bold">2</text>
+      <text x="64" y="34" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="16" font-weight="700">증거 이벤트 B</text>
+      <text x="64" y="56" fill="#FCA5A5" font-family="monospace" font-size="14">eventId = clip-001</text>
+      <text x="24" y="92" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="13">📹 10초 영상 클립 &amp; 스냅샷 늦은 도착</text>
+    </g>
+
+    <!-- Arrow down to Card 2 -->
+    <line x1="210" y1="468" x2="210" y2="498" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowRed)"/>
+
+    <!-- Incident Card 2 -->
+    <g transform="translate(48, 504)">
+      <rect width="324" height="64" rx="8" fill="#451A03" stroke="#F97316" stroke-width="1.5"/>
+      <text x="162" y="38" text-anchor="middle" fill="#FED7AA" font-family="system-ui, sans-serif" font-size="15" font-weight="700">❌ DB &amp; 화면: 사고 카드 2 (영상만 포함)</text>
+    </g>
+
+    <!-- Warning Footer -->
+    <rect x="24" y="600" width="372" height="68" rx="8" fill="#2A1215" stroke="#7F1D1D"/>
+    <text x="210" y="628" text-anchor="middle" fill="#FCA5A5" font-family="system-ui, sans-serif" font-size="13" font-weight="600">⚠️ 문제점: 동일 사고가 2건으로 분리 생성됨</text>
+    <text x="210" y="648" text-anchor="middle" fill="#F87171" font-family="system-ui, sans-serif" font-size="12">관제자가 사고 상황을 파악할 때 파편화 발생</text>
+  </g>
+
+  <!-- MIDDLE PANEL: PROCESSING & NORMALIZATION -->
+  <g transform="translate(520, 140)">
+    <rect width="440" height="700" rx="16" fill="url(#procGrad)" stroke="#4F46E5" stroke-width="2" filter="url(#shadow)"/>
+
+    <!-- Title Badge -->
+    <rect x="24" y="24" width="392" height="48" rx="8" fill="#312E81"/>
+    <text x="220" y="55" text-anchor="middle" fill="#C7D2FE" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">
+      originalEventId 정규화 &amp; 병합 처리
+    </text>
+
+    <!-- Step 1: Identifier Matching -->
+    <g transform="translate(24, 96)">
+      <rect width="392" height="110" rx="10" fill="#0F172A" stroke="#6366F1" stroke-width="1.5"/>
+      <text x="20" y="32" fill="#818CF8" font-family="system-ui, sans-serif" font-size="15" font-weight="700">1. 식별자 추출 및 정규화</text>
+      <text x="20" y="60" fill="#E2E8F0" font-family="monospace" font-size="13">originalEventId = "fall-001"</text>
+      <text x="20" y="82" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="12">실시간 경보와 증거 이벤트 공통 키 연결</text>
+    </g>
+
+    <!-- Flow Arrow -->
+    <line x1="220" y1="206" x2="220" y2="236" stroke="#818CF8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+    <!-- Step 2: Backend Persistence Lookup -->
+    <g transform="translate(24, 240)">
+      <rect width="392" height="125" rx="10" fill="#0F172A" stroke="#6366F1" stroke-width="1.5"/>
+      <text x="20" y="32" fill="#818CF8" font-family="system-ui, sans-serif" font-size="15" font-weight="700">2. Spring Boot 비동기 수신 &amp; DB 조회</text>
+      <text x="20" y="58" fill="#CBD5E1" font-family="system-ui, sans-serif" font-size="13">• 기존 originalEventId 사고 존재 여부 검사</text>
+      <text x="20" y="80" fill="#CBD5E1" font-family="system-ui, sans-serif" font-size="13">• 존재 시: S3 영상 클립 &amp; 스냅샷 URL 추가 연결</text>
+      <text x="20" y="102" fill="#CBD5E1" font-family="system-ui, sans-serif" font-size="13">• 미존재 시: 신규 Incident 생성</text>
+    </g>
+
+    <!-- Flow Arrow -->
+    <line x1="220" y1="365" x2="220" y2="395" stroke="#818CF8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+    <!-- Step 3: Frontend State Preservation -->
+    <g transform="translate(24, 400)">
+      <rect width="392" height="135" rx="10" fill="#0F172A" stroke="#6366F1" stroke-width="1.5"/>
+      <text x="20" y="32" fill="#818CF8" font-family="system-ui, sans-serif" font-size="15" font-weight="700">3. React 관제 화면 상태 병합</text>
+      <text x="20" y="58" fill="#CBD5E1" font-family="system-ui, sans-serif" font-size="13">• WebSocket 실시간 알림 우선 표시</text>
+      <text x="20" y="80" fill="#CBD5E1" font-family="system-ui, sans-serif" font-size="13">• 관제자 기존 확인(Ack) 상태 덮어쓰기 방지</text>
+      <text x="20" y="102" fill="#CBD5E1" font-family="system-ui, sans-serif" font-size="13">• 나중에 도착한 스냅샷/클립 미디어만 병합</text>
+    </g>
+
+    <!-- Flow Arrow -->
+    <line x1="220" y1="535" x2="220" y2="565" stroke="#818CF8" stroke-width="2" marker-end="url(#arrowBlue)"/>
+
+    <!-- Step 4: VLM Integration -->
+    <g transform="translate(24, 570)">
+      <rect width="392" height="100" rx="10" fill="#0F172A" stroke="#6366F1" stroke-width="1.5"/>
+      <text x="20" y="30" fill="#818CF8" font-family="system-ui, sans-serif" font-size="15" font-weight="700">4. VLM 8-Keyframe 설명 &amp; pgvector 색인</text>
+      <text x="20" y="54" fill="#CBD5E1" font-family="system-ui, sans-serif" font-size="13">• Gemini 8 프레임 비식별화 요약 생성</text>
+      <text x="20" y="76" fill="#CBD5E1" font-family="system-ui, sans-serif" font-size="13">• 768D 임베딩 변환 후 pgvector 자연어 검색 연동</text>
+    </g>
+  </g>
+
+  <!-- RIGHT PANEL: AFTER (Green Theme) -->
+  <g transform="translate(1000, 140)">
+    <rect width="540" height="700" rx="16" fill="url(#afterGrad)" stroke="#059669" stroke-width="2" filter="url(#shadow)"/>
+
+    <!-- Title Badge -->
+    <rect x="24" y="24" width="492" height="48" rx="8" fill="#065F46"/>
+    <text x="270" y="55" text-anchor="middle" fill="#6EE7B7" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">
+      After · 하나의 Incident (데이터 정합성 완성)
+    </text>
+
+    <!-- Single Unified Incident Card -->
+    <g transform="translate(24, 96)">
+      <rect width="492" height="570" rx="14" fill="#0F172A" stroke="#10B981" stroke-width="2"/>
+      
+      <!-- Card Header -->
+      <rect x="16" y="16" width="460" height="60" rx="8" fill="#064E3B"/>
+      <text x="36" y="52" fill="#A7F3D0" font-family="system-ui, sans-serif" font-size="18" font-weight="800">✅ 사고 카드 1개로 완전 통합 (Incident Card)</text>
+
+      <!-- Sub-Checklist Item 1 -->
+      <g transform="translate(24, 96)">
+        <rect width="444" height="72" rx="8" fill="#1E293B" stroke="#334155"/>
+        <circle cx="36" cy="36" r="14" fill="#10B981"/>
+        <path d="M 28 36 L 34 42 L 44 30" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="64" y="34" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="15" font-weight="700">실시간 경보 (Realtime Alert)</text>
+        <text x="64" y="54" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="13">STOMP 토픽 감지 알림 (경보 수신 시각, 카메라 정보)</text>
+      </g>
+
+      <!-- Sub-Checklist Item 2 -->
+      <g transform="translate(24, 180)">
+        <rect width="444" height="72" rx="8" fill="#1E293B" stroke="#334155"/>
+        <circle cx="36" cy="36" r="14" fill="#10B981"/>
+        <path d="M 28 36 L 34 42 L 44 30" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="64" y="34" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="15" font-weight="700">확인 상태 보존 (Ack State)</text>
+        <text x="64" y="54" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="13">관제 담당자의 확인 여부 및 조치 메모 상태 유지</text>
+      </g>
+
+      <!-- Sub-Checklist Item 3 -->
+      <g transform="translate(24, 264)">
+        <rect width="444" height="72" rx="8" fill="#1E293B" stroke="#334155"/>
+        <circle cx="36" cy="36" r="14" fill="#10B981"/>
+        <path d="M 28 36 L 34 42 L 44 30" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="64" y="34" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="15" font-weight="700">스냅샷 &amp; 10초 사고 클립 (Evidence Media)</text>
+        <text x="64" y="54" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="13">S3 연결 전후 5초 사고 영상 및 핵심 캡처 이미지</text>
+      </g>
+
+      <!-- Sub-Checklist Item 4 -->
+      <g transform="translate(24, 348)">
+        <rect width="444" height="72" rx="8" fill="#1E293B" stroke="#334155"/>
+        <circle cx="36" cy="36" r="14" fill="#10B981"/>
+        <path d="M 28 36 L 34 42 L 44 30" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="64" y="34" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="15" font-weight="700">VLM 사고 설명 (AI Summary Caption)</text>
+        <text x="64" y="54" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="13">Gemini 8-Keyframe 비식별화 텍스트 요약 연결</text>
+      </g>
+
+      <!-- Sub-Checklist Item 5 -->
+      <g transform="translate(24, 432)">
+        <rect width="444" height="72" rx="8" fill="#1E293B" stroke="#334155"/>
+        <circle cx="36" cy="36" r="14" fill="#10B981"/>
+        <path d="M 28 36 L 34 42 L 44 30" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="64" y="34" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="15" font-weight="700">자연어 검색 인덱싱 (pgvector Search)</text>
+        <text x="64" y="54" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="13">768차원 임베딩 저장으로 시맨틱 유사도 검색 지원</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- CONNECTING ARROWS BETWEEN PANELS -->
+  <line x1="480" y1="490" x2="520" y2="490" stroke="#EF4444" stroke-width="3" marker-end="url(#arrowRed)"/>
+  <line x1="960" y1="490" x2="1000" y2="490" stroke="#10B981" stroke-width="3" marker-end="url(#arrowGreen)"/>
+</svg>
