@@ -108,7 +108,13 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
   </section>
 );
 
-const ProjectsSection = () => {
+type ProjectsSectionProps = {
+  readonly items?: readonly Project[];
+  readonly grouped?: boolean;
+};
+
+
+const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionProps) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const handleKeyDown = (event: KeyboardEvent) => {
@@ -121,8 +127,9 @@ const ProjectsSection = () => {
     setSelectedProject(project);
   };
 
-  const mainProjects = projects.filter((project) => project.badge === "Main");
-  const supportingProjects = projects.filter((project) => project.badge === "Supporting");
+  const mainProjects = items.filter((project) => project.badge === "Main");
+  const supportingProjects = items.filter((project) => project.badge === "Supporting");
+  const orderedProjects = grouped ? mainProjects : items;
 
   const renderCard = (project: Project): ReactNode => (
     <ScrollAnimator key={project.title}>
@@ -213,10 +220,10 @@ const ProjectsSection = () => {
         </ScrollAnimator>
 
         <div className="relative z-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          {mainProjects.map((project) => renderCard(project))}
+          {orderedProjects.map((project) => renderCard(project))}
         </div>
 
-        {supportingProjects.length > 0 ? (
+        {grouped && supportingProjects.length > 0 ? (
           <>
             <ScrollAnimator>
               <div className="mb-6 mt-16 flex items-center gap-4">

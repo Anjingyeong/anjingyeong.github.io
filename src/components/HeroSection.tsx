@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import { ArrowDown, Sparkles, Brain, Network, Cpu } from "lucide-react";
 
-const HeroSection = () => {
-  const fullText = "정답에도 유효시간이 있습니다.";
+type HeroSectionProps = {
+  readonly variant?: "ai" | "fullstack";
+};
+
+const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
+  const isFullstack = variant === "fullstack";
+  const fullText = isFullstack ? "사용자 화면부터 API, 데이터 저장, 실시간 이벤트 전달과 배포까지 하나의 서비스 흐름으로 구현합니다." : "정답에도 유효시간이 있습니다.";
   const [displayText, setDisplayText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [typingDone, setTypingDone] = useState(false);
@@ -19,7 +24,7 @@ const HeroSection = () => {
       }
     }, 50);
     return () => clearInterval(timer);
-  }, []);
+  }, [fullText]);
 
   useEffect(() => {
     if (!typingDone) return;
@@ -46,11 +51,11 @@ const HeroSection = () => {
           <div className="order-2 lg:order-1 lg:col-span-7 pr-0 lg:pr-10">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-6">
               <Sparkles size={14} className="text-primary" />
-              <span className="text-sm font-medium text-primary">AI Engineer Portfolio</span>
+              <span className="text-sm font-medium text-primary">{isFullstack ? "Full-Stack Developer Portfolio" : "AI Engineer Portfolio"}</span>
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
-              실시간 영상 AI의 정확도와 지연을 함께 개선한 컴퓨터비전 엔지니어
+              {isFullstack ? "AI 기능을 실제 서비스로 연결해 온 풀스택 개발자" : "실시간 영상 AI의 정확도와 지연을 함께 개선한 컴퓨터비전 엔지니어"}
             </h1>
 
             <p className="text-base md:text-lg font-mono mb-6 text-primary font-semibold">
@@ -61,29 +66,44 @@ const HeroSection = () => {
             </p>
 
             <p className="text-base md:text-lg text-foreground/80 mb-8 leading-relaxed font-normal max-w-xl">
-              모델 정확도만 높이는 데 그치지 않고, 트랙 단절과 프레임 적체로 판단이 늦어지는 원인을 추적해 입력 특징·트래킹·처리 구조를 함께 개선했습니다.
+              {isFullstack
+                ? "React와 TypeScript 기반 사용자 화면부터 Spring Boot·Cloudflare 기반 API 및 데이터 저장 구조까지 구현해 왔습니다. 기능 구현에 그치지 않고 데이터 흐름, 예외 상황, 실시간 이벤트 전달과 운영 환경을 함께 고려합니다."
+                : "모델 정확도만 높이는 데 그치지 않고, 트랙 단절과 프레임 적체로 판단이 늦어지는 원인을 추적해 입력 특징·트래킹·처리 구조를 함께 개선했습니다."}
             </p>
 
             {/* Accomplishments Bullet Points */}
             <ul className="text-sm md:text-base text-muted-foreground mb-8 max-w-xl space-y-3.5 relative z-20 leading-[1.75] font-light">
-              <li className="flex items-start gap-2.5">
-                <span className="text-primary font-bold mt-0.5">•</span>
-                <span>
-                  <strong className="font-semibold text-foreground">[행동 분석]</strong> 51D 관절 좌표를 54D 동작 특징으로 확장해 F1-score를 89.29%에서 93.49%로 개선
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="text-primary font-bold mt-0.5">•</span>
-                <span>
-                  <strong className="font-semibold text-foreground">[트래킹]</strong> 낙상 자세 전환 중 발생하는 ID 단절을 재연결 후처리로 개선해 ID Switch를 8건에서 1건으로 감소
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="text-primary font-bold mt-0.5">•</span>
-                <span>
-                  <strong className="font-semibold text-foreground">[실시간 처리]</strong> Bounded Queue와 Drop-old 정책으로 평균 처리 지연을 11.789ms에서 6.101ms로 48.2% 단축
-                </span>
-              </li>
+              {isFullstack ? (
+                <>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-primary font-bold mt-0.5">•</span>
+                    <span><strong className="font-semibold text-foreground">[웹 서비스]</strong> React·Cloudflare Workers·D1 기반 자가체크 서비스 구축 및 배포</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-primary font-bold mt-0.5">•</span>
+                    <span><strong className="font-semibold text-foreground">[실시간 연동]</strong> Python AI Worker의 이벤트를 MQTT·Spring Boot·WebSocket 기반 관제 흐름에 연동</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-primary font-bold mt-0.5">•</span>
+                    <span><strong className="font-semibold text-foreground">[검색 서비스]</strong> BM25·Vector Search·RRF 기반 프로젝트 지식 검색 구조 구현</span>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-primary font-bold mt-0.5">•</span>
+                    <span><strong className="font-semibold text-foreground">[행동 분석]</strong> 51D 관절 좌표를 54D 동작 특징으로 확장해 F1-score를 89.29%에서 93.49%로 개선</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-primary font-bold mt-0.5">•</span>
+                    <span><strong className="font-semibold text-foreground">[트래킹]</strong> 낙상 자세 전환 중 발생하는 ID 단절을 재연결 후처리로 개선해 ID Switch를 8건에서 1건으로 감소</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-primary font-bold mt-0.5">•</span>
+                    <span><strong className="font-semibold text-foreground">[실시간 처리]</strong> Bounded Queue와 Drop-old 정책으로 평균 처리 지연을 11.789ms에서 6.101ms로 48.2% 단축</span>
+                  </li>
+                </>
+              )}
             </ul>
 
             {/* Categorized Tech Stack Tags */}
@@ -91,36 +111,36 @@ const HeroSection = () => {
               <div className="flex items-center gap-3 text-sm">
                 <div className="flex items-center gap-1.5 font-semibold min-w-[100px] text-xs uppercase tracking-wider text-muted-foreground/80">
                   <Brain size={14} className="text-primary/70" />
-                  <span>Model</span>
+                  <span>{isFullstack ? "Backend" : "Model"}</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="tech-tag">YOLO Pose</span>
-                  <span className="tech-tag">ByteTrack</span>
-                  <span className="tech-tag">LSTM</span>
+                  <span className="tech-tag">{isFullstack ? "Spring Boot" : "YOLO Pose"}</span>
+                  <span className="tech-tag">{isFullstack ? "Spring Data JPA" : "ByteTrack"}</span>
+                  <span className="tech-tag">{isFullstack ? "REST API" : "LSTM"}</span>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 text-sm">
                 <div className="flex items-center gap-1.5 font-semibold min-w-[100px] text-xs uppercase tracking-wider text-muted-foreground/80">
                   <Network size={14} className="text-primary/70" />
-                  <span>Pipeline</span>
+                  <span>{isFullstack ? "Frontend" : "Pipeline"}</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="tech-tag">RTSP</span>
-                  <span className="tech-tag">MQTT</span>
-                  <span className="tech-tag">WebSocket</span>
+                  <span className="tech-tag">{isFullstack ? "React" : "RTSP"}</span>
+                  <span className="tech-tag">{isFullstack ? "TypeScript" : "MQTT"}</span>
+                  <span className="tech-tag">{isFullstack ? "Tailwind CSS" : "WebSocket"}</span>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 text-sm">
                 <div className="flex items-center gap-1.5 font-semibold min-w-[100px] text-xs uppercase tracking-wider text-muted-foreground/80">
                   <Cpu size={14} className="text-primary/70" />
-                  <span>Stack</span>
+                  <span>{isFullstack ? "Data & Realtime" : "Stack"}</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="tech-tag">PyTorch</span>
-                  <span className="tech-tag">OpenCV</span>
-                  <span className="tech-tag">TensorRT</span>
+                  <span className="tech-tag">{isFullstack ? "MySQL" : "PyTorch"}</span>
+                  <span className="tech-tag">{isFullstack ? "WebSocket / STOMP" : "OpenCV"}</span>
+                  <span className="tech-tag">{isFullstack ? "MQTT" : "TensorRT"}</span>
                 </div>
               </div>
             </div>

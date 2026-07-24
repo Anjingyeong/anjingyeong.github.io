@@ -36,7 +36,40 @@ const skillCategories: SkillCategory[] = [
   },
 ];
 
-const SkillsSection = () => {
+const fullstackSkillCategories: SkillCategory[] = [
+  {
+    title: "Backend & Database",
+    icon: Database,
+    skills: ["Spring Boot", "Spring Data JPA", "Node.js", "REST API", "WebSocket", "STOMP", "MySQL", "SQL", "Cloudflare Workers", "D1"],
+    color: "from-blue-500/10 to-blue-600/5",
+  },
+  {
+    title: "Frontend",
+    icon: BarChart3,
+    skills: ["React", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS", "Vite"],
+    color: "from-emerald-500/10 to-teal-600/5",
+  },
+  {
+    title: "Integration & Deployment",
+    icon: Wrench,
+    skills: ["MQTT", "Docker", "Git", "GitHub", "GitHub Pages", "Cloudflare Pages"],
+    color: "from-purple-500/10 to-purple-600/5",
+  },
+  {
+    title: "AI & Data",
+    icon: Brain,
+    skills: ["Python", "PyTorch", "OpenCV", "Computer Vision", "RAG", "Vector Search"],
+    color: "from-indigo-500/10 to-indigo-600/5",
+  },
+];
+
+type SkillsSectionProps = {
+  readonly variant?: "ai" | "fullstack";
+};
+
+const SkillsSection = ({ variant = "ai" }: SkillsSectionProps) => {
+  const categories = variant === "fullstack" ? fullstackSkillCategories : skillCategories;
+
   return (
     <section id="skills" className="py-24 md:py-32">
       <div className="container">
@@ -47,7 +80,7 @@ const SkillsSection = () => {
         </ScrollAnimator>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {skillCategories.map((cat, i) => (
+          {categories.map((cat, i) => (
             <ScrollAnimator key={i}>
               <div className="minimal-card h-full overflow-hidden">
                 <div className={`bg-gradient-to-br ${cat.color} p-6 pb-4`}>
