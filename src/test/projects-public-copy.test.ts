@@ -87,9 +87,9 @@ describe("ProjectsSection public copy", () => {
 
     fireEvent.click(screen.getByText("실시간 이상행동 탐지 및 안전 관제 AI 시스템"));
 
-    expect(screen.getByRole("dialog")).toHaveTextContent("AI 판단 파이프라인");
+    expect(screen.getByRole("dialog")).toHaveTextContent("AI 시스템 구조");
     expect(screen.getByRole("dialog")).toHaveTextContent("51D에서 54D로 확장한 행동 특징");
-    expect(screen.getByRole("dialog")).toHaveTextContent("TensorRT 기반 실시간 추론 최적화");
+    expect(screen.getByRole("dialog")).toHaveTextContent("TensorRT 적용 및 통합 지연 검증");
   });
 
   it("opens VAE details with the corrected responsibility scope", () => {

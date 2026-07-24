@@ -93,7 +93,13 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
       </div>
     ) : null}
     {detail.images && detail.images.length > 0 ? (
-      <div className="mt-4 space-y-4">
+      <div
+        className={
+          detail.imageLayout === "grid"
+            ? "mt-4 grid gap-4 md:grid-cols-2"
+            : "mt-4 space-y-4"
+        }
+      >
         {detail.images.map((img, idx) => (
           <div key={idx} className="flex flex-col gap-2">
             <div className="flex items-center justify-center overflow-hidden rounded-xl border border-border bg-muted/20 p-2">
@@ -103,7 +109,11 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
                 loading="lazy"
                 decoding="async"
                 className={`${
-                  img.src.includes("/canva/") ? "max-h-[60vh]" : "max-h-[70vh]"
+                  img.src.includes("/canva/")
+                    ? detail.imageLayout === "grid"
+                      ? "max-h-80 md:max-h-72"
+                      : "max-h-[60vh]"
+                    : "max-h-[70vh]"
                 } w-full rounded-lg object-contain`}
                 onError={(e) => {
                   (e.target as HTMLImageElement).alt = `[이미지 로드 실패: ${img.src}]`;
