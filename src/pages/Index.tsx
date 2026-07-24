@@ -7,18 +7,23 @@ import SkillsSection from "@/components/SkillsSection";
 import CompetenceSection from "@/components/CompetenceSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import ContactSection from "@/components/ContactSection";
+import { fullstackProjects } from "@/data/fullstackProjects";
 
-const Index = () => {
+type IndexProps = {
+  readonly variant?: "ai" | "fullstack";
+};
+
+const Index = ({ variant = "ai" }: IndexProps) => {
   return (
     <div className="relative min-h-screen bg-background">
       <NetworkCanvas />
-      <Header />
+      <Header variant={variant} />
       <main className="relative z-10">
-        <HeroSection />
-        <AboutSection />
+        <HeroSection variant={variant} />
+        <AboutSection variant={variant} />
         <div className="section-divider" />
-        <ProjectsSection />
-        <SkillsSection />
+        <ProjectsSection items={variant === "fullstack" ? fullstackProjects : undefined} grouped={variant !== "fullstack"} />
+        <SkillsSection variant={variant} />
         <ExperienceSection />
         <CompetenceSection />
         <ContactSection />
