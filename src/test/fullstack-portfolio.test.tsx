@@ -23,7 +23,7 @@ describe("full-stack portfolio", () => {
     expect(fullstackProjects.some((project) => project.title.includes("포트폴리오 웹사이트"))).toBe(false);
     expect(fullstackProjects[0].meta?.period).toBe("약 2주");
     expect(fullstackProjects[0].meta?.role).toContain("1인 개발");
-    expect(fullstackProjects[1].description).toContain("위험 이벤트를 화면에 띄우는 데서 끝내지 않고");
+    expect(fullstackProjects[1].description).toContain("실시간 알림만 구현하는 데서 끝내지 않고");
     expect(JSON.stringify(fullstackProjects)).not.toContain("직접 구현한 것으로 표현하지 않습니다");
 
     render(<ProjectsSection items={fullstackProjects} grouped={false} />);
@@ -95,14 +95,16 @@ describe("full-stack portfolio", () => {
     const aiSmartSafety = projects.find((p) => p.title.includes("실시간 이상행동 탐지"));
     const fullstackSmartSafety = fullstackProjects.find((p) => p.title.includes("AI 이벤트 수신부터 사고 검색"));
 
-    expect(aiSmartSafety?.heroImage?.src).toBe("/images/smart-safety/dashboard-and-search.jpg");
+    expect(aiSmartSafety?.heroImage?.src).toBe("/images/smart-safety/ai-pipeline.jpg");
     expect(fullstackSmartSafety?.heroImage?.src).toBe("/images/smart-safety/dashboard-and-search.jpg");
 
     const aiImageSources = aiSmartSafety?.details.flatMap((d) => d.images?.map((i) => i.src) ?? []) ?? [];
     const fullstackImageSources = fullstackSmartSafety?.details.flatMap((d) => d.images?.map((i) => i.src) ?? []) ?? [];
 
-    expect(aiImageSources).toContain("/images/smart-safety/tracking-recovery.png");
+    expect(aiImageSources).toContain("/images/smart-safety/model-performance.jpg");
+    expect(aiImageSources).toContain("/images/smart-safety/inference-optimization.jpg");
     expect(fullstackImageSources).toContain("/images/smart-safety/incident-merge-before-after.svg");
+    expect(fullstackImageSources).toContain("/images/smart-safety/vlm-pipeline.jpg");
 
     [...aiImageSources, ...fullstackImageSources].forEach((src) => {
       expect(src).toMatch(/^\/images\/smart-safety\//);
@@ -126,20 +128,22 @@ describe("full-stack portfolio", () => {
     expect(projectsSectionSrc).toContain("object-contain");
   });
 
-  it("connects Canva background presentation images correctly to AI and Full-Stack projects (5 images only)", () => {
-    expect(JSON.stringify(projects)).toContain(
+  it("does not include removed Canva presentation images in AI or Full-Stack projects", () => {
+    // Canva images removed from AI project
+    expect(JSON.stringify(projects)).not.toContain(
       "/images/smart-safety/canva/problem-cctv-workload.png"
     );
-    expect(JSON.stringify(projects)).toContain(
+    expect(JSON.stringify(projects)).not.toContain(
       "/images/smart-safety/canva/problem-fall-risk.png"
     );
-    expect(JSON.stringify(projects)).toContain(
+    expect(JSON.stringify(projects)).not.toContain(
       "/images/smart-safety/canva/backpressure-before-after.png"
     );
-    expect(JSON.stringify(fullstackProjects)).toContain(
+    // Canva images removed from Full-Stack project
+    expect(JSON.stringify(fullstackProjects)).not.toContain(
       "/images/smart-safety/canva/service-definition.png"
     );
-    expect(JSON.stringify(fullstackProjects)).toContain(
+    expect(JSON.stringify(fullstackProjects)).not.toContain(
       "/images/smart-safety/canva/target-users.png"
     );
     expect(JSON.stringify(projects)).not.toContain(
@@ -202,7 +206,7 @@ describe("full-stack portfolio", () => {
       "문제 정의와 목표",
       "AI 시스템 구조",
       "전체 파이프라인을 기준으로 Pose 모델을 선택했습니다",
-      "낙상 구간의 트래킹 단절 문제 해결",
+      "낙상 구간의 Tracking 단절 문제 해결",
       "모든 프레임을 처리하는 대신 현재 프레임을 우선했습니다",
       "51D에서 54D로 확장한 행동 특징",
       "TensorRT 적용 및 통합 지연 검증",
@@ -226,16 +230,11 @@ describe("full-stack portfolio", () => {
 
     const projectJson = JSON.stringify(smartSafety);
 
-    expect(projectJson).toContain(
-      "/images/smart-safety/canva/problem-cctv-workload.png"
-    );
-
-    expect(projectJson).toContain(
-      "/images/smart-safety/canva/problem-fall-risk.png"
-    );
-
-    expect(projectJson).toContain(
-      "/images/smart-safety/canva/backpressure-before-after.png"
-    );
+    // Canva images replaced by Mermaid diagrams — not present in AI project
+    expect(projectJson).not.toContain("/images/smart-safety/canva/problem-cctv-workload.png");
+    expect(projectJson).not.toContain("/images/smart-safety/canva/backpressure-before-after.png");
+    // Technical images are present
+    expect(projectJson).toContain("/images/smart-safety/model-performance.jpg");
+    expect(projectJson).toContain("/images/smart-safety/inference-optimization.jpg");
   });
 });
