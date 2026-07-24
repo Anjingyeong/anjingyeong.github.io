@@ -82,6 +82,20 @@ export const projects: readonly Project[] = [
         body: "RTSP 영상에서 사람의 자세와 움직임을 분석해 낙상·실신 위험을 감지하고, 위험 이벤트를 관제 시스템으로 전달하는 실시간 영상 AI 시스템입니다.",
       },
       {
+        title: "왜 실시간 AI 안전 관제가 필요한가",
+        body: "한 명의 관제요원이 동시에 많은 CCTV를 확인해야 하는 환경에서는 위험 상황을 놓칠 가능성이 있습니다. 특히 고령층에서 추락·낙상이 주요 손상 원인으로 나타나는 상황을 고려해, 사람이 모든 화면을 지속해서 확인하지 않아도 위험 장면을 자동으로 감지하는 시스템을 기획했습니다.",
+        images: [
+          {
+            src: "/images/smart-safety/canva/problem-cctv-workload.png",
+            caption: "다수의 CCTV를 소수 인력이 관제해야 하는 기존 관제 환경의 한계",
+          },
+          {
+            src: "/images/smart-safety/canva/problem-fall-risk.png",
+            caption: "고령층에서 증가하는 추락·낙상 위험과 조기 대응 필요성",
+          },
+        ],
+      },
+      {
         title: "담당 역할",
         items: [
           "AI 파이프라인 설계 및 구현",
@@ -117,6 +131,21 @@ export const projects: readonly Project[] = [
           {
             src: "/images/smart-safety/tracking-recovery.png",
             caption: "낙상 구간의 ID 단절을 보완한 트래킹 재연결 전략",
+          },
+        ],
+      },
+      {
+        title: "모든 프레임보다 현재 프레임을 우선했습니다",
+        items: [
+          "**문제**: RTSP 입력 속도가 추론 속도보다 빨라지면 처리되지 못한 과거 프레임이 큐에 누적되고, 분석 결과가 현재 화면보다 늦게 도착했습니다.",
+          "**판단**: 실시간 관제에서는 모든 프레임을 빠짐없이 처리하는 것보다 현재 시점의 위험을 빠르게 판단하는 것이 중요하다고 판단했습니다.",
+          "**구현**: 입력 큐를 최대 3장으로 제한하고, 처리 지연이 발생하면 오래된 프레임을 폐기해 최신 프레임을 우선 분석하도록 구성했습니다.",
+          "**결과**: 과거 화면 분석으로 인한 지연 누적을 방지하고, 전체 처리 지연과 프레임 Drop 비율을 개선했습니다.",
+        ],
+        images: [
+          {
+            src: "/images/smart-safety/canva/backpressure-before-after.png",
+            caption: "오래된 프레임 누적 방식에서 최신 프레임 우선 처리 방식으로 개선",
           },
         ],
       },
@@ -160,6 +189,16 @@ export const projects: readonly Project[] = [
           ],
         },
         note: "End-to-End 알림 지연은 평균 20.9ms, 최대 27ms로 측정되었습니다.",
+      },
+      {
+        title: "모델 성능을 서비스 신뢰성으로 연결했습니다",
+        body: "모델 정확도뿐 아니라 미탐·오탐, 이벤트 전달 지연, 영상 복구와 사고 검색까지 함께 검증했습니다. 탐지 모델의 결과가 실제 관제 서비스에서 안정적으로 활용되는지를 최종 평가 기준으로 삼았습니다.",
+        images: [
+          {
+            src: "/images/smart-safety/canva/final-system-evaluation.png",
+            caption: "모델 성능, 알림 지연, 화면 복구와 사고 검색을 포함한 최종 시스템 평가",
+          },
+        ],
       },
       {
         title: "이벤트 후처리 및 운영 관찰",

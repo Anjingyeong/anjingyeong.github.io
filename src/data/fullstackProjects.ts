@@ -83,6 +83,20 @@ export const fullstackProjects: readonly Project[] = [
         body: "Python AI Worker에서 생성한 위험 이벤트를 MQTT로 수신하고, Spring Boot에서 저장·가공한 뒤 WebSocket을 통해 React 관제 화면에 전달하는 실시간 안전 관제 플랫폼입니다.\n\n사고 영상과 스냅샷을 VLM으로 설명하고 임베딩으로 저장해, 사용자가 자연어로 과거 사고를 검색할 수 있도록 확장했습니다.",
       },
       {
+        title: "AI 탐지 결과가 실제 대응으로 이어지는 서비스",
+        body: "RTSP 영상 분석, MQTT 이벤트 전달, 관제 대시보드 알림, 사고 기록과 스냅샷 저장을 하나의 서비스 흐름으로 연결했습니다. 개인 보호자와 요양원·병원·복지관 등 기관 사용자가 같은 플랫폼 안에서 서로 다른 범위의 카메라와 사고 이력을 확인할 수 있도록 설계했습니다.",
+        images: [
+          {
+            src: "/images/smart-safety/canva/service-definition.png",
+            caption: "영상 입력부터 AI 탐지, 알림과 사고 기록까지 연결한 End-to-End 관제 서비스",
+          },
+          {
+            src: "/images/smart-safety/canva/target-users.png",
+            caption: "개인 보호자와 요양원·병원·복지관 등 기관 사용자를 고려한 서비스 대상",
+          },
+        ],
+      },
+      {
         title: "담당 역할",
         items: [
           "AI·백엔드·프론트엔드 간 이벤트 계약 설계",
@@ -144,6 +158,16 @@ export const fullstackProjects: readonly Project[] = [
           {
             src: "/images/smart-safety/vlm-pipeline.jpg",
             caption: "Keyframe·Gemini·Embedding·pgvector 기반 자연어 검색 파이프라인",
+          },
+        ],
+      },
+      {
+        title: "현재 구현에 머무르지 않고 확장 경로까지 설계했습니다",
+        body: "현재는 MJPEG 기반 실시간 송출과 다중 CCTV 이벤트 처리를 구현했습니다. 카메라와 사용자 수가 증가할 경우 Worker 분리, 메시지 큐와 GPU 부하 분산을 적용하고, 지연과 동시 접속 요구사항에 따라 WebRTC 또는 HLS 방식으로 전환할 수 있도록 스트리밍 구성을 분리했습니다.",
+        images: [
+          {
+            src: "/images/smart-safety/canva/scalability-roadmap.png",
+            caption: "스트리밍, 다중 카메라 처리와 VLM 검색 기능의 단계별 고도화 방향",
           },
         ],
       },

@@ -102,7 +102,9 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
                 alt={img.caption}
                 loading="lazy"
                 decoding="async"
-                className="max-h-[70vh] w-full rounded-lg object-contain"
+                className={`${
+                  img.src.includes("/canva/") ? "max-h-[60vh]" : "max-h-[70vh]"
+                } w-full rounded-lg object-contain`}
                 onError={(e) => {
                   (e.target as HTMLImageElement).alt = `[이미지 로드 실패: ${img.src}]`;
                 }}

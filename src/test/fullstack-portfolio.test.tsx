@@ -125,4 +125,29 @@ describe("full-stack portfolio", () => {
     expect(projectsSectionSrc).toContain("whitespace-pre-line");
     expect(projectsSectionSrc).toContain("object-contain");
   });
+
+  it("connects Canva background presentation images correctly to AI and Full-Stack projects", () => {
+    const aiSmartSafety = projects.find((p) => p.title.includes("실시간 이상행동 탐지"));
+    const fullstackSmartSafety = fullstackProjects.find((p) => p.title.includes("AI 이벤트 수신부터 사고 검색"));
+
+    const aiImageSources = aiSmartSafety?.details.flatMap((d) => d.images?.map((i) => i.src) ?? []) ?? [];
+    const fullstackImageSources = fullstackSmartSafety?.details.flatMap((d) => d.images?.map((i) => i.src) ?? []) ?? [];
+
+    // AI Project assertions
+    expect(aiImageSources).toContain("/images/smart-safety/canva/problem-cctv-workload.png");
+    expect(aiImageSources).toContain("/images/smart-safety/canva/problem-fall-risk.png");
+    expect(aiImageSources).toContain("/images/smart-safety/canva/backpressure-before-after.png");
+    expect(aiImageSources).toContain("/images/smart-safety/canva/final-system-evaluation.png");
+
+    // Full-Stack Project assertions
+    expect(fullstackImageSources).toContain("/images/smart-safety/canva/service-definition.png");
+    expect(fullstackImageSources).toContain("/images/smart-safety/canva/target-users.png");
+    expect(fullstackImageSources).toContain("/images/smart-safety/canva/scalability-roadmap.png");
+
+    const allCanvaSources = [...aiImageSources, ...fullstackImageSources].filter((src) => src.includes("/canva/"));
+    expect(allCanvaSources.length).toBe(7);
+    allCanvaSources.forEach((src) => {
+      expect(src).toMatch(/^\/images\/smart-safety\/canva\//);
+    });
+  });
 });
