@@ -108,4 +108,21 @@ describe("full-stack portfolio", () => {
       expect(src).toMatch(/^\/images\/smart-safety\//);
     });
   });
+
+  it("supports demoUrl, githubUrl, lazy loading, and whitespace-pre-line in smart safety project views", () => {
+    const aiSmartSafety = projects.find((p) => p.title.includes("실시간 이상행동 탐지"));
+    const fullstackSmartSafety = fullstackProjects.find((p) => p.title.includes("AI 이벤트 수신부터 사고 검색"));
+
+    expect(aiSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies/ai");
+    expect(aiSmartSafety?.demoUrl).toBe("https://www.youtube.com/watch?v=O1-JNhcpvDQ");
+    expect(fullstackSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies/ai");
+    expect(fullstackSmartSafety?.demoUrl).toBe("https://www.youtube.com/watch?v=O1-JNhcpvDQ");
+
+    const projectsSectionSrc = readText("src/components/ProjectsSection.tsx");
+    expect(projectsSectionSrc).toContain("시연 영상 보기");
+    expect(projectsSectionSrc).toContain('loading="lazy"');
+    expect(projectsSectionSrc).toContain('decoding="async"');
+    expect(projectsSectionSrc).toContain("whitespace-pre-line");
+    expect(projectsSectionSrc).toContain("object-contain");
+  });
 });

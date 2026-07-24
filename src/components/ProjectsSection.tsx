@@ -1,5 +1,5 @@
 import { useState, type KeyboardEvent, type ReactNode } from "react";
-import { ArrowUpRight, ExternalLink, Github, X } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Github, Play, X } from "lucide-react";
 import { projects, type Project, type ProjectDetail } from "@/data/projects";
 import ScrollAnimator from "./ScrollAnimator";
 import Mermaid from "./Mermaid";
@@ -20,7 +20,11 @@ const renderInlineText = (text: string): ReactNode[] =>
 const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) => (
   <section className="space-y-2">
     <h4 className="text-lg font-semibold text-foreground">{detail.title}</h4>
-    {detail.body ? <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(detail.body)}</p> : null}
+    {detail.body ? (
+      <p className="whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
+        {renderInlineText(detail.body)}
+      </p>
+    ) : null}
     {detail.items ? (
       <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
         {detail.items.map((item) => (
@@ -79,6 +83,8 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
         <img
           src={detail.image}
           alt={detail.imageAlt || detail.title}
+          loading="lazy"
+          decoding="async"
           className="max-h-96 w-full rounded-lg object-contain"
           onError={(e) => {
             (e.target as HTMLImageElement).alt = `[이미지 로드 실패: ${detail.image}]`;
@@ -94,6 +100,8 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
               <img
                 src={img.src}
                 alt={img.caption}
+                loading="lazy"
+                decoding="async"
                 className="max-h-[70vh] w-full rounded-lg object-contain"
                 onError={(e) => {
                   (e.target as HTMLImageElement).alt = `[이미지 로드 실패: ${img.src}]`;
@@ -178,7 +186,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
               <img
                 src={project.heroImage.src}
                 alt={project.heroImage.caption}
-                className="aspect-[16/9] w-full object-cover"
+                className="aspect-[16/9] w-full bg-muted/20 object-contain"
               />
             </div>
           ) : null}
@@ -287,6 +295,17 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
                     >
                       <ExternalLink size={18} />
                       서비스 바로가기
+                    </a>
+                  ) : null}
+                  {selectedProject.demoUrl ? (
+                    <a
+                      href={selectedProject.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-rose-500/20 bg-rose-500/10 px-4 py-2 text-sm font-semibold text-rose-500 transition-colors hover:bg-rose-500/20 dark:text-rose-400"
+                    >
+                      <Play size={18} />
+                      시연 영상 보기
                     </a>
                   ) : null}
                   {selectedProject.githubUrl ? (

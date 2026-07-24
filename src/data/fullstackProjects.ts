@@ -75,6 +75,8 @@ export const fullstackProjects: readonly Project[] = [
       "Vector Search",
     ],
     gradient: "from-orange-500/10 to-rose-500/5",
+    githubUrl: "https://github.com/strangeRookies/ai",
+    demoUrl: "https://www.youtube.com/watch?v=O1-JNhcpvDQ",
     details: [
       {
         title: "프로젝트 개요",

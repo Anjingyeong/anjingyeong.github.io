@@ -47,6 +47,7 @@ export type Project = {
   readonly gradient: string;
   readonly githubUrl?: string;
   readonly liveUrl?: string;
+  readonly demoUrl?: string;
   readonly hasAwards?: boolean;
   readonly details: readonly ProjectDetail[];
 };
@@ -72,6 +73,8 @@ export const projects: readonly Project[] = [
     highlights: ["YOLO Pose 벤치마크", "LSTM 행동 분류", "MQTT 이벤트 연동"],
     tags: ["Python", "PyTorch", "YOLO26n-pose", "LSTM", "OpenCV", "RTSP", "MQTT"],
     gradient: "from-rose-500/10 to-orange-500/10",
+    githubUrl: "https://github.com/strangeRookies/ai",
+    demoUrl: "https://www.youtube.com/watch?v=O1-JNhcpvDQ",
     hasAwards: false,
     details: [
       {
