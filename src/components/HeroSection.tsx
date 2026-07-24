@@ -67,8 +67,8 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
 
             <p className="text-base md:text-lg text-foreground/80 mb-8 leading-relaxed font-normal max-w-xl">
               {isFullstack
-                ? "React와 TypeScript 기반 사용자 화면부터 Spring Boot·Cloudflare 기반 API 및 데이터 저장 구조까지 구현해 왔습니다. 기능 구현에 그치지 않고 데이터 흐름, 예외 상황, 실시간 이벤트 전달과 운영 환경을 함께 고려합니다."
-                : "모델 정확도만 높이는 데 그치지 않고, 트랙 단절과 프레임 적체로 판단이 늦어지는 원인을 추적해 입력 특징·트래킹·처리 구조를 함께 개선했습니다."}
+                ? "사용자의 한 번의 입력이 화면, API, 데이터와 결과까지 막힘없이 이어지도록 만드는 개발자입니다. 아이디어를 실제로 작동하는 제품으로 바꿉니다."
+                : "AI가 정확하게 판단하는 것을 넘어, 실제 환경에서 제때 작동하도록 만드는 엔지니어입니다. 모델 성능과 시스템 완성도를 함께 높입니다."}
             </p>
 
             {/* Accomplishments Bullet Points */}

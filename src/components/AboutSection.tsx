@@ -43,13 +43,13 @@ const AboutSection = ({ variant = "ai" }: AboutSectionProps) => {
                 <>
                   <h3 className="text-lg font-semibold mb-5 text-foreground">Full-Stack Developer 소개</h3>
                   <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    React와 TypeScript 기반 사용자 화면부터 Spring Boot·Cloudflare 기반 API 및 데이터 저장 구조까지 구현해 왔습니다. 기능 구현에 그치지 않고 데이터 흐름, 예외 상황, 실시간 이벤트 전달과 운영 환경을 함께 고려합니다.
+                    사용자의 한 번의 입력이 화면, API, 데이터와 결과까지 막힘없이 이어지도록 만드는 개발자입니다.
                   </p>
                   <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    <strong className="font-semibold text-foreground">마음이음 자가체크 웹서비스</strong>에서는 모바일 화면, 위험도 계산, Cloudflare Workers API, D1 저장, 관리자 통계, PDF 리포트와 배포를 하나의 사용자 흐름으로 연결했습니다.
+                    <strong className="font-semibold text-foreground">마음이음 웹서비스</strong>를 기획부터 배포까지 1인 개발하고, <strong className="font-semibold text-foreground">스마트 안전 관제</strong>에서는 AI 이벤트가 MQTT·백엔드·WebSocket을 거쳐 관제 화면에 도달하는 실시간 흐름을 연결했습니다. 화면과 서버를 따로 구현하기보다, 데이터가 이동하는 과정과 예외 상황을 함께 살피며 서비스를 완성합니다.
                   </p>
                   <p className="leading-[1.8] mb-6" style={{ color: "#4A4A4A" }}>
-                    <strong className="font-semibold text-foreground">스마트 안전 관제 프로젝트</strong>에서는 Python AI Worker에서 생성한 이벤트를 MQTT를 통해 Spring Boot·WebSocket 기반 관제 시스템에 연동하고 데이터 흐름을 검증했습니다.
+                    특정 기술에 갇히기보다 요구사항에 필요한 구조를 빠르게 파악하고, 아이디어를 실제로 작동하는 제품으로 바꿀 수 있는 사람입니다.
                   </p>
 
                   <div className="mt-8 pt-6 border-t border-border">
@@ -82,13 +82,13 @@ const AboutSection = ({ variant = "ai" }: AboutSectionProps) => {
                 <>
                   <h3 className="text-lg font-semibold mb-5 text-foreground">AI Engineer 소개</h3>
                   <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    의공학 기반의 의료 AI 프로젝트 경험을 바탕으로, 현재는 AI 모델의 추론 결과를 실제 서비스와 연결하는 엔지니어링에 집중하고 있습니다.
+                    AI가 정확하게 판단하는 것을 넘어, 실제 환경에서 제때 작동하도록 만드는 엔지니어입니다.
                   </p>
                   <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    <strong className="font-semibold text-foreground">RF-DETR 기반 용종 검출 프로젝트</strong>에서 <strong className="font-semibold text-foreground">mAP@50 86.2%, 22+ FPS</strong>의 실시간 추론 성능을 확보했고, <strong className="font-semibold text-foreground">VAE 기반 비지도 병변 검출 프로젝트</strong>에서는 라벨 데이터 부족 문제를 <strong className="font-semibold text-foreground">Anomaly Detection</strong>과 <strong className="font-semibold text-foreground">Dynamic Threshold 후처리</strong>로 해결했습니다.
+                    <strong className="font-semibold text-foreground">의료 AI</strong>에서 <strong className="font-semibold text-foreground">실시간 안전 관제</strong>까지 경험하며 데이터 품질, 특징 설계, 트래킹 단절, 처리 지연과 이벤트 전달을 하나의 문제로 다뤄 왔습니다. 정해진 모델을 반복 적용하기보다 로그와 지표로 원인을 좁히고, 필요한 구조를 직접 설계해 모델의 결과를 실제 서비스까지 연결합니다.
                   </p>
                   <p className="leading-[1.8] mb-6" style={{ color: "#4A4A4A" }}>
-                    최근에는 <strong className="font-semibold text-foreground">SK쉴더스 부트캠프</strong>에서 <strong className="font-semibold text-foreground">RTSP &rarr; AI 추론 &rarr; MQTT &rarr; WebSocket &rarr; 관제 대시보드</strong>로 이어지는 지능형 관제 시스템을 개발하며, 모델 개발을 넘어 실제 운영 환경에 연결되는 AI 서비스를 구현하고 있습니다.
+                    새로운 도메인에서도 문제를 빠르게 구조화하고, 모델 성능과 시스템 완성도를 함께 높일 수 있는 사람입니다.
                   </p>
 
                   <div className="mt-8 pt-6 border-t border-border">

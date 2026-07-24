@@ -15,14 +15,14 @@ describe("full-stack portfolio", () => {
   it("keeps exactly three requested projects with grounded ownership copy", () => {
     expect(fullstackProjects.map((project) => project.title)).toEqual([
       "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
-      "MQTT·Spring Boot·WebSocket 기반 실시간 안전 관제 플랫폼",
+      "AI 이벤트 수신부터 사고 검색까지 연결한 실시간 안전 관제 플랫폼",
       "BM25·Vector Search·RRF 기반 프로젝트 지식 검색 시스템",
     ]);
     expect(fullstackProjects).toHaveLength(3);
     expect(fullstackProjects.some((project) => project.title.includes("포트폴리오 웹사이트"))).toBe(false);
     expect(fullstackProjects[0].meta?.period).toBe("약 2주");
     expect(fullstackProjects[0].meta?.role).toContain("1인 개발");
-    expect(fullstackProjects[1].description).toContain("Python AI Worker의 위험 이벤트 생성과 MQTT 발행을 담당");
+    expect(fullstackProjects[1].description).toContain("위험 이벤트를 화면에 띄우는 데서 끝내지 않고");
     expect(JSON.stringify(fullstackProjects)).not.toContain("직접 구현한 것으로 표현하지 않습니다");
 
     render(<ProjectsSection items={fullstackProjects} grouped={false} />);
@@ -69,7 +69,7 @@ describe("full-stack portfolio", () => {
   it("renders the A4 full-stack resume with exactly three representative projects", () => {
     render(<MemoryRouter><FullstackPortfolioPrint /></MemoryRouter>);
     expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
-    expect(screen.getByText(/React와 TypeScript 기반 사용자 화면부터 Spring Boot·Cloudflare 기반 API/)).toBeInTheDocument();
+    expect(screen.getByText(/사용자의 한 번의 입력이 화면, API, 데이터와 결과까지 막힘없이 이어지도록 만드는 개발자입니다/)).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(3);
     expect(screen.getByText(/Python AI Worker의 위험 이벤트 생성과 MQTT 발행을 담당/)).toBeInTheDocument();
     expect(screen.getByText("2026.05 - 2026.07")).toBeInTheDocument();
