@@ -5,13 +5,13 @@ import "@/styles/print.css";
 const projectRows = [
   {
     title: "1. 마음이음 · 개인정보 최소 수집형 자가체크 웹서비스",
-    stack: "React · TypeScript · Vite · Cloudflare Pages · Workers · D1 · REST API",
-    body: "모바일 우선 자가체크 UI와 공통 위험도 계산 로직을 구현하고, 입력·결과 계산·Workers API·D1 저장·관리자 통계·PDF 리포트·운영 배포를 하나의 서비스 흐름으로 연결했습니다.",
+    stack: "약 2주 · 개인 프로젝트 · 1인 개발 · React · TypeScript · Vite · Cloudflare Pages · Workers · D1",
+    body: "개인적인 문제의식에서 시작해 기획, 설계, 모바일 우선 화면, 위험도 계산 로직, Workers API, D1 저장, 관리자 통계, PDF 리포트와 배포까지 직접 완성했습니다.",
   },
   {
     title: "2. 스마트 안전 관제 · 실시간 이벤트 파이프라인",
     stack: "Python · MQTT · Spring Boot · WebSocket · STOMP · React · Docker · RTSP",
-    body: "Python AI Worker에서 생성한 추론 결과와 이벤트를 MQTT를 통해 Spring Boot·WebSocket 기반 관제 시스템에 연동하고 데이터 흐름을 검증했습니다. Spring Boot 백엔드와 React 프론트엔드 전체가 아닌 AI Worker 이벤트 생성 및 연동 범위에 기여했습니다.",
+    body: "Python AI Worker의 위험 이벤트 생성과 MQTT 발행을 담당하고, Spring Boot의 이벤트 수신·저장 및 WebSocket·STOMP 관제 알림으로 이어지는 실시간 데이터 흐름을 연동·검증했습니다.",
   },
   {
     title: "3. LLM Wiki·RAG · 프로젝트 지식 검색 시스템",

@@ -219,7 +219,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
           </div>
         </ScrollAnimator>
 
-        <div className="relative z-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className={`relative z-10 grid grid-cols-1 gap-6 ${grouped ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}>
           {orderedProjects.map((project) => renderCard(project))}
         </div>
 

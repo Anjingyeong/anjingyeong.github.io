@@ -1,4 +1,4 @@
-import { BookOpen, HeartPulse, PanelsTopLeft, Shield } from "lucide-react";
+import { BookOpen, HeartPulse, Shield } from "lucide-react";
 import type { Project } from "./projects";
 
 export const fullstackProjects: readonly Project[] = [
@@ -7,10 +7,10 @@ export const fullstackProjects: readonly Project[] = [
     badge: "Main",
     title: "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
     summaryLine: "사용자 자가체크부터 결과 계산, 데이터 저장, 관리자 통계, PDF 리포트와 배포까지 연결한 웹서비스",
-    description: "React UI와 위험도 계산 로직부터 Cloudflare Workers API, D1 저장, 관리자 통계, PDF 리포트, 배포 및 운영 정책까지 구현했습니다.",
+    description: "개인적인 문제의식에서 시작해 약 2주 동안 기획부터 화면 구현, API, 데이터 저장, 결과 리포트와 배포까지 직접 완성한 웹서비스입니다.",
     meta: {
-      period: "기간 미기재",
-      role: "React UI, 위험도 계산 로직, Cloudflare Workers API, D1 저장, 관리자 통계, PDF 리포트, 배포 및 운영 정책",
+      period: "약 2주",
+      role: "1인 개발 · 기획, 설계, 개발, 배포",
       service: "마음이음 자가체크 웹서비스",
     },
     highlights: ["모바일 우선 자가체크", "Workers API·D1", "PDF 리포트·운영 배포"],
@@ -37,10 +37,10 @@ export const fullstackProjects: readonly Project[] = [
     badge: "Main",
     title: "MQTT·Spring Boot·WebSocket 기반 실시간 안전 관제 플랫폼",
     summaryLine: "AI Worker에서 발생한 위험 이벤트를 백엔드와 관제 화면까지 전달하는 실시간 이벤트 파이프라인",
-    description: "Python AI Worker에서 생성한 추론 결과와 이벤트를 MQTT를 통해 Spring Boot·WebSocket 기반 관제 시스템에 연동하고 데이터 흐름을 검증했습니다.",
+    description: "Python AI Worker의 위험 이벤트 생성과 MQTT 발행을 담당하고, Spring Boot의 이벤트 수신·저장 및 WebSocket 관제 알림으로 이어지는 실시간 데이터 흐름을 연동·검증했습니다.",
     meta: {
       period: "2026.05–2026.07",
-      role: "Python AI Worker 이벤트 생성 및 MQTT 연동, 실시간 이벤트 데이터 흐름 설계·검증",
+      role: "AI Worker 이벤트 처리 · MQTT 연동 · 실시간 데이터 흐름 검증",
       service: "스마트 안전 관제 플랫폼",
     },
     highlights: ["RTSP 위험 이벤트", "MQTT 이벤트 전달", "WebSocket·STOMP 관제 연동"],
@@ -50,19 +50,18 @@ export const fullstackProjects: readonly Project[] = [
       {
         title: "구현 및 연동 내용",
         items: [
-          "RTSP 입력에서 AI Worker가 위험 이벤트 생성",
-          "MQTT 메시지를 통한 이벤트 전달",
-          "Spring Boot 이벤트 수신 및 저장 흐름 연동",
-          "WebSocket·STOMP 기반 관제 알림 연결",
-          "React 관제 대시보드와 이벤트 상태 연동",
-          "프레임 ID와 시간 정보를 이용한 지연 추적",
-          "영상 종료, 소스 변경, 재연결 시 분석 상태 초기화 설계",
-          "Docker 기반 서비스 실행 구조",
+          "Python AI Worker의 위험 이벤트 생성",
+          "MQTT 이벤트 메시지 발행",
+          "프레임 ID 및 시간 정보 기반 지연 추적",
+          "영상 종료·소스 변경·재연결 시 분석 상태 초기화",
+          "Spring Boot 이벤트 수신·저장 흐름 연동",
+          "WebSocket·STOMP 관제 알림 연동",
+          "React 대시보드까지 이어지는 이벤트 흐름 검증",
         ],
       },
       {
         title: "기여 범위",
-        body: "Python AI Worker의 이벤트 생성과 MQTT 연동, 실시간 이벤트 데이터 흐름 설계·검증을 담당했습니다. Spring Boot 백엔드 전체와 React 프론트엔드 전체를 직접 구현한 것으로 표현하지 않습니다.",
+        body: "AI Worker의 이벤트 생성과 MQTT 연동을 중심으로 담당했으며, 백엔드와 관제 화면까지 이어지는 실시간 데이터 흐름을 함께 검증했습니다.",
       },
     ],
   },
@@ -93,36 +92,6 @@ export const fullstackProjects: readonly Project[] = [
           "`/api/auth/verify` 인증 흐름 구성",
           "검색 결과에 문서 출처와 섹션 정보 포함",
           "Cloudflare 정적 배포 환경에 맞춰 런타임 부하를 줄이는 구조 선택",
-        ],
-      },
-    ],
-  },
-  {
-    icon: PanelsTopLeft,
-    badge: "Main",
-    title: "React·TypeScript 기반 직무별 포트폴리오 웹사이트",
-    summaryLine: "AI 엔지니어와 풀스택 개발자 지원 목적에 따라 콘텐츠를 분리한 반응형 포트폴리오",
-    description: "기존 디자인과 컴포넌트를 유지하면서 직무별 라우트, 프로젝트 데이터, 인쇄 페이지를 분리했습니다.",
-    meta: {
-      period: "기간 미기재",
-      role: "React·TypeScript 구현, 직무별 콘텐츠 구성, 인쇄 페이지 및 배포",
-      service: "개인 포트폴리오 웹사이트",
-    },
-    highlights: ["직무별 라우트", "프로젝트 상세 모달", "A4 인쇄 페이지"],
-    tags: ["React", "TypeScript", "Tailwind CSS", "React Router", "Mermaid", "Vitest", "GitHub Pages"],
-    gradient: "from-cyan-500/10 to-blue-500/5",
-    details: [
-      {
-        title: "구현 내용",
-        items: [
-          "React·TypeScript 컴포넌트 기반 구성",
-          "프로젝트 데이터와 UI 렌더링 분리",
-          "프로젝트 상세 모달",
-          "Mermaid 시스템 아키텍처 렌더링",
-          "인쇄용 포트폴리오 페이지",
-          "반응형 레이아웃",
-          "Vitest 기반 기존 기능 검증",
-          "GitHub Pages 배포",
         ],
       },
     ],

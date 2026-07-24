@@ -12,18 +12,22 @@ import FullstackPortfolioPrint from "@/pages/FullstackPortfolioPrint";
 const readText = (path: string) => readFileSync(resolve(process.cwd(), path), "utf8");
 
 describe("full-stack portfolio", () => {
-  it("keeps the requested project order and contribution boundaries", () => {
+  it("keeps exactly three requested projects with grounded ownership copy", () => {
     expect(fullstackProjects.map((project) => project.title)).toEqual([
       "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
       "MQTT·Spring Boot·WebSocket 기반 실시간 안전 관제 플랫폼",
       "BM25·Vector Search·RRF 기반 프로젝트 지식 검색 시스템",
-      "React·TypeScript 기반 직무별 포트폴리오 웹사이트",
     ]);
+    expect(fullstackProjects).toHaveLength(3);
+    expect(fullstackProjects.some((project) => project.title.includes("포트폴리오 웹사이트"))).toBe(false);
+    expect(fullstackProjects[0].meta?.period).toBe("약 2주");
+    expect(fullstackProjects[0].meta?.role).toContain("1인 개발");
+    expect(fullstackProjects[1].description).toContain("Python AI Worker의 위험 이벤트 생성과 MQTT 발행을 담당");
+    expect(JSON.stringify(fullstackProjects)).not.toContain("직접 구현한 것으로 표현하지 않습니다");
 
     render(<ProjectsSection items={fullstackProjects} grouped={false} />);
     const headings = screen.getAllByRole("heading", { level: 3 }).map((heading) => heading.textContent);
     expect(headings).toEqual(fullstackProjects.map((project) => project.title));
-    expect(fullstackProjects[1].details.some((detail) => detail.body?.includes("Spring Boot 백엔드 전체와 React 프론트엔드 전체를 직접 구현한 것으로 표현하지 않습니다."))).toBe(true);
   });
 
   it("switches About copy without changing the AI variant", () => {
@@ -47,12 +51,11 @@ describe("full-stack portfolio", () => {
     expect(screen.getByRole("link", { name: "Full-Stack Developer" })).not.toHaveClass("bg-primary");
   });
 
-  it("uses verified project periods and leaves unknown periods unspecified", () => {
+  it("uses the stated project periods", () => {
     expect(fullstackProjects.map((project) => project.meta?.period)).toEqual([
-      "기간 미기재",
+      "약 2주",
       "2026.05–2026.07",
       "2026",
-      "기간 미기재",
     ]);
   });
 
@@ -68,17 +71,21 @@ describe("full-stack portfolio", () => {
     expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
     expect(screen.getByText(/React와 TypeScript 기반 사용자 화면부터 Spring Boot·Cloudflare 기반 API/)).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(3);
-    expect(screen.getByText(/Spring Boot 백엔드와 React 프론트엔드 전체가 아닌/)).toBeInTheDocument();
+    expect(screen.getByText(/Python AI Worker의 위험 이벤트 생성과 MQTT 발행을 담당/)).toBeInTheDocument();
     expect(screen.getByText("2026.05 - 2026.07")).toBeInTheDocument();
+    expect(screen.getByText(/약 2주 · 개인 프로젝트 · 1인 개발/)).toBeInTheDocument();
+    expect(document.body.textContent).not.toContain("Spring Boot 백엔드와 React 프론트엔드 전체가 아닌");
   });
 
   it("ships the matching full-stack developer resume document", () => {
     const resume = readText("docs/resume-fullstack-developer.md");
     expect(resume).toContain("Full-Stack Developer 이력서");
     expect(resume).toContain("직접 구현");
-    expect(resume).toContain("연동 기여");
+    expect(resume).toContain("MQTT 메시지를 발행");
     expect(resume.indexOf("마음이음")).toBeLessThan(resume.indexOf("스마트 안전 관제"));
     expect(resume.indexOf("스마트 안전 관제")).toBeLessThan(resume.indexOf("LLM Wiki·RAG"));
+    expect(resume).toContain("약 2주 · 개인 프로젝트 · 1인 개발");
+    expect(resume).not.toContain("직접 구현한 것으로 표현하지 않습니다");
     expect(resume).toContain("건양대학교 의공학과 학사, 2026.02 졸업");
     expect(resume).toContain("SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기, 2026.05–2026.07");
   });
