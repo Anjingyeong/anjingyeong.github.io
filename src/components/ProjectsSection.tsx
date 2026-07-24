@@ -100,7 +100,7 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
                 }}
               />
             </div>
-            <p className="text-center text-sm font-medium text-foreground/80">{img.caption}</p>
+            <p className="text-center text-xs text-muted-foreground">{img.caption}</p>
           </div>
         ))}
       </div>

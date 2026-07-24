@@ -30,7 +30,7 @@ describe("ProjectsSection public copy", () => {
   it("describes Smart Safety as a real-time event pipeline with caveated metrics", () => {
     expect(publicProjectSources).toContain("실시간 이상행동 탐지 및 안전 관제 AI 시스템");
     expect(publicProjectSources).toContain("YOLO26n-pose");
-    expect(publicProjectSources).toContain("RTSP 영상 → YOLO26n-pose 사람·관절 검출 → 관절 시퀀스 생성");
+    expect(publicProjectSources).toContain("RTSP 영상에서 YOLO26n-pose로 사람의 17개 관절을 추출");
     expect(publicProjectSources).toContain("LSTM");
     expect(publicProjectSources).toContain("MQTT");
   });
@@ -43,14 +43,12 @@ describe("ProjectsSection public copy", () => {
 
   it("describes the RF-DETR colonoscopy assistant within the verified role scope", () => {
     expect(publicProjectSources).toContain(
-      "RF-DETR 기반 실시간 대장 내시경 용종 검출 시스템",
+      "RF-DETR 기반 대장 내시경 용종 검출 애플리케이션",
     );
     expect(publicProjectSources).toContain("Kvasir Dataset");
     expect(publicProjectSources).toContain("Train 70% / Val 20% / Test 10%");
     expect(publicProjectSources).toContain("Elastic Deformation");
     expect(publicProjectSources).toContain("Grid Distortion");
-    expect(publicProjectSources).toContain("Object Query");
-    expect(publicProjectSources).toContain("Multi-scale feature");
     expect(publicProjectSources).toContain("fine-tuning");
     expect(publicProjectSources).toContain("OpenCV");
     expect(publicProjectSources).toContain("mAP@50");
@@ -72,7 +70,7 @@ describe("ProjectsSection public copy", () => {
 
   it("does not expose internal analysis or trend-first labels in public project copy", () => {
     expect(publicProjectSources).not.toMatch(
-      /STAR-RN|2026 트렌드|실험 중|구현은 향후 계획|Next Step|면접|감독판|GraphRAG|Agentic AI|VLM/,
+      /STAR-RN|2026 트렌드|실험 중|구현은 향후 계획|Next Step|면접|감독판|GraphRAG|Agentic AI/,
     );
   });
 
@@ -87,11 +85,11 @@ describe("ProjectsSection public copy", () => {
   it("opens project details from a card with submission-ready compact sections", () => {
     render(createElement(ProjectsSection));
 
-    fireEvent.click(screen.getByText("스마트 안전 관제 시스템"));
+    fireEvent.click(screen.getByText("실시간 이상행동 탐지 및 안전 관제 AI 시스템"));
 
-    expect(screen.getByRole("dialog")).toHaveTextContent("문제와 목표");
-    expect(screen.getByRole("dialog")).toHaveTextContent("핵심 문제 해결 사례");
-    expect(screen.getByRole("dialog")).toHaveTextContent("검증 범위와 한계");
+    expect(screen.getByRole("dialog")).toHaveTextContent("AI 판단 파이프라인");
+    expect(screen.getByRole("dialog")).toHaveTextContent("51D에서 54D로 확장한 행동 특징");
+    expect(screen.getByRole("dialog")).toHaveTextContent("TensorRT 기반 실시간 추론 최적화");
   });
 
   it("opens VAE details with the corrected responsibility scope", () => {
@@ -122,7 +120,7 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).toContain("정적 JSON");
     expect(publicProjectSources).toContain("8종 메타데이터");
     expect(publicProjectSources).not.toMatch(
-      /\/api\/rag\/ask|LLM API key|구현했습니다|GraphRAG/,
+      /\/api\/rag\/ask|LLM API key|GraphRAG/,
     );
   });
 

@@ -46,6 +46,10 @@ export const fullstackProjects: readonly Project[] = [
       role: "이벤트 계약 설계, Spring Boot 수신·저장, 정합성 개선, VLM 큐·검색, React 알림·검색 UI",
       service: "스마트 안전 관제 플랫폼",
     },
+    heroImage: {
+      src: "/images/smart-safety/dashboard-and-search.jpg",
+      caption: "실시간 관제와 자연어 사고 검색을 하나의 대시보드에서 제공",
+    },
     highlights: [
       "MQTT·WebSocket 연동",
       "사고 중복 병합",
@@ -91,17 +95,54 @@ export const fullstackProjects: readonly Project[] = [
         body: "Python · MQTT · Java 21 · Spring Boot · JPA · PostgreSQL · pgvector · Redis · AWS S3 · React · TypeScript · WebSocket · STOMP · Zod · Gemini API · VLM · Vector Search",
       },
       {
-        title: "전체 데이터 흐름",
-        body: "AI Worker → MQTT 위험 이벤트 발행 → Spring Boot 비동기 수신·검증 → PostgreSQL 사고 저장 및 S3 증거 연결 → STOMP 실시간 알림 발행 → React 관제 대시보드 표시 → VLM 사고 설명 생성 → 임베딩·pgvector 저장 → 자연어 사고 검색",
+        title: "실시간 이벤트 전달 흐름",
+        body: "AI Worker가 생성한 위험 이벤트를 MQTT QoS 1로 전달하고, Spring Boot에서 비동기로 수신·저장한 뒤 시설과 기업별 STOMP 토픽을 통해 React 관제 화면으로 브로드캐스트했습니다.",
+        images: [
+          {
+            src: "/images/smart-safety/realtime-flow.jpg",
+            caption: "RTSP 분석부터 MQTT 수신·DB 저장·STOMP 알림까지의 실시간 이벤트 흐름",
+          },
+        ],
       },
       {
-        title: "핵심 구현",
+        title: "동일 사고가 중복 저장되던 문제 해결",
         items: [
-          "**1. 실시간 이벤트 전달 흐름을 연결했습니다.**\n\nMQTT 이벤트를 Spring Boot에서 비동기로 처리하고, 시설과 기업별 STOMP 토픽으로 전달해 React 관제 화면에 실시간 알림이 나타나도록 구성했습니다.",
-          "**2. 하나의 사고가 여러 건으로 보이던 문제를 해결했습니다.**\n\n최초 실시간 경보와 이후 전달되는 영상·스냅샷 이벤트가 서로 다른 ID를 사용해 DB와 화면에 중복 사고가 생성되는 문제가 있었습니다.\n\n`originalEventId`를 기준으로 기존 사고를 찾아 증거 자료를 연결하고, 프론트에서도 WebSocket과 REST 응답을 같은 사고 카드로 병합하도록 수정했습니다.",
-          "**3. 비동기 데이터가 도착해도 화면 상태를 보존했습니다.**\n\n실시간 알림이 먼저 표시되고 스냅샷이나 영상이 나중에 도착하는 구조에서, 기존 확인 상태를 유지하면서 새 미디어 정보만 병합하도록 구현했습니다.",
-          "**4. VLM 작업을 안정적으로 처리했습니다.**\n\n사고 영상 설명과 임베딩 작업에 상태, 잠금 시간, 재시도 횟수와 다음 시도 시간을 적용했습니다. 일시적 오류와 API 호출 제한이 발생하면 지수 백오프로 다시 처리하고, 여러 Worker가 동일한 작업을 중복 실행하지 않도록 구성했습니다.",
-          "**5. 사고를 자연어로 검색할 수 있게 만들었습니다.**\n\nVLM이 생성한 사고 설명을 768차원 임베딩으로 저장하고, pgvector 유사도 검색을 구현했습니다. 벡터 검색을 사용할 수 없는 상황에서는 메모리 기반 검색으로 전환해 검색 기능이 완전히 중단되지 않도록 했습니다.\n\n프론트에서는 시설·기업 권한, 카메라와 날짜 조건, 유사도와 결과 개수를 반영하는 검색 UI를 구현하고 오래된 요청 취소, 중복 요청 방지와 응답 데이터 검증을 적용했습니다.",
+          "**문제**: 최초 실시간 경보와 이후 전달되는 영상·스냅샷 이벤트가 서로 다른 ID와 시점으로 도착해 DB와 화면에 동일 사고가 여러 건 생성되었습니다.",
+          "**판단**: 화면에서만 중복을 숨기면 DB에는 중복 데이터가 계속 남기 때문에 백엔드와 프론트 모두에서 사고 식별 기준을 통일해야 했습니다.",
+          "**구현**: `originalEventId`를 안정적인 사고 식별자로 사용해 백엔드에서는 기존 사고에 미디어를 연결하고, 프론트에서는 WebSocket과 REST 응답을 같은 사고 카드로 병합했습니다.",
+          "**결과**: 이벤트 도착 순서와 관계없이 확인 상태, 스냅샷, 사고 클립과 VLM 설명이 하나의 Incident에 유지되도록 개선했습니다.",
+        ],
+        images: [
+          {
+            src: "/images/smart-safety/incident-merge-before-after.svg",
+            caption: "실시간 경보와 증거 데이터를 하나의 Incident로 병합한 데이터 정합성 개선",
+          },
+        ],
+      },
+      {
+        title: "경보 이후의 증거 확인 흐름",
+        body: "실시간 경보가 발생한 뒤 사고 전후 5초씩 총 10초의 클립과 스냅샷을 연결해, 관제 담당자가 알림 발생 원인과 실제 상황을 확인할 수 있도록 구성했습니다.",
+        images: [
+          {
+            src: "/images/smart-safety/event-playback.jpg",
+            caption: "사고 전후 10초 이벤트 영상과 증거 확인 화면",
+          },
+        ],
+      },
+      {
+        title: "VLM 기반 자연어 사고 검색",
+        items: [
+          "**문제**: 이벤트 유형과 날짜만으로는 복장, 장소, 자세와 상황이 포함된 과거 사고를 찾기 어려웠습니다.",
+          "**구현**: 사고 클립에서 8개 Keyframe을 추출하고 얼굴을 비식별화한 뒤 Gemini로 사고 상황을 설명했습니다.",
+          "**검색**: 설명을 768차원 임베딩으로 변환해 PostgreSQL pgvector에 저장하고 자연어 유사도 검색을 구현했습니다.",
+          "**안정성**: 외부 API 오류와 호출 제한을 고려해 작업 상태, 잠금 시간, 재시도 횟수, 다음 시도 시간과 지수 백오프를 적용했습니다.",
+          "**프론트엔드**: 오래된 검색 요청 취소, 중복 요청 방지, 권한·서버 오류 처리와 응답 스키마 검증을 적용했습니다.",
+        ],
+        images: [
+          {
+            src: "/images/smart-safety/vlm-pipeline.jpg",
+            caption: "Keyframe·Gemini·Embedding·pgvector 기반 자연어 검색 파이프라인",
+          },
         ],
       },
       {
