@@ -47,6 +47,7 @@ export type Project = {
   readonly gradient: string;
   readonly githubUrl?: string;
   readonly liveUrl?: string;
+  readonly demoUrl?: string;
   readonly hasAwards?: boolean;
   readonly details: readonly ProjectDetail[];
 };
@@ -72,11 +73,27 @@ export const projects: readonly Project[] = [
     highlights: ["YOLO Pose 벤치마크", "LSTM 행동 분류", "MQTT 이벤트 연동"],
     tags: ["Python", "PyTorch", "YOLO26n-pose", "LSTM", "OpenCV", "RTSP", "MQTT"],
     gradient: "from-rose-500/10 to-orange-500/10",
+    githubUrl: "https://github.com/strangeRookies/ai",
+    demoUrl: "https://www.youtube.com/watch?v=O1-JNhcpvDQ",
     hasAwards: false,
     details: [
       {
         title: "프로젝트 개요",
         body: "RTSP 영상에서 사람의 자세와 움직임을 분석해 낙상·실신 위험을 감지하고, 위험 이벤트를 관제 시스템으로 전달하는 실시간 영상 AI 시스템입니다.",
+      },
+      {
+        title: "왜 실시간 AI 안전 관제가 필요한가",
+        body: "다수의 CCTV를 소수의 관제 인력이 동시에 확인하는 환경에서는 모든 화면의 위험 상황을 실시간으로 발견하기 어렵습니다.\n\n특히 고령층은 연령이 높아질수록 추락과 낙상 위험이 커지지만, 사고가 발생한 순간 주변에 사람이 없다면 발견과 대응이 늦어질 수 있습니다.\n\n이러한 문제를 해결하기 위해 사람이 모든 CCTV를 계속 주시하지 않아도 AI가 사람의 자세와 움직임을 분석하고, 위험 가능성이 높은 장면을 먼저 관제 담당자에게 전달하는 실시간 안전 관제 시스템을 구현했습니다.",
+        images: [
+          {
+            src: "/images/smart-safety/canva/problem-cctv-workload.png",
+            caption: "다수의 CCTV를 소수 인력이 동시에 확인해야 하는 기존 관제 환경의 한계",
+          },
+          {
+            src: "/images/smart-safety/canva/problem-fall-risk.png",
+            caption: "고령층에서 증가하는 추락·낙상 위험과 사고 조기 발견의 필요성",
+          },
+        ],
       },
       {
         title: "담당 역할",
@@ -114,6 +131,21 @@ export const projects: readonly Project[] = [
           {
             src: "/images/smart-safety/tracking-recovery.png",
             caption: "낙상 구간의 ID 단절을 보완한 트래킹 재연결 전략",
+          },
+        ],
+      },
+      {
+        title: "모든 프레임을 처리하는 대신 현재 프레임을 우선했습니다",
+        items: [
+          "**문제**: RTSP 영상이 지속해서 입력되는 상황에서 모든 프레임을 순서대로 처리하면, AI 추론 속도가 입력 속도를 따라가지 못할 때 처리되지 않은 과거 프레임이 큐에 계속 누적됐습니다. 이로 인해 AI는 현재 화면이 아니라 몇 초 전 화면을 분석하게 되고, 위험 알림도 실제 상황보다 늦게 전달됐습니다.",
+          "**판단**: 일반적인 영상 분석에서는 프레임을 빠짐없이 처리하는 것보다 현재 시점에 발생한 위험을 빠르게 판단하는 것이 더 중요하다고 판단했습니다.",
+          "**구현**: Reader와 Inference 구간 사이에 크기가 제한된 큐를 두고 최대 3개의 프레임만 유지했습니다. 큐가 가득 찬 상태에서 새로운 프레임이 들어오면 가장 오래된 프레임을 폐기하고 최신 프레임을 우선 분석하도록 구성했습니다.",
+          "**결과**: 과거 프레임이 계속 누적되던 구조를 최신 프레임 우선 구조로 변경해 전체 처리 지연을 11.789ms에서 6.101ms로 줄였습니다. 최악 카메라의 p95 지연도 14.719ms에서 7.159ms로 감소했으며, 분석 결과가 현재 영상과 멀어지는 현상을 완화했습니다.",
+        ],
+        images: [
+          {
+            src: "/images/smart-safety/canva/backpressure-before-after.png",
+            caption: "과거 프레임 누적 방식에서 오래된 프레임을 폐기하는 최신 프레임 우선 처리 방식으로 개선",
           },
         ],
       },
@@ -165,6 +197,20 @@ export const projects: readonly Project[] = [
           "**순간 예측의 위험 이벤트 변환**: 17개 관절 좌표를 시계열로 구성하고, 연속 위험 판단 횟수와 카메라별 cooldown을 적용해 순간적 오탐이 경보로 이어지지 않도록 설계했습니다.",
           "**운영 문제 추적 가능성**: 프레임 번호, 관절 검출 수, 생성 시퀀스, 예측 확률과 이벤트 발생 수를 기록하고, 영상 위 오버레이와 디버그 로그로 탐지 누락과 지연 원인을 추적 가능하게 구성했습니다.",
           "**실제 서비스 이벤트 변환**: 모델 추론 결과를 MQTT·WebSocket·Spring Boot 기반 관제 시스템으로 연결해 실제 운영 서비스 이벤트로 전환했습니다.",
+        ],
+      },
+      {
+        title: "검증 범위와 한계",
+        items: [
+          "**트래킹 평가 범위**: 약 19.7% 개선 결과는 자체 테스트 영상에서 Track 연속성과 재연결 성공 여부를 기준으로 측정한 결과입니다. 객관적인 추적 정확도를 주장하려면 ID Switch, Fragmentation, MOTA·HOTA 등의 추가 평가가 필요합니다.",
+          "**운영 환경 일반화**: 모델과 실시간 처리 성능은 프로젝트에서 사용한 영상과 GPU 환경을 기준으로 검증했습니다. 실제 시설 적용을 위해서는 카메라 각도, 조도, 인원 밀집도와 하드웨어별 추가 검증이 필요합니다.",
+        ],
+      },
+      {
+        title: "판단과 배운 점",
+        items: [
+          "**현재 상황을 우선하는 처리 정책**: 모든 프레임을 보존하자 과거 영상이 누적되어 위험 알림이 늦어졌습니다. 안전 관제의 목적은 영상을 빠짐없이 처리하는 것이 아니라 현재 위험을 빠르게 발견하는 것이라고 판단해 오래된 프레임을 폐기했습니다. 이 경험을 통해 서비스 목적에 따라 무엇을 보존하고 버릴지 결정하는 것도 중요한 설계라는 점을 배웠습니다.",
+          "**개별 모델보다 전체 파이프라인 기준으로 선택**: YOLO Pose의 FPS만으로는 최종 행동 판단 성능을 설명하기 어려웠습니다. 관절 시퀀스를 동일한 LSTM 조건에서 평가하고 Faint Recall과 F1-score까지 비교해 모델을 선택했습니다. 이를 통해 모델은 단독 벤치마크가 아니라 전체 서비스에서 만드는 결과를 기준으로 선택해야 한다는 점을 배웠습니다.",
         ],
       },
       {
@@ -257,11 +303,19 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "이 경험으로 수행할 수 있게 된 기술 업무",
+        title: "판단과 배운 점",
         items: [
-          "의료/비전 데이터셋 분할(Train/Val/Test) 및 Geometric Data Augmentation 파이프라인 구축",
-          "Object Detection 모델(RF-DETR) Fine-tuning 및 mAP 기반 정밀도 평가",
-          "OpenCV 기반 영상·웹캠 입력 탐지 및 Bounding Box 시각화 GUI 프로토타입 작성",
+          "**모델 교체보다 데이터 품질을 먼저 개선**: 조명과 병변 형태 차이로 일반화가 어려웠지만, 더 큰 모델을 적용하기 전에 학습 데이터의 다양성을 먼저 확보해야 한다고 판단했습니다. Elastic Deformation과 Grid Distortion으로 실제 조직의 형태 변화를 반영했습니다. 이를 통해 성능 문제의 원인이 항상 모델 구조에 있는 것은 아니며 데이터 설계를 먼저 점검해야 한다는 점을 배웠습니다.",
+          "**증강 효과보다 Bounding Box 정합성을 우선**: 영상을 변형한 뒤 라벨이 병변 위치와 일치하지 않으면 잘못된 데이터를 학습하게 됩니다. 증강 이미지의 다양성보다 변환된 병변과 Bounding Box가 정확히 일치하는지를 확인했습니다. 이를 통해 데이터 증강은 이미지 수를 늘리는 작업이 아니라 입력과 정답의 의미를 함께 보존하는 과정이라는 점을 배웠습니다.",
+        ],
+      },
+      {
+        title: "이 프로젝트로 보여주는 역량",
+        items: [
+          "의료·비전 데이터셋 분할과 Geometric Data Augmentation 파이프라인 구축",
+          "Object Detection 모델 Fine-tuning과 mAP 기반 성능 평가",
+          "증강 영상과 Bounding Box 라벨 정합성 검증",
+          "OpenCV 기반 영상·웹캠 실시간 탐지 애플리케이션 구현",
         ],
       },
     ],
@@ -338,11 +392,19 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "이 경험으로 수행할 수 있게 된 기술 업무",
+        title: "판단과 배운 점",
         items: [
-          "VAE 기반 비지도 이상 탐지(Anomaly Detection) 데이터 전처리 및 재구성 오차 맵(Reconstruction Error Map) 추출",
-          "이미지 픽셀 통계 분포를 활용한 적응형 동적 임계값(Dynamic Threshold) 후처리 산출",
-          "라벨 부족 문제 환경에서의 문제 재정의 및 한계점 명시 능력",
+          "**라벨 부족을 문제 정의의 기준으로 삼았습니다**: 병변 위치 라벨이 부족한 상태에서 지도학습을 강행하기보다 정상 조직의 분포를 학습하고 정상에서 벗어난 영역을 찾는 비지도 이상 탐지로 문제를 다시 정의했습니다. 이를 통해 원하는 모델을 먼저 정하는 것이 아니라 확보 가능한 데이터에 맞춰 문제와 평가 방식을 설계해야 한다는 점을 배웠습니다.",
+          "**고정 임계값보다 영상별 분포를 반영**: 초음파 영상마다 밝기와 노이즈가 달라 같은 임계값에서도 오탐 수준이 달라졌습니다. 이미지별 Reconstruction Error 분포를 반영하는 Dynamic Threshold를 적용해 고정 기준의 한계를 보완했습니다. 이 경험을 통해 후처리도 모델 성능의 일부이며 입력 환경의 변화에 대응하도록 설계해야 한다는 점을 배웠습니다.",
+        ],
+      },
+      {
+        title: "이 프로젝트로 보여주는 역량",
+        items: [
+          "VAE 기반 비지도 이상 탐지 모델과 재구성 오차 분석",
+          "Reconstruction Error Map 생성 및 이상 후보 영역 시각화",
+          "영상별 픽셀 분포를 반영한 Dynamic Threshold 후처리",
+          "라벨 부족 환경에서의 문제 재정의와 검증 한계 관리",
         ],
       },
     ],
@@ -403,11 +465,20 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "이 경험으로 수행할 수 있게 된 기술 업무",
+        title: "판단과 배운 점",
         items: [
-          "RAG 시스템 구축을 위한 문서 정규화 및 메타데이터 색인 파이프라인 설계",
-          "BM25 및 Vector Search 결합 RRF(Reciprocal Rank Fusion) 하이브리드 검색 아키텍처 구축",
-          "빌드 타임 정적 JSON 인덱스 생성(Node.js/TypeScript) 및 CI/CD 테스트 회귀 자동화",
+          "**벡터 검색 하나로 모든 질문을 해결하지 않았습니다**: Vector Search는 의미가 유사한 문서를 찾는 데 유리하지만 cameraLoginId와 frameId 같은 정확한 식별자를 놓칠 수 있었습니다. 키워드 검색에 강한 BM25와 문맥 검색에 강한 Vector Search를 결합하고 RRF로 결과 순위를 통합했습니다. 이를 통해 검색 기술은 하나를 선택하는 것이 아니라 질문 유형에 따라 강점을 조합해야 한다는 점을 배웠습니다.",
+          "**구현 결과와 검증된 성과를 구분했습니다**: 하이브리드 검색 구조를 구현했더라도 실제 검색 품질이 향상됐다고 주장하려면 Recall@k와 MRR 같은 정량 평가가 필요했습니다. 아키텍처 구현과 품질 검증 결과를 분리하고 부족한 평가는 후속 과제로 남겼습니다. 이를 통해 구현 사실과 검증된 성과를 명확히 구분하는 것이 기술 신뢰도를 높인다는 점을 배웠습니다.",
+        ],
+      },
+      {
+        title: "이 프로젝트로 보여주는 역량",
+        items: [
+          "문서 정규화와 메타데이터 검색 인덱스 설계",
+          "BM25와 Vector Search를 결합한 하이브리드 검색 구현",
+          "RRF 기반 검색 결과 순위 통합",
+          "정적 JSON 인덱스와 Cloudflare 배포 환경 최적화",
+          "검색 품질 평가 범위와 구현 성과를 구분하는 검증 설계",
         ],
       },
     ],

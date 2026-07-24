@@ -108,4 +108,112 @@ describe("full-stack portfolio", () => {
       expect(src).toMatch(/^\/images\/smart-safety\//);
     });
   });
+
+  it("supports demoUrl, githubUrl, lazy loading, and whitespace-pre-line in smart safety project views", () => {
+    const aiSmartSafety = projects.find((p) => p.title.includes("실시간 이상행동 탐지"));
+    const fullstackSmartSafety = fullstackProjects.find((p) => p.title.includes("AI 이벤트 수신부터 사고 검색"));
+
+    expect(aiSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies/ai");
+    expect(aiSmartSafety?.demoUrl).toBe("https://www.youtube.com/watch?v=O1-JNhcpvDQ");
+    expect(fullstackSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies/ai");
+    expect(fullstackSmartSafety?.demoUrl).toBe("https://www.youtube.com/watch?v=O1-JNhcpvDQ");
+
+    const projectsSectionSrc = readText("src/components/ProjectsSection.tsx");
+    expect(projectsSectionSrc).toContain("시연 영상 보기");
+    expect(projectsSectionSrc).toContain('loading="lazy"');
+    expect(projectsSectionSrc).toContain('decoding="async"');
+    expect(projectsSectionSrc).toContain("whitespace-pre-line");
+    expect(projectsSectionSrc).toContain("object-contain");
+  });
+
+  it("connects Canva background presentation images correctly to AI and Full-Stack projects (5 images only)", () => {
+    expect(JSON.stringify(projects)).toContain(
+      "/images/smart-safety/canva/problem-cctv-workload.png"
+    );
+    expect(JSON.stringify(projects)).toContain(
+      "/images/smart-safety/canva/problem-fall-risk.png"
+    );
+    expect(JSON.stringify(projects)).toContain(
+      "/images/smart-safety/canva/backpressure-before-after.png"
+    );
+    expect(JSON.stringify(fullstackProjects)).toContain(
+      "/images/smart-safety/canva/service-definition.png"
+    );
+    expect(JSON.stringify(fullstackProjects)).toContain(
+      "/images/smart-safety/canva/target-users.png"
+    );
+    expect(JSON.stringify(projects)).not.toContain(
+      "final-system-evaluation"
+    );
+    expect(JSON.stringify(fullstackProjects)).not.toContain(
+      "scalability-roadmap"
+    );
+  });
+
+  it("includes '판단과 배운 점' section with exactly 2 items in all projects", () => {
+    for (const project of projects) {
+      const reflection = project.details.find(
+        (detail) => detail.title === "판단과 배운 점"
+      );
+
+      expect(reflection).toBeDefined();
+      expect(reflection?.items).toHaveLength(2);
+    }
+
+    for (const project of fullstackProjects) {
+      const reflection = project.details.find(
+        (detail) => detail.title === "판단과 배운 점"
+      );
+
+      expect(reflection).toBeDefined();
+      expect(reflection?.items).toHaveLength(2);
+    }
+  });
+
+  it("unifies AI portfolio section structure across all 4 AI projects", () => {
+    expect(projects).toHaveLength(4);
+
+    for (const project of projects) {
+      const reflection = project.details.find(
+        (detail) => detail.title === "판단과 배운 점"
+      );
+
+      const capabilities = project.details.find(
+        (detail) => detail.title === "이 프로젝트로 보여주는 역량"
+      );
+
+      expect(reflection).toBeDefined();
+      expect(reflection?.items).toHaveLength(2);
+      expect(capabilities).toBeDefined();
+
+      expect(project.details.indexOf(reflection!)).toBeLessThan(
+        project.details.indexOf(capabilities!)
+      );
+    }
+
+    const smartSafety = projects.find(
+      (project) =>
+        project.title === "실시간 이상행동 탐지 및 안전 관제 AI 시스템"
+    );
+
+    expect(
+      smartSafety?.details.some(
+        (detail) => detail.title === "왜 실시간 AI 안전 관제가 필요한가"
+      )
+    ).toBe(true);
+
+    expect(
+      smartSafety?.details.some(
+        (detail) =>
+          detail.title ===
+          "모든 프레임을 처리하는 대신 현재 프레임을 우선했습니다"
+      )
+    ).toBe(true);
+
+    expect(
+      smartSafety?.details.some(
+        (detail) => detail.title === "검증 범위와 한계"
+      )
+    ).toBe(true);
+  });
 });
