@@ -1,5 +1,5 @@
 import { useState, type KeyboardEvent, type ReactNode } from "react";
-import { ArrowUpRight, Github, X } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Github, X } from "lucide-react";
 import { projects, type Project, type ProjectDetail } from "@/data/projects";
 import ScrollAnimator from "./ScrollAnimator";
 import Mermaid from "./Mermaid";
@@ -277,17 +277,30 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
                     </span>
                   </div>
                 </div>
-                {selectedProject.githubUrl ? (
-                  <a
-                    href={selectedProject.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-border bg-muted px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-muted/80"
-                  >
-                    <Github size={18} />
-                    GitHub
-                  </a>
-                ) : null}
+                <div className="flex flex-wrap items-center gap-2">
+                  {selectedProject.liveUrl ? (
+                    <a
+                      href={selectedProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary/20"
+                    >
+                      <ExternalLink size={18} />
+                      서비스 바로가기
+                    </a>
+                  ) : null}
+                  {selectedProject.githubUrl ? (
+                    <a
+                      href={selectedProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-border bg-muted px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-muted/80"
+                    >
+                      <Github size={18} />
+                      GitHub
+                    </a>
+                  ) : null}
+                </div>
               </div>
 
               <p className="mb-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">

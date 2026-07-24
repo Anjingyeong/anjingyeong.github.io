@@ -16,6 +16,7 @@ export const fullstackProjects: readonly Project[] = [
     highlights: ["모바일 우선 자가체크", "Workers API·D1", "PDF 리포트·운영 배포"],
     tags: ["React", "TypeScript", "Vite", "Cloudflare Pages", "Cloudflare Workers", "D1", "REST API"],
     gradient: "from-rose-500/10 to-pink-500/5",
+    liveUrl: "https://maumium.pages.dev/",
     details: [
       {
         title: "구현 내용",

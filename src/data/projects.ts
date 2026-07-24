@@ -46,6 +46,7 @@ export type Project = {
   readonly tags: readonly string[];
   readonly gradient: string;
   readonly githubUrl?: string;
+  readonly liveUrl?: string;
   readonly hasAwards?: boolean;
   readonly details: readonly ProjectDetail[];
 };
