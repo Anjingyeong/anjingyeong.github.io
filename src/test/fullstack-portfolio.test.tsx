@@ -169,4 +169,51 @@ describe("full-stack portfolio", () => {
       expect(reflection?.items).toHaveLength(2);
     }
   });
+
+  it("unifies AI portfolio section structure across all 4 AI projects", () => {
+    expect(projects).toHaveLength(4);
+
+    for (const project of projects) {
+      const reflection = project.details.find(
+        (detail) => detail.title === "판단과 배운 점"
+      );
+
+      const capabilities = project.details.find(
+        (detail) => detail.title === "이 프로젝트로 보여주는 역량"
+      );
+
+      expect(reflection).toBeDefined();
+      expect(reflection?.items).toHaveLength(2);
+      expect(capabilities).toBeDefined();
+
+      expect(project.details.indexOf(reflection!)).toBeLessThan(
+        project.details.indexOf(capabilities!)
+      );
+    }
+
+    const smartSafety = projects.find(
+      (project) =>
+        project.title === "실시간 이상행동 탐지 및 안전 관제 AI 시스템"
+    );
+
+    expect(
+      smartSafety?.details.some(
+        (detail) => detail.title === "왜 실시간 AI 안전 관제가 필요한가"
+      )
+    ).toBe(true);
+
+    expect(
+      smartSafety?.details.some(
+        (detail) =>
+          detail.title ===
+          "모든 프레임을 처리하는 대신 현재 프레임을 우선했습니다"
+      )
+    ).toBe(true);
+
+    expect(
+      smartSafety?.details.some(
+        (detail) => detail.title === "검증 범위와 한계"
+      )
+    ).toBe(true);
+  });
 });
