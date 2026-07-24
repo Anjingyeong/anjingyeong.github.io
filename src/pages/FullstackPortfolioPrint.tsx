@@ -78,7 +78,7 @@ const FullstackPortfolioPrint = () => (
       <section className="print-section">
         <h2 className="print-section-title">Education</h2>
         <div className="flex justify-between text-[8pt] text-slate-700"><strong>건양대학교 의공학과 학사</strong><span>2026.02 졸업</span></div>
-        <div className="flex justify-between text-[8pt] text-slate-700 mt-2"><strong>SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기</strong><span>2026.01 - 2026.07</span></div>
+        <div className="flex justify-between text-[8pt] text-slate-700 mt-2"><strong>SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기</strong><span>2026.05 - 2026.07</span></div>
       </section>
 
       <section className="print-section">

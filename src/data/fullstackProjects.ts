@@ -9,7 +9,7 @@ export const fullstackProjects: readonly Project[] = [
     summaryLine: "사용자 자가체크부터 결과 계산, 데이터 저장, 관리자 통계, PDF 리포트와 배포까지 연결한 웹서비스",
     description: "React UI와 위험도 계산 로직부터 Cloudflare Workers API, D1 저장, 관리자 통계, PDF 리포트, 배포 및 운영 정책까지 구현했습니다.",
     meta: {
-      period: "웹서비스",
+      period: "기간 미기재",
       role: "React UI, 위험도 계산 로직, Cloudflare Workers API, D1 저장, 관리자 통계, PDF 리포트, 배포 및 운영 정책",
       service: "마음이음 자가체크 웹서비스",
     },
@@ -73,7 +73,7 @@ export const fullstackProjects: readonly Project[] = [
     summaryLine: "프로젝트 문서와 기술 의사결정을 검색 가능한 데이터로 구조화한 하이브리드 검색 서비스",
     description: "정적 JSON 인덱스와 BM25·Vector Search·RRF를 결합해 문서 출처와 섹션 정보를 제공하는 프로젝트 지식 검색 구조를 구현했습니다.",
     meta: {
-      period: "프로젝트 지식 시스템",
+      period: "2026",
       role: "문서 인덱스, 하이브리드 검색, 검색 API 및 인증 흐름 구현",
       service: "LLM Wiki·RAG 지식 검색 시스템",
     },
@@ -104,7 +104,7 @@ export const fullstackProjects: readonly Project[] = [
     summaryLine: "AI 엔지니어와 풀스택 개발자 지원 목적에 따라 콘텐츠를 분리한 반응형 포트폴리오",
     description: "기존 디자인과 컴포넌트를 유지하면서 직무별 라우트, 프로젝트 데이터, 인쇄 페이지를 분리했습니다.",
     meta: {
-      period: "개인 프로젝트",
+      period: "기간 미기재",
       role: "React·TypeScript 구현, 직무별 콘텐츠 구성, 인쇄 페이지 및 배포",
       service: "개인 포트폴리오 웹사이트",
     },

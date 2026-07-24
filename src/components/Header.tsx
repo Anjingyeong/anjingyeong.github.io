@@ -10,7 +10,11 @@ const navItems = [
   { label: "Contact", href: "#contact" },
 ];
 
-const Header = () => {
+type HeaderProps = {
+  readonly variant?: "ai" | "fullstack";
+};
+
+const Header = ({ variant = "ai" }: HeaderProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
@@ -50,13 +54,13 @@ const Header = () => {
           <div className="hidden sm:flex items-center rounded-full border border-border bg-background/70 p-0.5 text-xs font-semibold">
             <NavLink
               to="/ai"
-              className={({ isActive }) => `rounded-full px-2.5 py-1 transition-colors ${isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+              className={`rounded-full px-2.5 py-1 transition-colors ${variant === "ai" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
             >
               AI Engineer
             </NavLink>
             <NavLink
               to="/fullstack"
-              className={({ isActive }) => `rounded-full px-2.5 py-1 transition-colors ${isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+              className={`rounded-full px-2.5 py-1 transition-colors ${variant === "fullstack" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
             >
               Full-Stack Developer
             </NavLink>
@@ -90,8 +94,8 @@ const Header = () => {
       {mobileOpen && (
         <nav className="md:hidden flex flex-col gap-4 p-6 bg-background/95 backdrop-blur-lg border-b border-border">
           <div className="flex gap-2 border-b border-border pb-4">
-            <NavLink to="/ai" onClick={() => setMobileOpen(false)} className="minimal-btn">AI Engineer</NavLink>
-            <NavLink to="/fullstack" onClick={() => setMobileOpen(false)} className="minimal-btn">Full-Stack Developer</NavLink>
+            <NavLink to="/ai" onClick={() => setMobileOpen(false)} className={`minimal-btn ${variant === "ai" ? "bg-primary text-primary-foreground" : ""}`}>AI Engineer</NavLink>
+            <NavLink to="/fullstack" onClick={() => setMobileOpen(false)} className={`minimal-btn ${variant === "fullstack" ? "bg-primary text-primary-foreground" : ""}`}>Full-Stack Developer</NavLink>
           </div>
           {navItems.map((item) => (
             <button

@@ -17,10 +17,10 @@ const Index = ({ variant = "ai" }: IndexProps) => {
   return (
     <div className="relative min-h-screen bg-background">
       <NetworkCanvas />
-      <Header />
+      <Header variant={variant} />
       <main className="relative z-10">
         <HeroSection variant={variant} />
-        <AboutSection />
+        <AboutSection variant={variant} />
         <div className="section-divider" />
         <ProjectsSection items={variant === "fullstack" ? fullstackProjects : undefined} grouped={variant !== "fullstack"} />
         <SkillsSection variant={variant} />
