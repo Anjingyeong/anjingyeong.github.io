@@ -71,6 +71,10 @@ const AboutSection = ({ variant = "ai" }: AboutSectionProps) => {
                         <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
                         Docker·GitHub Pages·Cloudflare Pages 기반 배포와 운영 환경 고려
                       </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                        React·TypeScript 기반으로 직무별 콘텐츠와 인쇄 페이지를 제공하는 개인 포트폴리오를 직접 구축·운영하고 있습니다.
+                      </li>
                     </ul>
                   </div>
                 </>
