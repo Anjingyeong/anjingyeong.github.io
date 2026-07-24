@@ -28,11 +28,11 @@ const portfolioPublicCopy = [
 
 describe("ProjectsSection public copy", () => {
   it("describes Smart Safety as a real-time event pipeline with caveated metrics", () => {
-    expect(publicProjectSources).toContain("스마트 안전 관제 시스템");
-    expect(publicProjectSources).toContain("RTSP 수신 → AI 추론 → MQTT 이벤트 발행 → Spring Boot 연동 → WebSocket 관제 알림");
-    expect(publicProjectSources).toContain("capturedAtMs, processedAtMs, publishedAtMs");
-    expect(publicProjectSources).toContain("Spring Boot");
-    expect(publicProjectSources).toContain("TensorRT");
+    expect(publicProjectSources).toContain("실시간 이상행동 탐지 및 안전 관제 AI 시스템");
+    expect(publicProjectSources).toContain("YOLO26n-pose");
+    expect(publicProjectSources).toContain("RTSP 영상 → YOLO26n-pose 사람·관절 검출 → 관절 시퀀스 생성");
+    expect(publicProjectSources).toContain("LSTM");
+    expect(publicProjectSources).toContain("MQTT");
   });
 
   it("does not contain bracketed evidence labels in public copy", () => {

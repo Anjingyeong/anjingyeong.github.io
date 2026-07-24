@@ -54,115 +54,60 @@ export const projects: readonly Project[] = [
   {
     icon: Shield,
     badge: "Main",
-    title: "스마트 안전 관제 시스템",
-    summaryLine: "낙상 시 끊기는 트랙과 늦어지는 관제 알림을 함께 개선한 실시간 영상 AI 시스템",
+    title: "실시간 이상행동 탐지 및 안전 관제 AI 시스템",
+    summaryLine:
+      "실제 Faint 판단 성능을 기준으로 YOLO Pose 모델을 선정하고, RTSP 추론부터 LSTM 행동 분류·이벤트 후처리·MQTT 전달까지 구현한 실시간 영상 AI 시스템",
     description:
-      "CCTV 영상에서 위험 상황(낙상·실신) 후보를 감지하고, **RTSP 수신부터 Spring Boot 백엔드 및 WebSocket 경보 전달까지** 연결한 실시간 AI 관제 보조 시스템입니다.",
+      "**모델의 정확도만 비교하지 않고, 실제 위험 상황을 얼마나 안정적으로 감지하고 전달하는지를 기준으로 AI 파이프라인을 설계했습니다.**",
     meta: {
       period: "2026.05–2026.07",
-      role: "Pose·LSTM 추론, 행동 특징 설계, 트래킹 재연결, 프레임 처리 개선, 관제 인터페이스 연동",
-      service: "CCTV 기반 실시간 안전관제",
+      role: "AI 파이프라인 설계, YOLO Pose 벤치마크, LSTM 행동 분류, 실시간 추론·후처리, MQTT 연동",
+      service: "실시간 영상 AI 관제 시스템",
     },
-    highlights: ["F1 89.29% → 93.49%", "ID Switch 8 → 1", "Mean Latency −48.2%"],
-    tags: ["Computer Vision", "YOLO Pose", "LSTM", "MQTT", "WebSocket", "Spring Boot", "Docker"],
+    highlights: ["YOLO Pose 벤치마크", "LSTM 행동 분류", "MQTT 이벤트 연동"],
+    tags: ["Python", "PyTorch", "YOLO26n-pose", "LSTM", "OpenCV", "RTSP", "MQTT"],
     gradient: "from-rose-500/10 to-orange-500/10",
     hasAwards: false,
     details: [
       {
-        title: "문제와 목표",
-        body: "CCTV를 사후 검토용으로만 활용하면 사고 대응 골든타임을 확보하기 어렵습니다. 본 프로젝트의 목표는 단순히 탐지 모델을 만드는 데 그치지 않고, **RTSP 수신 → AI 추론 → MQTT 이벤트 발행 → Spring Boot 연동 → WebSocket 관제 알림**으로 이어지는 실시간 이벤트 전달 파이프라인을 구축하여 관제자의 판단 공백을 보조하는 것입니다.",
+        title: "프로젝트 개요",
+        body: "RTSP 영상에서 사람의 자세와 움직임을 분석해 낙상·실신 위험을 감지하고, 위험 이벤트를 관제 시스템으로 전달하는 실시간 영상 AI 시스템입니다.",
       },
       {
-        title: "시스템 플로우",
-        diagram: `flowchart LR
-    Cam["📷 CCTV / RTSP Stream"] --> Queue["📦 Frame Queue\\nDrop-Old Policy"]
-    Queue --> Pose["🧠 YOLO Pose\\nKeypoint Extraction"]
-    Pose --> Track["🔄 Object Tracking\\n& Track Reconnection"]
-    Track --> Seq["📈 Keypoint Sequence\\nGeneration"]
-    Seq --> LSTM["🧠 LSTM Model\\nFall/Faint Classifier"]
-    LSTM --> SM["⚙️ State Machine\\nPost-Processing"]
-    SM --> MQTT["📡 MQTT Broker\\nsafety/events"]
-    MQTT --> Backend["⚙️ Spring Boot Backend\\nEvent Persistence"]
-    Backend --> WS["💬 WebSocket\\nBroadcast"]
-    WS --> Dashboard["🚨 Monitoring\\nDashboard"]`,
-        note: "설계 핵심: 모든 프레임을 보존하기보다 최신 상황을 대응 가능한 시간 안에 전달하도록 지연 누적을 줄이는 처리 구조를 선택했습니다.",
-      },
-      {
-        title: "사례 1. 순간 자세 오탐",
+        title: "담당 역할",
         items: [
-          "**문제**: 정적인 관절 좌표만으로는 낙상과 정상 동작의 시간적 변화를 충분히 구분하기 어려웠습니다.",
-          "**판단**: 모델을 교체하기보다 낙상 동작의 방향성과 속도를 입력 특징에 반영하는 것이 우선이라고 판단했습니다.",
-          "**해결**: 기존 51D 관절 좌표에 상체 기울기, 수직 하강량, 이동 속도를 추가해 54D 입력으로 확장하고, 상태 머신 후처리로 순간 오탐을 제어했습니다. 낙상·실신 threshold 0.6, 연속 이상 2프레임, 누운 자세 3프레임, 정상 복구 4프레임, 쿨다운 10초, 트랙 손실 유예 1.5초 규칙을 적용했습니다.",
-          "**결과**: 동일 LSTM과 테스트 조건에서 F1-score를 89.29%에서 93.49%로 높이고, FP와 FN을 각각 38.6%, 38.9% 줄였습니다.",
+          "AI 파이프라인 설계 및 구현",
+          "YOLO Pose 모델 벤치마크",
+          "LSTM 행동 분류 및 임계값 조정",
+          "실시간 추론·이벤트 후처리",
+          "MQTT 이벤트 연동 및 지연 분석",
         ],
       },
       {
-        title: "사례 2. 낙상 중 트랙 ID 단절",
+        title: "기술 스택",
+        body: "Python · PyTorch · YOLO26n-pose · LSTM · OpenCV · RTSP · MQTT",
+      },
+      {
+        title: "핵심 구현",
         items: [
-          "**문제**: 사람이 서 있다가 넘어질 때 bbox 종횡비와 중심점이 급변해 기존 매칭이 실패했습니다.",
-          "**판단**: 외형 기반 Re-ID는 실시간 처리 비용과 구현 복잡도가 커 현재 시스템에는 과하다고 판단했습니다.",
-          "**해결**: 외형 임베딩을 사용하지 않고, 예측 위치·정규화 중심점 거리·후보 수를 순차 적용하는 재연결 후처리를 구현했습니다.",
-          "**결과**: 평가 영상에서 ID Switch를 8건에서 1건으로 줄이고, 평균 Track Coverage를 35.76%에서 49.70%로 높였습니다. 내부 트랙 연속성 대리지표도 약 19.7% 개선했습니다.",
+          "**1. 실제 판단 성능을 기준으로 모델을 선택했습니다.**\n\nYOLO 모델의 FPS만 비교하지 않고, 추출된 관절 시퀀스를 LSTM에 입력했을 때의 Faint Recall, F1-score와 반복 학습 안정성을 기준으로 YOLO26n-pose를 최종 선정했습니다.",
+          "**2. 불균형 데이터를 고려한 평가 파이프라인을 구성했습니다.**\n\nNormal 데이터가 압도적으로 많은 환경에서 클래스 균형 샘플링, 임계값별 성능 비교와 반복 시드 평가를 적용해 우연한 결과가 아닌 재현 가능한 모델 선택 근거를 만들었습니다.",
+          "**3. 순간 예측을 실제 위험 이벤트로 변환했습니다.**\n\n17개 관절의 좌표와 신뢰도를 시계열로 구성하고, 연속 위험 판단 횟수와 카메라별 cooldown을 적용해 순간적인 오탐이 바로 경보로 이어지지 않도록 설계했습니다.",
+          "**4. 운영 중 발생하는 문제를 관찰할 수 있게 만들었습니다.**\n\n프레임 번호, 관절 검출 수, 생성된 시퀀스, 예측 확률과 이벤트 발생 수를 기록하고, 영상 위 오버레이와 디버그 로그를 통해 탐지 누락과 지연 원인을 추적할 수 있도록 구성했습니다.",
         ],
       },
       {
-        title: "사례 3. 프레임 적체와 지연",
+        title: "파이프라인",
+        body: "RTSP 영상 → YOLO26n-pose 사람·관절 검출 → 관절 시퀀스 생성 → LSTM Normal/Faint 분류 → 연속 판단·임계값·cooldown 후처리 → MQTT 위험 이벤트 발행",
+      },
+      {
+        title: "이 프로젝트로 보여주는 역량",
         items: [
-          "**문제**: 입력 속도가 추론 속도를 초과하면서 오래된 프레임이 누적되고 관제 판단이 늦어졌습니다.",
-          "**판단**: 실시간 관제에서는 모든 프레임을 순서대로 처리하는 것보다 최신 상황을 대응 가능한 시간 안에 전달하는 것이 중요하다고 판단했습니다.",
-          "**해결**: Reader와 Inference를 분리하고, Bounded Queue와 Drop-old 정책으로 오래된 프레임의 누적을 줄였으며 capturedAtMs·processedAtMs·publishedAtMs를 기록했습니다.",
-          "**결과**: 동일 다중 카메라 입력 조건에서 평균 처리 지연을 11.789ms에서 6.101ms로 48.2% 줄였고, 최악 카메라의 p95 지연을 14.719ms에서 7.159ms로 51.4% 줄였습니다.",
-        ],
-      },
-      {
-        title: "PyTorch 대비 TensorRT 추론 성능 비교 검증",
-        body: "동일한 1,800프레임 영상과 입력 조건에서 PyTorch 대비 TensorRT 추론 성능을 비교 검증했습니다.",
-        table: {
-          headers: ["평가 지표 (Metric)", "PyTorch", "TensorRT", "개선 및 변화율"],
-          rows: [
-            ["평가 조건", "1,800 프레임 동일 영상", "1,800 프레임 동일 영상", "동일 영상 환경 테스트"],
-            ["평균 지연 (Mean Latency)", "7.022 ms", "3.839 ms", "45.3% 단축 (지연시간 약 1.83배 감소)"],
-            ["p95 지연 (p95 Latency)", "8.537 ms", "4.896 ms", "42.6% 단축"],
-            ["처리 속도 (FPS)", "84.278 FPS", "119.544 FPS", "41.8% 증가 (약 1.42배 처리량 향상)"],
-          ],
-        },
-      },
-      {
-        title: "담당 범위와 협업",
-        items: [
-          "**직접 담당**: Pose·LSTM 추론, 54D 행동 특징 설계, 트래킹 재연결, 프레임 처리 개선, PyTorch–TensorRT 비교 검증",
-          "**연동 기여**: Python AI Worker에서 생성한 추론 결과와 이벤트를 MQTT를 통해 Spring Boot·WebSocket 기반 관제 흐름에 연결",
-        ],
-      },
-      {
-        title: "검증 범위와 한계",
-        groups: [
-          {
-            title: "확인한 범위",
-            items: [
-              "54D 행동 특징 전후 성능 비교",
-              "트랙 재연결 전후 ID Switch 및 Track Coverage 비교",
-              "다중 카메라 입력 조건의 평균·p95 처리 지연 비교",
-              "동일 1,800프레임 영상의 PyTorch–TensorRT 추론 성능 비교",
-            ],
-          },
-          {
-            title: "후속 평가 과제",
-            items: [
-              "TensorRT 변환 전후 탐지 결과 동등성",
-              "IDF1, HOTA, MOTA 등 표준 트래킹 지표",
-              "다중 스트림 확장 시 CPU/GPU 자원 사용량",
-              "Track Fragmentation과 잘못된 재연결 평가",
-            ],
-          },
-        ],
-      },
-      {
-        title: "입사 후 기여할 수 있는 영역",
-        items: [
-          "RTSP 영상 입력과 Bounded Queue 기반 프레임 적체 제어",
-          "Pose·LSTM 행동 분석과 트래킹 후처리",
-          "MQTT·WebSocket·Spring Boot 기반 관제 인터페이스 연동",
+          "영상 AI 모델을 동일 조건에서 비교하고 선택하는 능력",
+          "불균형 데이터에 맞는 실험과 평가 기준 설계",
+          "객체 검출과 시계열 행동 분류를 결합한 파이프라인 구현",
+          "오탐·미탐·지연 원인을 로그와 지표로 추적하는 능력",
+          "모델 출력을 실제 서비스 이벤트로 변환하는 시스템 설계",
         ],
       },
     ],

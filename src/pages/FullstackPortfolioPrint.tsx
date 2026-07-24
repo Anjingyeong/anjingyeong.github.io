@@ -49,7 +49,7 @@ const FullstackPortfolioPrint = () => (
 
       <section className="print-section">
         <h2 className="print-section-title">Profile Summary</h2>
-        <p className="text-[8.5pt] text-slate-700 leading-relaxed">React와 TypeScript 기반 사용자 화면부터 Spring Boot·Cloudflare 기반 API 및 데이터 저장 구조까지 서비스 흐름을 구현해 왔습니다. 자가체크 웹서비스에서는 입력·결과 계산·저장·관리자 통계·PDF 리포트·배포를 연결했고, 스마트 안전 관제 프로젝트에서는 Python AI Worker의 이벤트를 MQTT·Spring Boot·WebSocket 기반 관제 시스템에 연동했습니다.</p>
+        <p className="text-[8.5pt] text-slate-700 leading-relaxed">사용자의 한 번의 입력이 화면, API, 데이터와 결과까지 막힘없이 이어지도록 만드는 개발자입니다. 마음이음 웹서비스를 기획부터 배포까지 1인 개발하고, 스마트 안전 관제에서는 AI 이벤트가 MQTT·백엔드·WebSocket을 거쳐 관제 화면에 도달하는 실시간 흐름을 연결했습니다. 화면과 서버를 따로 구현하기보다, 데이터가 이동하는 과정과 예외 상황을 함께 살피며 서비스를 완성합니다. 특정 기술에 갇히기보다 요구사항에 필요한 구조를 빠르게 파악하고, 아이디어를 실제로 작동하는 제품으로 바꿀 수 있는 사람입니다.</p>
       </section>
 
       <section className="print-section">
