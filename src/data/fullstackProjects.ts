@@ -83,13 +83,19 @@ export const fullstackProjects: readonly Project[] = [
         body: "Python AI Worker에서 생성한 위험 이벤트를 MQTT로 수신하고, Spring Boot에서 저장·가공한 뒤 WebSocket을 통해 React 관제 화면에 전달하는 실시간 안전 관제 플랫폼입니다.\n\n사고 영상과 스냅샷을 VLM으로 설명하고 임베딩으로 저장해, 사용자가 자연어로 과거 사고를 검색할 수 있도록 확장했습니다.",
       },
       {
-        title: "AI 탐지 결과가 실제 대응으로 이어지는 서비스",
-        body: "RTSP 영상 분석, MQTT 이벤트 전달, 관제 대시보드 알림, 사고 기록과 스냅샷 저장을 하나의 서비스 흐름으로 연결했습니다. 개인 보호자와 요양원·병원·복지관 등 기관 사용자가 같은 플랫폼 안에서 서로 다른 범위의 카메라와 사고 이력을 확인할 수 있도록 설계했습니다.",
+        title: "AI 탐지부터 사고 기록까지 연결한 End-to-End 서비스",
+        body: "이 프로젝트는 AI 모델이 위험 행동을 탐지하는 데서 끝나지 않고, 탐지 결과가 실제 관제 담당자의 확인과 대응으로 이어지도록 전체 서비스 흐름을 연결한 시스템입니다.\n\nCCTV 영상은 RTSP로 AI Worker에 전달되고, AI Worker는 사람의 자세와 움직임을 분석해 위험 이벤트를 생성합니다. 분석 영상은 관제 화면에 표시하고, 탐지 이벤트는 MQTT를 통해 Spring Boot 백엔드로 전달합니다.\n\n백엔드는 이벤트를 데이터베이스에 저장한 뒤 WebSocket으로 관제 화면에 실시간 알림을 전송합니다. 사고 발생 시에는 스냅샷과 사고 전후 영상도 함께 연결해 관제 담당자가 알림 발생 원인과 실제 상황을 확인할 수 있도록 구성했습니다.",
         images: [
           {
             src: "/images/smart-safety/canva/service-definition.png",
-            caption: "영상 입력부터 AI 탐지, 알림과 사고 기록까지 연결한 End-to-End 관제 서비스",
+            caption: "RTSP 영상 입력부터 AI 탐지, MQTT 알림, 관제 화면과 사고 기록까지 연결한 End-to-End 서비스",
           },
+        ],
+      },
+      {
+        title: "개인과 기관의 서로 다른 관제 환경을 고려했습니다",
+        body: "개인 사용자는 혼자 생활하는 가족이나 보호 대상자의 위험 상황을 확인하고, 이상 행동이 감지되면 보호자가 알림과 사고 기록을 확인하는 형태로 사용할 수 있습니다.\n\n요양원, 병원, 복지관과 같은 기관 사용자는 여러 공간의 카메라를 하나의 대시보드에서 확인하고, 발생한 사고와 처리 상태를 통합 관리할 수 있도록 사용자 범위를 구분했습니다.\n\n이를 통해 단일 카메라를 확인하는 개인 관제와 여러 카메라를 운영하는 기관 관제를 같은 서비스 안에서 지원하는 구조를 설계했습니다.",
+        images: [
           {
             src: "/images/smart-safety/canva/target-users.png",
             caption: "개인 보호자와 요양원·병원·복지관 등 기관 사용자를 고려한 서비스 대상",
@@ -158,16 +164,6 @@ export const fullstackProjects: readonly Project[] = [
           {
             src: "/images/smart-safety/vlm-pipeline.jpg",
             caption: "Keyframe·Gemini·Embedding·pgvector 기반 자연어 검색 파이프라인",
-          },
-        ],
-      },
-      {
-        title: "현재 구현에 머무르지 않고 확장 경로까지 설계했습니다",
-        body: "현재는 MJPEG 기반 실시간 송출과 다중 CCTV 이벤트 처리를 구현했습니다. 카메라와 사용자 수가 증가할 경우 Worker 분리, 메시지 큐와 GPU 부하 분산을 적용하고, 지연과 동시 접속 요구사항에 따라 WebRTC 또는 HLS 방식으로 전환할 수 있도록 스트리밍 구성을 분리했습니다.",
-        images: [
-          {
-            src: "/images/smart-safety/canva/scalability-roadmap.png",
-            caption: "스트리밍, 다중 카메라 처리와 VLM 검색 기능의 단계별 고도화 방향",
           },
         ],
       },
