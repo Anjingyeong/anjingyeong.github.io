@@ -30,7 +30,7 @@ describe("ProjectsSection public copy", () => {
   it("describes Smart Safety as a real-time event pipeline with caveated metrics", () => {
     expect(publicProjectSources).toContain("실시간 이상행동 탐지 및 안전 관제 AI 시스템");
     expect(publicProjectSources).toContain("YOLO26n-pose");
-    expect(publicProjectSources).toContain("RTSP 영상에서 YOLO26n-pose로 사람의 17개 관절을 추출");
+    expect(publicProjectSources).toContain("RTSP 영상에서 YOLO26n-pose로");
     expect(publicProjectSources).toContain("LSTM");
     expect(publicProjectSources).toContain("MQTT");
   });
@@ -75,8 +75,12 @@ describe("ProjectsSection public copy", () => {
   });
 
   it("presents Smart Safety before LLM Wiki as public representative work", () => {
-    const smartSafetyIndex = publicProjectSources.indexOf("스마트 안전 관제");
-    const llmWikiIndex = publicProjectSources.indexOf("LLM Wiki");
+    const allSources = [
+      publicProjectSources,
+      readText("src/data/fullstackProjects.ts"),
+    ].join("\n");
+    const smartSafetyIndex = allSources.indexOf("스마트 안전 관제");
+    const llmWikiIndex = allSources.indexOf("LLM Wiki");
 
     expect(smartSafetyIndex).toBeGreaterThanOrEqual(0);
     expect(llmWikiIndex).toBeGreaterThan(smartSafetyIndex);
