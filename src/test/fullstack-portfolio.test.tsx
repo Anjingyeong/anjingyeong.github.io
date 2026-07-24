@@ -149,4 +149,24 @@ describe("full-stack portfolio", () => {
       "scalability-roadmap"
     );
   });
+
+  it("includes '판단과 배운 점' section with exactly 2 items in all projects", () => {
+    for (const project of projects) {
+      const reflection = project.details.find(
+        (detail) => detail.title === "판단과 배운 점"
+      );
+
+      expect(reflection).toBeDefined();
+      expect(reflection?.items).toHaveLength(2);
+    }
+
+    for (const project of fullstackProjects) {
+      const reflection = project.details.find(
+        (detail) => detail.title === "판단과 배운 점"
+      );
+
+      expect(reflection).toBeDefined();
+      expect(reflection?.items).toHaveLength(2);
+    }
+  });
 });
