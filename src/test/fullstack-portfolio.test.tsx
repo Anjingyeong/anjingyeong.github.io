@@ -196,24 +196,46 @@ describe("full-stack portfolio", () => {
         project.title === "실시간 이상행동 탐지 및 안전 관제 AI 시스템"
     );
 
-    expect(
-      smartSafety?.details.some(
-        (detail) => detail.title === "왜 실시간 AI 안전 관제가 필요한가"
-      )
-    ).toBe(true);
+    expect(smartSafety).toBeDefined();
 
-    expect(
-      smartSafety?.details.some(
-        (detail) =>
-          detail.title ===
-          "모든 프레임을 처리하는 대신 현재 프레임을 우선했습니다"
-      )
-    ).toBe(true);
+    expect(smartSafety?.details.map((detail) => detail.title)).toEqual([
+      "문제 정의와 목표",
+      "AI 시스템 구조",
+      "전체 파이프라인을 기준으로 Pose 모델을 선택했습니다",
+      "낙상 구간의 트래킹 단절 문제 해결",
+      "모든 프레임을 처리하는 대신 현재 프레임을 우선했습니다",
+      "51D에서 54D로 확장한 행동 특징",
+      "TensorRT 적용 및 통합 지연 검증",
+      "운영 안정화와 검증 범위",
+      "판단과 배운 점",
+      "이 프로젝트로 보여주는 역량",
+    ]);
 
-    expect(
-      smartSafety?.details.some(
-        (detail) => detail.title === "검증 범위와 한계"
-      )
-    ).toBe(true);
+    const titles = smartSafety?.details.map((detail) => detail.title) ?? [];
+
+    expect(titles).not.toContain("프로젝트 개요");
+    expect(titles).not.toContain("담당 역할");
+    expect(titles).not.toContain("기술 스택");
+    expect(titles).not.toContain("이벤트 후처리 및 운영 관찰");
+
+    const reflection = smartSafety?.details.find(
+      (detail) => detail.title === "판단과 배운 점"
+    );
+
+    expect(reflection?.items).toHaveLength(2);
+
+    const projectJson = JSON.stringify(smartSafety);
+
+    expect(projectJson).toContain(
+      "/images/smart-safety/canva/problem-cctv-workload.png"
+    );
+
+    expect(projectJson).toContain(
+      "/images/smart-safety/canva/problem-fall-risk.png"
+    );
+
+    expect(projectJson).toContain(
+      "/images/smart-safety/canva/backpressure-before-after.png"
+    );
   });
 });
