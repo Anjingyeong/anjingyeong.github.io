@@ -64,8 +64,6 @@ export const fullstackProjects: readonly Project[] = [
       "실시간 경보·VLM 비동기 분리",
     ],
     tags: [
-      "Python",
-      "MQTT",
       "Java 21",
       "Spring Boot",
       "JPA",
@@ -75,12 +73,9 @@ export const fullstackProjects: readonly Project[] = [
       "AWS S3",
       "React",
       "TypeScript",
-      "WebSocket",
-      "STOMP",
-      "Zod",
-      "Gemini API",
-      "VLM",
-      "Vector Search",
+      "MQTT",
+      "WebSocket·STOMP",
+      "Gemini VLM",
     ],
     gradient: "from-orange-500/10 to-rose-500/5",
     githubUrl: "https://github.com/strangeRookies",
@@ -89,7 +84,7 @@ export const fullstackProjects: readonly Project[] = [
       {
         title: "문제 정의와 서비스 목표",
         body:
-          "AI가 위험을 탐지하더라도 이벤트가 유실되거나 중복 저장되고, 사고 영상과 설명이 서로 다른 데이터로 남으면 관제 담당자는 실제 사고를 신뢰하기 어렵습니다.\n\n이 프로젝트에서는 Python AI Worker의 위험 이벤트를 MQTT로 수신해 Spring Boot에서 Incident로 저장하고, WebSocket·STOMP를 통해 React 관제 화면에 전달했습니다.\n\n이후 도착하는 스냅샷, 사고 클립과 VLM 설명을 동일 Incident에 연결해 실시간 경보부터 증거 확인과 과거 사고 검색까지 하나의 서비스 흐름으로 완성하는 것을 목표로 했습니다.",
+          "AI가 위험을 탐지하더라도 이벤트의 유실·중복 가능성을 제어하지 못하고, 사고 영상과 설명이 서로 다른 데이터로 남으면 관제 담당자는 사고 정보를 신뢰하기 어렵습니다.\n\n이 프로젝트에서는 Python AI Worker의 위험 이벤트를 MQTT로 수신해 Spring Boot에서 Incident로 저장하고, WebSocket·STOMP를 통해 React 관제 화면에 전달했습니다.\n\n이후 도착하는 스냅샷, 사고 클립과 VLM 설명을 동일 Incident에 연결해 실시간 경보부터 증거 확인과 과거 사고 검색까지 하나의 서비스 흐름으로 완성하는 것을 목표로 했습니다.",
       },
       {
         title: "End-to-End 서비스 구조",
@@ -244,14 +239,12 @@ export const fullstackProjects: readonly Project[] = [
       {
         title: "팀 협업과 통합 기준",
         items: [
-          "**팀 구성**: 총 5명의 팀 프로젝트에서 팀장을 맡아 AI·백엔드·프론트엔드·인프라 파트의 일정과 통합 이슈를 관리했습니다.",
-          "**직접 기여**: AI 이벤트 계약, originalEventId 기반 Incident 정합성, VLM 비동기 작업 흐름과 프론트엔드 병합 동작을 중심으로 구현·검증했습니다.",
-          "**역할 구분**: 전체 Spring Boot 백엔드와 React 프론트엔드를 단독 구현한 것이 아니라, 담당자들과 데이터 계약과 통합 기준을 맞추고 주요 정합성 문제를 함께 해결했습니다.",
-          "**관점 차이**: AI 파트는 MQTT 이벤트 발행을 완료로 보았고, 백엔드는 DB 저장과 STOMP 발행, 프론트엔드는 실제 화면 반영까지 확인해야 완료로 볼 수 있었습니다.",
-          "**조율 방법**: 누구의 구현이 잘못됐는지를 먼저 판단하지 않고 동일한 eventId와 timestamp를 따라 AI 발행, MQTT 수신, DB 저장, STOMP 수신과 화면 반영 로그를 순서대로 확인했습니다.",
-          "**공통 기준**: 이벤트 스키마, originalEventId, 필수 필드, 오류 응답과 완료 조건을 문서화하고 각 파트가 독립적으로 검증할 수 있는 체크리스트를 정했습니다.",
-          "**결과**: 파트별 기능을 단순 연결하는 수준을 넘어 실시간 경보, Incident 저장, 사고 증거와 VLM 설명이 하나의 서비스 흐름으로 유지되도록 통합했습니다.",
-          "**배운 점**: 협업 문제를 개인의 소통 태도나 실수로 설명하기보다 공통 식별자, 인터페이스와 완료 조건이 부족한 구조적 문제로 보고 해결해야 한다는 점을 배웠습니다.",
+          "**팀 구성과 역할**: 총 5명의 팀 프로젝트에서 팀장을 맡아 AI·백엔드·프론트엔드·인프라 파트의 일정과 통합 기준을 관리했습니다.",
+          "**직접 기여와 역할 구분**: AI 이벤트 계약, originalEventId 기반 Incident 정합성, VLM 비동기 작업 흐름과 프론트엔드 병합 동작을 구현·검증했습니다. 전체 백엔드와 프론트엔드를 단독 구현한 것이 아니라 담당자들과 주요 정합성 문제를 함께 해결했습니다.",
+          "**파트 간 조율**: 이벤트 스키마, originalEventId, 필수 필드, 오류 응답과 완료 조건을 문서화하고 각 파트가 독립적으로 검증할 체크리스트를 정했습니다.",
+          "**관점 차이**: AI는 MQTT 발행을 완료로 보았지만 백엔드는 DB 저장과 STOMP 발행, 프론트엔드는 화면 반영까지 확인해야 완료로 볼 수 있었습니다.",
+          "**조율과 결과**: 동일한 eventId와 timestamp를 따라 AI 발행부터 화면 반영까지 로그를 확인하고, 파트별 기능을 실시간 경보·Incident·증거·VLM 설명이 이어지는 하나의 흐름으로 통합했습니다.",
+          "**배운 점**: 협업 문제를 개인의 실수로 설명하기보다 공통 식별자, 인터페이스와 완료 조건이 부족한 구조적 문제로 보고 해결해야 한다는 점을 배웠습니다.",
         ],
       },
       {
@@ -264,11 +257,11 @@ export const fullstackProjects: readonly Project[] = [
       {
         title: "이 프로젝트로 보여주는 역량",
         items: [
-          "Python AI Worker·MQTT·Spring Boot·React를 연결하는 End-to-End 기능 구현",
-          "MQTT QoS와 WebSocket·STOMP를 활용한 실시간 이벤트 전달",
-          "비동기로 도착하는 경보와 증거 데이터를 하나의 Incident로 병합하는 정합성 설계",
-          "실패·잠금·재시도를 고려한 VLM 백그라운드 작업 구현",
-          "Gemini·Embedding·pgvector를 실제 자연어 사고 검색 기능으로 연결",
+          "MQTT·Spring Boot·WebSocket·React로 이어지는 End-to-End 이벤트 흐름 통합 및 지연 검증",
+          "Event ID와 originalEventId를 활용한 멱등 처리와 Incident 병합 설계",
+          "실시간 Critical Path와 VLM 후처리를 분리한 비동기 작업 구조 설계",
+          "작업 상태·잠금 만료·재시도를 고려한 VLM 처리 흐름 구현",
+          "공통 이벤트 계약과 구간별 로그를 활용한 파트 간 통합 검증",
         ],
       },
     ],

@@ -286,4 +286,56 @@ describe("full-stack portfolio", () => {
     expect(projectJson).not.toContain("/images/smart-safety/model-performance.jpg");
     expect(projectJson).not.toContain("/images/smart-safety/inference-optimization.jpg");
   });
+
+  it("validates fullstack smart safety project details and problem solving structure", () => {
+    const fullstackSmartSafety = fullstackProjects.find(
+      (project) =>
+        project.title ===
+        "AI 이벤트 수신부터 사고 검색까지 연결한 실시간 안전 관제 플랫폼"
+    );
+
+    expect(fullstackSmartSafety?.details.map((detail) => detail.title)).toEqual([
+      "문제 정의와 서비스 목표",
+      "End-to-End 서비스 구조",
+      "AI 이벤트가 관제 화면까지 도달하는 시간을 측정했습니다",
+      "화면의 중복이 아니라 사고 식별 구조를 수정했습니다",
+      "경보 이후의 증거 확인 흐름",
+      "실시간 알림과 VLM 분석을 서로 다른 처리 경로로 분리했습니다",
+      "운영 안정성과 검증 범위",
+      "팀 협업과 통합 기준",
+      "판단과 배운 점",
+      "이 프로젝트로 보여주는 역량",
+    ]);
+
+    const problemTitles = [
+      "AI 이벤트가 관제 화면까지 도달하는 시간을 측정했습니다",
+      "화면의 중복이 아니라 사고 식별 구조를 수정했습니다",
+      "실시간 알림과 VLM 분석을 서로 다른 처리 경로로 분리했습니다",
+    ];
+
+    const expectedLabels = [
+      "측정 현상",
+      "원인 분석",
+      "의사결정",
+      "구현",
+      "결과",
+      "배운 점",
+    ];
+
+    for (const title of problemTitles) {
+      const detail = fullstackSmartSafety?.details.find(
+        (item) => item.title === title
+      );
+
+      expect(detail?.problemSolving?.map((step) => step.label)).toEqual(
+        expectedLabels
+      );
+    }
+
+    const collaboration = fullstackSmartSafety?.details.find(
+      (detail) => detail.title === "팀 협업과 통합 기준"
+    );
+
+    expect(collaboration?.items).toHaveLength(6);
+  });
 });
