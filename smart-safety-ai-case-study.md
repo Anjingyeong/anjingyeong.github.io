@@ -44,7 +44,7 @@ flowchart LR
 - **측정 현상:** RTSP 입력 속도가 추론 속도를 초과하는 구간에서 과거 프레임이 큐에 적체되어 현재 시점 위험 알림 지연이 발생했습니다.
 - **원인 분석:** Bounded Queue 및 최신 프레임 우선 폐기 정책이 없어 AI Worker가 모든 과거 프레임을 순차 처리하려 한 것이 원인이었습니다.
 - **의사결정:** Reader-Inference 사이 Bounded Queue(maxsize=3)를 도입하고 Overwrite/Drop 정책을 적용했습니다.
-- **결과:** 과거 프레임 누적 현상을 방지하고 실시간 현재성을 보장했습니다.
+- **결과:** 과거 프레임의 지속적인 누적을 방지하고 분석 결과의 현재성 저하를 완화했습니다.
 
 ## 7. 54D 특징 확장
 
@@ -60,8 +60,7 @@ flowchart LR
 
 ## 9. 협업과 통합
 
-AI Worker에서 발행된 위험 이벤트는 MQTT QoS 1을 통해 Spring Boot 백엔드로 전달되고, WebSocket/STOMP를 거쳐 React 관제 대시보드에 브로드캐스트됩니다.
-파트 간 eventId, originalEventId, timestamp, capturedAt 데이터 계약을 맞춰 End-to-End 알림 지연 평균 20.931ms(p95 26ms)를 달성했으며 29개 테스트 이벤트 모두 1초 이내에 전달됐습니다.
+파트 간 eventId, originalEventId, timestamp와 capturedAt 데이터 계약을 맞추고 구간별 로그를 연결했습니다. 2카메라 TensorRT 환경의 29개 테스트 이벤트에서 End-to-End 알림 지연 평균 20.931ms, p95 26ms를 확인했으며 모두 1초 이내에 전달됐습니다.
 
 ## 10. 검증 범위와 한계
 

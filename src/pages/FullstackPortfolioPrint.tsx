@@ -9,9 +9,9 @@ const projectRows = [
     body: "개인적인 문제의식에서 시작해 기획, 설계, 모바일 우선 화면, 위험도 계산 로직, Workers API, D1 저장, 관리자 통계, PDF 리포트와 배포까지 직접 완성했습니다.",
   },
   {
-    title: "2. 스마트 안전 관제 · 실시간 이벤트 파이프라인",
-    stack: "Python · MQTT · Spring Boot · WebSocket · STOMP · React · Docker · RTSP",
-    body: "Python AI Worker의 위험 이벤트 생성과 MQTT 발행을 담당하고, Spring Boot의 이벤트 수신·저장 및 WebSocket·STOMP 관제 알림으로 이어지는 실시간 데이터 흐름을 연동·검증했습니다.",
+    title: "2. 스마트 안전 관제 · 실시간 이벤트 파이프라인 (5인 팀장)",
+    stack: "2026.05–2026.07 · Python · MQTT · Java 21 · Spring Boot · WebSocket · STOMP · React · Docker",
+    body: "2카메라 TensorRT 환경에서 위험 이벤트 29건의 End-to-End 평균 지연 20.931ms, p95 26ms를 확인했으며 29건 모두 1초 이내에 전달됐습니다. originalEventId를 공통 사고 식별자로 사용해 실시간 경보와 이후 도착한 스냅샷·사고 클립·VLM 설명을 하나의 Incident에 병합했습니다. 직접 기여: AI 이벤트 계약, originalEventId 기반 Incident 정합성, VLM 비동기 작업 흐름과 파트 간 통합 검증을 담당했습니다. 전체 백엔드와 프론트엔드를 단독 구현한 것이 아니라 각 담당자와 데이터 계약과 완료 기준을 맞췄습니다.",
   },
   {
     title: "3. LLM Wiki·RAG · 프로젝트 지식 검색 시스템",
@@ -55,31 +55,23 @@ const FullstackPortfolioPrint = () => (
       <section className="print-section">
         <h2 className="print-section-title">Core Skills</h2>
         <div className="space-y-1 text-[8.5pt] leading-relaxed text-slate-700">
-          <p><strong>Backend &amp; API:</strong> Java 21, Spring Boot, Spring Data JPA, Cloudflare Workers, REST API</p>
+          <p><strong>Backend &amp; API:</strong> Java 21, Spring Boot, Spring Data JPA, Cloudflare Workers</p>
           <p><strong>Frontend:</strong> React, TypeScript, Tailwind CSS, Vite</p>
-          <p><strong>Data &amp; Search:</strong> PostgreSQL, pgvector, Redis, Cloudflare D1, SQL</p>
-          <p><strong>Realtime &amp; Deployment:</strong> MQTT, WebSocket, STOMP, AWS S3, Docker, Cloudflare Pages, Git, GitHub</p>
+          <p><strong>Data &amp; Search:</strong> PostgreSQL, pgvector, Redis, Cloudflare D1</p>
+          <p><strong>Realtime &amp; Deployment:</strong> MQTT, WebSocket / STOMP, AWS S3, Docker / Cloudflare Pages</p>
         </div>
       </section>
 
       <section className="print-section">
         <h2 className="print-section-title">Representative Projects</h2>
         <div className="space-y-4">
-          <article>
-            <h3 className="text-xs font-bold text-slate-800">1. 마음이음 · 개인정보 최소 수집형 자가체크 웹서비스 (https://maumium.pages.dev/)</h3>
-            <p className="text-[7.5pt] text-sky-600 font-semibold my-1">약 2주 · 개인 프로젝트 · 1인 개발 · React · TypeScript · Vite · Cloudflare Pages · Workers · D1</p>
-            <p className="text-[8pt] text-slate-700 leading-relaxed">개인적인 문제의식에서 시작해 기획, 설계, 모바일 우선 화면, 위험도 계산 로직, Workers API, D1 저장, 관리자 통계, PDF 리포트와 배포까지 직접 완성했습니다.</p>
-          </article>
-          <article>
-            <h3 className="text-xs font-bold text-slate-800">2. 스마트 안전 관제 · 실시간 이벤트 파이프라인 (5인 팀장)</h3>
-            <p className="text-[7.5pt] text-sky-600 font-semibold my-1">2026.05–2026.07 · Python · MQTT · Java 21 · Spring Boot · WebSocket · STOMP · React · Docker</p>
-            <p className="text-[8pt] text-slate-700 leading-relaxed">2카메라 TensorRT 환경에서 위험 이벤트 29건의 End-to-End 평균 지연 20.931ms, p95 26ms를 확인했으며 29건 모두 1초 이내에 전달됐습니다. originalEventId를 공통 사고 식별자로 사용해 실시간 경보와 이후 도착한 스냅샷·사고 클립·VLM 설명을 하나의 Incident에 병합했습니다.</p>
-          </article>
-          <article>
-            <h3 className="text-xs font-bold text-slate-800">3. LLM Wiki·RAG · 프로젝트 지식 검색 시스템</h3>
-            <p className="text-[7.5pt] text-sky-600 font-semibold my-1">TypeScript · Cloudflare Pages Functions · BM25 · Vector Search · RRF · JSON Index · RAG</p>
-            <p className="text-[8pt] text-slate-700 leading-relaxed">프로젝트 문서를 정적 JSON 인덱스로 변환하고 BM25와 Vector Search 결과를 RRF로 결합했습니다. 검색 API, 인증 흐름, 문서 출처와 섹션 정보를 포함하는 검색 구조를 구현했습니다.</p>
-          </article>
+          {projectRows.map((project) => (
+            <article key={project.title}>
+              <h3 className="text-xs font-bold text-slate-800">{project.title}</h3>
+              <p className="text-[7.5pt] text-sky-600 font-semibold my-1">{project.stack}</p>
+              <p className="text-[8pt] text-slate-700 leading-relaxed">{project.body}</p>
+            </article>
+          ))}
         </div>
       </section>
 

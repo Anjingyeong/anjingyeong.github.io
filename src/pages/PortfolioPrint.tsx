@@ -54,11 +54,11 @@ const PortfolioPrint = () => {
             </div>
           </div>
           <div className="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap gap-2 text-xs font-semibold text-slate-500">
-            <span>React</span> &middot;
-            <span>Spring Boot</span> &middot;
+            <span>Python</span> &middot;
             <span>PyTorch</span> &middot;
             <span>Computer Vision</span> &middot;
-            <span>Real-Time Monitoring</span>
+            <span>TensorRT</span> &middot;
+            <span>RTSP</span>
           </div>
         </div>
 
@@ -124,7 +124,7 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-xs font-bold text-slate-800 mb-1">Certifications (역량 인증)</h4>
               <ul className="print-bullet-list">
-                <li>의공학 전문 실무역량 (ABEEK 공학인증 우수)</li>
+                <li>의공학 전문 실무역량</li>
                 <li>우수 소프트웨어 활용역량 (건양대학교 의공학심화 인증)</li>
               </ul>
             </div>
@@ -190,7 +190,7 @@ const PortfolioPrint = () => {
         <div className="print-section">
           <div className="flex justify-between items-baseline mb-1">
             <h3 className="text-sm font-bold text-slate-800">
-              2. RF-DETR 기반 대장 내 용종 검출 애플리케이션
+              2. RF-DETR 기반 대장 내시경 용종 검출 애플리케이션
             </h3>
             <span className="text-xs text-slate-500 font-mono">2025.03 - 2025.11</span>
           </div>
