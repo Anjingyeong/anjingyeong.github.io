@@ -8,39 +8,35 @@ React, TypeScript, Tailwind CSS 기반 개인 개발 포트폴리오 웹사이�
 
 ## 📌 소개 (Introduction)
 
-본 포트폴리오는 의공학적 배경을 지닌 AI Engineer / Full-Stack AI Developer 안진경의 포트폴리오입니다. 실시간 영상 AI, 의료 컴퓨터 비전, 검색 기반 지식 관리, 백엔드 실시간 이벤트 흐름을 중심으로 "모델 결과가 실제 서비스 흐름에 연결되는 구조"를 다룹니다. 특히 **RTSP-MQTT-WebSocket 이벤트 흐름**, **RF-DETR Train 70% / Validation 20% / Test 10% 분할**, **VAE Dynamic Threshold 후처리**, **BM25 + Vector Search + Metadata Filtering + RRF** 검색 구조를 주요 근거로 정리했습니다.
+안진경의 AI Engineer / Full-Stack Developer 포트폴리오입니다. 실시간 영상 AI, 의료 컴퓨터비전, 실시간 이벤트 처리와 검색 기반 서비스 프로젝트를 문제 정의·원인 분석·의사결정·결과 중심으로 정리했습니다.
 
 ---
 
 ## 🛠 Tech Stack (기술 스택)
 
-- **Languages:** Python, TypeScript, JavaScript, SQL, HTML/CSS
-- **Backend / Infra:** FastAPI, Node.js, WebSocket, MQTT, REST APIs, Docker
-- **Frontend:** React, Tailwind CSS, Streamlit
-- **AI & Data Pipeline:** PyTorch, TensorFlow, OpenCV, RF-DETR, VAE, BM25, Vector Search, RRF
-- **Tools:** Git, GitHub, Docker
+- **Portfolio Website:** React, TypeScript, Vite, Tailwind CSS, Vitest
+- **Project Areas:** Computer Vision, PyTorch, TensorRT, RTSP, MQTT, Spring Boot, PostgreSQL, React, Cloudflare Workers
 
 ---
 
 ## 🚀 주요 섹션 (Key Sections)
 
-1. **프로젝트 (Projects):** 핵심 AI 및 비전 관련 프로젝트 상세 설명 (상황/문제, 해결과정, 결과, 확인 가능한 수치 및 다이어그램 포함)
-2. **기술 역량 (Skills):** 언어, 프레임워크, 라이브러리 및 도구 요약
-3. **경험 및 수상 (Experience & Awards):** 학력, 대외 활동 및 경진대회 수상 이력
-4. **인증/역량 검증 (Competence):** 공학 역량 인증 및 자격증 정보
-5. **소개 (About):** 개발자 소개 및 핵심 커리어 지향점
+1. **프로젝트 (Projects):** 핵심 AI 및 비전/풀스택 관련 프로젝트 상세 설명 (문제 정의, 원인 분석, 의사결정, 결과 수치 및 다이어그램 포함)
+2. **기술 역량 (Skills):** 카테고리별 핵심 기술 스택 및 실무 적용 도구
+3. **경험 및 수상 (Experience & Awards):** 교육 과정, 학력, 인턴십 및 경진대회 수상 이력
+4. **인증/역량 검증 (Competence):** 공학 역량 인증 및 자격 수험 정보
+5. **소개 (About):** 개발자 소개 및 직무 핵심 역량
 6. **연락처 (Contact):** 협업 제안 및 문의 메시지 전송 폼
 
 ---
 
-## 📄 2026 AI Engineer 포트폴리오 문서
+## 📄 2026 AI Engineer / Full-Stack Developer 포트폴리오 문서
 
-취업 포트폴리오 관점에서 문제정의, 접근 방식, 수행 내용, 검증 가능한 성과, 프로젝트별 상세 근거를 정리한 문서입니다. 내부 면접 연습용 서술과 개발 메모는 웹 본문과 제출용 README 전면에 노출하지 않습니다.
+취업 포트폴리오 관점에서 문제정의, 접근 방식, 수행 내용, 검증 가능한 성과, 프로젝트별 상세 근거를 정리한 문서입니다.
 
-- [Portfolio Summary 2026 AI Engineer](./portfolio-summary-2026-ai-engineer.md)
 - [Smart Safety AI Case Study](./smart-safety-ai-case-study.md)
 - [LLM Wiki / RAG Case Study](./llm-wiki-rag-case-study.md)
-- [Project Selection Matrix](./project-selection-matrix.md)
+- [Portfolio Summary 2026 AI Engineer](./portfolio-summary-2026-ai-engineer.md)
 
 ---
 
@@ -52,7 +48,7 @@ React, TypeScript, Tailwind CSS 기반 개인 개발 포트폴리오 웹사이�
 # 1. 패키지 설치
 npm install
 
-# 2. 로컬 개발 서버 구동 (기본 포트: 8080)
+# 2. 로컬 개발 서버 구동
 npm run dev
 ```
 
@@ -76,8 +72,6 @@ npm run build
 npm run wiki:index
 ```
 
-현재 포트폴리오 회귀 테스트는 `src/test/projects-public-copy.test.ts`에서 프로젝트 공개 문구, RF-DETR/VAE 역할 범위, LLM Wiki 색인 구조를 함께 점검합니다.
-
 ---
 
 ## 🔒 EmailJS 환경 변수 설정 (EmailJS Configuration)
@@ -92,5 +86,3 @@ VITE_EMAILJS_SERVICE_ID=your_service_id_here
 VITE_EMAILJS_TEMPLATE_ID=your_template_id_here
 VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
 ```
-
-*설정되지 않은 경우, 로컬에서 경고 메시지가 출력되고 문의 전송 시 이메일 전송 구성이 필요하다는 안내가 노출됩니다.*

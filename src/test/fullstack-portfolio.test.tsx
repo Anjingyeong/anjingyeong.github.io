@@ -68,9 +68,9 @@ describe("full-stack portfolio", () => {
   it("renders the A4 full-stack resume with exactly three representative projects", () => {
     render(<MemoryRouter><FullstackPortfolioPrint /></MemoryRouter>);
     expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
-    expect(screen.getByText(/사용자의 한 번의 입력이 화면, API, 데이터와 결과까지 막힘없이 이어지도록 만드는 개발자입니다/)).toBeInTheDocument();
+    expect(screen.getByText(/사용자의 입력과 AI 이벤트가 화면, API, 데이터 저장과 결과까지 끊기지 않도록 만드는 풀스택 개발자입니다/)).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(3);
-    expect(screen.getByText(/Python AI Worker의 위험 이벤트 생성과 MQTT 발행을 담당/)).toBeInTheDocument();
+    expect(screen.getByText(/2카메라 TensorRT 환경에서 위험 이벤트 29건의 End-to-End 평균 지연 20.931ms/)).toBeInTheDocument();
     expect(screen.getByText("2026.05 - 2026.07")).toBeInTheDocument();
     expect(screen.getByText(/약 2주 · 개인 프로젝트 · 1인 개발/)).toBeInTheDocument();
     expect(document.body.textContent).not.toContain("Spring Boot 백엔드와 React 프론트엔드 전체가 아닌");

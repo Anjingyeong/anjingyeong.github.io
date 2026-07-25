@@ -31,8 +31,7 @@ const PortfolioPrint = () => {
                 안진경 <span className="text-slate-400 font-normal">| An Jin Gyeong</span>
               </h1>
               <p className="text-sky-600 font-semibold text-sm mt-1 uppercase tracking-wide">
-                실시간 영상 AI의 정확도와 지연을 함께 개선한 컴퓨터비전 엔지니어<br />
-                정답에도 유효시간이 있습니다.
+                실시간 영상 AI의 정확도와 지연을 함께 개선한 컴퓨터비전 엔지니어
               </p>
             </div>
             <div className="text-right space-y-1">
@@ -67,9 +66,7 @@ const PortfolioPrint = () => {
         <div className="print-section">
           <h2 className="print-section-title">Profile Summary</h2>
           <p className="text-[8.5pt] text-slate-700 leading-relaxed">
-            트랙 단절, 순간 자세 오탐, 프레임 적체를 모델 입력·트래킹·처리 구조의 문제로 분리해 개선한 신입 컴퓨터비전 엔지니어입니다.
-            의료영상 AI에서 시작해 CCTV 객체 추적·행동 분석과 실시간 관제 시스템까지 경험했습니다.
-            정확도뿐 아니라 지연과 서비스 전달까지 고려해 AI 결과를 관제 애플리케이션으로 연결하는 데 강점이 있습니다.
+            Tracking 단절, 입력 시퀀스 오류와 프레임 적체를 모델·Tracking·실시간 처리 구조의 문제로 나누어 분석한 신입 컴퓨터비전 엔지니어입니다. 의료영상 AI에서 시작해 CCTV 행동 분석과 실시간 관제 시스템까지 경험했으며, 정확도뿐 아니라 지연과 서비스 전달까지 함께 검증하는 데 강점이 있습니다.
           </p>
         </div>
 
@@ -91,7 +88,7 @@ const PortfolioPrint = () => {
             <h3 className="text-xs font-bold text-slate-800">
               SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기
             </h3>
-            <span className="text-xs text-slate-500 font-mono">2026.01 - 2026.07</span>
+            <span className="text-xs text-slate-500 font-mono">2026.05 - 2026.07</span>
           </div>
           <p className="text-[7.8pt] text-sky-600 font-semibold mb-1">SK쉴더스 / AI Application Development Trainee</p>
           <p className="text-[8pt] text-slate-700 leading-relaxed">
@@ -151,12 +148,12 @@ const PortfolioPrint = () => {
         <div className="print-section">
           <div className="flex justify-between items-baseline mb-1">
             <h3 className="text-sm font-bold text-slate-800">
-              1. AI 기반 스마트 안전 관제 시스템 (SK쉴더스 5기)
+              1. AI 기반 스마트 안전 관제 시스템 (SK쉴더스 5기, 5인 팀장)
             </h3>
             <span className="text-xs text-slate-500 font-mono">2026.05 - 2026.07</span>
           </div>
           <p className="text-[7.5pt] text-slate-500 font-semibold mb-1.5">
-            FastAPI, Docker, MQTT, WebSocket, RTSP, Spring Boot, React, TypeScript
+            Python, YOLO Pose, ByteTrack, PyTorch, TensorRT, MQTT, RTSP, Docker
           </p>
           <p className="text-[7.5pt] text-slate-700 leading-relaxed mb-1.5">
             행동 분석 정확도, 트랙 연속성, 프레임 처리 지연을 각각 측정하고 개선
@@ -171,20 +168,20 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Role / Contribution</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                담당 역할: 행동 분석 특징 설계, 트래킹·프레임 처리 개선, 추론 성능 비교 및 관제 연동
+                5인 팀장 · Pose 모델 비교, LSTM 특징 설계, Tracking·프레임 처리 개선, MQTT 연동
               </p>
             </div>
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Result / Outcome</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                F1-score를 89.29%에서 93.49%로 높이고, FP 38.6% 감소, FN 38.9% 감소를 확인했습니다.
+                54D 특징 F1 93.49%, ID Switch 1건, TensorRT YOLO 지연 50.0% 감소
               </p>
             </div>
           </div>
           <div className="mt-2 space-y-1 text-[7.5pt] text-slate-700 leading-relaxed">
-            <p>모든 프레임을 보존하면 현재 상황 전달이 늦어진다고 판단해 최신 프레임 중심 처리 구조를 적용했습니다. 동일 다중 카메라 입력에서 측정한 프레임 처리 지연을 평균 11.789ms에서 6.101ms로 줄이고, 최악 카메라의 p95 지연을 14.719ms에서 7.159ms로 줄였습니다.</p>
-            <p>실시간 처리 비용을 고려해 외형 기반 Re-ID 대신 예측 위치·정규화 중심점 거리·후보 수 조건을 순차 적용했습니다. 그 결과 ID Switch를 8건에서 1건으로 줄이고, 동일 인물의 추적 유지 비율로 사용한 Track Coverage를 35.76%에서 49.70%로 높였습니다.</p>
-            <p>동일한 1,800프레임 영상에서 PyTorch와 TensorRT의 추론 지연과 처리량을 비교했습니다. 평균 추론 지연은 7.022ms에서 3.839ms로 감소했고, 처리량은 84.278 FPS에서 119.544 FPS로 증가했습니다.</p>
+            <p>54D 행동 특징을 적용해 F1-score를 89.29%에서 93.49%로 높이고, False Positive를 38.6%, False Negative를 38.9% 줄였습니다.</p>
+            <p>자체 테스트 영상에서 ID Switch를 8건에서 1건으로 줄이고 Mean Track Coverage를 35.76%에서 49.70%로 높였습니다.</p>
+            <p>TensorRT를 적용해 YOLO 평균 지연을 9.454ms에서 4.723ms로 줄였습니다. 전체 처리 지연 11.789ms에서 6.101ms로의 감소는 TensorRT와 최신 프레임 처리 정책이 함께 적용된 통합 결과입니다.</p>
             <p>Python AI Worker의 낙상·실신 이벤트를 MQTT로 전달하고, Spring Boot·WebSocket 기반 관제 화면에 연동했습니다.</p>
           </div>
         </div>
