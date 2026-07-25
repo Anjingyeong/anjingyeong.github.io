@@ -23,7 +23,7 @@ describe("full-stack portfolio", () => {
     expect(fullstackProjects.some((project) => project.title.includes("포트폴리오 웹사이트"))).toBe(false);
     expect(fullstackProjects[0].meta?.period).toBe("약 2주");
     expect(fullstackProjects[0].meta?.role).toContain("1인 개발");
-    expect(fullstackProjects[1].description).toContain("실시간 알림만 구현하는 데서 끝내지 않고");
+    expect(fullstackProjects[1].description).toContain("비동기로 도착하는 경보와 증거 데이터를 하나의 사고로 유지하고");
     expect(JSON.stringify(fullstackProjects)).not.toContain("직접 구현한 것으로 표현하지 않습니다");
 
     render(<ProjectsSection items={fullstackProjects} grouped={false} />);
@@ -115,7 +115,7 @@ describe("full-stack portfolio", () => {
 
     expect(aiSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies/ai");
     expect(aiSmartSafety?.demoUrl).toBe("https://www.youtube.com/watch?v=O1-JNhcpvDQ");
-    expect(fullstackSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies/ai");
+    expect(fullstackSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies");
     expect(fullstackSmartSafety?.demoUrl).toBe("https://www.youtube.com/watch?v=O1-JNhcpvDQ");
 
     const projectsSectionSrc = readText("src/components/ProjectsSection.tsx");
@@ -150,6 +150,16 @@ describe("full-stack portfolio", () => {
     expect(JSON.stringify(fullstackProjects)).not.toContain(
       "scalability-roadmap"
     );
+
+    // Unverified terms removed per 03-smart-safety-fullstack.md spec
+    const fullstackJson = JSON.stringify(fullstackProjects);
+    expect(fullstackJson).not.toContain("기존 HTTP 동기 요청 구조");
+    expect(fullstackJson).not.toContain("브라우저 폴링 간격");
+    expect(fullstackJson).not.toContain("네트워크 지연 시 경보 누락");
+    expect(fullstackJson).not.toContain("동일 사고 카드 3~4건");
+    expect(fullstackJson).not.toContain("사고 중복 생성률 0%");
+    expect(fullstackJson).not.toContain("수 초~수십 초");
+    expect(fullstackJson).not.toContain("서비스 수준 합약");
   });
 
   it("includes '판단과 배운 점' section with exactly 2 items in all projects", () => {
