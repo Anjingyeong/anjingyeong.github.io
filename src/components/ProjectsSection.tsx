@@ -25,6 +25,16 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
         {renderInlineText(detail.body)}
       </p>
     ) : null}
+    {detail.problemSolving ? (
+      <div className="grid gap-3 md:grid-cols-2">
+        {detail.problemSolving.map((step) => (
+          <div key={step.label} className="rounded-lg border border-border bg-muted/20 p-4">
+            <p className="mb-1 text-xs font-bold uppercase tracking-wide text-primary">{step.label}</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(step.text)}</p>
+          </div>
+        ))}
+      </div>
+    ) : null}
     {detail.items ? (
       <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
         {detail.items.map((item) => (

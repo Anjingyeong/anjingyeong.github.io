@@ -95,14 +95,14 @@ describe("full-stack portfolio", () => {
     const aiSmartSafety = projects.find((p) => p.title.includes("실시간 이상행동 탐지"));
     const fullstackSmartSafety = fullstackProjects.find((p) => p.title.includes("AI 이벤트 수신부터 사고 검색"));
 
-    expect(aiSmartSafety?.heroImage?.src).toBe("/images/smart-safety/ai-pipeline.jpg");
+    expect(aiSmartSafety?.heroImage?.src).toBe("/images/smart-safety/dashboard-and-search.jpg");
     expect(fullstackSmartSafety?.heroImage?.src).toBe("/images/smart-safety/dashboard-and-search.jpg");
 
     const aiImageSources = aiSmartSafety?.details.flatMap((d) => d.images?.map((i) => i.src) ?? []) ?? [];
     const fullstackImageSources = fullstackSmartSafety?.details.flatMap((d) => d.images?.map((i) => i.src) ?? []) ?? [];
 
-    expect(aiImageSources).toContain("/images/smart-safety/model-performance.jpg");
-    expect(aiImageSources).toContain("/images/smart-safety/inference-optimization.jpg");
+    expect(aiImageSources).not.toContain("/images/smart-safety/model-performance.jpg");
+    expect(aiImageSources).not.toContain("/images/smart-safety/inference-optimization.jpg");
     expect(fullstackImageSources).toContain("/images/smart-safety/incident-merge-before-after.svg");
     expect(fullstackImageSources).toContain("/images/smart-safety/vlm-pipeline.jpg");
 
@@ -233,8 +233,8 @@ describe("full-stack portfolio", () => {
     // Canva images replaced by Mermaid diagrams — not present in AI project
     expect(projectJson).not.toContain("/images/smart-safety/canva/problem-cctv-workload.png");
     expect(projectJson).not.toContain("/images/smart-safety/canva/backpressure-before-after.png");
-    // Technical images are present
-    expect(projectJson).toContain("/images/smart-safety/model-performance.jpg");
-    expect(projectJson).toContain("/images/smart-safety/inference-optimization.jpg");
+    // Images replaced by Mermaid diagrams & clean tables — not present in AI project
+    expect(projectJson).not.toContain("/images/smart-safety/model-performance.jpg");
+    expect(projectJson).not.toContain("/images/smart-safety/inference-optimization.jpg");
   });
 });

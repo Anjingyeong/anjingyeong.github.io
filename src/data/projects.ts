@@ -14,9 +14,15 @@ export type ProjectDetailTable = {
   readonly rows: readonly (readonly string[])[];
 };
 
+export type ProblemSolvingStep = {
+  readonly label: "측정 현상" | "원인 분석" | "의사결정" | "구현" | "적용" | "결과" | "배운 점";
+  readonly text: string;
+};
+
 export type ProjectDetail = {
   readonly title: string;
   readonly body?: string;
+  readonly problemSolving?: readonly ProblemSolvingStep[];
   readonly items?: readonly string[];
   readonly groups?: readonly {
     readonly title: string;
@@ -68,9 +74,9 @@ export const projects: readonly Project[] = [
       service: "스마트 안전 관제 AI 시스템",
     },
     heroImage: {
-      src: "/images/smart-safety/ai-pipeline.jpg",
+      src: "/images/smart-safety/dashboard-and-search.jpg",
       caption:
-        "RTSP 입력부터 Pose·Tracking·LSTM·상태 후처리·MQTT까지 연결한 AI 판단 파이프라인",
+        "실시간 위험 알림과 자연어 사고 검색을 제공하는 스마트 안전 관제 대시보드",
     },
     highlights: [
       "54D LSTM F1 93.49%",
@@ -92,13 +98,13 @@ export const projects: readonly Project[] = [
         title: "AI 시스템 구조",
         body:
           "RTSP 영상에서 YOLO26n-pose로 사람의 Bounding Box와 17개 관절을 추출하고, Tracking ID별로 자세와 움직임의 시계열 특징을 구성했습니다.\n\nLSTM 예측 결과에 연속 위험 판단, 자세 조건과 Cooldown을 적용해 한 프레임의 오판을 걸러낸 뒤 최종 위험 이벤트를 MQTT로 관제 시스템에 전달했습니다.",
-        images: [
-          {
-            src: "/images/smart-safety/ai-pipeline.jpg",
-            caption:
-              "RTSP 입력부터 Pose·Tracking·LSTM·상태 후처리·MQTT까지의 AI 판단 흐름",
-          },
-        ],
+        diagram: `flowchart LR
+    RTSP["📹 RTSP Video Stream"] --> Pose["👤 YOLO26n-pose\\nBounding Box & 17 Keypoints"]
+    Pose --> Tracking["🆔 Multi-Object Tracking\\nTracking ID Maintain & Relink"]
+    Tracking --> Feature["📊 Time-series Feature Extractor\\n54D Pose/Motion Features"]
+    Feature --> LSTM["🧠 LSTM Classifier\\nAction & Fall/Faint Prediction"]
+    LSTM --> Post["⚙️ Post-Processing\\nConsecutive Threshold & Cooldown"]
+    Post --> MQTT["📡 MQTT Event Publisher\\nReal-time Alert to Control Center"]`,
       },
       {
         title: "전체 파이프라인을 기준으로 Pose 모델을 선택했습니다",
@@ -178,13 +184,6 @@ export const projects: readonly Project[] = [
         title: "51D에서 54D로 확장한 행동 특징",
         body:
           "17개 관절의 x·y 좌표와 신뢰도로 구성한 51차원 특징만으로는 서 있는 자세에서 바닥으로 쓰러지는 시간적 변화를 충분히 표현하기 어려웠습니다.\n\n신체 중심의 하강량인 center_drop, 프레임 간 이동 속도인 velocity, 상체 기울기인 torso_angle을 추가해 54차원으로 확장했습니다. 단순한 누운 자세뿐 아니라 하강·쓰러짐·누움으로 이어지는 낙상 전이를 LSTM이 학습하도록 구성했습니다.",
-        images: [
-          {
-            src: "/images/smart-safety/model-performance.jpg",
-            caption:
-              "51D 관절 특징과 54D 낙상 전이 특징의 성능 비교",
-          },
-        ],
         table: {
           headers: ["평가 지표", "51D 모델", "최종 54D 모델", "개선"],
           rows: [
@@ -201,13 +200,6 @@ export const projects: readonly Project[] = [
         title: "TensorRT 적용 및 통합 지연 검증",
         body:
           "YOLO 추론 구간의 지연 여유를 확보하기 위해 동일한 카메라 입력 조건에서 PyTorch와 TensorRT를 비교했습니다.\n\n모델 추론 시간만 측정하지 않고 Tracking, LSTM, 후처리와 프레임 처리 정책이 포함된 전체 파이프라인 지연과 Dropped Frame도 함께 확인했습니다. 이를 통해 TensorRT의 추론 개선과 통합 실행 환경의 처리 결과를 구분해 검증했습니다.",
-        images: [
-          {
-            src: "/images/smart-safety/inference-optimization.jpg",
-            caption:
-              "동일 카메라 입력에서 PyTorch와 TensorRT 적용 전후 지연 비교",
-          },
-        ],
         table: {
           headers: ["검증 항목", "PyTorch", "TensorRT", "개선"],
           rows: [
