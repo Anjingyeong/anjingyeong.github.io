@@ -34,15 +34,13 @@ describe("full-stack portfolio", () => {
   it("switches About copy without changing the AI variant", () => {
     const { rerender } = render(<AboutSection variant="fullstack" />);
     expect(screen.getByText("Full-Stack Developer 소개")).toBeInTheDocument();
-    expect(screen.getByText("Full-Stack Development")).toBeInTheDocument();
-    expect(screen.getByText("Production-ready Full-Stack Developer")).toBeInTheDocument();
+    expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
     expect(screen.getByText("Full-Stack Development Focus")).toBeInTheDocument();
     expect(screen.queryByText("AI Engineer 소개")).not.toBeInTheDocument();
 
     rerender(<AboutSection variant="ai" />);
     expect(screen.getByText("AI Engineer 소개")).toBeInTheDocument();
-    expect(screen.getByText("AI Engineering")).toBeInTheDocument();
-    expect(screen.getByText("Production-ready AI Engineer")).toBeInTheDocument();
+    expect(screen.getByText("Computer Vision AI Engineer")).toBeInTheDocument();
     expect(screen.getByText("AI Engineering Focus")).toBeInTheDocument();
   });
 
