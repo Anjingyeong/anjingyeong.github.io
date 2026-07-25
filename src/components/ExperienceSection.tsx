@@ -14,7 +14,7 @@ interface TimelineItem {
 const educationAndTraining: TimelineItem[] = [
   {
     title: "SK쉴더스 지능형 애플리케이션 개발 과정",
-    subtitle: "부트캠프 5기 수료",
+    subtitle: "교육 이수 중",
     organization: "SK쉴더스 / 한국표준협회",
     period: "2026.05 – 2026.07",
     description: "AI 기반 실시간 영상 분석, 백엔드 이벤트 처리, 클라우드 인프라 연동 중심의 실전 시스템 설계 및 프로젝트 수행",
@@ -25,21 +25,21 @@ const educationAndTraining: TimelineItem[] = [
     subtitle: "공학사 졸업",
     organization: "건양대학교",
     period: "2020.03 – 2026.02",
-    description: "의공학 및 컴퓨터비전 기초, 데이터 구조, 신호/영상 처리 교과 과정 이수 및 캡스톤디자인 수행",
+    description: "의공학 및 컴퓨터비전 기초, 자료구조, 신호/영상 처리 교과 과정 이수 및 캡스톤디자인 수행",
     icon: BookOpen,
   },
   {
     title: "미래내일 일경험 프로젝트 기획 인턴",
     organization: "충남경제진흥원",
     period: "2024.12 – 2025.02",
-    description: "공공 서비스 관련 기획 지원, 행정 데이터 검수 및 프로세스 개선 실무 수행",
+    description: "공공 서비스 관련 기획 지원, 행정 데이터 검수 및 운영 지원 실무 수행",
     icon: Briefcase,
   },
   {
     title: "Lab-CORPS 산학협력 실증 프로젝트",
     organization: "건양대학교 산학협력단",
     period: "2024.03 – 2024.11",
-    description: "산학 연계 딥러닝 과제 참여 및 R&D 엔지니어링 실증 프로세스 경험",
+    description: "산학 연계 딥러닝 과제 참여 및 R&D 실증 프로세스 경험",
     icon: Briefcase,
   },
 ];
@@ -50,7 +50,7 @@ const awards: TimelineItem[] = [
     subtitle: "동상",
     organization: "산업통상자원부 / 공학교육혁신센터",
     period: "2025.11",
-    description: "RF-DETR 기반 용종 검출 프로젝트의 데이터 증강과 구현 완성도를 인정받아 수상",
+    description: "RF-DETR 기반 용종 검출 프로젝트를 외부 컨소시엄 경진대회에서 발표해 동상 수상",
     icon: Trophy,
   },
   {
@@ -58,7 +58,7 @@ const awards: TimelineItem[] = [
     subtitle: "금상",
     organization: "건양대학교",
     period: "2025.10",
-    description: "RF-DETR 기반 용종 검출 프로젝트의 데이터 증강과 구현 완성도를 인정받아 수상",
+    description: "RF-DETR 기반 용종 검출 애플리케이션의 데이터 증강과 bbox 정합성 검증으로 금상 수상",
     icon: Award,
   },
   {

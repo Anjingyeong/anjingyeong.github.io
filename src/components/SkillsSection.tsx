@@ -40,7 +40,12 @@ const fullstackSkillCategories: SkillCategory[] = [
   {
     title: "Backend & API",
     icon: Database,
-    skills: ["Spring Boot", "Spring Data JPA", "Cloudflare Workers", "REST API"],
+    skills: [
+      "Java 21",
+      "Spring Boot",
+      "Spring Data JPA",
+      "Cloudflare Workers",
+    ],
     color: "from-blue-500/10 to-blue-600/5",
   },
   {
@@ -52,13 +57,18 @@ const fullstackSkillCategories: SkillCategory[] = [
   {
     title: "Data & Search",
     icon: Cpu,
-    skills: ["PostgreSQL", "pgvector", "Cloudflare D1", "SQL"],
+    skills: ["PostgreSQL", "pgvector", "Redis", "Cloudflare D1"],
     color: "from-indigo-500/10 to-indigo-600/5",
   },
   {
     title: "Realtime & Deployment",
     icon: Network,
-    skills: ["MQTT", "WebSocket / STOMP", "Docker", "Cloudflare Pages", "Git / GitHub"],
+    skills: [
+      "MQTT",
+      "WebSocket / STOMP",
+      "AWS S3",
+      "Docker / Cloudflare Pages",
+    ],
     color: "from-purple-500/10 to-purple-600/5",
   },
 ];

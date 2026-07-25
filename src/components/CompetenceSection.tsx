@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import ScrollAnimator from "./ScrollAnimator";
-import { ShieldCheck, ZoomIn, ExternalLink, FileCheck } from "lucide-react";
+import { ShieldCheck, ZoomIn, FileCheck, X } from "lucide-react";
 
 // Certificate image paths
 const CERT_SW =
@@ -50,8 +50,16 @@ const CompetenceSection = () => {
               {/* Card 1: 우수 소프트웨어 활용역량 */}
               <ScrollAnimator className="h-full">
                 <div
-                  className="competence-card group cursor-pointer flex flex-col h-full p-6"
+                  role="button"
+                  tabIndex={0}
+                  className="competence-card group cursor-pointer flex flex-col h-full p-6 focus:outline-none focus:ring-2 focus:ring-primary/50"
                   onClick={() => openModal(CERT_SW, "우수 소프트웨어 활용역량")}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      openModal(CERT_SW, "우수 소프트웨어 활용역량");
+                    }
+                  }}
                   title="클릭하면 실제 인증서를 볼 수 있습니다"
                 >
                   <div className="flex items-center gap-4 mb-4">
@@ -71,7 +79,7 @@ const CompetenceSection = () => {
                   </div>
 
                   <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-                    요구사항에 따른 소프트웨어 설계 및 구현 완료 역량을 객관적으로 인증받았습니다.
+                    소프트웨어 활용과 애플리케이션 구현 역량을 인증받았습니다.
                   </p>
 
                   <div className="mt-auto pt-3 border-t border-border/50 flex items-center justify-between">
@@ -84,31 +92,39 @@ const CompetenceSection = () => {
                 </div>
               </ScrollAnimator>
 
-              {/* Card 2: 의공학 역량 우수 인증 */}
+              {/* Card 2: 의공학 전문 실무역량 */}
               <ScrollAnimator className="h-full">
                 <div
-                  className="competence-card group cursor-pointer flex flex-col h-full p-6"
-                  onClick={() => openModal(CERT_BIO, "의공학 역량 우수 인증")}
+                  role="button"
+                  tabIndex={0}
+                  className="competence-card group cursor-pointer flex flex-col h-full p-6 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  onClick={() => openModal(CERT_BIO, "의공학 전문 실무역량")}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      openModal(CERT_BIO, "의공학 전문 실무역량");
+                    }
+                  }}
                   title="클릭하면 실제 인증서를 볼 수 있습니다"
                 >
                   <div className="flex items-center gap-4 mb-4">
                     <img
                       src="/images/(Accredited Excellence in Biomedical Engineering Competence)_image.png"
-                      alt="의공학 역량 우수 인증 Badge"
+                      alt="의공학 전문 실무역량 Badge"
                       className="w-16 h-16 object-contain drop-shadow-sm transition-transform duration-300 group-hover:scale-105"
                     />
                     <div>
                       <h3 className="text-base font-bold text-foreground leading-snug">
-                        의공학 역량 우수 인증
+                        의공학 전문 실무역량
                       </h3>
                       <p className="text-xs text-muted-foreground mt-0.5 font-medium">
-                        발급: ABEEK / 건양대학교 (2026.02)
+                        발급: 건양대학교 (2026.02)
                       </p>
                     </div>
                   </div>
 
                   <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-                    공학적 원리와 복잡한 도메인 지식을 융합한 시스템 설계 및 이수 기준을 검증받았습니다.
+                    의공학 심화과정에서 공학적 설계와 전문 실무 역량을 인증받았습니다.
                   </p>
 
                   <div className="mt-auto pt-3 border-t border-border/50 flex items-center justify-between">
@@ -131,7 +147,7 @@ const CompetenceSection = () => {
                   </div>
                   <div>
                     <span className="text-sm font-semibold text-foreground">정보처리기사</span>
-                    <span className="ml-2.5 text-xs text-muted-foreground">자격증 수험 실적</span>
+                    <span className="ml-2.5 text-xs text-muted-foreground">필기 합격 · 실기 준비 중</span>
                   </div>
                 </div>
                 <span className="text-xs font-medium text-emerald-600 bg-emerald-500/10 px-2.5 py-1 rounded-full flex-shrink-0">
@@ -146,6 +162,9 @@ const CompetenceSection = () => {
       {/* Modal */}
       {modal && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${modal.title} 인증서`}
           className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-10"
           onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
         >
@@ -171,7 +190,7 @@ const CompetenceSection = () => {
                 className="cert-modal-close w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground transition-all duration-200"
                 aria-label="인증서 닫기"
               >
-                <ExternalLink size={16} />
+                <X size={18} strokeWidth={2.5} />
               </button>
             </div>
 
