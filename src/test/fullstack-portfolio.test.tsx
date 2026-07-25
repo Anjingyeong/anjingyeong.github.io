@@ -227,7 +227,47 @@ describe("full-stack portfolio", () => {
 
     expect(reflection?.items).toHaveLength(2);
 
+    const aiProblemTitles = [
+      "가장 빠른 모델보다 실제 실신을 덜 놓치는 모델을 선택했습니다",
+      "낙상 순간 끊기는 Tracking ID의 원인을 추적했습니다",
+      "모든 프레임보다 현재 프레임을 우선했습니다",
+      "자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다",
+      "추론 속도뿐 아니라 전체 파이프라인 지연을 측정했습니다",
+    ];
+
+    const expectedLabels = [
+      "측정 현상",
+      "원인 분석",
+      "의사결정",
+      "구현",
+      "결과",
+      "배운 점",
+    ];
+
+    for (const title of aiProblemTitles) {
+      const detail = smartSafety?.details.find(
+        (item) => item.title === title
+      );
+
+      expect(detail?.problemSolving?.map((step) => step.label)).toEqual(
+        expectedLabels
+      );
+    }
+
     const projectJson = JSON.stringify(smartSafety);
+
+    expect(projectJson).not.toContain("약 19.7%");
+    expect(smartSafety?.heroImage?.src).toBe(
+      "/images/smart-safety/ai-pipeline.jpg"
+    );
+
+    const poseSelection = smartSafety?.details.find(
+      (detail) =>
+        detail.title ===
+        "가장 빠른 모델보다 실제 실신을 덜 놓치는 모델을 선택했습니다"
+    );
+
+    expect(poseSelection?.table).toBeUndefined();
 
     // Canva images replaced by Mermaid diagrams — not present in AI project
     expect(projectJson).not.toContain("/images/smart-safety/canva/problem-cctv-workload.png");
