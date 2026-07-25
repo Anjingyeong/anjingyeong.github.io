@@ -1,5 +1,5 @@
 import ScrollAnimator from "./ScrollAnimator";
-import { Brain, Database, BarChart3, Wrench } from "lucide-react";
+import { Brain, Database, Cpu, Network } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 interface SkillCategory {
@@ -9,57 +9,57 @@ interface SkillCategory {
   color: string;
 }
 
-const skillCategories: SkillCategory[] = [
+const aiSkillCategories: SkillCategory[] = [
   {
-    title: "Backend & Database",
-    icon: Database,
-    skills: ["Spring Boot / Spring Data JPA", "Node.js / REST API", "WebSocket / STOMP", "MySQL / SQL"],
+    title: "Computer Vision",
+    icon: Brain,
+    skills: ["YOLO Pose", "RF-DETR", "OpenCV", "ByteTrack / Object Tracking"],
     color: "from-blue-500/10 to-blue-600/5",
   },
   {
-    title: "Frontend",
-    icon: BarChart3,
-    skills: ["React / TypeScript", "JavaScript / HTML / CSS", "Tailwind CSS", "Streamlit"],
-    color: "from-emerald-500/10 to-teal-600/5",
-  },
-  {
-    title: "AI & Data",
-    icon: Brain,
-    skills: ["Python / PyTorch / TensorFlow", "OpenCV / RF-DETR / VAE", "BeautifulSoup4 / pykrx", "Seaborn"],
+    title: "Modeling & Optimization",
+    icon: Cpu,
+    skills: ["PyTorch", "TensorFlow", "LSTM", "TensorRT"],
     color: "from-indigo-500/10 to-indigo-600/5",
   },
   {
-    title: "Tools",
-    icon: Wrench,
-    skills: ["Git / GitHub"],
+    title: "Real-Time Pipeline",
+    icon: Network,
+    skills: ["RTSP", "MQTT", "Bounded Queue", "MJPEG / MediaMTX"],
+    color: "from-emerald-500/10 to-teal-600/5",
+  },
+  {
+    title: "Development & Evaluation",
+    icon: Database,
+    skills: ["Python", "Docker", "Git / GitHub", "Precision / Recall / F1 / Latency 분석"],
     color: "from-purple-500/10 to-purple-600/5",
   },
 ];
 
 const fullstackSkillCategories: SkillCategory[] = [
   {
-    title: "Backend & Database",
+    title: "Backend & API",
     icon: Database,
-    skills: ["Spring Boot", "Spring Data JPA", "Node.js", "REST API", "WebSocket", "STOMP", "MySQL", "SQL", "Cloudflare Workers", "D1"],
+    skills: ["Spring Boot", "Spring Data JPA", "Cloudflare Workers", "REST API"],
     color: "from-blue-500/10 to-blue-600/5",
   },
   {
     title: "Frontend",
-    icon: BarChart3,
-    skills: ["React", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS", "Vite"],
+    icon: Brain,
+    skills: ["React", "TypeScript", "Tailwind CSS", "Vite"],
     color: "from-emerald-500/10 to-teal-600/5",
   },
   {
-    title: "Integration & Deployment",
-    icon: Wrench,
-    skills: ["MQTT", "Docker", "Git", "GitHub", "GitHub Pages", "Cloudflare Pages"],
-    color: "from-purple-500/10 to-purple-600/5",
+    title: "Data & Search",
+    icon: Cpu,
+    skills: ["PostgreSQL", "pgvector", "Cloudflare D1", "SQL"],
+    color: "from-indigo-500/10 to-indigo-600/5",
   },
   {
-    title: "AI & Data",
-    icon: Brain,
-    skills: ["Python", "PyTorch", "OpenCV", "Computer Vision", "RAG", "Vector Search"],
-    color: "from-indigo-500/10 to-indigo-600/5",
+    title: "Realtime & Deployment",
+    icon: Network,
+    skills: ["MQTT", "WebSocket / STOMP", "Docker", "Cloudflare Pages", "Git / GitHub"],
+    color: "from-purple-500/10 to-purple-600/5",
   },
 ];
 
@@ -68,7 +68,7 @@ type SkillsSectionProps = {
 };
 
 const SkillsSection = ({ variant = "ai" }: SkillsSectionProps) => {
-  const categories = variant === "fullstack" ? fullstackSkillCategories : skillCategories;
+  const categories = variant === "fullstack" ? fullstackSkillCategories : aiSkillCategories;
 
   return (
     <section id="skills" className="py-24 md:py-32">
@@ -84,9 +84,9 @@ const SkillsSection = ({ variant = "ai" }: SkillsSectionProps) => {
             <ScrollAnimator key={i}>
               <div className="minimal-card h-full overflow-hidden">
                 <div className={`bg-gradient-to-br ${cat.color} p-6 pb-4`}>
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 flex-shrink-0" style={{ background: 'hsl(var(--primary) / 0.15)', boxShadow: 'inset 0 0 0 1.5px hsl(var(--primary) / 0.25)' }}>
-                      <cat.icon size={22} className="text-primary" strokeWidth={2.2} />
-                    </div>
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 flex-shrink-0" style={{ background: 'hsl(var(--primary) / 0.15)', boxShadow: 'inset 0 0 0 1.5px hsl(var(--primary) / 0.25)' }}>
+                    <cat.icon size={22} className="text-primary" strokeWidth={2.2} />
+                  </div>
                   <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide">{cat.title}</h3>
                 </div>
                 <div className="p-6 pt-4">
