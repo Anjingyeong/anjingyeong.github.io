@@ -93,7 +93,7 @@ describe("full-stack portfolio", () => {
     const aiSmartSafety = projects.find((p) => p.title.includes("실시간 이상행동 탐지"));
     const fullstackSmartSafety = fullstackProjects.find((p) => p.title.includes("AI 이벤트 수신부터 사고 검색"));
 
-    expect(aiSmartSafety?.heroImage?.src).toBe("/images/smart-safety/dashboard-and-search.jpg");
+    expect(aiSmartSafety?.heroImage?.src).toBe("/images/smart-safety/ai-pipeline.jpg");
     expect(fullstackSmartSafety?.heroImage?.src).toBe("/images/smart-safety/dashboard-and-search.jpg");
 
     const aiImageSources = aiSmartSafety?.details.flatMap((d) => d.images?.map((i) => i.src) ?? []) ?? [];
@@ -203,12 +203,13 @@ describe("full-stack portfolio", () => {
     expect(smartSafety?.details.map((detail) => detail.title)).toEqual([
       "문제 정의와 목표",
       "AI 시스템 구조",
-      "전체 파이프라인을 기준으로 Pose 모델을 선택했습니다",
-      "낙상 구간의 Tracking 단절 문제 해결",
-      "모든 프레임을 처리하는 대신 현재 프레임을 우선했습니다",
-      "51D에서 54D로 확장한 행동 특징",
-      "TensorRT 적용 및 통합 지연 검증",
+      "가장 빠른 모델보다 실제 실신을 덜 놓치는 모델을 선택했습니다",
+      "낙상 순간 끊기는 Tracking ID의 원인을 추적했습니다",
+      "모든 프레임보다 현재 프레임을 우선했습니다",
+      "자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다",
+      "추론 속도뿐 아니라 전체 파이프라인 지연을 측정했습니다",
       "운영 안정화와 검증 범위",
+      "팀 협업과 시스템 통합",
       "판단과 배운 점",
       "이 프로젝트로 보여주는 역량",
     ]);

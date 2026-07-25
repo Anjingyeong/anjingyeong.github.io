@@ -65,22 +65,22 @@ export const projects: readonly Project[] = [
     badge: "Main",
     title: "실시간 이상행동 탐지 및 안전 관제 AI 시스템",
     summaryLine:
-      "RTSP 영상에서 YOLO Pose·Tracking·LSTM으로 낙상·실신을 감지하고, 상태 후처리한 위험 이벤트를 MQTT로 전달한 실시간 영상 AI 프로젝트",
+      "RTSP 영상에서 Pose·Tracking·LSTM으로 낙상·실신을 감지하고, 입력 단절과 처리 지연을 수치로 분석해 개선한 실시간 영상 AI 프로젝트",
     description:
-      "**단일 모델의 정확도보다 실제 위험을 안정적으로 감지하고 현재 시점에 전달하는 전체 파이프라인을 기준으로 설계했습니다.**",
+      "모델 성능만 높이는 데서 끝나지 않고, Tracking·입력 시퀀스·프레임 지연·이벤트 전달 구간을 나누어 원인을 분석했습니다.",
     meta: {
       period: "2026.05–2026.07",
-      role: "AI 파이프라인 설계, Pose 모델 비교, LSTM 행동 분류, Tracking·실시간 프레임 처리, MQTT 연동",
+      role: "5인 팀장 · Pose 모델 비교, LSTM 특징 설계, Tracking·프레임 처리 개선, MQTT 연동",
       service: "스마트 안전 관제 AI 시스템",
     },
     heroImage: {
-      src: "/images/smart-safety/dashboard-and-search.jpg",
+      src: "/images/smart-safety/ai-pipeline.jpg",
       caption:
-        "실시간 위험 알림과 자연어 사고 검색을 제공하는 스마트 안전 관제 대시보드",
+        "RTSP 입력부터 Pose·Tracking·LSTM·상태 후처리·MQTT 이벤트까지 연결한 AI 판단 파이프라인",
     },
     highlights: [
-      "54D LSTM F1 93.49%",
-      "최신 프레임 우선 처리",
+      "54D 특징 F1 89.29% → 93.49%",
+      "자체 테스트 ID Switch 8건 → 1건",
       "TensorRT YOLO 지연 50.0% 감소",
     ],
     tags: ["Python", "PyTorch", "YOLO26n-pose", "LSTM", "OpenCV", "RTSP", "MQTT"],
@@ -107,9 +107,33 @@ export const projects: readonly Project[] = [
     Post --> MQTT["📡 MQTT Event Publisher\\nReal-time Alert to Control Center"]`,
       },
       {
-        title: "전체 파이프라인을 기준으로 Pose 모델을 선택했습니다",
-        body:
-          "처음에는 Pose 모델의 FPS와 Keypoint 누락률을 중심으로 비교했습니다. 그러나 Pose 결과는 최종 출력이 아니라 LSTM 행동 분류의 입력이므로, 단독 추론 속도만으로는 실제 낙상 판단 성능을 설명하기 어렵다고 판단했습니다.\n\n동일한 영상과 LSTM 조건에서 YOLOv11n-pose와 YOLO26n-pose를 비교한 결과, YOLO26n-pose가 더 많은 유효 시퀀스를 생성하고 Faint Recall과 F1-score에서도 우세했습니다. 가장 빠른 모델보다 실제 실신을 덜 놓치는 전체 파이프라인을 기준으로 YOLO26n-pose를 선택했습니다.",
+        title: "가장 빠른 모델보다 실제 실신을 덜 놓치는 모델을 선택했습니다",
+        problemSolving: [
+          {
+            label: "측정 현상",
+            text: "동일한 영상과 LSTM 조건에서 YOLOv11n-pose는 Faint Recall 66.00%, F1-score 56.90%, 유효 시퀀스 131개를 기록했습니다. YOLO26n-pose는 Recall 86.44%, F1-score 64.97%, 유효 시퀀스 139개를 기록했고 시퀀스를 생성하지 못한 영상도 15개에서 9개로 줄었습니다.",
+          },
+          {
+            label: "원인 분석",
+            text: "Pose 모델의 출력은 최종 결과가 아니라 LSTM 행동 분류의 입력입니다. 단독 FPS가 높더라도 관절 누락이나 시퀀스 생성 실패가 많으면 실제 낙상·실신 판단 성능이 낮아질 수 있었습니다.",
+          },
+          {
+            label: "의사결정",
+            text: "안전 관제에서는 일부 속도 차이보다 실제 실신을 놓치지 않는 것이 중요하다고 판단했습니다. Pose 단독 속도가 아니라 후속 LSTM의 Recall과 F1-score를 최종 모델 선택 기준으로 사용했습니다.",
+          },
+          {
+            label: "구현",
+            text: "Pose 모델별로 동일 영상의 관절 시퀀스를 생성하고, 같은 LSTM 조건에서 Faint Recall·F1-score·Generated Sequence·Zero Sequence Clip을 비교했습니다.",
+          },
+          {
+            label: "결과",
+            text: "Faint Recall과 시퀀스 생성 안정성이 더 높은 YOLO26n-pose를 최종 Pose 모델로 선택했습니다. Repeated Seed 평가에서 YOLO26n-pose의 Recall 평균은 81.36%, F1 평균은 63.46%였습니다.",
+          },
+          {
+            label: "배운 점",
+            text: "개별 모델의 벤치마크보다 해당 모델이 전체 파이프라인에서 만드는 최종 결과를 기준으로 선택해야 한다는 점을 배웠습니다.",
+          },
+        ],
         table: {
           headers: [
             "평가 항목",
@@ -144,16 +168,34 @@ export const projects: readonly Project[] = [
             ],
           ],
         },
-        note:
-          "Repeated Seed 평가에서 YOLO26n-pose의 Recall 평균은 81.36%, F1 평균은 63.46%였습니다. Pose 단독 FPS가 아니라 후속 LSTM 행동 분류 결과까지 포함해 선택했습니다.",
       },
       {
-        title: "낙상 구간의 Tracking 단절 문제 해결",
-        items: [
-          "**상황**: 사람이 서 있는 자세에서 바닥에 누운 자세로 전환되는 순간 Bounding Box 형태와 중심점이 급격히 변하면서 Tracking ID가 끊겼습니다. 동일 인물이 새로운 ID를 받으면서 LSTM 입력 시퀀스도 중간에 분리됐습니다.",
-          "**판단**: 단순히 매칭 허용 범위를 넓히면 주변의 다른 사람과 잘못 연결될 수 있어, 신뢰도가 높은 기본 매칭과 제한적으로 허용하는 재연결을 분리해야 한다고 판단했습니다.",
-          "**해결**: IoU와 중심점 거리를 활용한 Hard Match를 먼저 수행하고, 실패한 경우에만 frame gap·center ratio·velocity 조건을 확인하는 Soft Relink를 적용했습니다. 단독 후보 매칭과 Grace Period도 함께 적용했습니다.",
-          "**결과**: 자체 테스트 영상과 내부 연속성 지표를 기준으로 트랙 유지 및 재연결 품질을 약 19.7% 개선했습니다.",
+        title: "낙상 순간 끊기는 Tracking ID의 원인을 추적했습니다",
+        problemSolving: [
+          {
+            label: "측정 현상",
+            text: "자체 낙상 테스트 영상에서 동일 인물의 ID Switch가 8건 발생했고, Mean Track Coverage는 35.76%에 머물렀습니다. Tracking ID가 바뀔 때마다 해당 인물의 LSTM 입력 시퀀스도 중간에 분리됐습니다.",
+          },
+          {
+            label: "원인 분석",
+            text: "사람이 서 있는 자세에서 바닥에 누운 자세로 전환되면서 Bounding Box의 종횡비와 중심점이 급격히 바뀌었습니다. 기존 IoU 중심 매칭이 이 변화를 동일 인물로 연결하지 못한 것이 원인이었습니다.",
+          },
+          {
+            label: "의사결정",
+            text: "매칭 허용 범위를 무조건 넓히면 주변의 다른 사람과 잘못 연결될 수 있었습니다. 신뢰도가 높은 기본 매칭을 먼저 수행하고, 실패한 경우에만 제한적인 조건으로 재연결하기로 결정했습니다.",
+          },
+          {
+            label: "구현",
+            text: "IoU와 중심점 거리를 활용한 Hard Match 이후 frame gap·center ratio·velocity를 확인하는 Soft Relink를 적용했습니다. 단독 후보일 때만 연결하는 Sole Candidate Match와 Grace Period도 함께 적용했습니다.",
+          },
+          {
+            label: "결과",
+            text: "자체 테스트 영상에서 ID Switch를 8건에서 1건으로 줄였고, Mean Track Coverage를 35.76%에서 49.70%로 높였습니다.",
+          },
+          {
+            label: "배운 점",
+            text: "행동 분류 오류처럼 보이는 문제도 모델 자체가 아니라 검출·Tracking·시퀀스 생성 과정에서 시작될 수 있으므로 입력 흐름부터 확인해야 한다는 점을 배웠습니다.",
+          },
         ],
         diagram: `flowchart LR
     A["FALL 진행 중\\nTrack ID 12"] --> B["자세 급변·검출 누락"]
@@ -162,14 +204,35 @@ export const projects: readonly Project[] = [
     D -->|"Hard Match"| E["기존 시퀀스 유지"]
     D -->|"Soft·Sole Match"| E
     D -->|"조건 불충족"| F["새 Track 생성"]`,
+        note: "ID Switch와 Track Coverage는 자체 테스트 시나리오의 내부 평가 결과입니다. 객관적인 추적 성능을 주장하려면 MOTA·HOTA·Fragmentation 등의 추가 평가가 필요합니다.",
       },
       {
-        title: "모든 프레임을 처리하는 대신 현재 프레임을 우선했습니다",
-        items: [
-          "**상황**: RTSP 입력 속도가 추론 속도보다 빨라지면 처리되지 못한 과거 프레임이 큐에 누적됐습니다. AI는 현재 화면이 아니라 몇 초 전 화면을 분석하게 되고 위험 알림도 실제 상황보다 늦게 전달됐습니다.",
-          "**판단**: 실시간 안전 관제의 목적은 영상을 빠짐없이 처리하는 것이 아니라 현재 발생한 위험을 빠르게 발견하는 것이라고 판단했습니다.",
-          "**해결**: Reader와 Inference 사이에 최대 3개의 프레임만 유지하는 제한 큐를 두고, 큐가 가득 차면 가장 오래된 프레임을 폐기해 최신 프레임을 우선 분석했습니다.",
-          "**결과**: 오래된 프레임이 계속 누적되는 현상을 방지하고 AI 분석 결과가 현재 영상과 멀어지는 문제를 완화했습니다.",
+        title: "모든 프레임보다 현재 프레임을 우선했습니다",
+        problemSolving: [
+          {
+            label: "측정 현상",
+            text: "RTSP 입력 속도가 추론 속도보다 빨라지는 구간에서 처리되지 않은 과거 프레임이 큐에 누적됐습니다. AI가 현재 화면이 아니라 이전 시점의 영상을 분석하면서 위험 판단의 현재성이 떨어졌습니다.",
+          },
+          {
+            label: "원인 분석",
+            text: "Reader와 Inference 사이의 큐에 크기 제한과 프레임 폐기 정책이 없어, AI Worker가 들어오는 모든 프레임을 순서대로 처리하려 한 것이 원인이었습니다.",
+          },
+          {
+            label: "의사결정",
+            text: "실시간 안전 관제에서는 모든 과거 프레임을 보존하는 것보다 현재 발생한 위험을 빠르게 감지하는 것이 중요하다고 판단했습니다.",
+          },
+          {
+            label: "구현",
+            text: "Reader와 Inference 사이의 큐를 최대 3장으로 제한하고, 큐가 가득 차면 가장 오래된 프레임을 폐기해 최신 프레임을 우선 분석하도록 변경했습니다.",
+          },
+          {
+            label: "결과",
+            text: "과거 프레임이 계속 누적되는 현상을 방지하고, AI 분석 결과가 현재 영상과 멀어지는 문제를 완화했습니다.",
+          },
+          {
+            label: "배운 점",
+            text: "데이터 손실을 무조건 피하는 것이 아니라 서비스 목적에 따라 무엇을 보존하고 버릴지를 결정하는 것도 중요한 시스템 설계라는 점을 배웠습니다.",
+          },
         ],
         diagram: `flowchart LR
     A["RTSP Reader"] --> B["Bounded Queue\\nmaxsize = 3"]
@@ -178,12 +241,36 @@ export const projects: readonly Project[] = [
     B -->|"Queue Full"| E["가장 오래된 프레임 폐기"]
     E --> B`,
         note:
-          "전체 처리 지연 감소 수치는 TensorRT와 최신 프레임 처리 정책이 함께 적용된 통합 실행 결과이며, 백프레셔의 단독 효과로 해석하지 않았습니다.",
+          "전체 처리 지연 11.789ms에서 6.101ms로의 감소는 TensorRT와 최신 프레임 처리 정책이 함께 적용된 통합 결과이며, Bounded Queue의 단독 효과로 표현하지 않습니다.",
       },
       {
-        title: "51D에서 54D로 확장한 행동 특징",
-        body:
-          "17개 관절의 x·y 좌표와 신뢰도로 구성한 51차원 특징만으로는 서 있는 자세에서 바닥으로 쓰러지는 시간적 변화를 충분히 표현하기 어려웠습니다.\n\n신체 중심의 하강량인 center_drop, 프레임 간 이동 속도인 velocity, 상체 기울기인 torso_angle을 추가해 54차원으로 확장했습니다. 단순한 누운 자세뿐 아니라 하강·쓰러짐·누움으로 이어지는 낙상 전이를 LSTM이 학습하도록 구성했습니다.",
+        title: "자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다",
+        problemSolving: [
+          {
+            label: "측정 현상",
+            text: "17개 관절의 좌표와 신뢰도만 사용한 51D 모델은 Accuracy 89.20%, F1-score 89.29%였으며 False Positive 132건, False Negative 108건을 기록했습니다.",
+          },
+          {
+            label: "원인 분석",
+            text: "관절의 현재 위치만으로는 사람이 서 있는 상태에서 하강하고 바닥으로 쓰러지는 시간적 변화를 직접 표현하기 어려웠습니다.",
+          },
+          {
+            label: "의사결정",
+            text: "LSTM 크기를 먼저 키우기보다 낙상 과정에서 의미가 있는 움직임 정보를 입력 특징에 직접 추가하기로 결정했습니다.",
+          },
+          {
+            label: "구현",
+            text: "신체 중심의 하강량인 center_drop, 프레임 간 이동 속도인 velocity, 상체 기울기인 torso_angle을 추가해 입력 특징을 51D에서 54D로 확장했습니다.",
+          },
+          {
+            label: "결과",
+            text: "F1-score는 89.29%에서 93.49%로 향상됐고, False Positive는 132건에서 81건으로 38.6%, False Negative는 108건에서 66건으로 38.9% 감소했습니다.",
+          },
+          {
+            label: "배운 점",
+            text: "모델 구조를 복잡하게 변경하기 전에 해결하려는 현상을 직접 설명할 수 있는 입력 특징을 설계하는 것이 더 효과적인 개선 방법이 될 수 있다는 점을 배웠습니다.",
+          },
+        ],
         table: {
           headers: ["평가 지표", "51D 모델", "최종 54D 모델", "개선"],
           rows: [
@@ -197,9 +284,33 @@ export const projects: readonly Project[] = [
         },
       },
       {
-        title: "TensorRT 적용 및 통합 지연 검증",
-        body:
-          "YOLO 추론 구간의 지연 여유를 확보하기 위해 동일한 카메라 입력 조건에서 PyTorch와 TensorRT를 비교했습니다.\n\n모델 추론 시간만 측정하지 않고 Tracking, LSTM, 후처리와 프레임 처리 정책이 포함된 전체 파이프라인 지연과 Dropped Frame도 함께 확인했습니다. 이를 통해 TensorRT의 추론 개선과 통합 실행 환경의 처리 결과를 구분해 검증했습니다.",
+        title: "추론 속도뿐 아니라 전체 파이프라인 지연을 측정했습니다",
+        problemSolving: [
+          {
+            label: "측정 현상",
+            text: "PyTorch 환경에서 YOLO 평균 지연은 9.454ms, 최악 카메라 p95 지연은 14.719ms, 전체 처리 지연은 11.789ms로 측정됐습니다.",
+          },
+          {
+            label: "원인 분석",
+            text: "RTSP 수신부터 Tracking, LSTM과 이벤트 후처리까지 여러 구간의 지연이 누적됐으며, YOLO 추론이 주요 지연 구간 중 하나였습니다.",
+          },
+          {
+            label: "의사결정",
+            text: "단순 FPS 상승보다 카메라 증가와 후처리 추가에도 실시간성을 유지할 수 있는 처리 여유를 확보하기 위해 TensorRT를 적용했습니다.",
+          },
+          {
+            label: "구현",
+            text: "동일한 카메라 입력 조건에서 PyTorch와 TensorRT를 비교하고 YOLO 평균 지연, 최악 카메라 p95, 전체 처리 지연과 Dropped Frame을 함께 측정했습니다.",
+          },
+          {
+            label: "결과",
+            text: "YOLO 평균 지연은 9.454ms에서 4.723ms로 50.0% 감소했고, TensorRT와 최신 프레임 정책이 적용된 통합 환경에서 전체 처리 지연은 11.789ms에서 6.101ms로 48.2% 감소했습니다.",
+          },
+          {
+            label: "배운 점",
+            text: "최적화는 가장 높은 FPS를 만드는 작업이 아니라 전체 서비스의 병목 구간을 수치로 확인하고 다음 기능을 추가할 처리 여유를 확보하는 과정이라는 점을 배웠습니다.",
+          },
+        ],
         table: {
           headers: ["검증 항목", "PyTorch", "TensorRT", "개선"],
           rows: [
@@ -227,10 +338,24 @@ export const projects: readonly Project[] = [
           {
             title: "검증 범위와 한계",
             items: [
-              "**Tracking 평가 범위**: 약 19.7% 개선 결과는 자체 테스트 영상과 내부 트랙 연속성·재연결 기준으로 측정했습니다. 객관적인 추적 성능을 주장하려면 ID Switch, Fragmentation, MOTA·HOTA 등의 추가 평가가 필요합니다.",
+              "**Tracking 평가 범위**: ID Switch와 Track Coverage는 자체 테스트 시나리오의 내부 평가 결과입니다. 객관적인 추적 성능을 주장하려면 MOTA·HOTA·Fragmentation 등의 추가 평가가 필요합니다.",
               "**환경 일반화**: 모델과 실시간 처리 성능은 프로젝트 영상과 사용한 GPU 환경을 기준으로 검증했습니다. 실제 시설 적용을 위해서는 카메라 각도, 조도, 가림, 인원 밀집도와 하드웨어별 추가 검증이 필요합니다.",
             ],
           },
+        ],
+      },
+      {
+        title: "팀 협업과 시스템 통합",
+        items: [
+          "**팀 구성**: 총 5명의 팀 프로젝트에서 팀장을 맡았으며, AI·백엔드·프론트엔드·인프라 파트로 역할을 나누어 개발했습니다.",
+          "**직접 담당**: Pose 모델 비교, LSTM 행동 특징 설계, Tracking 재연결, 최신 프레임 처리, TensorRT 비교와 MQTT 위험 이벤트 발행을 담당했습니다.",
+          "**통합 기여**: 개별 기능의 구현 완료가 아니라 RTSP 입력부터 화면 알림까지 전체 관제 흐름에서 검증 가능한 상태를 완료 기준으로 정리했습니다.",
+          "**백엔드와 맞춘 내용**: cameraId, eventType, capturedAt, confidence와 originalEventId 등 AI 이벤트의 필수 필드와 의미를 맞췄습니다.",
+          "**프론트엔드와 맞춘 내용**: AI의 Tracking ID와 화면 표시용 ID를 구분하고, 위험 이벤트·영상·스냅샷이 같은 사고로 표시되는 기준을 확인했습니다.",
+          "**인프라와 맞춘 내용**: RTSP 입력 주소, 카메라별 Worker 실행 조건, MQTT Broker와 서비스 포트 등 AI Worker 실행 환경을 맞췄습니다.",
+          "**의견 조율**: AI는 MQTT 발행을 완료로 볼 수 있었지만 백엔드는 DB 저장과 브로드캐스트, 프론트엔드는 화면 표시까지 확인해야 했습니다. 어느 파트의 책임인지 따지기보다 RTSP 입력, AI 추론, MQTT 수신, DB 저장, WebSocket 전달과 화면 표시를 구간별 완료 기준으로 정했습니다.",
+          "**결과**: 각 파트가 독립적으로 구현한 기능을 RTSP → AI Worker → MQTT → Spring Boot → WebSocket·STOMP → React 관제 화면으로 연결하고 최종 시연 가능한 흐름으로 완성했습니다.",
+          "**배운 점**: 협업은 친절하게 의견을 듣는 데서 끝나는 것이 아니라, 파트 간 인터페이스와 완료 조건을 문서·로그·테스트 기준으로 맞추는 과정이라는 점을 배웠습니다.",
         ],
       },
       {
