@@ -35,7 +35,16 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center max-w-6xl mx-auto">
           {/* Text Content (Left side on desktop, first on mobile) */}
           <div className="order-1 lg:order-1 lg:col-span-7 pr-0 lg:pr-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-6">
+            <div className="mb-5">
+              <p className="text-sm font-bold tracking-[0.2em] text-primary uppercase">
+                An Jin Gyeong
+              </p>
+              <p className="mt-1 text-base font-semibold text-foreground/70">
+                안진경 · {isFullstack ? "Full-Stack Developer" : "Computer Vision AI Engineer"}
+              </p>
+            </div>
+
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-5">
               <Sparkles size={14} className="text-primary" />
               <span className="text-sm font-medium text-primary">{isFullstack ? "Full-Stack Developer Portfolio" : "AI Engineer Portfolio"}</span>
             </div>
@@ -69,13 +78,21 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
 
           {/* Profile Image (Right side on desktop, second on mobile) */}
           <div className="flex justify-center lg:justify-end order-2 lg:order-2 lg:col-span-5">
-            <div className="relative w-44 h-44 md:w-56 md:h-56 lg:w-[18rem] lg:h-[18rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: '0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)' }}>
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <img
-                src="/profile.jpg"
-                alt="안진경 프로필 사진"
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              />
+            <div className="flex flex-col items-center">
+              <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-[19rem] lg:h-[19rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: '0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)' }}>
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <img
+                  src="/profile.jpg"
+                  alt="안진경 프로필 사진"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+              </div>
+              <div className="mt-5 text-center">
+                <strong className="block text-xl font-black tracking-tight text-foreground">안진경</strong>
+                <span className="mt-1 block text-sm font-semibold text-primary">
+                  {isFullstack ? "Full-Stack Developer" : "Computer Vision AI Engineer"}
+                </span>
+              </div>
             </div>
           </div>
         </div>
