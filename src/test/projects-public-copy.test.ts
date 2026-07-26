@@ -93,7 +93,7 @@ describe("ProjectsSection public copy", () => {
 
     expect(screen.getByRole("dialog")).toHaveTextContent("AI 시스템 구조");
     expect(screen.getByRole("dialog")).toHaveTextContent("자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다");
-    expect(screen.getByRole("dialog")).toHaveTextContent("추론 속도뿐 아니라 전체 파이프라인 지연을 측정했습니다");
+    expect(screen.getByRole("dialog")).toHaveTextContent("최신 프레임 정책과 TensorRT로 실시간성을 확보했습니다");
   });
 
   it("opens VAE details with the corrected responsibility scope", () => {

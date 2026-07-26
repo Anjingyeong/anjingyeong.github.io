@@ -17,6 +17,19 @@ const renderInlineText = (text: string): ReactNode[] =>
     return part;
   });
 
+const recruiterStepLabels = [
+  { source: "측정 현상", display: "문제" },
+  { source: "의사결정", display: "선택" },
+  { source: "결과", display: "성과" },
+] as const;
+
+const technicalStepLabels = ["원인 분석", "구현", "배운 점"] as const;
+
+const summarizeStep = (text: string): string => {
+  const firstSentence = text.match(/^.*?다\./)?.[0] ?? text;
+  return firstSentence.length > 100 ? `${firstSentence.slice(0, 100).trimEnd()}…` : firstSentence;
+};
+
 const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) => (
   <section className="space-y-2">
     <h4 className="text-lg font-semibold text-foreground">{detail.title}</h4>
@@ -26,13 +39,73 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
       </p>
     ) : null}
     {detail.problemSolving ? (
-      <div className="grid gap-3 md:grid-cols-2">
-        {detail.problemSolving.map((step) => (
-          <div key={step.label} className="rounded-lg border border-border bg-muted/20 p-4">
-            <p className="mb-1 text-xs font-bold uppercase tracking-wide text-primary">{step.label}</p>
-            <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(step.text)}</p>
+      <div className="space-y-3">
+        <div className="grid gap-3 md:grid-cols-3">
+          {recruiterStepLabels.map(({ source, display }) => {
+            const step = detail.problemSolving?.find((item) => item.label === source);
+            if (!step) return null;
+
+            return (
+              <div key={source} className="rounded-lg border border-border bg-muted/20 p-4">
+                <p className="mb-1 text-xs font-bold uppercase tracking-wide text-primary">{display}</p>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {renderInlineText(summarizeStep(step.text))}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+
+        <details className="rounded-lg border border-border bg-background/40">
+          <summary className="cursor-pointer px-4 py-3 text-sm font-semibold text-foreground">
+            원인·구현·검증 상세 보기
+          </summary>
+          <div className="space-y-4 border-t border-border p-4">
+            <div className="grid gap-3 md:grid-cols-2">
+              {detail.problemSolving
+                .filter((step) => technicalStepLabels.includes(step.label as (typeof technicalStepLabels)[number]))
+                .map((step) => (
+                  <div key={step.label} className="rounded-lg border border-border bg-muted/20 p-4">
+                    <p className="mb-1 text-xs font-bold uppercase tracking-wide text-primary">
+                      {step.label === "배운 점" ? "기술 인사이트" : step.label}
+                    </p>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(step.text)}</p>
+                  </div>
+                ))}
+            </div>
+
+            {detail.table ? (
+              <div className="overflow-x-auto rounded-lg border border-border">
+                <table className="w-full text-left text-xs md:text-sm">
+                  <thead className="border-b border-border bg-muted/50 font-semibold text-foreground">
+                    <tr>
+                      {detail.table.headers.map((h, idx) => (
+                        <th key={idx} className="p-2.5 md:p-3">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border text-muted-foreground">
+                    {detail.table.rows.map((row, rIdx) => (
+                      <tr key={rIdx} className="hover:bg-muted/20">
+                        {row.map((cell, cIdx) => (
+                          <td key={cIdx} className="p-2.5 md:p-3">{renderInlineText(cell)}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : null}
+
+            {detail.diagram ? <Mermaid chart={detail.diagram} /> : null}
+
+            {detail.note ? (
+              <p className="rounded-lg bg-muted/30 p-3 text-xs leading-relaxed text-muted-foreground">
+                {renderInlineText(detail.note)}
+              </p>
+            ) : null}
           </div>
-        ))}
+        </details>
       </div>
     ) : null}
     {detail.items ? (
@@ -56,7 +129,7 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
         ))}
       </div>
     ) : null}
-    {detail.table ? (
+    {!detail.problemSolving && detail.table ? (
       <div className="mt-4 overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-left text-xs md:text-sm">
           <thead className="border-b border-border bg-muted/50 font-semibold text-foreground">
@@ -82,12 +155,12 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
         </table>
       </div>
     ) : null}
-    {detail.diagram ? (
+    {!detail.problemSolving && detail.diagram ? (
       <div className="mt-4">
         <Mermaid chart={detail.diagram} />
       </div>
     ) : null}
-    {detail.note ? <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(detail.note)}</p> : null}
+    {!detail.problemSolving && detail.note ? <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(detail.note)}</p> : null}
     {detail.image ? (
       <div className="mt-4 overflow-hidden rounded-xl border border-border bg-muted/30 p-2">
         <img

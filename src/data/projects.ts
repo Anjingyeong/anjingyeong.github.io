@@ -70,7 +70,7 @@ export const projects: readonly Project[] = [
       "모델 성능만 높이는 데서 끝나지 않고, Tracking·입력 시퀀스·프레임 지연·이벤트 전달 구간을 나누어 원인을 분석했습니다.",
     meta: {
       period: "2026.05–2026.07",
-      role: "5인 팀장 · Pose 모델 비교, LSTM 특징 설계, Tracking·프레임 처리 개선, MQTT 연동",
+      role: "5인 팀장 · 실시간 영상 AI 파이프라인 담당",
       service: "스마트 안전 관제 AI 시스템",
     },
     heroImage: {
@@ -97,7 +97,7 @@ export const projects: readonly Project[] = [
       {
         title: "AI 시스템 구조",
         body:
-          "RTSP 영상에서 YOLO26n-pose로 사람의 Bounding Box와 17개 관절을 추출하고, Tracking ID별로 자세와 움직임의 시계열 특징을 구성했습니다.\n\nLSTM 예측 결과에 연속 위험 판단, 자세 조건과 Cooldown을 적용해 한 프레임의 오판을 걸러낸 뒤 최종 위험 이벤트를 MQTT로 관제 시스템에 전달했습니다.",
+          "RTSP 영상에서 YOLO26n-pose로 사람의 Bounding Box와 17개 관절을 추출하고, Tracking ID별로 자세와 움직임의 시계열 특징을 구성했습니다. Pose 모델은 단독 속도보다 동일한 LSTM 조건에서의 Recall·F1과 시퀀스 생성 안정성을 기준으로 선택했습니다.\n\nLSTM 예측 결과에 연속 위험 판단, 자세 조건과 Cooldown을 적용해 한 프레임의 오판을 걸러낸 뒤 최종 위험 이벤트를 MQTT로 관제 시스템에 전달했습니다.",
         diagram: `flowchart LR
     RTSP["📹 RTSP Video Stream"] --> Pose["👤 YOLO26n-pose\\nBounding Box & 17 Keypoints"]
     Pose --> Tracking["🆔 Multi-Object Tracking\\nTracking ID Maintain & Relink"]
@@ -105,35 +105,6 @@ export const projects: readonly Project[] = [
     Feature --> LSTM["🧠 LSTM Classifier\\nAction & Fall/Faint Prediction"]
     LSTM --> Post["⚙️ Post-Processing\\nConsecutive Threshold & Cooldown"]
     Post --> MQTT["📡 MQTT Event Publisher\\nReal-time Alert to Control Center"]`,
-      },
-      {
-        title: "가장 빠른 모델보다 실제 실신을 덜 놓치는 모델을 선택했습니다",
-        problemSolving: [
-          {
-            label: "측정 현상",
-            text: "동일한 영상과 LSTM 조건에서 YOLOv11n-pose는 Faint Recall 66.00%, F1-score 56.90%, 유효 시퀀스 131개를 기록했습니다. YOLO26n-pose는 Recall 86.44%, F1-score 64.97%, 유효 시퀀스 139개를 기록했고 시퀀스를 생성하지 못한 영상도 15개에서 9개로 줄었습니다.",
-          },
-          {
-            label: "원인 분석",
-            text: "Pose 모델의 출력은 최종 결과가 아니라 LSTM 행동 분류의 입력입니다. 단독 FPS가 높더라도 관절 누락이나 시퀀스 생성 실패가 많으면 실제 낙상·실신 판단 성능이 낮아질 수 있었습니다.",
-          },
-          {
-            label: "의사결정",
-            text: "안전 관제에서는 일부 속도 차이보다 실제 실신을 놓치지 않는 것이 중요하다고 판단했습니다. Pose 단독 속도가 아니라 후속 LSTM의 Recall과 F1-score를 최종 모델 선택 기준으로 사용했습니다.",
-          },
-          {
-            label: "구현",
-            text: "Pose 모델별로 동일 영상의 관절 시퀀스를 생성하고, 같은 LSTM 조건에서 Faint Recall·F1-score·Generated Sequence·Zero Sequence Clip을 비교했습니다.",
-          },
-          {
-            label: "결과",
-            text: "Faint Recall과 시퀀스 생성 안정성이 더 높은 YOLO26n-pose를 최종 Pose 모델로 선택했습니다. Repeated Seed 평가에서 YOLO26n-pose의 Recall 평균은 81.36%, F1 평균은 63.46%였습니다.",
-          },
-          {
-            label: "배운 점",
-            text: "개별 모델의 벤치마크보다 해당 모델이 전체 파이프라인에서 만드는 최종 결과를 기준으로 선택해야 한다는 점을 배웠습니다.",
-          },
-        ],
       },
       {
         title: "낙상 순간 끊기는 Tracking ID의 원인을 추적했습니다",
@@ -171,43 +142,6 @@ export const projects: readonly Project[] = [
     D -->|"Soft·Sole Match"| E
     D -->|"조건 불충족"| F["새 Track 생성"]`,
         note: "ID Switch와 Track Coverage는 자체 테스트 시나리오의 내부 평가 결과입니다. 객관적인 추적 성능을 주장하려면 MOTA·HOTA·Fragmentation 등의 추가 평가가 필요합니다.",
-      },
-      {
-        title: "모든 프레임보다 현재 프레임을 우선했습니다",
-        problemSolving: [
-          {
-            label: "측정 현상",
-            text: "RTSP 입력 속도가 추론 속도보다 빨라지는 구간에서 처리되지 않은 과거 프레임이 큐에 누적됐습니다. AI가 현재 화면이 아니라 이전 시점의 영상을 분석하면서 위험 판단의 현재성이 떨어졌습니다.",
-          },
-          {
-            label: "원인 분석",
-            text: "Reader와 Inference 사이의 큐에 크기 제한과 프레임 폐기 정책이 없어, AI Worker가 들어오는 모든 프레임을 순서대로 처리하려 한 것이 원인이었습니다.",
-          },
-          {
-            label: "의사결정",
-            text: "실시간 안전 관제에서는 모든 과거 프레임을 보존하는 것보다 현재 발생한 위험을 빠르게 감지하는 것이 중요하다고 판단했습니다.",
-          },
-          {
-            label: "구현",
-            text: "Reader와 Inference 사이의 큐를 최대 3장으로 제한하고, 큐가 가득 차면 가장 오래된 프레임을 폐기해 최신 프레임을 우선 분석하도록 변경했습니다.",
-          },
-          {
-            label: "결과",
-            text: "과거 프레임이 계속 누적되는 현상을 방지하고, AI 분석 결과가 현재 영상과 멀어지는 문제를 완화했습니다.",
-          },
-          {
-            label: "배운 점",
-            text: "데이터 손실을 무조건 피하는 것이 아니라 서비스 목적에 따라 무엇을 보존하고 버릴지를 결정하는 것도 중요한 시스템 설계라는 점을 배웠습니다.",
-          },
-        ],
-        diagram: `flowchart LR
-    A["RTSP Reader"] --> B["Bounded Queue\\nmaxsize = 3"]
-    B --> C["AI Inference"]
-    D["새 프레임 도착"] --> B
-    B -->|"Queue Full"| E["가장 오래된 프레임 폐기"]
-    E --> B`,
-        note:
-          "전체 처리 지연 11.789ms에서 6.101ms로의 감소는 TensorRT와 최신 프레임 처리 정책이 함께 적용된 통합 결과이며, Bounded Queue의 단독 효과로 표현하지 않습니다.",
       },
       {
         title: "자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다",
@@ -250,23 +184,23 @@ export const projects: readonly Project[] = [
         },
       },
       {
-        title: "추론 속도뿐 아니라 전체 파이프라인 지연을 측정했습니다",
+        title: "최신 프레임 정책과 TensorRT로 실시간성을 확보했습니다",
         problemSolving: [
           {
             label: "측정 현상",
-            text: "PyTorch 환경에서 YOLO 평균 지연은 9.454ms, 최악 카메라 p95 지연은 14.719ms, 전체 처리 지연은 11.789ms로 측정됐습니다.",
+            text: "입력 속도가 추론 속도보다 빠른 구간에는 과거 프레임이 누적됐고, PyTorch 환경의 YOLO 평균 지연은 9.454ms, 전체 처리 지연은 11.789ms로 측정됐습니다.",
           },
           {
             label: "원인 분석",
-            text: "RTSP 수신부터 Tracking, LSTM과 이벤트 후처리까지 여러 구간의 지연이 누적됐으며, YOLO 추론이 주요 지연 구간 중 하나였습니다.",
+            text: "Reader와 Inference 사이에 프레임 폐기 정책이 없어 이전 영상이 순서대로 쌓였고, 전체 파이프라인에서는 YOLO 추론이 주요 병목 구간 중 하나였습니다.",
           },
           {
             label: "의사결정",
-            text: "단순 FPS 상승보다 카메라 증가와 후처리 추가에도 실시간성을 유지할 수 있는 처리 여유를 확보하기 위해 TensorRT를 적용했습니다.",
+            text: "안전 관제에서는 모든 과거 프레임의 보존보다 현재 위험의 빠른 감지가 중요하다고 판단했습니다. 최신 프레임 우선 정책과 TensorRT를 함께 적용해 적체와 추론 병목을 각각 줄였습니다.",
           },
           {
             label: "구현",
-            text: "동일한 카메라 입력 조건에서 PyTorch와 TensorRT를 비교하고 YOLO 평균 지연, 최악 카메라 p95, 전체 처리 지연과 Dropped Frame을 함께 측정했습니다.",
+            text: "Reader와 Inference 사이의 큐를 최대 3장으로 제한하고 가득 차면 가장 오래된 프레임을 폐기했습니다. 동일한 카메라 입력에서 PyTorch와 TensorRT의 평균·p95·전체 처리 지연과 Dropped Frame을 비교했습니다.",
           },
           {
             label: "결과",
@@ -274,9 +208,15 @@ export const projects: readonly Project[] = [
           },
           {
             label: "배운 점",
-            text: "최적화는 가장 높은 FPS를 만드는 작업이 아니라 전체 서비스의 병목 구간을 수치로 확인하고 다음 기능을 추가할 처리 여유를 확보하는 과정이라는 점을 배웠습니다.",
+            text: "실시간 최적화는 모든 데이터를 보존하거나 최고 FPS만 만드는 작업이 아니라, 서비스 목적에 따라 처리 정책을 정하고 병목을 수치로 줄여 현재성을 확보하는 과정이었습니다.",
           },
         ],
+        diagram: `flowchart LR
+    A["RTSP Reader"] --> B["Bounded Queue\\nmaxsize = 3"]
+    B --> C["TensorRT Inference"]
+    D["새 프레임 도착"] --> B
+    B -->|"Queue Full"| E["가장 오래된 프레임 폐기"]
+    E --> B`,
         table: {
           headers: ["검증 항목", "PyTorch", "TensorRT", "개선"],
           rows: [
@@ -311,14 +251,24 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "팀 협업과 시스템 통합",
-        items: [
-          "**팀 구성과 역할**: 총 5명의 팀 프로젝트에서 팀장을 맡아 AI·백엔드·프론트엔드·인프라 파트의 진행 상황과 통합 기준을 관리했습니다.",
-          "**직접 담당**: Pose 모델 비교, LSTM 행동 특징 설계, Tracking 재연결, 최신 프레임 처리, TensorRT 비교와 MQTT 위험 이벤트 발행을 담당했습니다.",
-          "**파트 간 조율**: 백엔드와는 cameraId·eventType·capturedAt·originalEventId 등 이벤트 스키마를 맞추고, 프론트엔드와는 Tracking ID와 화면 표시 ID, 인프라와는 RTSP·MQTT·Worker 실행 조건을 맞췄습니다.",
-          "**의견 차이**: AI는 MQTT 발행을 완료로 보았지만 백엔드는 DB 저장과 브로드캐스트, 프론트엔드는 화면 표시까지 확인해야 완료로 볼 수 있었습니다.",
-          "**조율과 결과**: 책임 소재를 먼저 판단하지 않고 RTSP 입력부터 화면 표시까지 구간별 로그와 완료 조건을 정했습니다. 이를 바탕으로 각 파트의 기능을 최종 시연 가능한 관제 흐름으로 연결했습니다.",
-          "**배운 점**: 협업은 단순히 의견을 듣는 것이 아니라 파트 간 인터페이스와 완료 조건을 문서·로그·테스트 기준으로 맞추는 과정이라는 점을 배웠습니다.",
+        title: "담당 범위와 협업",
+        groups: [
+          {
+            title: "직접 구현",
+            items: [
+              "Pose 모델 비교와 LSTM 행동 특징 설계",
+              "Tracking 재연결, 최신 프레임 처리와 TensorRT 비교",
+              "상태 후처리와 MQTT 위험 이벤트 발행",
+            ],
+          },
+          {
+            title: "협업·통합",
+            items: [
+              "백엔드와 cameraId·eventType·capturedAt·originalEventId 이벤트 계약 협의",
+              "프론트엔드의 Tracking ID·화면 표시 ID, 인프라의 RTSP·MQTT·Worker 실행 조건 조율",
+              "팀장으로서 RTSP 입력부터 화면 표시까지 구간별 로그와 완료 기준을 통합 검증",
+            ],
+          },
         ],
       },
       {

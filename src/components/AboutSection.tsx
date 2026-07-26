@@ -28,7 +28,7 @@ const AboutSection = ({ variant = "ai" }: AboutSectionProps) => {
   const displayedInfoItems = isFullstack ? fullstackInfoItems : infoItems;
 
   return (
-    <div className="py-24 md:py-32">
+    <div id="about" className="py-24 md:py-32">
       <div className="container">
         <ScrollAnimator>
           <div className="section-header">
@@ -41,80 +41,54 @@ const AboutSection = ({ variant = "ai" }: AboutSectionProps) => {
             <div className="minimal-card p-8 md:p-10">
               {isFullstack ? (
                 <>
-                  <h3 className="text-lg font-semibold mb-5 text-foreground">Full-Stack Developer 소개</h3>
+                  <h3 className="text-lg font-semibold mb-5 text-foreground">기능의 앞뒤 흐름까지 책임지는 개발자</h3>
                   <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    저는 사용자의 한 번의 입력과 하나의 이벤트가 화면, API, 데이터 저장과 결과까지 끊기지 않도록 만드는 풀스택 개발자입니다.
-                  </p>
-                  <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    마음이음 웹서비스는 약 2주 동안 기획부터 모바일 화면, API, D1 저장, 관리자 통계, PDF 리포트와 배포까지 1인 개발했습니다. 스마트 안전 관제에서는 Python AI Worker의 위험 이벤트를 MQTT로 수신하고, Spring Boot 저장과 WebSocket 알림, 사고 증거와 VLM 검색까지 이어지는 흐름을 구현했습니다.
+                    기능을 화면 한 장이나 API 하나로 보지 않고, 사용자의 입력이 어떤 상태로 저장되고 다음 화면과 알림으로 어떻게 이어지는지까지 확인합니다. 문제가 생기면 보이는 증상만 수정하기보다 데이터가 생성되고 전달되는 흐름을 따라 원인을 찾습니다.
                   </p>
                   <p className="leading-[1.8] mb-6" style={{ color: "#4A4A4A" }}>
-                    팀 프로젝트에서는 각 파트가 구현한 기능을 단순히 연결하는 데 그치지 않고, 비동기로 도착하는 이벤트의 ID와 완료 시점을 함께 맞췄습니다. 화면에 나타난 증상만 수정하기보다 저장 구조와 데이터 계약까지 확인해 서비스 전체의 정합성을 해결하는 것이 저의 강점입니다.
+                    협업할 때는 파트별 구현보다 먼저 공통 식별자, 상태 변화와 완료 조건을 맞춥니다. 서로 다른 기준 때문에 문제가 반복되지 않도록 구간별 로그와 데이터 계약을 공유하고, 실제 사용자 화면까지 함께 확인하는 방식으로 작업합니다.
                   </p>
 
                   <div className="mt-8 pt-6 border-t border-border">
-                    <h4 className="text-sm font-semibold mb-3 text-primary uppercase tracking-wide">Full-Stack Development Focus</h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        React·TypeScript 기반 사용자 화면과 비동기 상태 관리
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        Spring Boot·Spring Data JPA·Cloudflare Workers 기반 API 구현
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        PostgreSQL·pgvector·D1 기반 데이터 저장 및 검색 구조
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        MQTT·WebSocket·STOMP 기반 실시간 이벤트 전달
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        Incident 병합, 작업 상태, 잠금 만료와 재시도를 고려한 운영 설계
-                      </li>
-                    </ul>
+                    <h4 className="text-sm font-semibold mb-4 text-primary uppercase tracking-wide">How I Work</h4>
+                    <div className="grid gap-3 sm:grid-cols-3">
+                      {[
+                        ["흐름으로 설계", "입력부터 저장·표시까지 기능의 전체 경로를 확인합니다."],
+                        ["계약으로 협업", "식별자·상태·완료 조건을 먼저 맞춰 재작업을 줄입니다."],
+                        ["운영까지 검증", "실패와 재시도 상황에서도 사용 가능한지 확인합니다."],
+                      ].map(([title, description]) => (
+                        <div key={title} className="rounded-lg border border-border bg-muted/20 p-4">
+                          <p className="mb-1 text-sm font-semibold text-foreground">{title}</p>
+                          <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </>
               ) : (
                 <>
-                  <h3 className="text-lg font-semibold mb-5 text-foreground">AI Engineer 소개</h3>
+                  <h3 className="text-lg font-semibold mb-5 text-foreground">원인을 분리하고 끝까지 검증하는 엔지니어</h3>
                   <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    저는 숫자로 이상을 발견하고 로그로 원인을 좁힌 뒤, 서비스 목적에 맞는 해결 방법을 선택하는 컴퓨터비전 엔지니어입니다.
-                  </p>
-                  <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    스마트 안전 관제 프로젝트에서는 행동 분류 성능만 확인하지 않고 Pose 검출, Tracking ID, LSTM 입력 시퀀스, 프레임 큐와 이벤트 전달 구간을 나누어 분석했습니다. 그 결과 54D 특징 확장으로 F1-score를 93.49%까지 높이고, 낙상 구간의 ID Switch와 TensorRT 추론 지연을 개선했습니다.
+                    결과가 기대와 다르면 곧바로 모델을 바꾸기보다 입력, 추적, 시계열 구성과 전달 과정을 나누어 확인합니다. 감으로 원인을 정하지 않고 비교 가능한 지표와 로그를 만든 뒤, 서비스에서 가장 중요한 기준에 맞춰 해결 방법을 선택합니다.
                   </p>
                   <p className="leading-[1.8] mb-6" style={{ color: "#4A4A4A" }}>
-                    팀 프로젝트에서는 AI 결과를 전달하는 데서 끝내지 않고, 백엔드·프론트엔드 담당자와 cameraId, eventType, timestamp, originalEventId 등 이벤트의 의미와 완료 기준을 맞췄습니다. 모델 결과가 실제 서비스에서 신뢰할 수 있는 데이터로 이어지도록 만드는 것이 저의 강점입니다.
+                    팀장으로서는 AI 파트의 결과 전달을 완료로 보지 않고, 백엔드 저장과 프론트 화면 표시까지 같은 기준으로 확인했습니다. 파트 간 책임을 따지기보다 공통 이벤트 의미와 완료 조건을 정리해 전체 흐름에서 문제를 재현하고 해결하는 방식을 중요하게 생각합니다.
                   </p>
 
                   <div className="mt-8 pt-6 border-t border-border">
-                    <h4 className="text-sm font-semibold mb-3 text-primary uppercase tracking-wide">AI Engineering Focus</h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        YOLO Pose·Tracking·LSTM을 연결한 실시간 행동 분석 파이프라인
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        Precision·Recall·F1·ID Switch·Latency를 활용한 원인 분석과 검증
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        Bounded Queue와 TensorRT 기반 실시간 영상 처리 최적화
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        AI 결과를 상태 후처리와 MQTT 위험 이벤트로 전환하는 서비스 연동
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        RTSP → Pose → Tracking → LSTM → 상태 후처리 → MQTT
-                      </li>
-                    </ul>
+                    <h4 className="text-sm font-semibold mb-4 text-primary uppercase tracking-wide">How I Work</h4>
+                    <div className="grid gap-3 sm:grid-cols-3">
+                      {[
+                        ["구간을 나눠 측정", "문제를 재현하고 병목이 발생한 위치부터 좁힙니다."],
+                        ["목적을 기준으로 선택", "단일 수치보다 실제 서비스의 우선순위를 따릅니다."],
+                        ["완료 조건을 공유", "파트 간 같은 기준으로 결과를 끝까지 검증합니다."],
+                      ].map(([title, description]) => (
+                        <div key={title} className="rounded-lg border border-border bg-muted/20 p-4">
+                          <p className="mb-1 text-sm font-semibold text-foreground">{title}</p>
+                          <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </>
               )}

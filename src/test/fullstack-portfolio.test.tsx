@@ -33,15 +33,15 @@ describe("full-stack portfolio", () => {
 
   it("switches About copy without changing the AI variant", () => {
     const { rerender } = render(<AboutSection variant="fullstack" />);
-    expect(screen.getByText("Full-Stack Developer 소개")).toBeInTheDocument();
+    expect(screen.getByText("기능의 앞뒤 흐름까지 책임지는 개발자")).toBeInTheDocument();
     expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
-    expect(screen.getByText("Full-Stack Development Focus")).toBeInTheDocument();
-    expect(screen.queryByText("AI Engineer 소개")).not.toBeInTheDocument();
+    expect(screen.getByText("흐름으로 설계")).toBeInTheDocument();
+    expect(screen.queryByText("원인을 분리하고 끝까지 검증하는 엔지니어")).not.toBeInTheDocument();
 
     rerender(<AboutSection variant="ai" />);
-    expect(screen.getByText("AI Engineer 소개")).toBeInTheDocument();
+    expect(screen.getByText("원인을 분리하고 끝까지 검증하는 엔지니어")).toBeInTheDocument();
     expect(screen.getByText("Computer Vision AI Engineer")).toBeInTheDocument();
-    expect(screen.getByText("AI Engineering Focus")).toBeInTheDocument();
+    expect(screen.getByText("구간을 나눠 측정")).toBeInTheDocument();
   });
 
   it("marks the AI role active on the root variant", () => {
@@ -65,15 +65,64 @@ describe("full-stack portfolio", () => {
     }
   });
 
-  it("renders the A4 full-stack resume with exactly three representative projects", () => {
-    render(<MemoryRouter><FullstackPortfolioPrint /></MemoryRouter>);
-    expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
-    expect(screen.getByText(/사용자의 입력과 AI 이벤트가 화면, API, 데이터 저장과 결과까지 끊기지 않도록 만드는 풀스택 개발자입니다/)).toBeInTheDocument();
-    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(3);
-    expect(screen.getByText(/2카메라 TensorRT 환경에서 위험 이벤트 29건의 End-to-End 평균 지연 20.931ms/)).toBeInTheDocument();
-    expect(screen.getByText("2026.05 - 2026.07")).toBeInTheDocument();
-    expect(screen.getByText(/약 2주 · 개인 프로젝트 · 1인 개발/)).toBeInTheDocument();
-    expect(document.body.textContent).not.toContain("Spring Boot 백엔드와 React 프론트엔드 전체가 아닌");
+  it("renders the A4 full-stack resume with exactly two print pages and exact project sequence", () => {
+    const { container } = render(
+      <MemoryRouter>
+        <FullstackPortfolioPrint />
+      </MemoryRouter>
+    );
+
+    // 1. Full-Stack 인쇄 페이지가 정확히 2개의 print-page를 렌더링
+    const printPages = container.querySelectorAll(".print-page");
+    expect(printPages).toHaveLength(2);
+
+    // 2. 지원 직무 문구가 Full-Stack Developer 방향인지
+    expect(
+      screen.getByText("AI 이벤트를 실제 서비스 흐름으로 연결해 온 풀스택 개발자")
+    ).toBeInTheDocument();
+
+    // 3 & 4 & 5. 마음이음이 1번째, 스마트 안전 관제가 2번째, LLM Wiki가 3번째(Supporting Project)인지
+    const projectHeadings = Array.from(
+      printPages[1].querySelectorAll("h3")
+    ).map((h) => h.textContent);
+    expect(projectHeadings[0]).toContain("1. 마음이음");
+    expect(projectHeadings[1]).toContain("2. 스마트 안전 관제");
+    expect(projectHeadings[2]).toContain("3. LLM Wiki·RAG");
+    expect(screen.getByText("Supporting Project")).toBeInTheDocument();
+
+    // 6. 마음이음에 약 2주 · 개인 프로젝트 · 1인 개발 포함
+    expect(
+      screen.getByText("약 2주 · 개인 프로젝트 · 1인 개발")
+    ).toBeInTheDocument();
+
+    // 7. 스마트 안전 관제에 29건, 20.931ms, p95 26ms 포함
+    const printText = container.textContent ?? "";
+    expect(printText).toContain("29건");
+    expect(printText).toContain("20.931ms");
+    expect(printText).toContain("p95 26ms");
+
+    // 8. originalEventId와 Incident가 포함되는지
+    expect(printText).toContain("originalEventId");
+    expect(printText).toContain("Incident");
+
+    // 9. 전체 백엔드와 프론트엔드를 단독 구현하지 않았다는 역할 경계 포함
+    expect(printText).toContain(
+      "전체 백엔드와 프론트엔드를 단독 구현한 것이 아니라"
+    );
+
+    // 10. AI 전용 F1·ID Switch·TensorRT 모델 성과가 Full-Stack 상단 핵심 성과로 사용되지 않는지
+    // Page 1 Header/Core Skills should not have F1-score or TensorRT model claims
+    const page1Text = printPages[0].textContent ?? "";
+    expect(page1Text).not.toContain("F1-score");
+    expect(page1Text).not.toContain("ID Switch");
+    expect(page1Text).not.toContain("TensorRT 적용으로");
+
+    // 11. AI PortfolioPrint.tsx가 변경되지 않았는지
+    const aiPortfolioPrintSrc = readText("src/pages/PortfolioPrint.tsx");
+    expect(aiPortfolioPrintSrc).toContain(
+      "실시간 영상 AI의 정확도와 지연을 함께 개선한 컴퓨터비전 엔지니어"
+    );
+    expect(aiPortfolioPrintSrc).toContain("Computer Vision");
   });
 
   it("ships the matching full-stack developer resume document", () => {
@@ -213,13 +262,11 @@ describe("full-stack portfolio", () => {
     expect(smartSafety?.details.map((detail) => detail.title)).toEqual([
       "문제 정의와 목표",
       "AI 시스템 구조",
-      "가장 빠른 모델보다 실제 실신을 덜 놓치는 모델을 선택했습니다",
       "낙상 순간 끊기는 Tracking ID의 원인을 추적했습니다",
-      "모든 프레임보다 현재 프레임을 우선했습니다",
       "자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다",
-      "추론 속도뿐 아니라 전체 파이프라인 지연을 측정했습니다",
+      "최신 프레임 정책과 TensorRT로 실시간성을 확보했습니다",
       "운영 안정화와 검증 범위",
-      "팀 협업과 시스템 통합",
+      "담당 범위와 협업",
       "판단과 배운 점",
       "이 프로젝트로 보여주는 역량",
     ]);
@@ -238,11 +285,9 @@ describe("full-stack portfolio", () => {
     expect(reflection?.items).toHaveLength(2);
 
     const aiProblemTitles = [
-      "가장 빠른 모델보다 실제 실신을 덜 놓치는 모델을 선택했습니다",
       "낙상 순간 끊기는 Tracking ID의 원인을 추적했습니다",
-      "모든 프레임보다 현재 프레임을 우선했습니다",
       "자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다",
-      "추론 속도뿐 아니라 전체 파이프라인 지연을 측정했습니다",
+      "최신 프레임 정책과 TensorRT로 실시간성을 확보했습니다",
     ];
 
     const expectedLabels = [
@@ -271,13 +316,11 @@ describe("full-stack portfolio", () => {
       "/images/smart-safety/ai-pipeline.jpg"
     );
 
-    const poseSelection = smartSafety?.details.find(
-      (detail) =>
-        detail.title ===
-        "가장 빠른 모델보다 실제 실신을 덜 놓치는 모델을 선택했습니다"
+    const systemStructure = smartSafety?.details.find(
+      (detail) => detail.title === "AI 시스템 구조"
     );
 
-    expect(poseSelection?.table).toBeUndefined();
+    expect(systemStructure?.body).toContain("Recall·F1과 시퀀스 생성 안정성");
 
     // Canva images replaced by Mermaid diagrams — not present in AI project
     expect(projectJson).not.toContain("/images/smart-safety/canva/problem-cctv-workload.png");
@@ -302,7 +345,7 @@ describe("full-stack portfolio", () => {
       "경보 이후의 증거 확인 흐름",
       "실시간 알림과 VLM 분석을 서로 다른 처리 경로로 분리했습니다",
       "운영 안정성과 검증 범위",
-      "팀 협업과 통합 기준",
+      "담당 범위와 협업",
       "판단과 배운 점",
       "이 프로젝트로 보여주는 역량",
     ]);
@@ -333,9 +376,11 @@ describe("full-stack portfolio", () => {
     }
 
     const collaboration = fullstackSmartSafety?.details.find(
-      (detail) => detail.title === "팀 협업과 통합 기준"
+      (detail) => detail.title === "담당 범위와 협업"
     );
 
-    expect(collaboration?.items).toHaveLength(6);
+    expect(collaboration?.groups).toHaveLength(2);
+    expect(collaboration?.groups?.[0].title).toBe("직접 구현·검증");
+    expect(collaboration?.groups?.[1].title).toBe("협업·통합");
   });
 });
