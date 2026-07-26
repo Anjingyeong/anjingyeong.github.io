@@ -58,11 +58,14 @@ describe("full-stack portfolio", () => {
     ]);
   });
 
-  it("defines AI, full-stack, and print routes without replacing existing routes", () => {
+  it("uses clean browser routes and mode-based root rendering", () => {
     const appSource = readText("src/App.tsx");
     for (const route of ['path="/"', 'path="/ai"', 'path="/fullstack"', 'path="/print"', 'path="/print/fullstack"']) {
       expect(appSource).toContain(route);
     }
+    expect(appSource).toContain("BrowserRouter");
+    expect(appSource).toContain('import.meta.env.MODE === "fullstack"');
+    expect(appSource).not.toContain("HashRouter");
   });
 
   it("renders the A4 full-stack resume with exactly two print pages and exact project sequence", () => {

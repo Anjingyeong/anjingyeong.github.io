@@ -57,7 +57,7 @@ const fullstackSkillCategories: SkillCategory[] = [
   {
     title: "Data & Search",
     icon: Cpu,
-    skills: ["PostgreSQL", "pgvector", "Redis", "Cloudflare D1"],
+    skills: ["PostgreSQL", "pgvector", "Cloudflare D1"],
     color: "from-indigo-500/10 to-indigo-600/5",
   },
   {

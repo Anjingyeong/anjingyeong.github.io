@@ -2,7 +2,10 @@
 
 React, TypeScript, Tailwind CSS 기반 개인 개발 포트폴리오 웹사이트입니다.
 
-배포 링크: [https://anjingyeong.github.io/](https://anjingyeong.github.io/)
+배포 예정 주소:
+
+- AI Engineer: `https://ai.jingyeong.cloud`
+- Full-Stack Developer: `https://fullstack.jingyeong.cloud`
 
 ---
 
@@ -48,8 +51,11 @@ React, TypeScript, Tailwind CSS 기반 개인 개발 포트폴리오 웹사이�
 # 1. 패키지 설치
 npm install
 
-# 2. 로컬 개발 서버 구동
-npm run dev
+# 2. AI 포트폴리오 로컬 실행
+npm run dev:ai
+
+# 3. Full-Stack 포트폴리오 로컬 실행
+npm run dev:fullstack
 ```
 
 ---
@@ -65,10 +71,13 @@ npm run lint
 # 2. 테스트 스크립트 실행 (Vitest)
 npm run test
 
-# 3. 배포용 빌드 파일 생성
-npm run build
+# 3. AI 배포용 빌드
+npm run build:ai
 
-# 4. LLM Wiki 정적 검색 인덱스 생성
+# 4. Full-Stack 배포용 빌드
+npm run build:fullstack
+
+# 5. LLM Wiki 정적 검색 인덱스 생성
 npm run wiki:index
 ```
 

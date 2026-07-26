@@ -23,10 +23,9 @@ describe("Skills & Experience & Competence sections", () => {
     expect(textContent).not.toContain("MySQL");
   });
 
-  it("includes Java 21, Redis, AWS S3 in Full-Stack skills without MySQL", () => {
+  it("includes Java 21 and AWS S3 in Full-Stack skills without Redis or MySQL", () => {
     const { container } = render(<SkillsSection variant="fullstack" />);
     expect(screen.getByText("Java 21")).toBeInTheDocument();
-    expect(screen.getByText("Redis")).toBeInTheDocument();
     expect(screen.getByText("AWS S3")).toBeInTheDocument();
 
     const textContent = container.textContent ?? "";
@@ -34,6 +33,7 @@ describe("Skills & Experience & Competence sections", () => {
     expect(textContent).not.toContain("pykrx");
     expect(textContent).not.toContain("Seaborn");
     expect(textContent).not.toContain("MySQL");
+    expect(textContent).not.toContain("Redis");
   });
 
   it("displays Education & Training and Awards separately in Experience", () => {

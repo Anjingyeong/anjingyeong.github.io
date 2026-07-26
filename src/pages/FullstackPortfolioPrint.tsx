@@ -28,7 +28,7 @@ export const fullstackPrintProjects: FullstackPrintProject[] = [
     decision:
       "짧은 기간 안에 운영 가능한 서비스를 완성하기 위해 React·TypeScript로 화면과 위험도 로직을 분리하고, 별도 서버 관리가 필요 없는 Cloudflare Pages·Workers·D1 조합을 선택했습니다.",
     process:
-      "사용자 흐름과 최소 수집 항목을 먼저 정의한 뒤 모바일 화면, 위험도 계산, 저장 API, 관리자 통계, PDF 리포트 순으로 기능을 연결했습니다. 마지막에는 동의 문구·SEO·배포 환경까지 점검했습니다.",
+      "사용자 흐름과 최소 수집 항목을 먼저 정의한 뒤 모바일 화면과 저장 API를 연결했습니다. 공통 위험도 기준을 결과 화면과 관리자 통계에서 함께 사용하고, 동일한 결과 데이터를 해석 리포트와 PDF에도 연결했습니다. 마지막에는 동의 문구·SEO·배포 환경까지 점검했습니다.",
     role: "기획, 모바일 우선 UI, 위험도 계산, Workers API, D1 저장, 관리자 통계, PDF 리포트와 운영 배포까지 전체 라이프사이클을 직접 구현했습니다.",
     result:
       "사용자 체크부터 결과 저장, 관리자 통계와 PDF 리포트까지 이어지는 1인 웹서비스를 실제 배포 환경에 완성했습니다.",
@@ -39,11 +39,11 @@ export const fullstackPrintProjects: FullstackPrintProject[] = [
     title: "2. 스마트 안전 관제 · 실시간 이벤트 및 Incident 플랫폼",
     periodRole: "2026.05 – 2026.07 · 5인 팀장",
     stack:
-      "Java 21 · Spring Boot · JPA · PostgreSQL · MQTT · WebSocket / STOMP · React · Redis · AWS S3",
+      "Java 21 · Spring Boot · JPA · PostgreSQL · MQTT · WebSocket / STOMP · React · AWS S3",
     problem:
       "AI 위험 이벤트와 이후 도착하는 스냅샷·사고 클립·VLM 설명을 하나의 사고로 유지하고 관제 화면에 빠르게 전달해야 했습니다.",
     decision:
-      "영상 추론과 서비스 처리를 분리하기 위해 MQTT를 이벤트 계약으로 사용하고, Spring Boot에서 저장·병합한 뒤 WebSocket / STOMP로 관제 화면에 전달했습니다. PostgreSQL은 Incident 정합성, Redis는 실시간 상태 보조, S3는 증거 자산 보관에 사용했습니다.",
+      "영상 추론과 서비스 처리를 분리하기 위해 MQTT를 이벤트 계약으로 사용하고, Spring Boot에서 저장·병합한 뒤 WebSocket / STOMP로 관제 화면에 전달했습니다. PostgreSQL은 Incident 정합성, S3는 증거 자산 보관에 사용했습니다.",
     process:
       "이벤트 스키마와 originalEventId를 먼저 합의하고, 수신→DB 저장→Incident 병합→실시간 브로드캐스트→VLM 후처리 순서로 통합했습니다. 각 단계의 완료 기준과 로그를 맞춘 뒤 2카메라 환경에서 End-to-End 지연을 측정했습니다.",
     role: "AI 이벤트 계약, originalEventId 기반 Incident 정합성, VLM 비동기 작업 흐름과 파트 간 통합 검증을 담당했습니다. 전체 백엔드와 프론트엔드를 단독 구현한 것이 아니라 각 담당자와 데이터 계약과 완료 기준을 맞췄습니다.",
@@ -65,7 +65,7 @@ export const fullstackPrintProjects: FullstackPrintProject[] = [
       "문서 구조를 수집·정규화한 뒤 청크와 출처 메타데이터를 생성하고, BM25와 벡터 검색 결과를 각각 계산해 RRF로 재정렬했습니다. 이후 인증 API와 답변 근거 표시까지 연결했습니다.",
     role: "문서를 정적 JSON 인덱스로 변환하고 BM25와 Vector Search 결과를 RRF로 결합했습니다. 인증 API와 문서 출처·섹션 정보를 포함하는 검색 구조를 구현했습니다.",
     result:
-      "프로젝트 지식을 검색 가능한 정적 구조로 정리하고, 키워드와 의미 기반 검색을 함께 제공하는 하이브리드 검색 시스템을 완성했습니다.",
+      "프로젝트 지식을 검색 가능한 정적 구조로 정리하고, 코드·테스트·문서 관계를 2,057개 노드와 2,803개 관계로 구조화했습니다. 명시 관계와 AI 추론 관계를 분리해 근거를 다시 확인할 수 있게 했습니다.",
   },
 ];
 
@@ -156,7 +156,7 @@ const FullstackPortfolioPrint = () => {
               <strong>Frontend:</strong> React, TypeScript, Tailwind CSS, Vite
             </p>
             <p>
-              <strong>Data &amp; Search:</strong> PostgreSQL, pgvector, Redis, Cloudflare D1
+              <strong>Data &amp; Search:</strong> PostgreSQL, pgvector, Cloudflare D1
             </p>
             <p>
               <strong>Realtime &amp; Deployment:</strong> MQTT, WebSocket / STOMP, AWS S3, Docker / Cloudflare Pages

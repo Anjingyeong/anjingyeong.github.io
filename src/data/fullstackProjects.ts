@@ -27,8 +27,8 @@ export const fullstackProjects: readonly Project[] = [
         title: "개발 프로세스",
         items: [
           "**1. 문제와 데이터 범위 정의**: 자가체크에 필요한 입력과 저장하지 않을 개인정보를 먼저 정하고, 서비스가 진단으로 오해되지 않도록 안내 문구와 동의 흐름을 설계했습니다.",
-          "**2. 핵심 사용자 흐름 구현**: React·Vite 기반 모바일 UI와 공통 위험도 계산 로직을 구현해 문항 입력부터 결과 확인까지 먼저 연결했습니다.",
-          "**3. API와 운영 기능 연결**: Workers API와 D1 저장, 관리자 통계와 결과 조회, PDF 리포트를 순서대로 추가했습니다.",
+          "**2. 핵심 사용자 흐름 구현**: React·Vite 기반 모바일 UI를 구현하고, 공통 위험도 기준을 결과 화면과 관리자 통계에서 함께 사용하도록 분리했습니다.",
+          "**3. API와 운영 기능 연결**: Workers API와 D1 저장을 연결하고, 동일한 결과 데이터를 해석 리포트·관리자 통계·PDF 리포트에서 재사용하도록 구성했습니다.",
           "**4. 배포 전 검증**: 개인정보처리방침, 쿠키·분석 도구 동의, robots.txt, sitemap과 SEO 메타데이터를 점검한 뒤 Cloudflare Pages에 배포했습니다.",
         ],
       },
@@ -288,7 +288,7 @@ export const fullstackProjects: readonly Project[] = [
       role: "문서 인덱스, 하이브리드 검색, 검색 API 및 인증 흐름 구현",
       service: "LLM Wiki·RAG 지식 검색 시스템",
     },
-    highlights: ["정적 JSON 검색 인덱스", "BM25·Vector Search", "RRF 순위 결합"],
+    highlights: ["2,057 노드·2,803 관계", "BM25·Vector Search", "명시·AI 추론 관계 분리"],
     tags: ["TypeScript", "Cloudflare Pages Functions", "BM25", "Vector Search", "RRF", "JSON Index", "RAG"],
     gradient: "from-indigo-500/10 to-violet-500/5",
     details: [
@@ -306,6 +306,11 @@ export const fullstackProjects: readonly Project[] = [
           "**4. 서비스 연결**: `/api/rag/ask` 검색 API와 `/api/auth/verify` 인증 흐름을 구성하고, 응답에 문서 출처와 섹션 정보를 포함했습니다.",
           "**5. 배포 최적화**: 빌드 단계에서 정적 JSON 인덱스를 생성해 런타임에서는 검색과 응답 처리에 집중하도록 구성했습니다.",
         ],
+      },
+      {
+        title: "검색을 넘어 문서·코드 관계를 지식 그래프로 구조화했습니다",
+        body:
+          "문서 검색 결과를 개별 파일 목록으로만 제공하지 않고, 코드·테스트·문서 사이의 연결을 2,057개 노드와 2,803개 관계로 구조화했습니다. 원문에서 직접 확인한 EXTRACTED 관계와 AI가 제안한 INFERRED 관계를 구분해, 추론 결과를 사실과 동일하게 취급하지 않도록 설계했습니다.",
       },
       {
         title: "판단과 배운 점",

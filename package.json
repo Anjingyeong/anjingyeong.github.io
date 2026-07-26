@@ -5,7 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:ai": "vite --mode ai",
+    "dev:fullstack": "vite --mode fullstack",
     "build": "vite build",
+    "build:ai": "vite build --mode ai",
+    "build:fullstack": "vite build --mode fullstack",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
