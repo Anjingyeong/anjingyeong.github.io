@@ -31,7 +31,7 @@ const PortfolioPrint = () => {
                 안진경 <span className="text-slate-400 font-normal">| An Jin Gyeong</span>
               </h1>
               <p className="text-sky-600 font-semibold text-sm mt-1 uppercase tracking-wide">
-                실시간 영상 AI의 정확도와 지연을 함께 개선한 컴퓨터비전 엔지니어
+                영상 속 위험을 1초 안에 관제 알림으로 연결한 컴퓨터비전 엔지니어
               </p>
             </div>
             <div className="text-right space-y-1">
@@ -66,7 +66,7 @@ const PortfolioPrint = () => {
         <div className="print-section">
           <h2 className="print-section-title">Profile Summary</h2>
           <p className="text-[8.5pt] text-slate-700 leading-relaxed">
-            Tracking 단절, 입력 시퀀스 오류와 프레임 적체를 모델·Tracking·실시간 처리 구조의 문제로 나누어 분석한 신입 컴퓨터비전 엔지니어입니다. 의료영상 AI에서 시작해 CCTV 행동 분석과 실시간 관제 시스템까지 경험했으며, 정확도뿐 아니라 지연과 서비스 전달까지 함께 검증하는 데 강점이 있습니다.
+            RTSP 입력부터 Pose·Tracking·행동 분류, TensorRT 최적화와 MQTT 관제 연동까지 구현한 컴퓨터비전 엔지니어입니다. 2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 관제 서비스까지 전달했으며, 행동 분류 F1 93.49%와 YOLO 추론 지연 50.0% 감소를 달성했습니다. 모델 성능뿐 아니라 Tracking 단절, 프레임 적체와 이벤트 전달 지연을 구간별로 측정해 실제 서비스 흐름을 완성하는 데 강점이 있습니다.
           </p>
         </div>
 
@@ -156,7 +156,7 @@ const PortfolioPrint = () => {
             Python, YOLO Pose, ByteTrack, PyTorch, TensorRT, MQTT, RTSP, Docker
           </p>
           <p className="text-[7.5pt] text-slate-700 leading-relaxed mb-1.5">
-            행동 분석 정확도, 트랙 연속성, 프레임 처리 지연을 각각 측정하고 개선
+            RTSP 영상에서 위험 행동을 감지해 1초 안에 관제 서비스까지 전달한 실시간 영상 AI 시스템
           </p>
           <div className="print-grid-3 gap-x-4">
             <div>
@@ -174,11 +174,12 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Result / Outcome</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                54D 특징 F1 93.49%, ID Switch 1건, TensorRT YOLO 지연 50.0% 감소
+                29/29건 1초 내 관제 도달, F1 93.49%, TensorRT YOLO 지연 50.0% 감소
               </p>
             </div>
           </div>
           <div className="mt-2 space-y-1 text-[7.5pt] text-slate-700 leading-relaxed">
+            <p>2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 관제 서비스까지 전달했습니다.</p>
             <p>54D 행동 특징을 적용해 F1-score를 89.29%에서 93.49%로 높이고, False Positive를 38.6%, False Negative를 38.9% 줄였습니다.</p>
             <p>자체 테스트 영상에서 ID Switch를 8건에서 1건으로 줄이고 Mean Track Coverage를 35.76%에서 49.70%로 높였습니다.</p>
             <p>TensorRT를 적용해 YOLO 평균 지연을 9.454ms에서 4.723ms로 줄였습니다. 전체 처리 지연 11.789ms에서 6.101ms로의 감소는 TensorRT와 최신 프레임 처리 정책이 함께 적용된 통합 결과입니다.</p>

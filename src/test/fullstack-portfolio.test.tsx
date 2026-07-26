@@ -123,7 +123,7 @@ describe("full-stack portfolio", () => {
     // 11. AI PortfolioPrint.tsx가 변경되지 않았는지
     const aiPortfolioPrintSrc = readText("src/pages/PortfolioPrint.tsx");
     expect(aiPortfolioPrintSrc).toContain(
-      "실시간 영상 AI의 정확도와 지연을 함께 개선한 컴퓨터비전 엔지니어"
+      "영상 속 위험을 1초 안에 관제 알림으로 연결한 컴퓨터비전 엔지니어"
     );
     expect(aiPortfolioPrintSrc).toContain("Computer Vision");
   });

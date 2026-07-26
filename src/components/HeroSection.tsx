@@ -13,9 +13,9 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
         { value: "1 Incident", label: "경보·증거·설명 통합", note: "originalEventId" },
       ]
     : [
+        { value: "29/29", label: "1초 내 관제 도달", note: "2카메라 내부 테스트" },
         { value: "93.49%", label: "행동 분류 F1", note: "51D → 54D" },
-        { value: "8 → 1", label: "ID Switch", note: "자체 낙상 테스트" },
-        { value: "-50.0%", label: "YOLO 평균 지연", note: "TensorRT 적용" },
+        { value: "-50.0%", label: "YOLO 추론 지연", note: "9.454 → 4.723ms" },
       ];
 
   return (
@@ -46,17 +46,17 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
 
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-5">
               <Sparkles size={14} className="text-primary" />
-              <span className="text-sm font-medium text-primary">{isFullstack ? "Full-Stack Developer Portfolio" : "AI Engineer Portfolio"}</span>
+              <span className="text-sm font-medium text-primary">{isFullstack ? "Full-Stack Developer Portfolio" : "Real-Time Computer Vision Engineer"}</span>
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
-              {isFullstack ? "AI 기능을 운영 가능한 서비스로 완성하는 개발자" : "실시간 영상 AI를 현장에서 작동하게 만드는 엔지니어"}
+              {isFullstack ? "AI 기능을 운영 가능한 서비스로 완성하는 개발자" : "영상 속 위험을 감지해 1초 안에 관제 알림으로 연결합니다"}
             </h1>
 
             <p className="text-base md:text-lg text-foreground/75 mb-8 leading-relaxed font-normal max-w-xl break-keep">
               {isFullstack
                 ? "화면·API·데이터·실시간 이벤트를 연결하고, 비동기 정합성과 실패 복구까지 고려합니다."
-                : "Pose·Tracking·행동 분류부터 TensorRT 최적화와 MQTT 연동까지, 파이프라인의 병목을 로그와 지표로 해결합니다."}
+                : "RTSP 입력부터 Pose·Tracking·행동 분류, TensorRT 최적화와 MQTT 관제 연동까지 구현했습니다. 모델 정확도뿐 아니라 지연·프레임 적체·Tracking 단절을 구간별 지표로 추적해 실제 서비스 흐름을 완성합니다."}
             </p>
 
             <div className="grid max-w-xl grid-cols-1 gap-3 mb-8 sm:grid-cols-3">
@@ -71,7 +71,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
 
             <div className="relative z-20">
               <a href="#projects" className="minimal-btn-primary" onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}>
-                프로젝트 보기
+                {isFullstack ? "프로젝트 보기" : "실시간 AI 시스템 보기"}
               </a>
             </div>
           </div>

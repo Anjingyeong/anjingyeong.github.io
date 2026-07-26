@@ -1,4 +1,4 @@
-# RTSP 기반 실시간 AI 안전관리 시스템을 구현한 융합보안 개발자 (An Jin Gyeong)
+# 영상 속 위험을 1초 안에 관제 알림으로 연결한 컴퓨터비전 엔지니어 (An Jin Gyeong)
 
 - Email: anjin0910@gmail.com
 - GitHub: https://github.com/Anjingyeong
@@ -8,7 +8,7 @@
 
 ## 1. 프로필 요약 (Profile Summary)
 
-의공학 기반의 영상 AI 경험을 바탕으로 RTSP/CCTV 환경에서 실시간 이상행동 탐지 및 관제 이벤트 파이프라인을 구현했습니다. YOLO Pose, ByteTrack, LSTM을 활용한 행동 분석 모델을 구성하고, 추론 결과를 MQTT로 발행하여 Spring Boot 백엔드와 WebSocket, React 대시보드까지 연결하는 End-to-End 관제 구조를 설계했습니다. frameId/timestamp 기반 AI Payload와 OverlaySyncBuffer를 적용하여 영상 프레임과 탐지 오버레이의 정합성을 확보했으며, 다중 카메라 환경에서 worker 동적 할당과 stale stream 자동 복구 흐름을 구현했습니다. RF-DETR 객체 탐지와 VAE 비지도 이상탐지 프로젝트를 통해 오탐 제어, 데이터 증강, Dynamic Threshold 후처리 경험을 추가로 보유하고 있습니다.
+RTSP 영상 입력부터 Pose·Tracking·행동 분류, TensorRT 최적화와 MQTT 관제 연동까지 실시간 영상 AI 시스템을 구현했습니다. 2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 관제 서비스까지 전달했고, 행동 분류 F1 93.49%, YOLO 평균 추론 지연 50.0% 감소를 달성했습니다. 모델 정확도만 높이는 데서 끝나지 않고 Tracking 단절, 프레임 적체와 이벤트 전달 지연을 구간별 로그와 지표로 추적해 실제 서비스 흐름을 완성하는 데 강점이 있습니다. RF-DETR 객체 탐지와 VAE 비지도 이상탐지 프로젝트를 통해 의료영상의 데이터 증강, 오탐 제어와 Dynamic Threshold 후처리 경험도 보유하고 있습니다.
 
 ---
 
@@ -55,10 +55,10 @@
 - WebRTC WHEP를 primary 관제 영상 경로로, HLS를 fallback으로 구성하여 저지연 관제 화면 재생 구조를 설계함. 카메라 채널별 독립 worker에 process allowlist를 적용하여 중복 실행과 port 충돌을 방지함.
 
 **결과**
-- LSTM 최종 검증(stratified source video split 기준 test 2,784개)에서 threshold 0.5 기준 Faint Recall 0.774547, F1 0.756179, Accuracy 0.773186을 달성함.
-- overlay-sync 계약 및 동작 시뮬레이션 테스트 44개가 모두 PASS하고, Backend Gradle 빌드와 Frontend TypeScript 빌드가 성공함.
-- 낙상·실신 등 이상행동 이벤트를 실시간으로 탐지하여 관제 대시보드 알림으로 전달하는 통합 파이프라인 동작을 검증함.
-- 특정 스트림 장애가 전체 관제 흐름에 영향을 주지 않도록 worker 상태를 채널별로 분리 관리하는 구조를 구현함.
+- 2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 관제 서비스까지 전달함.
+- 51D 입력에 center_drop·velocity·torso_angle을 추가해 54D로 확장하고, 행동 분류 F1-score를 89.29%에서 93.49%로 향상함.
+- TensorRT 적용으로 YOLO 평균 추론 지연을 9.454ms에서 4.723ms로 50.0% 줄이고, 최신 프레임 처리 정책과 함께 전체 처리 지연을 11.789ms에서 6.101ms로 낮춤.
+- 자체 낙상 테스트에서 ID Switch를 8건에서 1건으로 줄이고 Mean Track Coverage를 35.76%에서 49.70%로 높임.
 
 **사용 기술:** Python, Spring Boot, React, Mosquitto (MQTT), WebSocket/STOMP, MediaMTX, YOLO26n-pose, ByteTrack, LSTM, WebRTC, Docker
 
