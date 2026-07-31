@@ -65,12 +65,12 @@ export const projects: readonly Project[] = [
     badge: "Main",
     title: "실시간 이상행동 탐지 및 안전 관제 AI 시스템",
     summaryLine:
-      "RTSP 영상 입력부터 Pose·Tracking·LSTM·TensorRT·MQTT 관제 알림까지 연결해, 위험 이벤트를 실제 서비스 흐름으로 완성한 실시간 컴퓨터비전 프로젝트",
+      "YOLO 비교·선정, Tracking과 LSTM 입력 개선, 프레임 버퍼·TensorRT 최적화와 영상 송출을 담당하고 MQTT 토픽 정합성을 맞춘 실시간 컴퓨터비전 프로젝트",
     description:
       "2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 관제 서비스까지 전달했습니다. 이후 행동 분류, Tracking 단절과 추론 병목을 구간별 수치로 개선했습니다.",
     meta: {
       period: "2026.05–2026.07",
-      role: "5인 팀장 · 실시간 영상 AI 파이프라인 담당",
+      role: "5인 팀장 · YOLO 비교·선정, Tracking·프레임 버퍼·TensorRT, LSTM 특징 개선, 영상 송출 담당",
       service: "스마트 안전 관제 AI 시스템",
     },
     heroImage: {
@@ -258,13 +258,14 @@ export const projects: readonly Project[] = [
             items: [
               "Pose 모델 비교와 LSTM 행동 특징 설계",
               "Tracking 재연결, 최신 프레임 처리와 TensorRT 비교",
-              "상태 후처리와 MQTT 위험 이벤트 발행",
+              "AI Worker의 MQTT 토픽·메시지 계약 정합성 조율",
+              "RTSP 영상 송출 방식 비교와 관제 화면 송출 안정화",
             ],
           },
           {
             title: "협업·통합",
             items: [
-              "백엔드와 cameraId·eventType·capturedAt·originalEventId 이벤트 계약 협의",
+              "기존 MQTT 발행 구조를 사용하되 백엔드와 토픽·메시지 필드 규칙을 맞추고 연동 테스트",
               "프론트엔드의 Tracking ID·화면 표시 ID, 인프라의 RTSP·MQTT·Worker 실행 조건 조율",
               "팀장으로서 RTSP 입력부터 화면 표시까지 구간별 로그와 완료 기준을 통합 검증",
             ],
@@ -285,28 +286,28 @@ export const projects: readonly Project[] = [
           "객체 검출·Tracking·시계열 행동 분류를 연결한 실시간 영상 AI 파이프라인 구현",
           "Tracking 단절과 입력 시퀀스 오류를 로그와 프레임 단위로 추적하는 문제 해결 능력",
           "프레임 처리 정책과 TensorRT 효과를 구분해 전체 지연을 측정하는 실시간 최적화",
-          "모델 출력을 상태 후처리와 MQTT 위험 이벤트로 전환하는 서비스 연동 역량",
+          "AI Worker와 관제 시스템 사이의 MQTT 토픽·메시지 계약을 맞추는 통합 협업 역량",
         ],
       },
     ],
   },
   {
     icon: Microscope,
-    badge: "Main",
+    badge: "Supporting",
     title: "RF-DETR 기반 대장 내시경 용종 검출 애플리케이션",
-    summaryLine: "데이터 증강과 bbox 정합성 검증으로 내시경 영상의 형태 편차에 대응한 용종 검출 프로젝트",
+    summaryLine: "기하학적 증강의 효과보다 라벨 정합성을 우선하고, 데이터 품질과 검증 조건을 관리한 의료영상 객체검출 프로젝트",
     description:
       "Kvasir 용종 데이터를 **Train 70% / Val 20% / Test 10%**로 분할하고, Data-Centric 증강과 bbox 정합성 검증으로 영상·웹캠 입력 탐지 애플리케이션을 구현한 프로젝트입니다.",
     meta: {
       period: "2025.03–2025.11",
-      role: "데이터 증강 및 bbox 정합성 검증",
+      role: "데이터 증강 설계 · bbox 정합성 검증 · 영상 입력 애플리케이션 구현",
       service: "대장 내시경 용종 검출 애플리케이션",
     },
     heroImage: {
       src: "/images/rf-detr-polyp-detection.png",
       caption: "대장 내시경 용종 검출 대표 화면",
     },
-    highlights: ["mAP@50 86.2%", "Kvasir 7:2:1", "Data Augmentation"],
+    highlights: ["mAP@50 86.2% · 팀 모델", "bbox 정합성 검증", "영상·웹캠 22+ FPS"],
     tags: ["Python", "RF-DETR", "DINOv2", "OpenCV", "Kvasir Dataset", "Data Augmentation"],
     gradient: "from-blue-500/10 to-indigo-500/10",
     githubUrl: "https://github.com/Anjingyeong/RF-DETR-project",
@@ -315,6 +316,15 @@ export const projects: readonly Project[] = [
       {
         title: "문제와 목표",
         body: "대장 내시경 검사는 육안 판독 시 의사의 피로도와 숙련도에 따라 미세 용종을 놓칠 위험이 있습니다. 특히 비정형적이거나 크기가 작은 병변은 조기 발견이 어렵습니다. 본 프로젝트는 Kvasir 대장 내시경 데이터를 활용해 병변 검출 모델을 fine-tuning하고, 카메라·동영상 입력 환경에서 의료진의 판독을 보조하는 애플리케이션을 구축하는 것을 목표로 했습니다.",
+      },
+      {
+        title: "채용담당자 요약",
+        items: [
+          "**문제**: 내시경 영상의 조명·형태 편차를 단순 모델 교체만으로 해결하기 어려웠습니다.",
+          "**개인 기여**: Elastic Deformation·Grid Distortion 증강을 설계하고, 변환 후 Bounding Box가 실제 병변 영역과 일치하는지 검증했습니다. OpenCV 영상·웹캠 입력 애플리케이션도 구현했습니다.",
+          "**검증 결과**: 팀 모델은 Kvasir 10% 내부 테스트셋에서 mAP@50 86.2%를 기록했고, GUI 렌더링을 포함해 22+ FPS를 확인했습니다.",
+          "**FM플랫폼 전환 역량**: 센서·영상 데이터 변형 과정에서 입력과 정답의 정합성을 확인하고, 데이터 품질 문제를 모델 문제와 구분하는 역량을 보여줍니다.",
+        ],
       },
       {
         title: "시스템 플로우",
@@ -387,9 +397,9 @@ export const projects: readonly Project[] = [
   },
   {
     icon: BarChart2,
-    badge: "Main",
+    badge: "Supporting",
     title: "VAE 기반 유방 초음파 이상 탐지",
-    summaryLine: "라벨이 부족한 유방 초음파에서 정상 분포를 학습해 이상 후보를 시각화한 비지도 이상탐지 프로젝트",
+    summaryLine: "라벨 부족을 비지도 이상탐지 문제로 재정의하고, 영상별 오차 분포를 반영한 후처리를 설계한 프로젝트",
     description:
       "라벨링 비용 문제를 정상 조직 분포를 학습하는 비지도 이상 탐지로 재정의하고, **Reconstruction Error Map**과 적응형 **Dynamic Threshold** 후처리를 개발한 프로젝트입니다.",
     meta: {
@@ -397,7 +407,7 @@ export const projects: readonly Project[] = [
       role: "VAE 비지도 이상탐지 및 Dynamic Threshold 후처리",
       service: "유방 초음파 이상 후보 영역 시각화",
     },
-    highlights: ["Unsupervised", "Error Map", "Dynamic Threshold"],
+    highlights: ["라벨 부족 문제 재정의", "Reconstruction Error Map", "Dynamic Threshold"],
     tags: ["TensorFlow", "VAE", "Anomaly Detection", "Reconstruction Error", "Dynamic Threshold", "Computer Vision"],
     gradient: "from-violet-500/10 to-purple-500/10",
     githubUrl: "https://github.com/Anjingyeong/vae-breast-cancer-anomaly",
@@ -406,6 +416,15 @@ export const projects: readonly Project[] = [
       {
         title: "문제와 목표",
         body: "유방 초음파 영상은 전문의 주석 라벨링 비용이 매우 높아 대규모 지도학습 데이터셋 확보가 어렵습니다. 본 프로젝트의 목표는 라벨이 부족한 환경에서 정상 조직 분포를 먼저 학습한 후, 정상 패턴에서 벗어나는 차영상 오차를 추적하는 비지도 이상 탐지(Unsupervised Anomaly Detection) 접근법을 구축하는 것이었습니다.",
+      },
+      {
+        title: "채용담당자 요약",
+        items: [
+          "**문제**: 병변 위치 라벨이 부족해 일반적인 지도학습 방식의 적용과 평가가 제한적이었습니다.",
+          "**개인 기여**: 정상 조직 분포를 학습하는 VAE 구조를 적용하고, Reconstruction Error Map과 영상별 오차 분포 기반 Dynamic Threshold 후처리를 구현했습니다.",
+          "**검증 태도**: 평가 조건이 불명확한 과거 Dice 수치는 대표 성과에서 제외하고, 정성 확인 결과와 미완료 검증 범위를 분리했습니다.",
+          "**FM플랫폼 전환 역량**: 정상 상태를 기준으로 이상 후보를 선별하고, 환경별 분포 차이에 맞춰 경계값을 조정하는 이상탐지·알람 튜닝 관점을 보여줍니다.",
+        ],
       },
       {
         title: "시스템 플로우",
@@ -477,73 +496,145 @@ export const projects: readonly Project[] = [
   {
     icon: Brain,
     badge: "Supporting",
-    title: "LLM Wiki · RAG 기반 프로젝트 지식 및 하이브리드 검색 시스템",
-    summaryLine: "프로젝트 문서와 사고 기록을 검색 가능한 정적 지식으로 구조화한 하이브리드 검색 시스템",
+    title: "LLM Wiki · Smart Safety Engineering Wiki & Hybrid Search System",
+    summaryLine:
+      "관제 시스템의 장애·실험·기술 판단을 코드 근거와 연결하고, 검색 품질과 회귀 테스트로 운영 가능한 지식 시스템을 만든 프로젝트",
     description:
-      "프로젝트 문서와 사고 기록을 정적 JSON 인덱스로 구조화하고, **8종 메타데이터**와 **BM25 + Vector + Metadata + RRF 4단계 검색 아키텍처**를 설계한 지식 관리 프로젝트입니다.",
-    highlights: ["4단계 Hybrid Search", "8종 메타데이터", "정적 JSON 인덱스"],
-    tags: ["RAG", "Vector Search", "BM25", "Hybrid Search", "TypeScript", "Cloudflare", "LLM"],
+      "스마트 안전관제 시스템 개발 과정에서 흩어진 문제 해결 기록, 실험 결과, 설계 판단을 구조화해 **50개 Wiki 문서 / 737개 Chunk**로 검색 가능한 지식 시스템을 구축했습니다. 또한 **61개 Golden Query 평가셋**으로 Vector, BM25, Hybrid 검색 품질을 비교하고, 확장성을 위해 **Elasticsearch BM25 · dense_vector kNN · HNSW · RRF 기반 Provider**를 별도로 설계·구현했습니다.",
+    highlights: [
+      "50개 문서 · 737개 Chunk",
+      "61개 Golden Query 평가",
+      "Hybrid Hit@5 82.14%",
+      "Elasticsearch Provider 설계·구현",
+    ],
+    tags: [
+      "RAG",
+      "Knowledge Management",
+      "BM25",
+      "Vector Search",
+      "Hybrid Search",
+      "Elasticsearch",
+      "TypeScript",
+      "LLM",
+    ],
     gradient: "from-violet-500/10 to-fuchsia-500/10",
     hasAwards: false,
     details: [
       {
         title: "문제와 목표",
-        body: "AI 개발 과정의 의사결정 기록, 실패한 실험, 오탐 원인 분석 문서는 시간이 지나면 파편화되어 다시 찾기 어렵습니다. 또한 단순 의미론적 벡터 검색(Vector Search)만으로는 cameraLoginId, frameId, MQTT 토픽 같은 코드 식별자와 키워드를 정밀하게 검색하기 어렵습니다. 본 프로젝트는 8종 메타데이터와 BM25 + Vector Search + RRF 랭킹 파이프라인을 구축하여 의사결정 근거를 추적할 수 있는 지식 파이프라인을 설계하는 것을 목표로 했습니다.",
+        body:
+          "스마트 안전관제 시스템은 AI 추론, RTSP 스트리밍, MQTT 이벤트, 백엔드 저장, 프론트 알림까지 여러 기술 영역이 연결된 복합 프로젝트였습니다. 개발이 진행될수록 RTSP 지연, Overlay 불일치, 중복 알림, TensorRT 검증, VLM 후처리 분리 같은 문제의 원인과 해결 기록이 Git 커밋, 메신저, 개인 메모, 코드 내부에 흩어졌습니다. 이 프로젝트의 목표는 흩어진 개발 기록을 단순 문서가 아니라 다시 검색하고 재사용할 수 있는 엔지니어링 지식 자산으로 전환하는 것이었습니다.",
+      },
+      {
+        title: "채용담당자 요약",
+        items: [
+          "**문제**: 여러 저장소와 메모에 흩어진 장애 원인과 기술 판단을 다시 찾기 어려웠습니다.",
+          "**개인 기여**: 50개 문서를 737개 Chunk로 구조화하고, 61개 Golden Query로 Vector·BM25·Hybrid 검색을 비교했습니다. Elasticsearch Provider와 Legacy fallback 구조도 구현했습니다.",
+          "**검증 결과**: 기존 Hybrid 검색 Hit@5 82.14%를 기준선으로 확보했고, 신규 테스트 3개와 전체 회귀 테스트 92개를 통과했습니다.",
+          "**FM플랫폼 전환 역량**: 장애 이력·운영 매뉴얼·설비 지식을 검색 가능한 자산으로 만들고, 신규 기능이 기존 검색 품질을 깨뜨리지 않는지 검증하는 운영 관점을 보여줍니다.",
+        ],
+      },
+      {
+        title: "저장소와 데모",
+        items: [
+          "**GitHub 저장소**: https://github.com/Anjingyeong/llm_wiki_strange",
+          "**핵심 가치**: 단순한 문서 보관이 아니라, 문제·원인·판단·코드 근거를 다시 검색 가능한 형태로 구조화",
+          "**활용 목적**: 개발 중 트러블슈팅 재참조, 포트폴리오 근거 정리, 기술 설명의 evidence repository",
+        ],
+      },
+      {
+        title: "지식화 범위",
+        items: [
+          "**Architecture**: AI · Backend · Frontend · Infra 연결 구조 정리",
+          "**Engineering Decision**: 기술 선택 이유와 대안 비교 기록",
+          "**Bug Report**: 증상, 원인, 해결 방식, 트레이드오프 문서화",
+          "**Experiment**: 모델·추론·스트리밍 성능 수치 및 비교 결과 축적",
+          "**Event Contract**: MQTT Payload와 동기화 규칙 정리",
+          "**Incident Metadata**: incidentAt / cameraId / eventType / severity 기준으로 안전 이벤트 문서 필터링",
+          "**Source Map**: 실제 구현 코드 경로와 문서 연결",
+          "**Implementation Status**: planned / implemented / verified / deprecated 상태 구분",
+        ],
       },
       {
         title: "시스템 플로우",
         diagram: `flowchart LR
-    Query["🔍 Search Query"] --> MetaFilter["📌 Metadata Filtering\\ntitle / category / tags / incidentAt"]
-    MetaFilter --> BM25["📝 BM25\\nKeyword Search"]
-    MetaFilter --> Vector["🧠 Vector Search\\nSemantic Similarity"]
-    BM25 --> RRF["⚖️ RRF\\nReciprocal Rank Fusion"]
-    Vector --> RRF
-    RRF --> Context["📄 LLM Context\\nTitle / Category / Section / SourcePath"]
-    Context --> Answer["✅ Answer + Source Evidence"]`,
+    Raw["📝 Raw Notes / Logs / Screenshots"] --> Normalize["🧹 Document Normalization"]
+    Normalize --> Chunk["✂️ Chunking + Context Prefix"]
+    Chunk --> Meta["🏷️ Metadata\\ncategory / tags / sourcePath / status"]
+    Meta --> Legacy["🔎 Legacy Search\\nBM25 / Vector / RRF"]
+    Meta --> Elastic["⚡ Elasticsearch Provider\\nBM25 / dense_vector kNN / HNSW / RRF"]
+    Legacy --> Answer["📄 Search Result + Source Evidence"]
+    Elastic --> Answer
+    Answer --> Reuse["♻️ Portfolio / Technical Story / Troubleshooting Reuse"]`,
       },
       {
-        title: "핵심 문제 해결 사례",
-        items: [
-          "**메타데이터 추적 구조 설계**: title, category, updatedAt, summary, tags, order, sourcePath, sectionTitle 등 8종 메타데이터를 텍스트 청크와 함께 색인하여 출처 문맥을 추적할 수 있게 했습니다.",
-          "**관제 사고 문서 메타데이터 포함**: incidentAt, cameraId, eventType, severity 4종 필드를 추가하여 특정 카메라 및 사고 시점 기반의 정밀 필터링 구조를 수립했습니다.",
-          "**하이브리드 검색 (BM25 + Vector + RRF) 파이프라인**: 식별자 키워드 검색에 강한 BM25와 문맥 의미 검색에 강한 Vector Search를 조합하고, RRF(Reciprocal Rank Fusion)로 순위를 종합하는 4단계 파이프라인을 설계했습니다.",
-          "**정적 배포 환경 부하 절감**: Cloudflare Pages 정적 환경에 맞게 search-index 및 rag-vector-index를 빌드 타임 정적 JSON 파일로 생성하여 런타임 서버 오버헤드를 절감했습니다.",
-        ],
-      },
-      {
-        title: "적용 전후 비교",
-        body: "단순 Vector Search 대비 4단계 하이브리드 검색 설계 특성 비교입니다.",
+        title: "검색 구조와 인덱싱",
+        body:
+          "Markdown 문서를 Frontmatter와 섹션 단위로 구조적으로 분할하고, Contextual Prefix와 메타데이터를 포함한 검색 인덱스를 생성했습니다. 각 Chunk에는 문서 제목, slug, heading path, category, tags, 관련 문서, 코드 심벌, 참조 파일, 구현 상태, content hash 등을 포함시켜 단순 키워드 검색보다 더 깊은 근거 추적이 가능하도록 설계했습니다.",
         table: {
-          headers: ["구분", "단순 벡터 검색 (Vector Search)", "하이브리드 검색 (BM25 + Vector + RRF)", "비고 및 특성"],
+          headers: ["항목", "내용"],
           rows: [
-            ["정확한 키워드/ID 검색", "cameraLoginId 등 정확 식별자 누락 위험", "BM25 키워드 매칭으로 식별자 검색 보완", "키워드 정밀도 보완"],
-            ["의미론적 유사도", "문맥 및 의도 기반 유사 문서 검색 지원", "Vector Search로 문맥 검색 지원", "의미 유사도 보존"],
-            ["검증 지표 (Recall@k, MRR)", "정량 대조군 수치 미비", "검색 품질 정량 대조군 측정 진행 예정", "후속 검증 과제로 관리"],
+            ["Wiki 문서 수", "50개"],
+            ["RAG Chunk 수", "737개"],
+            ["증분 인덱싱 재사용", "728개"],
+            ["신규 생성 Chunk", "9개"],
+            ["누락 문서", "0개"],
           ],
         },
       },
       {
+        title: "검색 품질 기준선 평가",
+        body:
+          "Elasticsearch를 도입하기 전에 먼저 현재 검색 구조의 품질을 직접 측정했습니다. 61개 Golden Query 평가셋을 구성해 Vector, BM25, Hybrid 검색을 동일 조건으로 비교했고, 새로운 기술 도입 전에 baseline을 수치로 확보했습니다.",
+        table: {
+          headers: ["검색 방식", "Hit@5", "Recall@5", "MRR", "nDCG@5", "No-result 정확도", "p95"],
+          rows: [
+            ["Vector", "69.64%", "46.13%", "0.5696", "0.4618", "0%", "2.45ms"],
+            ["BM25", "75.00%", "50.00%", "0.6369", "0.4977", "40%", "127.73ms"],
+            ["Hybrid", "82.14%", "61.01%", "0.6875", "0.5884", "100%", "171.89ms"],
+          ],
+        },
+      },
+      {
+        title: "Elasticsearch 확장 설계 및 구현",
+        items: [
+          "**Legacy 검색 유지**: 기존 BM25 · 로컬 Vector · RRF 경로를 보존한 상태에서 Elasticsearch Provider를 분리 설계",
+          "**BM25 검색**: title, codeSymbols, tags, headingPath 등에 가중치를 둔 검색 구성",
+          "**Vector 검색**: 256차원 임베딩을 dense_vector 필드에 저장하고 cosine similarity 기반 kNN 검색 구성",
+          "**HNSW 적용**: int8_hnsw 인덱싱 구조로 확장성 고려",
+          "**Hybrid 검색**: BM25 결과와 kNN 결과를 RRF로 결합",
+          "**Bulk Indexing**: RAG JSON 인덱스를 Elasticsearch 문서 형식으로 변환해 200개 단위로 _bulk 색인",
+          "**Fallback 구조**: Elasticsearch 연결 실패 시 기존 Legacy 검색 경로로 복구 가능하도록 분리",
+        ],
+      },
+      {
         title: "검증 범위와 한계",
         items: [
-          "**검색 품질 정량 평가**: BM25 단독 대비 하이브리드 검색의 Recall@k, MRR, 식별자 검색 성공률 및 응답 지연시간에 대한 정량 대조군 측정은 후속 평가 과제로 남겨두었습니다.",
-          "**아키텍처 완성도와 정량 성과의 구분**: 4단계 필터링 및 정적 인덱싱 아키텍처 구현 자체와 최종 검색 품질 향상 성과를 분리하여 설명했습니다.",
+          "**완료된 범위**: Elasticsearch Mapping 설계, Bulk 색인 코드, BM25 검색 코드, dense_vector kNN 검색 코드, RRF Hybrid 검색, Metadata Filter, 단위 테스트, 회귀 테스트, TypeScript/Vite 빌드 검증",
+          "**검증 결과**: Elasticsearch 신규 테스트 3개 통과, 전체 회귀 테스트 92개 통과, 실패 0건",
+          "**미완료 범위**: Docker Desktop 환경 이슈로 실제 Elasticsearch 컨테이너 색인 및 61개 질의 전체 실측은 미완료",
+          "**표현 원칙**: '성능을 개선했다'고 과장하지 않고, '비교 평가가 가능한 구조까지 설계·구현했다'고 구분해 설명",
         ],
       },
       {
         title: "판단과 배운 점",
         items: [
-          "**벡터 검색 하나로 모든 질문을 해결하지 않았습니다**: Vector Search는 의미가 유사한 문서를 찾는 데 유리하지만 cameraLoginId와 frameId 같은 정확한 식별자를 놓칠 수 있었습니다. 키워드 검색에 강한 BM25와 문맥 검색에 강한 Vector Search를 결합하고 RRF로 결과 순위를 통합했습니다. 이를 통해 검색 기술은 하나를 선택하는 것이 아니라 질문 유형에 따라 강점을 조합해야 한다는 점을 배웠습니다.",
-          "**구현 결과와 검증된 성과를 구분했습니다**: 하이브리드 검색 구조를 구현했더라도 실제 검색 품질이 향상됐다고 주장하려면 Recall@k와 MRR 같은 정량 평가가 필요했습니다. 아키텍처 구현과 품질 검증 결과를 분리하고 부족한 평가는 후속 과제로 남겼습니다. 이를 통해 구현 사실과 검증된 성과를 명확히 구분하는 것이 기술 신뢰도를 높인다는 점을 배웠습니다.",
+          "**기록을 많이 남기는 것과 지식화는 다르다는 점을 배웠습니다**: 단순 메모는 시간이 지나면 다시 찾기 어렵습니다. 문제, 원인, 결정, 실험 결과, 코드 근거가 연결되어야 실제로 재사용 가능한 엔지니어링 지식이 된다는 점을 경험했습니다.",
+          "**새 기술 도입 전에는 baseline이 필요하다는 점을 배웠습니다**: 처음부터 Elasticsearch를 붙였다면 개선 여부를 설명하기 어려웠습니다. 기존 Vector·BM25·Hybrid 성능을 먼저 측정하고 기준선을 확보한 뒤 확장 구조를 설계함으로써 기술 도입의 이유를 수치로 설명할 수 있었습니다.",
+          "**검색 품질과 지연시간은 트레이드오프라는 점을 배웠습니다**: Vector 검색은 빠르지만 정확도가 낮았고, Hybrid 검색은 정확도가 높지만 계산 비용이 증가했습니다. 검색 시스템은 정확도만이 아니라 지연시간, 운영 복잡도, 장애 대응 전략까지 함께 고려해야 한다는 점을 배웠습니다.",
+          "**구현과 검증 완료를 구분하는 태도가 중요하다는 점을 배웠습니다**: 코드가 존재하는 것과 실제 환경에서 검증된 것은 다릅니다. 저는 구현 사실과 검증된 성과를 분리해 설명하는 것이 오히려 기술 신뢰도를 높인다고 판단했습니다.",
+          "**Wiki도 하나의 제품이라는 관점을 갖게 되었습니다**: 문서를 작성하는 데서 끝나는 것이 아니라 인덱싱, 검색, 테스트, 회귀 검증, 품질 평가가 필요했습니다. 이를 통해 문서 시스템 역시 지속적으로 관리하고 개선해야 하는 소프트웨어 제품이라는 점을 배웠습니다.",
         ],
       },
       {
         title: "이 프로젝트로 보여주는 역량",
         items: [
-          "문서 정규화와 메타데이터 검색 인덱스 설계",
-          "BM25와 Vector Search를 결합한 하이브리드 검색 구현",
-          "RRF 기반 검색 결과 순위 통합",
-          "정적 JSON 인덱스와 Cloudflare 배포 환경 최적화",
-          "검색 품질 평가 범위와 구현 성과를 구분하는 검증 설계",
+          "개발 과정의 문제 해결 기록을 구조화된 엔지니어링 지식으로 전환하는 능력",
+          "BM25 · Vector Search · RRF 기반 하이브리드 검색 설계 및 평가",
+          "Golden Query 평가셋 구성과 검색 품질 정량 비교",
+          "Elasticsearch BM25 · dense_vector kNN · HNSW · Bulk Indexing 설계/구현",
+          "Legacy fallback을 고려한 점진적 전환 전략 설계",
+          "구현 범위와 검증 완료 범위를 구분해 설명하는 기술 커뮤니케이션 능력",
         ],
       },
     ],

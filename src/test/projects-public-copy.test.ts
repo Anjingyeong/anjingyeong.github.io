@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { createElement } from "react";
 import { describe, expect, it } from "vitest";
 import ProjectsSection from "@/components/ProjectsSection";
@@ -87,43 +87,40 @@ describe("ProjectsSection public copy", () => {
     expect(llmWikiIndex).toBeGreaterThan(smartSafetyIndex);
   });
 
-  it("opens project details from a card with submission-ready compact sections", () => {
+  it("shows Smart Safety problem, role, decisions, and results without opening a dialog", () => {
     render(createElement(ProjectsSection));
 
-    fireEvent.click(screen.getByText("실시간 이상행동 탐지 및 안전 관제 AI 시스템"));
-
-    expect(screen.getByRole("dialog")).toHaveTextContent("AI 시스템 구조");
-    expect(screen.getByRole("dialog")).toHaveTextContent("자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다");
-    expect(screen.getByRole("dialog")).toHaveTextContent("최신 프레임 정책과 TensorRT로 실시간성을 확보했습니다");
+    expect(screen.getAllByText("해결한 문제").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("개인 기여 · 직접 담당").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("문제를 어떻게 판단하고 개선했는지").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("AI 시스템 구조").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("최신 프레임 정책과 TensorRT로 실시간성을 확보했습니다").length).toBeGreaterThan(0);
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
-  it("opens VAE details with the corrected responsibility scope", () => {
+  it("shows VAE responsibility evidence directly on the page", () => {
     render(createElement(ProjectsSection));
 
-    fireEvent.click(screen.getByText("VAE 기반 유방 초음파 이상 탐지"));
-
-    expect(screen.getByRole("dialog")).toHaveTextContent(
-      "Reconstruction Error Map",
-    );
-    expect(screen.getByRole("dialog")).toHaveTextContent(
-      "Dynamic Threshold",
-    );
-    expect(screen.getByRole("dialog")).toHaveTextContent(
-      "수치 공개 대신 세부 검증 항목 지정",
-    );
-    expect(screen.getByRole("dialog")).not.toHaveTextContent(
-      "커스텀 손실 함수를 단독 설계",
-    );
+    expect(screen.getByText("VAE 기반 유방 초음파 이상 탐지")).toBeInTheDocument();
+    expect(screen.getAllByText(/Reconstruction Error Map/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Dynamic Threshold/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/라벨 부족 문제 재정의/).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/커스텀 손실 함수를 단독 설계/)).not.toBeInTheDocument();
   });
 
-  it("keeps LLM Wiki claims aligned with lightweight static index generation", () => {
+  it("keeps LLM Wiki claims aligned with the evaluated hybrid search and Elasticsearch scope", () => {
     expect(packageJson).toContain('"wiki:index"');
-    expect(publicProjectSources).toContain("Metadata Filtering");
+    expect(publicProjectSources).toContain("50개 Wiki 문서 / 737개 Chunk");
+    expect(publicProjectSources).toContain("61개 Golden Query 평가셋");
+    expect(publicProjectSources).toContain("Hybrid Hit@5 82.14%");
     expect(publicProjectSources).toContain("BM25");
     expect(publicProjectSources).toContain("Vector Search");
     expect(publicProjectSources).toContain("RRF");
-    expect(publicProjectSources).toContain("정적 JSON");
-    expect(publicProjectSources).toContain("8종 메타데이터");
+    expect(publicProjectSources).toContain("Elasticsearch");
+    expect(publicProjectSources).toContain("dense_vector");
+    expect(publicProjectSources).toContain("HNSW");
+    expect(publicProjectSources).toContain("Legacy 검색 유지");
     expect(publicProjectSources).not.toMatch(
       /\/api\/rag\/ask|LLM API key|GraphRAG/,
     );

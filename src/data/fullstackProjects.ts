@@ -280,15 +280,16 @@ export const fullstackProjects: readonly Project[] = [
   {
     icon: BookOpen,
     badge: "Main",
-    title: "BM25·Vector Search·RRF 기반 프로젝트 지식 검색 시스템",
+    title: "LLM Wiki·Smart Safety Engineering Wiki",
     summaryLine: "프로젝트 문서와 기술 의사결정을 검색 가능한 데이터로 구조화한 하이브리드 검색 서비스",
-    description: "정적 JSON 인덱스와 BM25·Vector Search·RRF를 결합해 문서 출처와 섹션 정보를 제공하는 프로젝트 지식 검색 구조를 구현했습니다.",
+    description:
+      "스마트 안전관제 개발 과정에서 생성된 기술 문서와 장애 기록을 검색 가능한 지식으로 구조화하고, BM25·Vector Search·RRF와 Elasticsearch 확장 구조를 설계·구현했습니다.",
     meta: {
       period: "2026",
-      role: "문서 인덱스, 하이브리드 검색, 검색 API 및 인증 흐름 구현",
+      role: "문서를 정적 인덱스로 구조화하고 BM25·Vector Search·RRF를 구현했으며, Elasticsearch Provider와 검색 품질 평가 구조를 설계·구현했습니다.",
       service: "LLM Wiki·RAG 지식 검색 시스템",
     },
-    highlights: ["2,057 노드·2,803 관계", "BM25·Vector Search", "명시·AI 추론 관계 분리"],
+    highlights: ["50개 문서 · 737개 Chunk", "61개 Golden Query 평가", "Hybrid Hit@5 82.14%"],
     tags: ["TypeScript", "Cloudflare Pages Functions", "BM25", "Vector Search", "RRF", "JSON Index", "RAG"],
     gradient: "from-indigo-500/10 to-violet-500/5",
     details: [

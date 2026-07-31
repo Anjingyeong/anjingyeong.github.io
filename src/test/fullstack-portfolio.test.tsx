@@ -17,7 +17,7 @@ describe("full-stack portfolio", () => {
     expect(fullstackProjects.map((project) => project.title)).toEqual([
       "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
       "AI 이벤트 수신부터 사고 검색까지 연결한 실시간 안전 관제 플랫폼",
-      "BM25·Vector Search·RRF 기반 프로젝트 지식 검색 시스템",
+      "LLM Wiki·Smart Safety Engineering Wiki",
     ]);
     expect(fullstackProjects).toHaveLength(3);
     expect(fullstackProjects.some((project) => project.title.includes("포트폴리오 웹사이트"))).toBe(false);
@@ -214,14 +214,14 @@ describe("full-stack portfolio", () => {
     expect(fullstackJson).not.toContain("서비스 수준 합약");
   });
 
-  it("includes '판단과 배운 점' section with exactly 2 items in all projects", () => {
+  it("includes a substantive '판단과 배운 점' section in all projects", () => {
     for (const project of projects) {
       const reflection = project.details.find(
         (detail) => detail.title === "판단과 배운 점"
       );
 
       expect(reflection).toBeDefined();
-      expect(reflection?.items).toHaveLength(2);
+      expect(reflection?.items?.length).toBeGreaterThanOrEqual(2);
     }
 
     for (const project of fullstackProjects) {
@@ -230,7 +230,7 @@ describe("full-stack portfolio", () => {
       );
 
       expect(reflection).toBeDefined();
-      expect(reflection?.items).toHaveLength(2);
+      expect(reflection?.items?.length).toBeGreaterThanOrEqual(2);
     }
   });
 
@@ -247,7 +247,7 @@ describe("full-stack portfolio", () => {
       );
 
       expect(reflection).toBeDefined();
-      expect(reflection?.items).toHaveLength(2);
+      expect(reflection?.items?.length).toBeGreaterThanOrEqual(2);
       expect(capabilities).toBeDefined();
 
       expect(project.details.indexOf(reflection!)).toBeLessThan(

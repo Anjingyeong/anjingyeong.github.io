@@ -14,7 +14,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
       ]
     : [
         { value: "29/29", label: "1초 내 관제 도달", note: "2카메라 내부 테스트" },
-        { value: "93.49%", label: "행동 분류 F1", note: "51D → 54D" },
+        { value: "93.49%", label: "행동 분류 F1", note: "동일 평가 조건" },
         { value: "-50.0%", label: "YOLO 추론 지연", note: "9.454 → 4.723ms" },
       ];
 
@@ -46,17 +46,17 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
 
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-5">
               <Sparkles size={14} className="text-primary" />
-              <span className="text-sm font-medium text-primary">{isFullstack ? "Full-Stack Developer Portfolio" : "Real-Time Computer Vision Engineer"}</span>
+              <span className="text-sm font-medium text-primary">{isFullstack ? "Full-Stack Developer Portfolio" : "융합보안 · 지능형 관제 · FM플랫폼 지원 포트폴리오"}</span>
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
-              {isFullstack ? "AI 기능을 운영 가능한 서비스로 완성하는 개발자" : "영상 속 위험을 감지해 1초 안에 관제 알림으로 연결합니다"}
+              {isFullstack ? "AI 기능을 운영 가능한 서비스로 완성하는 개발자" : "영상 AI를 관제 플랫폼의 실제 대응 흐름으로 연결합니다"}
             </h1>
 
             <p className="text-base md:text-lg text-foreground/75 mb-8 leading-relaxed font-normal max-w-xl break-keep">
               {isFullstack
                 ? "화면·API·데이터·실시간 이벤트를 연결하고, 비동기 정합성과 실패 복구까지 고려합니다."
-                : "RTSP 입력부터 Pose·Tracking·행동 분류, TensorRT 최적화와 MQTT 관제 연동까지 구현했습니다. 모델 정확도뿐 아니라 지연·프레임 적체·Tracking 단절을 구간별 지표로 추적해 실제 서비스 흐름을 완성합니다."}
+                : "YOLO 후보 비교·선정, Tracking 개선, LSTM 입력 특징 보강, 프레임 버퍼·TensorRT 최적화와 RTSP 영상 송출을 담당했습니다. AI Worker의 MQTT 발행 로직을 새로 만들기보다 백엔드와 토픽·메시지 규칙을 맞춰 관제 시스템과 통합했습니다."}
             </p>
 
             <div className="grid max-w-xl grid-cols-1 gap-3 mb-8 sm:grid-cols-3">

@@ -56,11 +56,11 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
           })}
         </div>
 
-        <details className="rounded-lg border border-border bg-background/40">
-          <summary className="cursor-pointer px-4 py-3 text-sm font-semibold text-foreground">
-            원인·구현·검증 상세 보기
-          </summary>
-          <div className="space-y-4 border-t border-border p-4">
+        <div className="rounded-lg border border-border bg-background/40">
+          <div className="border-b border-border px-4 py-3 text-sm font-semibold text-foreground">
+            원인·구현·검증
+          </div>
+          <div className="space-y-4 p-4">
             <div className="grid gap-3 md:grid-cols-2">
               {detail.problemSolving
                 .filter((step) => technicalStepLabels.includes(step.label as (typeof technicalStepLabels)[number]))
@@ -105,7 +105,7 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
               </p>
             ) : null}
           </div>
-        </details>
+        </div>
       </div>
     ) : null}
     {detail.items ? (
@@ -210,6 +210,155 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
     ) : null}
   </section>
 );
+
+const FeaturedProject = ({ project }: { readonly project: Project }) => {
+  const problem = project.details.find((detail) => detail.title === "문제 정의와 목표")?.body;
+  const role = project.details.find((detail) => detail.title === "담당 범위와 협업")?.groups?.[0]?.items;
+  const decisions = project.details
+    .filter((detail) => detail.problemSolving)
+    .slice(0, 4)
+    .map((detail) => ({
+      title: detail.title,
+      choice: detail.problemSolving?.find((step) => step.label === "의사결정")?.text ?? "",
+      result: detail.problemSolving?.find((step) => step.label === "결과")?.text ?? "",
+    }));
+
+  return (
+    <ScrollAnimator>
+      <article className="overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-sm">
+        <div className={`bg-gradient-to-br ${project.gradient} p-6 md:p-10`}>
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="icon-container"><project.icon size={24} /></div>
+                <span className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-bold text-primary">FM플랫폼 직무 연관 대표 프로젝트</span>
+              </div>
+              <h3 className="text-2xl font-bold leading-tight text-foreground md:text-3xl">{project.title}</h3>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base">{renderInlineText(project.summaryLine)}</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {project.demoUrl ? (
+                <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-rose-500/20 bg-rose-500/10 px-4 py-2 text-sm font-semibold text-rose-500"><Play size={17} /> 시연 영상</a>
+              ) : null}
+              {project.githubUrl ? (
+                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-border bg-background/70 px-4 py-2 text-sm font-semibold text-foreground"><Github size={17} /> GitHub</a>
+              ) : null}
+            </div>
+          </div>
+          {project.heroImage ? (
+            <div className="mt-7 overflow-hidden rounded-xl border border-border bg-card/80 p-2">
+              <img src={project.heroImage.src} alt={project.heroImage.caption} className="max-h-[520px] w-full rounded-lg object-contain" />
+            </div>
+          ) : null}
+        </div>
+
+        <div className="space-y-8 p-6 md:p-10">
+          {project.title.includes("안전 관제") ? (
+            <section className="rounded-2xl border border-primary/25 bg-primary/5 p-5 md:p-7">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">채용담당자 10초 요약</p>
+              <div className="mt-4 grid gap-3 lg:grid-cols-3">
+                <div className="rounded-xl border border-border bg-background/70 p-4">
+                  <p className="text-xs font-bold text-primary">문제</p>
+                  <p className="mt-2 text-sm font-semibold leading-relaxed text-foreground">낙상 순간 Tracking ID가 끊기고 프레임 적체와 송출 정지로 실시간 관제 안정성이 떨어졌습니다.</p>
+                </div>
+                <div className="rounded-xl border border-border bg-background/70 p-4">
+                  <p className="text-xs font-bold text-primary">직접 역할</p>
+                  <p className="mt-2 text-sm font-semibold leading-relaxed text-foreground">YOLO 비교·선정, Tracking·LSTM 입력 개선, 프레임 버퍼·TensorRT 최적화, 영상 송출을 담당했습니다.</p>
+                </div>
+                <div className="rounded-xl border border-border bg-background/70 p-4">
+                  <p className="text-xs font-bold text-primary">핵심 결과</p>
+                  <p className="mt-2 text-sm font-semibold leading-relaxed text-foreground">ID Switch 8→1건, F1 89.29→93.49%, YOLO 평균 지연 50.0% 감소를 내부 동일 조건에서 확인했습니다.</p>
+                </div>
+              </div>
+            </section>
+          ) : null}
+          <section className="rounded-xl border border-primary/20 bg-primary/5 p-5 md:p-6">
+            <p className="text-xs font-bold uppercase tracking-wide text-primary">FM플랫폼 직무 적합성</p>
+            <p className="mt-2 text-base font-bold leading-relaxed text-foreground">영상·센서 이벤트를 탐지하는 AI와 관제 서비스 사이의 연결 구조를 이해하고, 정확도·추적 안정성·지연을 함께 개선한 경험입니다.</p>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">시설 안전 플랫폼에서 필요한 것은 탐지 모델 하나가 아니라, 현장 입력을 안정적으로 처리하고 위험 이벤트를 운영자 화면과 대응 절차까지 전달하는 전체 흐름이라고 판단했습니다.</p>
+          </section>
+          <div className="grid gap-3 md:grid-cols-3">
+            {project.meta ? (
+              <>
+                <div className="rounded-xl border border-border bg-muted/20 p-4"><p className="text-xs font-bold text-primary">기간</p><p className="mt-1 text-sm font-semibold text-foreground">{project.meta.period}</p></div>
+                <div className="rounded-xl border border-border bg-muted/20 p-4"><p className="text-xs font-bold text-primary">본인 역할</p><p className="mt-1 text-sm font-semibold text-foreground">{project.meta.role}</p></div>
+                <div className="rounded-xl border border-border bg-muted/20 p-4"><p className="text-xs font-bold text-primary">서비스</p><p className="mt-1 text-sm font-semibold text-foreground">{project.meta.service}</p></div>
+              </>
+            ) : null}
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            <section className="rounded-xl border border-border bg-background/50 p-5">
+              <p className="text-xs font-bold uppercase tracking-wide text-primary">해결한 문제</p>
+              <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">{problem ? renderInlineText(problem) : renderInlineText(project.description)}</p>
+            </section>
+            <section className="rounded-xl border border-border bg-background/50 p-5">
+              <p className="text-xs font-bold uppercase tracking-wide text-primary">개인 기여 · 직접 담당</p>
+              <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted-foreground">
+                {(role ?? [project.meta?.role ?? "담당 범위"]).map((item) => (
+                  <li key={item} className="flex gap-2"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{renderInlineText(item)}</li>
+                ))}
+              </ul>
+            </section>
+          </div>
+
+          <section>
+            <div className="mb-4">
+              <p className="text-xs font-bold uppercase tracking-wide text-primary">핵심 의사결정과 결과</p>
+              <h4 className="mt-1 text-xl font-bold text-foreground">문제를 어떻게 판단하고 개선했는지</h4>
+            </div>
+            <div className="grid gap-4 lg:grid-cols-3">
+              {decisions.map((item) => (
+                <div key={item.title} className="rounded-xl border border-border bg-muted/15 p-5">
+                  <h5 className="text-sm font-bold leading-snug text-foreground">{item.title}</h5>
+                  <div className="mt-4"><p className="text-xs font-bold text-primary">판단</p><p className="mt-1 text-sm leading-relaxed text-muted-foreground">{renderInlineText(summarizeStep(item.choice))}</p></div>
+                  <div className="mt-4 border-t border-border pt-4"><p className="text-xs font-bold text-primary">성과</p><p className="mt-1 text-sm leading-relaxed text-muted-foreground">{renderInlineText(item.result)}</p></div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {project.title.includes("안전 관제") ? (
+            <section>
+              <div className="mb-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-primary">검증된 성과 구분</p>
+                <h4 className="mt-1 text-xl font-bold text-foreground">개인 개선 성과와 팀 통합 성과</h4>
+              </div>
+              <div className="grid gap-4 lg:grid-cols-2">
+                <div className="rounded-xl border border-primary/20 bg-primary/5 p-5">
+                  <p className="text-sm font-bold text-foreground">개인 개선 성과</p>
+                  <ul className="mt-4 space-y-3 text-sm leading-relaxed text-muted-foreground">
+                    <li><strong className="text-foreground">Tracking:</strong> ID Switch 8→1건, Mean Track Coverage 35.76→49.70% <span className="block text-xs">자체 낙상 테스트 영상 기준</span></li>
+                    <li><strong className="text-foreground">LSTM:</strong> F1 89.29→93.49% <span className="block text-xs">동일 데이터 분할·동일 평가 조건</span></li>
+                    <li><strong className="text-foreground">TensorRT:</strong> YOLO 평균 지연 9.454→4.723ms <span className="block text-xs">동일 카메라 입력·동일 GPU 기준</span></li>
+                  </ul>
+                </div>
+                <div className="rounded-xl border border-border bg-muted/20 p-5">
+                  <p className="text-sm font-bold text-foreground">팀 통합 성과</p>
+                  <ul className="mt-4 space-y-3 text-sm leading-relaxed text-muted-foreground">
+                    <li><strong className="text-foreground">이벤트 전달:</strong> 위험 이벤트 29/29건이 1초 이내 관제 서비스에 도달</li>
+                    <li><strong className="text-foreground">검증 환경:</strong> 2개 카메라 내부 통합 테스트</li>
+                    <li><strong className="text-foreground">역할 경계:</strong> MQTT 발행 모듈은 기존 구조를 사용하고 토픽·메시지 규칙을 맞춤</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          ) : (
+            <div className="grid gap-3 sm:grid-cols-3">
+              {project.highlights.map((highlight) => (
+                <div key={highlight} className="rounded-xl border border-primary/15 bg-primary/5 p-4 text-center text-sm font-bold text-primary">{highlight}</div>
+              ))}
+            </div>
+          )}
+
+          <section className="space-y-8 border-t border-border pt-8">
+            {project.details.map((detail) => <ProjectDetailSection key={detail.title} detail={detail} />)}
+          </section>
+        </div>
+      </article>
+    </ScrollAnimator>
+  );
+};
 
 type ProjectsSectionProps = {
   readonly items?: readonly Project[];
@@ -319,12 +468,19 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
         <ScrollAnimator>
           <div className="section-header">
             <h2>Projects</h2>
+            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">기술 나열보다 현장 문제, 개인 기여, 판단 근거와 검증 결과가 먼저 보이도록 구성했습니다.</p>
           </div>
         </ScrollAnimator>
 
-        <div className={`relative z-10 grid grid-cols-1 gap-6 ${grouped ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}>
-          {orderedProjects.map((project) => renderCard(project))}
-        </div>
+        {grouped ? (
+          <div className="relative z-10 space-y-8">
+            {orderedProjects.map((project) => <FeaturedProject key={project.title} project={project} />)}
+          </div>
+        ) : (
+          <div className="relative z-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {orderedProjects.map((project) => renderCard(project))}
+          </div>
+        )}
 
         {grouped && supportingProjects.length > 0 ? (
           <>
