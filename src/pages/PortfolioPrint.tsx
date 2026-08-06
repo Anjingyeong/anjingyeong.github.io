@@ -66,7 +66,7 @@ const PortfolioPrint = () => {
         <div className="print-section">
           <h2 className="print-section-title">Profile Summary</h2>
           <p className="text-[8.5pt] text-slate-700 leading-relaxed">
-            RTSP 입력부터 Pose·Tracking·행동 분류, TensorRT 최적화와 MQTT 관제 연동까지 구현한 컴퓨터비전 엔지니어입니다. 2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 관제 서비스까지 전달했으며, 행동 분류 F1 93.49%와 YOLO 추론 지연 50.0% 감소를 달성했습니다. 모델 성능뿐 아니라 Tracking 단절, 프레임 적체와 이벤트 전달 지연을 구간별로 측정해 실제 서비스 흐름을 완성하는 데 강점이 있습니다.
+            RTSP 입력부터 Pose·Tracking·행동 분류, TensorRT 최적화와 MQTT 관제 연동까지 구현한 컴퓨터비전 엔지니어입니다. 2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 MQTT Subscriber까지 전달했으며, Spring Boot·STOMP·React 화면 표시는 별도 통합 테스트로 확인했고, 행동 분류 F1 93.49%와 YOLO 추론 지연 50.0% 감소를 달성했습니다. 모델 성능뿐 아니라 Tracking 단절, 프레임 적체와 이벤트 전달 지연을 구간별로 측정해 실제 서비스 흐름을 완성하는 데 강점이 있습니다.
           </p>
         </div>
 
@@ -88,7 +88,7 @@ const PortfolioPrint = () => {
             <h3 className="text-xs font-bold text-slate-800">
               SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기
             </h3>
-            <span className="text-xs text-slate-500 font-mono">2026.05 - 2026.07</span>
+            <span className="text-xs text-slate-500 font-mono">2026.01 - 2026.07</span>
           </div>
           <p className="text-[7.8pt] text-sky-600 font-semibold mb-1">SK쉴더스 / 지능형 애플리케이션 개발 과정 수료</p>
           <p className="text-[8pt] text-slate-700 leading-relaxed">
@@ -156,7 +156,7 @@ const PortfolioPrint = () => {
             Python, YOLO Pose, ByteTrack, PyTorch, TensorRT, MQTT, RTSP, Docker
           </p>
           <p className="text-[7.5pt] text-slate-700 leading-relaxed mb-1.5">
-            RTSP 영상에서 위험 행동을 감지해 1초 안에 관제 서비스까지 전달한 실시간 영상 AI 시스템
+            RTSP 영상에서 위험 행동을 감지해 1초 안에 MQTT Subscriber까지 전달하고, 관제 화면 연동을 별도 통합 확인한 실시간 영상 AI 시스템
           </p>
           <div className="print-grid-3 gap-x-4">
             <div>
@@ -174,12 +174,12 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Result / Outcome</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                29/29건 1초 내 관제 도달, F1 93.49%, TensorRT YOLO 지연 50.0% 감소
+                29/29건 1초 내 MQTT Subscriber 도달, F1 93.49%, TensorRT YOLO 지연 50.0% 감소
               </p>
             </div>
           </div>
           <div className="mt-2 space-y-1 text-[7.5pt] text-slate-700 leading-relaxed">
-            <p>2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 관제 서비스까지 전달했습니다.</p>
+            <p>2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 MQTT Subscriber까지 전달했습니다. Spring Boot 저장·STOMP·React 화면 표시는 별도 통합 테스트로 확인했습니다.</p>
             <p>54D 행동 특징을 적용해 F1-score를 89.29%에서 93.49%로 높이고, False Positive를 38.6%, False Negative를 38.9% 줄였습니다.</p>
             <p>자체 테스트 영상에서 ID Switch를 8건에서 1건으로 줄이고 Mean Track Coverage를 35.76%에서 49.70%로 높였습니다.</p>
             <p>TensorRT를 적용해 YOLO 평균 지연을 9.454ms에서 4.723ms로 줄였습니다. 전체 처리 지연 11.789ms에서 6.101ms로의 감소는 TensorRT와 최신 프레임 처리 정책이 함께 적용된 통합 결과입니다.</p>
@@ -227,7 +227,7 @@ const PortfolioPrint = () => {
         <div className="print-section">
           <div className="flex justify-between items-baseline mb-1">
             <h3 className="text-sm font-bold text-slate-800">
-              3. VAE 기반 비지도 학습 유방암 병변 검출 시스템
+              3. VAE 기반 유방 초음파 이상 후보 시각화 프로젝트
             </h3>
             <span className="text-xs text-slate-500 font-mono">2024.03 - 2024.10</span>
           </div>
@@ -235,7 +235,7 @@ const PortfolioPrint = () => {
             Python, TensorFlow, VAE, Reconstruction Error, Dynamic Threshold
           </p>
           <p className="text-[7.5pt] text-slate-700 leading-relaxed mb-1.5">
-            라벨 부족 문제를 비지도 이상탐지로 재정의하고, 영상별 밝기와 노이즈에 따른 고정 임계값 편차를 줄이기 위해 이미지별 오차 분포 기반 Dynamic Threshold를 구현
+            라벨 부족 환경에서 팀의 VAE 재구성 흐름과 차영상을 활용해 이상 후보를 확인한 프로젝트
           </p>
           <div className="print-grid-3 gap-x-4">
             <div>
@@ -247,13 +247,13 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Role / Contribution</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                유방 초음파 데이터 전처리와 Reconstruction Error Map 생성, Dynamic Threshold 후처리 알고리즘 개발을 담당했습니다.
+                초음파 영상 데이터 증강과 원본·재구성 차영상 기반 이상 후보 시각화 아이디어를 담당했습니다. VAE 모델과 후처리는 팀 구현입니다.
               </p>
             </div>
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Result / Outcome</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                고정 임계값이 영상 밝기와 노이즈에 따라 달라지는 문제를 확인하고, 이미지별 오차 분포를 반영하는 Dynamic Threshold를 구현했습니다.
+                팀의 VAE 재구성 결과를 차영상으로 비교해 이상 후보를 사람이 검토하기 쉬운 형태로 표현했습니다.
               </p>
             </div>
           </div>

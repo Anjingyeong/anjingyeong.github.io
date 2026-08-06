@@ -16,7 +16,7 @@ const educationAndTraining: TimelineItem[] = [
     title: "SK쉴더스 지능형 애플리케이션 개발 과정",
     subtitle: "수료",
     organization: "SK쉴더스 / 한국표준협회",
-    period: "2026.05 – 2026.07",
+    period: "2026.01 – 2026.07",
     description: "AI 기반 실시간 영상 분석, 백엔드 이벤트 처리, 클라우드 인프라 연동 중심의 실전 시스템 설계 및 프로젝트 수행",
     icon: GraduationCap,
   },
@@ -50,7 +50,7 @@ const awards: TimelineItem[] = [
     subtitle: "동상",
     organization: "산업통상자원부 / 공학교육혁신센터",
     period: "2025.11",
-    description: "RF-DETR 기반 용종 검출 프로젝트를 외부 컨소시엄 경진대회에서 발표해 동상 수상",
+    description: "RF-DETR 용종 검출 팀 프로젝트로 동상 수상 · 개인 기여: 데이터 증강과 bbox 정합성 검토",
     icon: Trophy,
   },
   {
@@ -58,7 +58,7 @@ const awards: TimelineItem[] = [
     subtitle: "금상",
     organization: "건양대학교",
     period: "2025.10",
-    description: "RF-DETR 기반 용종 검출 애플리케이션의 데이터 증강과 bbox 정합성 검증으로 금상 수상",
+    description: "RF-DETR 용종 검출 팀 프로젝트로 금상 수상 · 개인 기여: 데이터 증강과 bbox 정합성 검토",
     icon: Award,
   },
   {
@@ -66,7 +66,7 @@ const awards: TimelineItem[] = [
     subtitle: "공학혁신상",
     organization: "산업통상자원부 / 공학교육혁신센터",
     period: "2024.10",
-    description: "VAE 재구성 오차와 동적 임계값을 활용한 라벨 부족 대응 방식을 인정받아 수상",
+    description: "VAE 기반 유방 초음파 이상 후보 시각화 팀 프로젝트로 수상 · 개인 기여: 데이터 증강과 차영상 아이디어",
     icon: Award,
   },
 ];

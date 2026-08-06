@@ -45,13 +45,13 @@ describe("Skills & Experience & Competence sections", () => {
   it("has exactly 3 awards with distinct RF-DETR award descriptions", () => {
     render(<ExperienceSection />);
     const capstoneAward = screen.getByText(
-      "RF-DETR 기반 용종 검출 애플리케이션의 데이터 증강과 bbox 정합성 검증으로 금상 수상"
+      "RF-DETR 용종 검출 팀 프로젝트로 금상 수상 · 개인 기여: 데이터 증강과 bbox 정합성 검토"
     );
     const consortiumAward = screen.getByText(
-      "RF-DETR 기반 용종 검출 프로젝트를 외부 컨소시엄 경진대회에서 발표해 동상 수상"
+      "RF-DETR 용종 검출 팀 프로젝트로 동상 수상 · 개인 기여: 데이터 증강과 bbox 정합성 검토"
     );
     const dnaAward = screen.getByText(
-      "VAE 재구성 오차와 동적 임계값을 활용한 라벨 부족 대응 방식을 인정받아 수상"
+      "VAE 기반 유방 초음파 이상 후보 시각화 팀 프로젝트로 수상 · 개인 기여: 데이터 증강과 차영상 아이디어"
     );
 
     expect(capstoneAward).toBeInTheDocument();

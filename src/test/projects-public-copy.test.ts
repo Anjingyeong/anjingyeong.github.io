@@ -38,7 +38,7 @@ const portfolioPublicCopy = [
 describe("ProjectsSection public copy", () => {
   it("describes Smart Safety as a real-time event pipeline with caveated metrics", () => {
     expect(publicProjectSources).toContain("실시간 이상행동 탐지 및 안전 관제 AI 시스템");
-    expect(publicProjectSources).toContain("29/29건 위험 이벤트 1초 내 관제 도달");
+    expect(publicProjectSources).toContain("29/29건 위험 이벤트 1초 내 MQTT Subscriber 도달");
     expect(publicProjectSources).toContain("YOLO26n-pose");
     expect(publicProjectSources).toContain("RTSP 영상에서 YOLO26n-pose로");
     expect(publicProjectSources).toContain("LSTM");
@@ -60,7 +60,10 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).toContain("Elastic Deformation");
     expect(publicProjectSources).toContain("Grid Distortion");
     expect(publicProjectSources).toContain("fine-tuning");
+    expect(publicProjectSources).toContain("팀 구현");
     expect(publicProjectSources).toContain("OpenCV");
+    expect(publicProjectSources).toContain("데이터 증강 적용 · 증강 후 bbox 정합성 검토");
+    expect(publicProjectSources).not.toContain("영상 입력 애플리케이션 구현");
     expect(publicProjectSources).toContain("mAP@50");
     expect(publicProjectSources).toContain("/images/rf-detr-polyp-detection.png");
     expect(publicProjectSources).toContain("/images/rf_detr_aug.png");
@@ -69,10 +72,12 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).not.toContain("임상 검증이 완료");
   });
 
-  it("keeps VAE responsibilities aligned to preprocessing and dynamic threshold post-processing", () => {
+  it("keeps VAE responsibilities aligned to augmentation and difference-image ideation", () => {
     expect(portfolioPublicCopy).toContain("유방 초음파");
-    expect(portfolioPublicCopy).toContain("Dynamic Threshold");
-    expect(portfolioPublicCopy).toContain("Reconstruction Error Map");
+    expect(publicProjectSources).toContain("초음파 영상 데이터 증강");
+    expect(publicProjectSources).toContain("차영상 기반 이상 후보 시각화 아이디어");
+    expect(publicProjectSources).toContain("VAE 모델과 후처리 구현은 팀 작업");
+    expect(publicProjectSources).not.toContain("VAE 비지도 이상탐지 및 Dynamic Threshold 후처리");
     expect(portfolioPublicCopy).not.toMatch(
       /Custom Loss 설계|커스텀 Loss|커스텀 손실 함수.*구현|KLD\+MSE 커스텀 손실 함수/,
     );
@@ -129,9 +134,9 @@ describe("ProjectsSection public copy", () => {
     render(createElement(ProjectsSection));
 
     expect(screen.getByText("VAE 기반 유방 초음파 이상 탐지")).toBeInTheDocument();
-    expect(screen.getAllByText(/Reconstruction Error Map/).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/Dynamic Threshold/).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/라벨 부족 문제 재정의/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/초음파 영상 데이터 증강/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/차영상 기반 후보 시각화 아이디어/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/VAE 재구성 · 팀 흐름/).length).toBeGreaterThan(0);
     expect(screen.queryByText(/커스텀 손실 함수를 단독 설계/)).not.toBeInTheDocument();
   });
 

@@ -13,7 +13,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
         { value: "1 Incident", label: "경보·증거·설명 통합", note: "originalEventId" },
       ]
     : [
-        { value: "29/29", label: "1초 내 관제 도달", note: "2카메라 내부 테스트" },
+        { value: "29/29", label: "1초 내 MQTT 도달", note: "Subscriber 기준 · 화면 별도 확인" },
         { value: "93.49%", label: "행동 분류 F1", note: "동일 평가 조건" },
         { value: "-50.0%", label: "YOLO 추론 지연", note: "9.454 → 4.723ms" },
       ];

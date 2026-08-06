@@ -67,7 +67,7 @@ export const projects: readonly Project[] = [
     summaryLine:
       "YOLO 비교·선정, Tracking과 LSTM 입력 개선, 프레임 버퍼·TensorRT 최적화와 영상 송출을 담당하고 MQTT 토픽 정합성을 맞춘 실시간 컴퓨터비전 프로젝트",
     description:
-      "2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 관제 서비스까지 전달했습니다. 이후 행동 분류, Tracking 단절과 추론 병목을 구간별 수치로 개선했습니다.",
+      "2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 MQTT Subscriber까지 전달했습니다. Spring Boot·STOMP·React 관제 화면 표시는 별도 통합 테스트로 확인했고, 이후 행동 분류, Tracking 단절과 추론 병목을 구간별 수치로 개선했습니다.",
     meta: {
       period: "2026.05–2026.07",
       role: "5인 팀장 · YOLO 비교·선정, Tracking·프레임 버퍼·TensorRT, LSTM 특징 개선, 영상 송출 담당",
@@ -79,7 +79,7 @@ export const projects: readonly Project[] = [
         "RTSP 입력부터 Pose·Tracking·LSTM·상태 후처리·MQTT 이벤트까지 연결한 AI 판단 파이프라인",
     },
     highlights: [
-      "29/29건 위험 이벤트 1초 내 관제 도달",
+      "29/29건 위험 이벤트 1초 내 MQTT Subscriber 도달",
       "행동 분류 F1 89.29% → 93.49%",
       "TensorRT YOLO 지연 50.0% 감소",
     ],
@@ -92,7 +92,7 @@ export const projects: readonly Project[] = [
       {
         title: "문제 정의와 목표",
         body:
-          "다수의 CCTV를 소수의 관제 인력이 동시에 확인하는 환경에서는 모든 위험 상황을 즉시 발견하기 어렵습니다. 특히 낙상과 실신은 사고 직후의 발견과 대응 속도가 중요합니다.\n\n이를 해결하기 위해 RTSP 영상에서 사람의 자세와 움직임을 분석하고, 위험 가능성이 높은 장면을 실시간으로 선별해 MQTT 이벤트로 관제 서비스까지 전달하는 AI 시스템을 구현했습니다. 내부 2개 카메라 테스트에서는 발생한 위험 이벤트 29건이 모두 1초 안에 관제 서비스에 도달했습니다.\n\n이후 모델 정확도만 높이는 것이 아니라 사람별 시계열이 끊기지 않는지, 분석 결과가 현재 영상보다 늦어지지 않는지, 순간적인 오판이 실제 경보로 이어지지 않는지까지 구간별 지표로 개선했습니다.",
+          "다수의 CCTV를 소수의 관제 인력이 동시에 확인하는 환경에서는 모든 위험 상황을 즉시 발견하기 어렵습니다. 특히 낙상과 실신은 사고 직후의 발견과 대응 속도가 중요합니다.\n\n이를 해결하기 위해 RTSP 영상에서 사람의 자세와 움직임을 분석하고, 위험 가능성이 높은 장면을 실시간으로 선별해 MQTT 이벤트로 관제 서비스까지 전달하는 AI 시스템을 구현했습니다. 내부 2개 카메라 테스트에서는 발생한 위험 이벤트 29건이 모두 1초 안에 MQTT Subscriber에 도달했습니다. Spring Boot 저장·STOMP·React 관제 화면 표시는 별도 통합 테스트로 확인했습니다.\n\n이후 모델 정확도만 높이는 것이 아니라 사람별 시계열이 끊기지 않는지, 분석 결과가 현재 영상보다 늦어지지 않는지, 순간적인 오판이 실제 경보로 이어지지 않는지까지 구간별 지표로 개선했습니다.",
       },
       {
         title: "AI 시스템 구조",
@@ -227,7 +227,7 @@ export const projects: readonly Project[] = [
           ],
         },
         note:
-          "End-to-End 알림 지연은 평균 20.931ms, p95 26ms, 최대 27ms로 측정했습니다. 전체 처리 지연과 Dropped Frame은 TensorRT와 최신 프레임 처리 정책이 함께 적용된 통합 결과입니다.",
+          "AI Worker의 프레임 수신부터 MQTT Subscriber 수신까지 전달 지연은 평균 20.931ms, p95 26ms, 최대 27ms로 측정했습니다. Spring Boot 저장·STOMP·React 화면 표시는 별도 통합 테스트로 확인했습니다. 전체 처리 지연과 Dropped Frame은 TensorRT와 최신 프레임 처리 정책이 함께 적용된 통합 결과입니다.",
       },
       {
         title: "운영 안정화와 검증 범위",
@@ -297,17 +297,17 @@ export const projects: readonly Project[] = [
     title: "RF-DETR 기반 대장 내시경 용종 검출 애플리케이션",
     summaryLine: "기하학적 증강의 효과보다 라벨 정합성을 우선하고, 데이터 품질과 검증 조건을 관리한 의료영상 객체검출 프로젝트",
     description:
-      "Kvasir 용종 데이터를 **Train 70% / Val 20% / Test 10%**로 분할하고, Data-Centric 증강과 bbox 정합성 검증으로 영상·웹캠 입력 탐지 애플리케이션을 구현한 프로젝트입니다.",
+      "Kvasir 용종 데이터를 **Train 70% / Val 20% / Test 10%**로 분할한 팀 프로젝트입니다. 저는 Data-Centric 증강 적용과 증강 후 bbox 정합성 검토를 담당했고, 팀은 RF-DETR 모델과 영상·웹캠 입력 탐지 애플리케이션을 구현했습니다.",
     meta: {
       period: "2025.03–2025.11",
-      role: "데이터 증강 설계 · bbox 정합성 검증 · 영상 입력 애플리케이션 구현",
+      role: "데이터 증강 적용 · 증강 후 bbox 정합성 검토",
       service: "대장 내시경 용종 검출 애플리케이션",
     },
     heroImage: {
       src: "/images/rf-detr-polyp-detection.png",
       caption: "대장 내시경 용종 검출 대표 화면",
     },
-    highlights: ["mAP@50 86.2% · 팀 모델", "bbox 정합성 검증", "영상·웹캠 22+ FPS"],
+    highlights: ["mAP@50 86.2% · 팀 모델", "증강 후 bbox 정합성 검토", "22+ FPS · 팀 애플리케이션"],
     tags: ["Python", "RF-DETR", "DINOv2", "OpenCV", "Kvasir Dataset", "Data Augmentation"],
     gradient: "from-blue-500/10 to-indigo-500/10",
     githubUrl: "https://github.com/Anjingyeong/RF-DETR-project",
@@ -321,7 +321,7 @@ export const projects: readonly Project[] = [
         title: "프로젝트 요약",
         items: [
           "**문제**: 내시경 영상의 조명·형태 편차를 단순 모델 교체만으로 해결하기 어려웠습니다.",
-          "**담당 역할**: Elastic Deformation·Grid Distortion 증강을 설계하고, 변환 후 Bounding Box가 실제 병변 영역과 일치하는지 검증했습니다. OpenCV 영상·웹캠 입력 애플리케이션도 구현했습니다.",
+          "**개인 기여**: Elastic Deformation·Grid Distortion 증강을 적용하고, 변환 후 Bounding Box가 실제 병변 영역과 일치하는지 검토했습니다. RF-DETR+DINOv2 fine-tuning과 OpenCV 영상·웹캠 애플리케이션은 팀 구현입니다.",
           "**검증 결과**: 팀 모델은 Kvasir 10% 내부 테스트셋에서 mAP@50 86.2%를 기록했고, GUI 렌더링을 포함해 22+ FPS를 확인했습니다.",
           "**핵심 역량**: 센서·영상 데이터 변형 과정에서 입력과 정답의 정합성을 확인하고, 데이터 품질 문제를 모델 문제와 구분했습니다.",
         ],
@@ -336,7 +336,7 @@ export const projects: readonly Project[] = [
         G["Grid Distortion\\n국소적 기하학적 왜곡 모사"]
     end
     Aug --> RF["RF-DETR + DINOv2\\nFine-tuning"]
-    RF --> GUI["OpenCV GUI\\nReal-time Inference"]
+    RF --> GUI["OpenCV GUI\\nTeam Inference App"]
     GUI --> Result["Video/Webcam Detection\\nmAP@50 86.2%"]`,
       },
       {
@@ -344,7 +344,7 @@ export const projects: readonly Project[] = [
         items: [
           "**문제**: 내시경 영상의 조명 변화와 병변 형태 편차로 인해 일반화가 어려웠습니다.",
           "**판단**: 모델을 교체하기보다 데이터 다양성과 증강 후 bbox 정합성 확보를 우선했습니다.",
-          "**해결**: Elastic Deformation과 Grid Distortion을 적용하고, 변환된 bbox가 실제 용종 영역과 일치하는지 확인했습니다. RF-DETR fine-tuning과 OpenCV GUI의 카메라·영상 입력 연동도 구성했습니다.",
+          "**해결**: 저는 Elastic Deformation과 Grid Distortion을 적용하고, 변환된 bbox가 실제 용종 영역과 일치하는지 검토했습니다. 팀은 RF-DETR fine-tuning과 OpenCV GUI의 카메라·영상 입력 연동을 구성했습니다.",
           "**결과**: 팀 모델은 Kvasir 내부 테스트셋에서 mAP@50 86.2%를 기록했습니다.",
         ],
         images: [
@@ -361,7 +361,7 @@ export const projects: readonly Project[] = [
             ["데이터셋 분할", "Train 70% / Val 20% / Test 10%", "Kvasir Dataset 1,000장 기준 평가 분할"],
             ["mAP@50 검출 성능", "86.2%", "Kvasir 10% Test set 평가 수치"],
             ["베이스라인 대비 검출 성능", "mAP@50 약 +7%p 향상", "기본 퓨전/초기 모델 설정 대비 검출 성능 비교"],
-            ["추론 속도", "22+ FPS", "OpenCV GUI 렌더링 및 디스플레이 포함 처리 속도"],
+            ["팀 애플리케이션 처리 속도", "22+ FPS", "OpenCV GUI 렌더링 및 디스플레이 포함 팀 측정 결과"],
           ],
         },
       },
@@ -387,10 +387,10 @@ export const projects: readonly Project[] = [
       {
         title: "핵심 기술 역량",
         items: [
-          "의료·비전 데이터셋 분할과 Geometric Data Augmentation 파이프라인 구축",
-          "Object Detection 모델 Fine-tuning과 mAP 기반 성능 평가",
-          "증강 영상과 Bounding Box 라벨 정합성 검증",
-          "OpenCV 기반 영상·웹캠 실시간 탐지 애플리케이션 구현",
+          "Elastic Deformation·Grid Distortion 기반 Geometric Data Augmentation 적용",
+          "증강 영상과 Bounding Box 라벨 정합성 검토",
+          "의료영상 데이터 품질 문제를 모델 문제와 구분하는 검증",
+          "팀 모델·애플리케이션 성과와 개인 기여 범위를 구분한 기술 설명",
         ],
       },
     ],
@@ -399,15 +399,15 @@ export const projects: readonly Project[] = [
     icon: BarChart2,
     badge: "Supporting",
     title: "VAE 기반 유방 초음파 이상 탐지",
-    summaryLine: "라벨 부족을 비지도 이상탐지 문제로 재정의하고, 영상별 오차 분포를 반영한 후처리를 설계한 프로젝트",
+    summaryLine: "라벨 부족 환경에서 팀의 VAE 재구성 흐름을 이해하고, 데이터 증강과 차영상 기반 후보 시각화에 기여한 프로젝트",
     description:
-      "라벨링 비용 문제를 정상 조직 분포를 학습하는 비지도 이상 탐지로 재정의하고, **Reconstruction Error Map**과 적응형 **Dynamic Threshold** 후처리를 개발한 프로젝트입니다.",
+      "라벨 부족 환경에서 정상 조직 분포를 학습하는 VAE 재구성 흐름과 차영상을 활용해 이상 후보를 확인한 팀 프로젝트입니다. 저는 초음파 영상 데이터 증강과 원본·재구성 차영상 기반 후보 시각화 아이디어를 담당했습니다.",
     meta: {
       period: "2024.03–2024.10",
-      role: "VAE 비지도 이상탐지 및 Dynamic Threshold 후처리",
+      role: "초음파 영상 데이터 증강 · 차영상 기반 이상 후보 시각화 아이디어",
       service: "유방 초음파 이상 후보 영역 시각화",
     },
-    highlights: ["라벨 부족 문제 재정의", "Reconstruction Error Map", "Dynamic Threshold"],
+    highlights: ["초음파 영상 데이터 증강", "차영상 기반 후보 시각화 아이디어", "VAE 재구성 · 팀 흐름"],
     tags: ["TensorFlow", "VAE", "Anomaly Detection", "Reconstruction Error", "Dynamic Threshold", "Computer Vision"],
     gradient: "from-violet-500/10 to-purple-500/10",
     githubUrl: "https://github.com/Anjingyeong/vae-breast-cancer-anomaly",
@@ -421,9 +421,9 @@ export const projects: readonly Project[] = [
         title: "프로젝트 요약",
         items: [
           "**문제**: 병변 위치 라벨이 부족해 일반적인 지도학습 방식의 적용과 평가가 제한적이었습니다.",
-          "**담당 역할**: 정상 조직 분포를 학습하는 VAE 구조를 적용하고, Reconstruction Error Map과 영상별 오차 분포 기반 Dynamic Threshold 후처리를 구현했습니다.",
+          "**개인 기여**: 초음파 영상 데이터 증강을 적용하고, 원본 영상과 팀의 VAE 재구성 결과 차이를 활용해 이상 후보를 시각화하는 아이디어를 제안했습니다. VAE 모델과 후처리 구현은 팀 작업입니다.",
           "**검증 기준**: 평가 조건이 불명확한 과거 Dice 수치는 대표 성과에서 제외하고, 정성 확인 결과와 미완료 검증 범위를 분리했습니다.",
-          "**핵심 역량**: 정상 상태를 기준으로 이상 후보를 선별하고, 환경별 분포 차이에 맞춰 경계값을 조정하는 이상탐지 관점을 적용했습니다.",
+          "**핵심 역량**: 정상 상태와의 차이를 이상 후보로 해석하는 관점을 이해하고, 개인 기여는 데이터 증강과 차영상 시각화로 구분했습니다.",
         ],
       },
       {
@@ -443,8 +443,8 @@ export const projects: readonly Project[] = [
         items: [
           "**문제**: 병변 위치 라벨 확보가 제한적이었습니다.",
           "**판단**: 지도학습 대신 정상 영상의 분포를 학습하는 비지도 이상탐지를 선택했습니다.",
-          "**해결**: VAE Reconstruction Error Map을 생성하고 이미지별 오차 분포 기반 Dynamic Threshold를 구현했습니다.",
-          "**결과**: 이상 후보 영역을 시각화하고, 영상별 밝기와 노이즈에 따라 고정 threshold의 오탐 수준이 달라지는 문제를 완화했습니다.",
+          "**해결**: 팀은 VAE 재구성 결과와 후처리 흐름을 구성했고, 저는 원본·재구성 차영상을 활용해 이상 후보를 직관적으로 확인하는 시각화 아이디어와 데이터 증강을 담당했습니다.",
+          "**결과**: 팀 흐름에서 이상 후보 영역을 시각화했고, 저는 데이터 증강과 차영상 표현 방식으로 결과를 검토하기 쉽게 만드는 데 기여했습니다.",
         ],
         images: [
           { src: "/images/vae_diff.png", caption: "Reconstruction Error Map 기반 오차 시각화" },
@@ -479,16 +479,16 @@ export const projects: readonly Project[] = [
         title: "판단과 배운 점",
         items: [
           "**라벨 부족을 문제 정의의 기준으로 삼았습니다**: 병변 위치 라벨이 부족한 상태에서 지도학습을 강행하기보다 정상 조직의 분포를 학습하고 정상에서 벗어난 영역을 찾는 비지도 이상 탐지로 문제를 다시 정의했습니다. 이를 통해 원하는 모델을 먼저 정하는 것이 아니라 확보 가능한 데이터에 맞춰 문제와 평가 방식을 설계해야 한다는 점을 배웠습니다.",
-          "**고정 임계값보다 영상별 분포를 반영**: 초음파 영상마다 밝기와 노이즈가 달라 같은 임계값에서도 오탐 수준이 달라졌습니다. 이미지별 Reconstruction Error 분포를 반영하는 Dynamic Threshold를 적용해 고정 기준의 한계를 보완했습니다. 이 경험을 통해 후처리도 모델 성능의 일부이며 입력 환경의 변화에 대응하도록 설계해야 한다는 점을 배웠습니다.",
+          "**차영상으로 이상 후보를 설명**: 원본과 재구성 영상의 차이를 시각화하면 모델 출력이 어느 영역에서 달라졌는지 더 직관적으로 확인할 수 있다고 판단했습니다. 팀의 VAE 흐름에 차영상 기반 후보 시각화 아이디어를 제안하면서, 모델 결과를 사람이 검토 가능한 형태로 표현하는 과정의 중요성을 배웠습니다.",
         ],
       },
       {
         title: "핵심 기술 역량",
         items: [
-          "VAE 기반 비지도 이상 탐지 모델과 재구성 오차 분석",
-          "Reconstruction Error Map 생성 및 이상 후보 영역 시각화",
-          "영상별 픽셀 분포를 반영한 Dynamic Threshold 후처리",
-          "라벨 부족 환경에서의 문제 재정의와 검증 한계 관리",
+          "초음파 영상 데이터 증강과 입력 품질 검토",
+          "원본·재구성 차영상 기반 이상 후보 시각화 아이디어",
+          "팀 VAE 재구성 흐름과 개인 기여 범위 구분",
+          "라벨 부족 환경에서의 문제 정의와 검증 한계 관리",
         ],
       },
     ],
