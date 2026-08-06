@@ -20,9 +20,9 @@ const Index = ({ variant = "ai" }: IndexProps) => {
       <Header variant={variant} />
       <main className="relative z-10">
         <HeroSection variant={variant} />
-        <AboutSection variant={variant} />
-        <div className="section-divider" />
         <ProjectsSection items={variant === "fullstack" ? fullstackProjects : undefined} grouped={variant !== "fullstack"} />
+        <div className="section-divider" />
+        <AboutSection variant={variant} />
         <SkillsSection variant={variant} />
         <ExperienceSection />
         <CompetenceSection />

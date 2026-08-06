@@ -233,11 +233,16 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
   const mainProjects = items.filter((project) => project.badge === "Main");
   const supportingProjects = items.filter((project) => project.badge === "Supporting");
   const orderedProjects = grouped ? [...mainProjects, ...supportingProjects] : items;
+  const sectionDescription = grouped
+    ? "영상 AI의 정확도·Tracking·처리 지연을 개선하고, 위험 이벤트를 관제 서비스의 대응 흐름까지 연결한 경험입니다."
+    : "안전·보안 이벤트를 신뢰할 수 있는 Incident로 저장하고, 실시간 알림·증거 확인·사고 검색까지 연결한 경험입니다.";
 
-  const renderCard = (project: Project): ReactNode => (
+  const renderCard = (project: Project, featured = false): ReactNode => (
     <ScrollAnimator key={project.title}>
       <div
-        className="minimal-card-accent group flex h-full cursor-pointer flex-col"
+        className={`minimal-card-accent group h-full cursor-pointer overflow-hidden ${
+          featured ? "flex flex-col md:grid md:grid-cols-[1.05fr_0.95fr]" : "flex flex-col"
+        }`}
         role="button"
         tabIndex={0}
         style={{ transition: "transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease" }}
@@ -266,7 +271,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
                     : "border-border bg-muted text-muted-foreground"
                 }`}
               >
-                {project.badge === "Main" ? "대표 프로젝트" : "프로젝트"}
+                {project.badge === "Main" ? "대표 프로젝트" : "기술 확장"}
               </span>
               <ArrowUpRight
                 size={20}
@@ -275,7 +280,9 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
               />
             </div>
           </div>
-          <h3 className="text-lg font-semibold leading-snug text-foreground">{project.title}</h3>
+          <h3 className={featured ? "text-xl font-bold leading-snug text-foreground md:text-2xl" : "text-lg font-semibold leading-snug text-foreground"}>
+            {project.title}
+          </h3>
           {project.heroImage ? (
             <div className="mt-5 overflow-hidden rounded-lg border border-border bg-card/70">
               <img
@@ -319,11 +326,32 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
         <ScrollAnimator>
           <div className="section-header">
             <h2>Projects</h2>
+            <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
+              {sectionDescription}
+            </p>
           </div>
         </ScrollAnimator>
 
-        <div className="relative z-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-          {orderedProjects.map((project) => renderCard(project))}
+        <div className="relative z-10 space-y-10">
+          {orderedProjects[0] ? (
+            <div>
+              <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-primary">대표 프로젝트</p>
+              <div className="grid grid-cols-1 gap-6">
+                {renderCard(orderedProjects[0], true)}
+              </div>
+            </div>
+          ) : null}
+
+          {orderedProjects.length > 1 ? (
+            <div>
+              <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                기술 확장 프로젝트
+              </p>
+              <div className={grouped ? "grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3" : "grid grid-cols-1 gap-6 md:grid-cols-2"}>
+                {orderedProjects.slice(1).map((project) => renderCard(project))}
+              </div>
+            </div>
+          ) : null}
         </div>
 
         {selectedProject ? (
@@ -361,7 +389,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
                           : "border-border bg-muted text-muted-foreground"
                       }`}
                     >
-                      {selectedProject.badge}
+                      {selectedProject.badge === "Main" ? "대표 프로젝트" : "기술 확장 프로젝트"}
                     </span>
                   </div>
                 </div>

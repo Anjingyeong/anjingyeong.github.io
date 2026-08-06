@@ -133,7 +133,7 @@ const PortfolioPrint = () => {
 
         {/* Page 1 Footer */}
         <div className="text-[7pt] text-slate-400 font-mono mt-auto pt-3 border-t border-slate-100 flex justify-between">
-          <span>안진경 · Computer Vision AI Engineer</span>
+          <span>안진경 · 융합보안·AI 안전관제 플랫폼 개발자</span>
           <span>1 / 2 페이지</span>
         </div>
       </div>

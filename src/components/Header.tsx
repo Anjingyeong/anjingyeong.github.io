@@ -63,7 +63,7 @@ const Header = ({ variant = "ai" }: HeaderProps) => {
           <div className="leading-tight">
             <span className="block text-lg font-black text-foreground tracking-tight font-sans">안진경</span>
             <span className="hidden text-[11px] font-semibold tracking-wide text-muted-foreground sm:block">
-              {variant === "fullstack" ? "FULL-STACK DEVELOPER" : "COMPUTER VISION AI ENGINEER"}
+              {variant === "fullstack" ? "FULL-STACK DEVELOPER" : "ENTRY-LEVEL · CONVERGENCE SECURITY · AI SURVEILLANCE"}
             </span>
           </div>
           {showPortfolioSwitcher && <div className="hidden sm:flex items-center rounded-full border border-border bg-background/70 p-0.5 text-xs font-semibold">
@@ -71,7 +71,7 @@ const Header = ({ variant = "ai" }: HeaderProps) => {
               href={portfolioUrls.ai}
               className={`rounded-full px-2.5 py-1 transition-colors ${variant === "ai" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
             >
-              AI Engineer
+              융합보안·AI 관제
             </a>
             <a
               href={portfolioUrls.fullstack}

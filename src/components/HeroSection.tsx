@@ -1,4 +1,4 @@
-import { ArrowDown, Sparkles } from "lucide-react";
+import { ArrowDown, ExternalLink, Play, Sparkles } from "lucide-react";
 
 type HeroSectionProps = {
   readonly variant?: "ai" | "fullstack";
@@ -18,13 +18,18 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
         { value: "-50.0%", label: "YOLO 추론 지연", note: "9.454 → 4.723ms" },
       ];
 
+  const showLocalPortfolioSwitcher = !import.meta.env.PROD;
+  const crossPortfolioUrl = isFullstack ? "/ai" : "/fullstack";
+  const crossPortfolioLabel = isFullstack
+    ? "AI 모델·Tracking 상세"
+    : "관제 플랫폼 상세";
+
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{ paddingTop: "var(--header-height)", background: "var(--gradient-hero)" }}
     >
-      {/* Floating decorations */}
       <div className="float-decoration w-96 h-96 -top-48 -right-48" />
       <div className="float-decoration w-64 h-64 bottom-20 -left-32 opacity-20" />
       <div className="absolute top-1/4 right-1/4 w-2 h-2 rounded-full bg-primary/20 animate-pulse" />
@@ -33,31 +38,42 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
 
       <div className="container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center max-w-6xl mx-auto">
-          {/* Text Content (Left side on desktop, first on mobile) */}
           <div className="order-1 lg:order-1 lg:col-span-7 pr-0 lg:pr-10">
             <div className="mb-5">
               <p className="text-sm font-bold tracking-[0.2em] text-primary uppercase">
                 An Jin Gyeong
               </p>
               <p className="mt-1 text-base font-semibold text-foreground/70">
-                안진경 · {isFullstack ? "Full-Stack Developer" : "Computer Vision AI Engineer"}
+                안진경 · {isFullstack ? "Full-Stack Developer" : "융합보안·AI 안전관제 플랫폼 개발자"}
               </p>
             </div>
 
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-5">
               <Sparkles size={14} className="text-primary" />
-              <span className="text-sm font-medium text-primary">{isFullstack ? "Full-Stack Developer" : "Computer Vision AI Engineer"}</span>
+              <span className="text-sm font-medium text-primary">
+                FM·안전관리 플랫폼 연계 · 융합보안 · 지능형 영상관제
+              </span>
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
-              {isFullstack ? "AI 기능을 운영 가능한 서비스로 완성하는 개발자" : "영상 AI를 관제 플랫폼의 실제 대응 흐름으로 연결합니다"}
+              {isFullstack
+                ? "안전·보안 이벤트를 운영 가능한 관제 서비스로 연결합니다"
+                : "부트캠프 프로젝트에서 영상 AI와 실시간 이벤트를 관제 서비스로 연결했습니다"}
             </h1>
 
-            <p className="text-base md:text-lg text-foreground/75 mb-8 leading-relaxed font-normal max-w-xl break-keep">
-              {isFullstack
-                ? "화면·API·데이터·실시간 이벤트를 연결하고, 비동기 정합성과 실패 복구까지 고려합니다."
-                : "YOLO 후보 비교·선정, Tracking 개선, LSTM 입력 특징 보강, 프레임 버퍼·TensorRT 최적화와 RTSP 영상 송출을 담당했습니다. AI Worker의 MQTT 발행 로직을 새로 만들기보다 백엔드와 토픽·메시지 규칙을 맞춰 관제 시스템과 통합했습니다."}
-            </p>
+            <div className="mb-8 max-w-xl space-y-3 break-keep">
+              <p className="text-base md:text-lg text-foreground/75 leading-relaxed font-normal">
+                {isFullstack
+                  ? "AI 위험 이벤트가 MQTT·Spring Boot·Incident·STOMP를 거쳐 관제 화면과 사고 검색까지 이어지는 흐름을 설계했습니다. 비동기 도착 순서와 중복, 실패 상황을 함께 검증했습니다."
+                  : "SK쉴더스 지능형 애플리케이션 개발 과정에서 RTSP 영상 입력부터 객체 탐지·Tracking·행동 분석, MQTT 이벤트 전달과 관제 화면 알림까지 하나의 시스템 흐름으로 구현했습니다. 모델 정확도뿐 아니라 실시간 처리와 데이터 정합성도 함께 검증했습니다."}
+              </p>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                <strong className="font-semibold text-foreground">개인 기여 · </strong>
+                {isFullstack
+                  ? "이벤트 계약, originalEventId 기반 Incident 정합성, VLM 비동기 처리 흐름과 파트 간 통합 검증"
+                  : "YOLO 후보 비교·선정, Tracking 재연결, LSTM 입력 특징 보강, 프레임 처리·TensorRT·영상 송출 최적화"}
+              </p>
+            </div>
 
             <div className="grid max-w-xl grid-cols-1 gap-3 mb-8 sm:grid-cols-3">
               {metrics.map((metric) => (
@@ -69,17 +85,41 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
               ))}
             </div>
 
-            <div className="relative z-20">
-              <a href="#projects" className="minimal-btn-primary" onClick={(e) => { e.preventDefault(); document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }); }}>
-                {isFullstack ? "프로젝트 보기" : "실시간 AI 시스템 보기"}
+            <div className="relative z-20 flex flex-wrap gap-3">
+              <a
+                href="#projects"
+                className="minimal-btn-primary"
+                onClick={(event) => {
+                  event.preventDefault();
+                  document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                대표 프로젝트 보기
               </a>
+              <a
+                href="https://www.youtube.com/watch?v=O1-JNhcpvDQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="minimal-btn inline-flex items-center gap-2"
+              >
+                <Play size={16} />
+                시연 영상
+              </a>
+              {showLocalPortfolioSwitcher ? (
+                <a
+                  href={crossPortfolioUrl}
+                  className="minimal-btn inline-flex items-center gap-2"
+                >
+                  <ExternalLink size={16} />
+                  {crossPortfolioLabel}
+                </a>
+              ) : null}
             </div>
           </div>
 
-          {/* Profile Image (Right side on desktop, second on mobile) */}
           <div className="flex justify-center lg:justify-end order-2 lg:order-2 lg:col-span-5">
             <div className="flex flex-col items-center">
-              <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-[19rem] lg:h-[19rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: '0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)' }}>
+              <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-[19rem] lg:h-[19rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: "0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)" }}>
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <img
                   src="/profile.jpg"
@@ -90,7 +130,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
               <div className="mt-5 text-center">
                 <strong className="block text-xl font-black tracking-tight text-foreground">안진경</strong>
                 <span className="mt-1 block text-sm font-semibold text-primary">
-                  {isFullstack ? "Full-Stack Developer" : "Computer Vision AI Engineer"}
+                  {isFullstack ? "Full-Stack Developer" : "융합보안·AI 안전관제 플랫폼 개발자"}
                 </span>
               </div>
             </div>
@@ -101,6 +141,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
       <button
         onClick={() => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-primary transition-colors animate-bounce"
+        aria-label="프로젝트로 이동"
       >
         <ArrowDown size={20} />
       </button>

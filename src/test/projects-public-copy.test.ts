@@ -110,8 +110,8 @@ describe("ProjectsSection public copy", () => {
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(screen.queryByText("AI 시스템 구조")).not.toBeInTheDocument();
-    expect(screen.getByText("대표 프로젝트")).toBeInTheDocument();
-    expect(screen.getAllByText("프로젝트")).toHaveLength(3);
+    expect(screen.getAllByText("대표 프로젝트").length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByText("기술 확장")).toHaveLength(3);
     expect(screen.queryByText("Main")).not.toBeInTheDocument();
     expect(screen.queryByText("Supporting")).not.toBeInTheDocument();
 

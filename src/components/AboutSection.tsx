@@ -4,8 +4,8 @@ import { Github, Mail, MapPin, GraduationCap, Briefcase, Brain, Globe } from "lu
 const infoItems = [
   { icon: MapPin, label: "거주지", value: "서울, 대한민국" },
   { icon: GraduationCap, label: "학력", value: "건양대학교 의공학과" },
-  { icon: Briefcase, label: "전문 분야", value: "Computer Vision AI Engineer" },
-  { icon: Brain, label: "핵심 분야", value: "실시간 영상 분석 · Tracking · 행동 분류" },
+  { icon: Briefcase, label: "지원 분야", value: "융합보안·AI 안전관제 플랫폼" },
+  { icon: Brain, label: "핵심 분야", value: "영상 AI · 실시간 이벤트 · 관제 서비스 연동" },
   { icon: Globe, label: "협업 방식", value: "이벤트 계약 · 로그 · 수치 기반 조율" },
   { icon: Mail, label: "이메일", value: "anjin0910@gmail.com" },
 ];
@@ -67,12 +67,12 @@ const AboutSection = ({ variant = "ai" }: AboutSectionProps) => {
                 </>
               ) : (
                 <>
-                  <h3 className="text-lg font-semibold mb-5 text-foreground">원인을 분리하고 끝까지 검증하는 엔지니어</h3>
+                  <h3 className="text-lg font-semibold mb-5 text-foreground">배운 기술을 실제 관제 흐름으로 연결하는 개발자</h3>
                   <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    결과가 기대와 다르면 곧바로 모델을 바꾸기보다 입력, 추적, 시계열 구성과 전달 과정을 나누어 확인합니다. 감으로 원인을 정하지 않고 비교 가능한 지표와 로그를 만든 뒤, 서비스에서 가장 중요한 기준에 맞춰 해결 방법을 선택합니다.
+                    부트캠프 프로젝트에서 영상 AI 결과가 기대와 다르면 곧바로 모델을 바꾸기보다 입력, 추적, 시계열 구성과 이벤트 전달 과정을 나누어 확인했습니다. 비교 가능한 지표와 로그를 만들고, 배운 기술을 실제 관제 목적에 맞게 적용하는 과정을 반복했습니다.
                   </p>
                   <p className="leading-[1.8] mb-6" style={{ color: "#4A4A4A" }}>
-                    팀장으로서는 AI 파트의 결과 전달을 완료로 보지 않고, 백엔드 저장과 프론트 화면 표시까지 같은 기준으로 확인했습니다. 파트 간 책임을 따지기보다 공통 이벤트 의미와 완료 조건을 정리해 전체 흐름에서 문제를 재현하고 해결하는 방식을 중요하게 생각합니다.
+                    팀장으로서는 AI 탐지만 완료로 보지 않고 MQTT 이벤트, 백엔드 저장과 프론트 관제 화면 표시까지 같은 기준으로 확인했습니다. 모르는 부분은 빠르게 학습하고, 파트 간 이벤트 의미와 완료 조건을 맞춰 하나의 동작하는 시스템으로 완성하는 데 집중했습니다.
                   </p>
 
                   <div className="mt-8 pt-6 border-t border-border">

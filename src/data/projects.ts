@@ -496,7 +496,7 @@ export const projects: readonly Project[] = [
   {
     icon: Brain,
     badge: "Supporting",
-    title: "LLM Wiki · Smart Safety Engineering Wiki & Hybrid Search System",
+    title: "LLM Wiki · Hybrid Search 지식 시스템",
     summaryLine:
       "스마트 안전관제 개발 지식을 코드 근거와 연결하고, 검색 기준선 측정부터 Elasticsearch 확장 학습까지 이어간 프로젝트",
     description:

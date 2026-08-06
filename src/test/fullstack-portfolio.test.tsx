@@ -17,11 +17,11 @@ describe("full-stack portfolio", () => {
     expect(fullstackProjects.map((project) => project.title)).toEqual([
       "AI 이벤트 수신부터 사고 검색까지 연결한 실시간 안전 관제 플랫폼",
       "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
-      "LLM Wiki·Smart Safety Engineering Wiki",
+      "LLM Wiki · Hybrid Search 지식 시스템",
     ]);
     expect(fullstackProjects).toHaveLength(3);
     expect(fullstackProjects.some((project) => project.title.includes("포트폴리오 웹사이트"))).toBe(false);
-    expect(fullstackProjects.map((project) => project.badge)).toEqual(["Main", "Main", "Supporting"]);
+    expect(fullstackProjects.map((project) => project.badge)).toEqual(["Main", "Supporting", "Supporting"]);
     expect(fullstackProjects[0].meta?.period).toBe("2026.05–2026.07");
     expect(fullstackProjects[0].meta?.role).toContain("5인 팀장");
     expect(fullstackProjects[0].description).toContain("비동기로 도착하는 경보와 증거 데이터를 하나의 사고로 유지하고");
@@ -36,22 +36,33 @@ describe("full-stack portfolio", () => {
     expect(headings).toEqual(fullstackProjects.map((project) => project.title));
   });
 
+  it("places projects immediately after the hero and exposes the submission positioning", () => {
+    const indexSource = readText("src/pages/Index.tsx");
+    const heroSource = readText("src/components/HeroSection.tsx");
+
+    expect(indexSource.indexOf("<ProjectsSection")).toBeLessThan(indexSource.indexOf("<AboutSection"));
+    expect(heroSource).toContain("FM·안전관리 플랫폼 연계 · 융합보안 · 지능형 영상관제");
+    expect(heroSource).toContain("showLocalPortfolioSwitcher = !import.meta.env.PROD");
+    expect(heroSource).toContain("대표 프로젝트 보기");
+    expect(heroSource).toContain("시연 영상");
+  });
+
   it("switches About copy without changing the AI variant", () => {
     const { rerender } = render(<AboutSection variant="fullstack" />);
     expect(screen.getByText("기능의 앞뒤 흐름까지 책임지는 개발자")).toBeInTheDocument();
     expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
     expect(screen.getByText("흐름으로 설계")).toBeInTheDocument();
-    expect(screen.queryByText("원인을 분리하고 끝까지 검증하는 엔지니어")).not.toBeInTheDocument();
+    expect(screen.queryByText("배운 기술을 실제 관제 흐름으로 연결하는 개발자")).not.toBeInTheDocument();
 
     rerender(<AboutSection variant="ai" />);
-    expect(screen.getByText("원인을 분리하고 끝까지 검증하는 엔지니어")).toBeInTheDocument();
-    expect(screen.getByText("Computer Vision AI Engineer")).toBeInTheDocument();
+    expect(screen.getByText("배운 기술을 실제 관제 흐름으로 연결하는 개발자")).toBeInTheDocument();
+    expect(screen.getByText("융합보안·AI 안전관제 플랫폼")).toBeInTheDocument();
     expect(screen.getByText("구간을 나눠 측정")).toBeInTheDocument();
   });
 
   it("marks the AI role active on the root variant", () => {
     render(<MemoryRouter initialEntries={["/"]}><Header variant="ai" /></MemoryRouter>);
-    expect(screen.getByRole("link", { name: "AI Engineer" })).toHaveClass("bg-primary");
+    expect(screen.getByRole("link", { name: "융합보안·AI 관제" })).toHaveClass("bg-primary");
     expect(screen.getByRole("link", { name: "Full-Stack Developer" })).not.toHaveClass("bg-primary");
   });
 

@@ -240,7 +240,7 @@ export const fullstackProjects: readonly Project[] = [
   },
   {
     icon: HeartPulse,
-    badge: "Main",
+    badge: "Supporting",
     title: "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
     summaryLine: "사용자 자가체크부터 결과 계산, 데이터 저장, 관리자 통계, PDF 리포트와 배포까지 연결한 웹서비스",
     description: "개인적인 문제의식에서 시작해 약 2주 동안 기획부터 화면 구현, API, 데이터 저장, 결과 리포트와 배포까지 직접 완성한 웹서비스입니다.",
@@ -280,7 +280,7 @@ export const fullstackProjects: readonly Project[] = [
   {
     icon: BookOpen,
     badge: "Supporting",
-    title: "LLM Wiki·Smart Safety Engineering Wiki",
+    title: "LLM Wiki · Hybrid Search 지식 시스템",
     summaryLine: "프로젝트 문서와 기술 의사결정을 검색 가능한 데이터로 구조화한 하이브리드 검색 서비스",
     description:
       "스마트 안전관제 개발 과정의 장애·실험·설계 판단을 50개 문서와 737개 Chunk로 지식화했습니다. 61개 Golden Query로 Vector·BM25·Hybrid 검색의 기준선을 측정한 뒤 Elasticsearch BM25·dense_vector kNN·HNSW·RRF Provider를 별도로 구현했으며, 실제 Elasticsearch 전체 질의 실측은 후속 검증으로 분리했습니다.",
