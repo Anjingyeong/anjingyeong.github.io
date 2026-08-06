@@ -280,7 +280,7 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "이 프로젝트로 보여주는 역량",
+        title: "핵심 기술 역량",
         items: [
           "Pose 모델의 속도·시퀀스 생성·후속 행동 분류 결과를 함께 비교하는 모델 선택 능력",
           "객체 검출·Tracking·시계열 행동 분류를 연결한 실시간 영상 AI 파이프라인 구현",
@@ -318,16 +318,16 @@ export const projects: readonly Project[] = [
         body: "대장 내시경 검사는 육안 판독 시 의사의 피로도와 숙련도에 따라 미세 용종을 놓칠 위험이 있습니다. 특히 비정형적이거나 크기가 작은 병변은 조기 발견이 어렵습니다. 본 프로젝트는 Kvasir 대장 내시경 데이터를 활용해 병변 검출 모델을 fine-tuning하고, 카메라·동영상 입력 환경에서 의료진의 판독을 보조하는 애플리케이션을 구축하는 것을 목표로 했습니다.",
       },
       {
-        title: "채용담당자 요약",
+        title: "프로젝트 요약",
         items: [
           "**문제**: 내시경 영상의 조명·형태 편차를 단순 모델 교체만으로 해결하기 어려웠습니다.",
-          "**개인 기여**: Elastic Deformation·Grid Distortion 증강을 설계하고, 변환 후 Bounding Box가 실제 병변 영역과 일치하는지 검증했습니다. OpenCV 영상·웹캠 입력 애플리케이션도 구현했습니다.",
+          "**담당 역할**: Elastic Deformation·Grid Distortion 증강을 설계하고, 변환 후 Bounding Box가 실제 병변 영역과 일치하는지 검증했습니다. OpenCV 영상·웹캠 입력 애플리케이션도 구현했습니다.",
           "**검증 결과**: 팀 모델은 Kvasir 10% 내부 테스트셋에서 mAP@50 86.2%를 기록했고, GUI 렌더링을 포함해 22+ FPS를 확인했습니다.",
-          "**FM플랫폼 전환 역량**: 센서·영상 데이터 변형 과정에서 입력과 정답의 정합성을 확인하고, 데이터 품질 문제를 모델 문제와 구분하는 역량을 보여줍니다.",
+          "**핵심 역량**: 센서·영상 데이터 변형 과정에서 입력과 정답의 정합성을 확인하고, 데이터 품질 문제를 모델 문제와 구분했습니다.",
         ],
       },
       {
-        title: "시스템 플로우",
+        title: "시스템 구조",
         diagram: `flowchart LR
     Raw["Kvasir Dataset\\n(Polyp Images)"] --> Split["Data Split\\nTrain 70% / Val 20% / Test 10%"]
     Split --> Aug["Data Augmentation"]
@@ -385,7 +385,7 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "이 프로젝트로 보여주는 역량",
+        title: "핵심 기술 역량",
         items: [
           "의료·비전 데이터셋 분할과 Geometric Data Augmentation 파이프라인 구축",
           "Object Detection 모델 Fine-tuning과 mAP 기반 성능 평가",
@@ -418,16 +418,16 @@ export const projects: readonly Project[] = [
         body: "유방 초음파 영상은 전문의 주석 라벨링 비용이 매우 높아 대규모 지도학습 데이터셋 확보가 어렵습니다. 본 프로젝트의 목표는 라벨이 부족한 환경에서 정상 조직 분포를 먼저 학습한 후, 정상 패턴에서 벗어나는 차영상 오차를 추적하는 비지도 이상 탐지(Unsupervised Anomaly Detection) 접근법을 구축하는 것이었습니다.",
       },
       {
-        title: "채용담당자 요약",
+        title: "프로젝트 요약",
         items: [
           "**문제**: 병변 위치 라벨이 부족해 일반적인 지도학습 방식의 적용과 평가가 제한적이었습니다.",
-          "**개인 기여**: 정상 조직 분포를 학습하는 VAE 구조를 적용하고, Reconstruction Error Map과 영상별 오차 분포 기반 Dynamic Threshold 후처리를 구현했습니다.",
-          "**검증 태도**: 평가 조건이 불명확한 과거 Dice 수치는 대표 성과에서 제외하고, 정성 확인 결과와 미완료 검증 범위를 분리했습니다.",
-          "**FM플랫폼 전환 역량**: 정상 상태를 기준으로 이상 후보를 선별하고, 환경별 분포 차이에 맞춰 경계값을 조정하는 이상탐지·알람 튜닝 관점을 보여줍니다.",
+          "**담당 역할**: 정상 조직 분포를 학습하는 VAE 구조를 적용하고, Reconstruction Error Map과 영상별 오차 분포 기반 Dynamic Threshold 후처리를 구현했습니다.",
+          "**검증 기준**: 평가 조건이 불명확한 과거 Dice 수치는 대표 성과에서 제외하고, 정성 확인 결과와 미완료 검증 범위를 분리했습니다.",
+          "**핵심 역량**: 정상 상태를 기준으로 이상 후보를 선별하고, 환경별 분포 차이에 맞춰 경계값을 조정하는 이상탐지 관점을 적용했습니다.",
         ],
       },
       {
-        title: "시스템 플로우",
+        title: "시스템 구조",
         diagram: `flowchart TD
     Norm["🟢 Normal Tissue Data"] --> Train["🧠 β-VAE Training\\nMSE + KLD Loss"]
     Train --> Topo["정상 조직\\n잠재 공간 학습"]
@@ -467,7 +467,7 @@ export const projects: readonly Project[] = [
       {
         title: "검증 범위와 한계",
         items: [
-          "**Dice Coefficient 평가 조건 명시**: 과거 문서의 Dice 약 90% 수치는 데이터셋 분할, Ground-Truth 마스크 출처, 평균 산정 방식이 엄밀히 확정되지 않아 카드 하이라이트에서 제외하고 내부 평가 보완 항목으로 지정했습니다.",
+          "**Dice Coefficient 평가 조건 명시**: 과거 문서의 Dice 약 90% 수치는 데이터셋 분할, Ground-Truth 마스크 출처, 평균 산정 방식이 엄밀히 확정되지 않아 대표 성과에서 제외하고 추가 검증 과제로 남겼습니다.",
           "**지도학습 모델과의 직접 비교 한계**: 비지도학습 방식이 동일한 데이터 조건에서 지도학습(U-Net 등)보다 우수하다고 단정하지 않았으며, 지도학습 대조군과의 직접 비교 부재를 본 연구의 한계로 명시했습니다.",
           "**Dynamic Threshold 세부 수식 파라미터**: percentile, mean/std, Otsu 알고리즘 등 구체적인 픽셀 분포 수식 파라미터와 경계값 조건은 추후 연구 문서로 체계화하고 있습니다.",
         ],
@@ -483,7 +483,7 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "이 프로젝트로 보여주는 역량",
+        title: "핵심 기술 역량",
         items: [
           "VAE 기반 비지도 이상 탐지 모델과 재구성 오차 분석",
           "Reconstruction Error Map 생성 및 이상 후보 영역 시각화",
@@ -498,9 +498,9 @@ export const projects: readonly Project[] = [
     badge: "Supporting",
     title: "LLM Wiki · Smart Safety Engineering Wiki & Hybrid Search System",
     summaryLine:
-      "관제 시스템의 장애·실험·기술 판단을 코드 근거와 연결하고, 검색 품질과 회귀 테스트로 운영 가능한 지식 시스템을 만든 프로젝트",
+      "스마트 안전관제 개발 지식을 코드 근거와 연결하고, 검색 기준선 측정부터 Elasticsearch 확장 학습까지 이어간 프로젝트",
     description:
-      "스마트 안전관제 시스템 개발 과정에서 흩어진 문제 해결 기록, 실험 결과, 설계 판단을 구조화해 **50개 Wiki 문서 / 737개 Chunk**로 검색 가능한 지식 시스템을 구축했습니다. 또한 **61개 Golden Query 평가셋**으로 Vector, BM25, Hybrid 검색 품질을 비교하고, 확장성을 위해 **Elasticsearch BM25 · dense_vector kNN · HNSW · RRF 기반 Provider**를 별도로 설계·구현했습니다.",
+      "스마트 안전관제 시스템 개발 과정에서 흩어진 문제 해결 기록, 실험 결과, 설계 판단을 구조화해 **50개 Wiki 문서 / 737개 Chunk**로 검색 가능한 지식 시스템을 구축했습니다. **61개 Golden Query 평가셋**으로 Vector·BM25·Hybrid 검색 기준선을 먼저 측정하고, 그 한계를 바탕으로 Elasticsearch의 BM25·dense_vector kNN·HNSW·RRF를 학습해 별도 Provider로 구현했습니다. 실제 Elasticsearch 전체 질의 실측은 후속 검증으로 구분했습니다.",
     highlights: [
       "50개 문서 · 737개 Chunk",
       "61개 Golden Query 평가",
@@ -526,12 +526,12 @@ export const projects: readonly Project[] = [
           "스마트 안전관제 시스템은 AI 추론, RTSP 스트리밍, MQTT 이벤트, 백엔드 저장, 프론트 알림까지 여러 기술 영역이 연결된 복합 프로젝트였습니다. 개발이 진행될수록 RTSP 지연, Overlay 불일치, 중복 알림, TensorRT 검증, VLM 후처리 분리 같은 문제의 원인과 해결 기록이 Git 커밋, 메신저, 개인 메모, 코드 내부에 흩어졌습니다. 이 프로젝트의 목표는 흩어진 개발 기록을 단순 문서가 아니라 다시 검색하고 재사용할 수 있는 엔지니어링 지식 자산으로 전환하는 것이었습니다.",
       },
       {
-        title: "채용담당자 요약",
+        title: "프로젝트 요약",
         items: [
           "**문제**: 여러 저장소와 메모에 흩어진 장애 원인과 기술 판단을 다시 찾기 어려웠습니다.",
-          "**개인 기여**: 50개 문서를 737개 Chunk로 구조화하고, 61개 Golden Query로 Vector·BM25·Hybrid 검색을 비교했습니다. Elasticsearch Provider와 Legacy fallback 구조도 구현했습니다.",
+          "**담당 역할**: 50개 문서를 737개 Chunk로 구조화하고, 61개 Golden Query로 Vector·BM25·Hybrid 검색을 비교했습니다. Elasticsearch Provider와 Legacy fallback 구조도 구현했습니다.",
           "**검증 결과**: 기존 Hybrid 검색 Hit@5 82.14%를 기준선으로 확보했고, 신규 테스트 3개와 전체 회귀 테스트 92개를 통과했습니다.",
-          "**FM플랫폼 전환 역량**: 장애 이력·운영 매뉴얼·설비 지식을 검색 가능한 자산으로 만들고, 신규 기능이 기존 검색 품질을 깨뜨리지 않는지 검증하는 운영 관점을 보여줍니다.",
+          "**핵심 역량**: 장애 이력과 기술 판단을 검색 가능한 자산으로 만들고, 신규 기능이 기존 검색 품질을 깨뜨리지 않는지 회귀 테스트로 검증했습니다.",
         ],
       },
       {
@@ -539,7 +539,7 @@ export const projects: readonly Project[] = [
         items: [
           "**GitHub 저장소**: https://github.com/Anjingyeong/llm_wiki_strange",
           "**핵심 가치**: 단순한 문서 보관이 아니라, 문제·원인·판단·코드 근거를 다시 검색 가능한 형태로 구조화",
-          "**활용 목적**: 개발 중 트러블슈팅 재참조, 포트폴리오 근거 정리, 기술 설명의 evidence repository",
+          "**활용 목적**: 개발 중 트러블슈팅 재참조, 기술 근거 정리, 기술 설명을 위한 지식 저장소",
         ],
       },
       {
@@ -556,7 +556,7 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "시스템 플로우",
+        title: "시스템 구조",
         diagram: `flowchart LR
     Raw["📝 Raw Notes / Logs / Screenshots"] --> Normalize["🧹 Document Normalization"]
     Normalize --> Chunk["✂️ Chunking + Context Prefix"]
@@ -565,7 +565,7 @@ export const projects: readonly Project[] = [
     Meta --> Elastic["⚡ Elasticsearch Provider\\nBM25 / dense_vector kNN / HNSW / RRF"]
     Legacy --> Answer["📄 Search Result + Source Evidence"]
     Elastic --> Answer
-    Answer --> Reuse["♻️ Portfolio / Technical Story / Troubleshooting Reuse"]`,
+    Answer --> Reuse["♻️ Troubleshooting / Engineering Decisions / Knowledge Reuse"]`,
       },
       {
         title: "검색 구조와 인덱싱",
@@ -596,7 +596,7 @@ export const projects: readonly Project[] = [
         },
       },
       {
-        title: "Elasticsearch 확장 설계 및 구현",
+        title: "Elasticsearch 학습·확장 구현",
         items: [
           "**Legacy 검색 유지**: 기존 BM25 · 로컬 Vector · RRF 경로를 보존한 상태에서 Elasticsearch Provider를 분리 설계",
           "**BM25 검색**: title, codeSymbols, tags, headingPath 등에 가중치를 둔 검색 구성",
@@ -613,7 +613,7 @@ export const projects: readonly Project[] = [
           "**완료된 범위**: Elasticsearch Mapping 설계, Bulk 색인 코드, BM25 검색 코드, dense_vector kNN 검색 코드, RRF Hybrid 검색, Metadata Filter, 단위 테스트, 회귀 테스트, TypeScript/Vite 빌드 검증",
           "**검증 결과**: Elasticsearch 신규 테스트 3개 통과, 전체 회귀 테스트 92개 통과, 실패 0건",
           "**미완료 범위**: Docker Desktop 환경 이슈로 실제 Elasticsearch 컨테이너 색인 및 61개 질의 전체 실측은 미완료",
-          "**표현 원칙**: '성능을 개선했다'고 과장하지 않고, '비교 평가가 가능한 구조까지 설계·구현했다'고 구분해 설명",
+          "**성과 해석**: 실제 Elasticsearch 환경의 전체 질의 실측 전에는 성능 개선으로 단정하지 않고, 비교 평가가 가능한 구조를 설계·구현한 범위로 구분",
         ],
       },
       {
@@ -627,12 +627,12 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "이 프로젝트로 보여주는 역량",
+        title: "핵심 기술 역량",
         items: [
           "개발 과정의 문제 해결 기록을 구조화된 엔지니어링 지식으로 전환하는 능력",
           "BM25 · Vector Search · RRF 기반 하이브리드 검색 설계 및 평가",
           "Golden Query 평가셋 구성과 검색 품질 정량 비교",
-          "Elasticsearch BM25 · dense_vector kNN · HNSW · Bulk Indexing 설계/구현",
+          "Elasticsearch BM25 · dense_vector kNN · HNSW · Bulk Indexing 학습 및 설계/구현",
           "Legacy fallback을 고려한 점진적 전환 전략 설계",
           "구현 범위와 검증 완료 범위를 구분해 설명하는 기술 커뮤니케이션 능력",
         ],

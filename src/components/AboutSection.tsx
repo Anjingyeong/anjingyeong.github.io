@@ -4,7 +4,7 @@ import { Github, Mail, MapPin, GraduationCap, Briefcase, Brain, Globe } from "lu
 const infoItems = [
   { icon: MapPin, label: "거주지", value: "서울, 대한민국" },
   { icon: GraduationCap, label: "학력", value: "건양대학교 의공학과" },
-  { icon: Briefcase, label: "지원 직무", value: "Computer Vision AI Engineer" },
+  { icon: Briefcase, label: "전문 분야", value: "Computer Vision AI Engineer" },
   { icon: Brain, label: "핵심 분야", value: "실시간 영상 분석 · Tracking · 행동 분류" },
   { icon: Globe, label: "협업 방식", value: "이벤트 계약 · 로그 · 수치 기반 조율" },
   { icon: Mail, label: "이메일", value: "anjin0910@gmail.com" },
@@ -13,7 +13,7 @@ const infoItems = [
 const fullstackInfoItems = [
   { icon: MapPin, label: "거주지", value: "서울, 대한민국" },
   { icon: GraduationCap, label: "학력", value: "건양대학교 의공학과" },
-  { icon: Briefcase, label: "지원 직무", value: "Full-Stack Developer" },
+  { icon: Briefcase, label: "전문 분야", value: "Full-Stack Developer" },
   { icon: Brain, label: "핵심 분야", value: "실시간 이벤트 · API · 데이터 정합성" },
   { icon: Globe, label: "협업 방식", value: "공통 식별자 · 완료 조건 · 구간별 로그" },
   { icon: Mail, label: "이메일", value: "anjin0910@gmail.com" },

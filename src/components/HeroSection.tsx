@@ -46,7 +46,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
 
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-5">
               <Sparkles size={14} className="text-primary" />
-              <span className="text-sm font-medium text-primary">{isFullstack ? "Full-Stack Developer Portfolio" : "융합보안 · 지능형 관제 · FM플랫폼 지원 포트폴리오"}</span>
+              <span className="text-sm font-medium text-primary">{isFullstack ? "Full-Stack Developer" : "Computer Vision AI Engineer"}</span>
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">

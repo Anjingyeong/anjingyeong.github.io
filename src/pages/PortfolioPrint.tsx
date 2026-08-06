@@ -90,7 +90,7 @@ const PortfolioPrint = () => {
             </h3>
             <span className="text-xs text-slate-500 font-mono">2026.05 - 2026.07</span>
           </div>
-          <p className="text-[7.8pt] text-sky-600 font-semibold mb-1">SK쉴더스 / AI Application Development Trainee</p>
+          <p className="text-[7.8pt] text-sky-600 font-semibold mb-1">SK쉴더스 / 지능형 애플리케이션 개발 과정 수료</p>
           <p className="text-[8pt] text-slate-700 leading-relaxed">
             AI 기반 스마트 애플리케이션 설계 및 산학협력 프로젝트를 진행했습니다.
             지능형 시스템 설계, RTSP/MQTT 연계 실시간 관제 시스템 파이프라인 개발, 백엔드와 프론트엔드 연동 경험을 쌓았습니다.
@@ -133,7 +133,7 @@ const PortfolioPrint = () => {
 
         {/* Page 1 Footer */}
         <div className="text-[7pt] text-slate-400 font-mono mt-auto pt-3 border-t border-slate-100 flex justify-between">
-          <span>안진경 포트폴리오 (제출용)</span>
+          <span>안진경 · Computer Vision AI Engineer</span>
           <span>1 / 2 페이지</span>
         </div>
       </div>

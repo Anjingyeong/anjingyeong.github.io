@@ -19,24 +19,8 @@ export interface FullstackPrintProject {
 
 export const fullstackPrintProjects: FullstackPrintProject[] = [
   {
-    id: "maumium",
-    title: "1. 마음이음 · 개인정보 최소 수집형 자가체크 웹서비스",
-    periodRole: "약 2주 · 개인 프로젝트 · 1인 개발",
-    stack: "React · TypeScript · Vite · Cloudflare Pages · Workers · D1",
-    problem:
-      "개인정보 부담을 줄이면서 사용자가 모바일에서 자가체크를 완료하고 결과와 다음 행동을 확인할 수 있는 서비스가 필요했습니다.",
-    decision:
-      "짧은 기간 안에 운영 가능한 서비스를 완성하기 위해 React·TypeScript로 화면과 위험도 로직을 분리하고, 별도 서버 관리가 필요 없는 Cloudflare Pages·Workers·D1 조합을 선택했습니다.",
-    process:
-      "사용자 흐름과 최소 수집 항목을 먼저 정의한 뒤 모바일 화면과 저장 API를 연결했습니다. 공통 위험도 기준을 결과 화면과 관리자 통계에서 함께 사용하고, 동일한 결과 데이터를 해석 리포트와 PDF에도 연결했습니다. 마지막에는 동의 문구·SEO·배포 환경까지 점검했습니다.",
-    role: "기획, 모바일 우선 UI, 위험도 계산, Workers API, D1 저장, 관리자 통계, PDF 리포트와 운영 배포까지 전체 라이프사이클을 직접 구현했습니다.",
-    result:
-      "사용자 체크부터 결과 저장, 관리자 통계와 PDF 리포트까지 이어지는 1인 웹서비스를 실제 배포 환경에 완성했습니다.",
-    link: "https://maumium.pages.dev/",
-  },
-  {
     id: "smart-safety",
-    title: "2. 스마트 안전 관제 · 실시간 이벤트 및 Incident 플랫폼",
+    title: "1. 스마트 안전 관제 · 실시간 이벤트 및 Incident 플랫폼",
     periodRole: "2026.05 – 2026.07 · 5인 팀장",
     stack:
       "Java 21 · Spring Boot · JPA · PostgreSQL · MQTT · WebSocket / STOMP · React · AWS S3",
@@ -51,21 +35,37 @@ export const fullstackPrintProjects: FullstackPrintProject[] = [
       "2카메라 TensorRT 환경에서 위험 이벤트 29건의 End-to-End 평균 지연 20.931ms, p95 26ms를 확인했으며 29건 모두 1초 이내에 전달됐습니다. originalEventId를 기준으로 경보·스냅샷·클립·VLM 설명을 하나의 Incident에 병합했습니다.",
   },
   {
+    id: "maumium",
+    title: "2. 마음이음 · 개인정보 최소 수집형 자가체크 웹서비스",
+    periodRole: "약 2주 · 개인 프로젝트 · 1인 개발",
+    stack: "React · TypeScript · Vite · Cloudflare Pages · Workers · D1",
+    problem:
+      "개인정보 부담을 줄이면서 사용자가 모바일에서 자가체크를 완료하고 결과와 다음 행동을 확인할 수 있는 서비스가 필요했습니다.",
+    decision:
+      "짧은 기간 안에 운영 가능한 서비스를 완성하기 위해 React·TypeScript로 화면과 위험도 로직을 분리하고, 별도 서버 관리가 필요 없는 Cloudflare Pages·Workers·D1 조합을 선택했습니다.",
+    process:
+      "사용자 흐름과 최소 수집 항목을 먼저 정의한 뒤 모바일 화면과 저장 API를 연결했습니다. 공통 위험도 기준을 결과 화면과 관리자 통계에서 함께 사용하고, 동일한 결과 데이터를 해석 리포트와 PDF에도 연결했습니다. 마지막에는 동의 문구·SEO·배포 환경까지 점검했습니다.",
+    role: "기획, 모바일 우선 UI, 위험도 계산, Workers API, D1 저장, 관리자 통계, PDF 리포트와 운영 배포까지 전체 라이프사이클을 직접 구현했습니다.",
+    result:
+      "사용자 체크부터 결과 저장, 관리자 통계와 PDF 리포트까지 이어지는 1인 웹서비스를 실제 배포 환경에 완성했습니다.",
+    link: "https://maumium.pages.dev/",
+  },
+  {
     id: "llm-wiki",
     title: "3. LLM Wiki·RAG · 프로젝트 지식 검색 시스템",
     category: "Supporting Project",
     periodRole: "Supporting Project · 개인 개발",
     stack:
-      "TypeScript · Cloudflare Pages Functions · BM25 · Vector Search · RRF · JSON Index",
+      "TypeScript · Cloudflare Pages Functions · BM25 · Vector Search · RRF · Elasticsearch · HNSW",
     problem:
       "프로젝트 문서와 사고 기록이 여러 파일에 흩어져 필요한 근거와 구현 내용을 빠르게 찾기 어려웠습니다.",
     decision:
       "운영 비용과 배포 복잡도를 낮추기 위해 문서를 JSON 인덱스로 정적화하고, 정확한 키워드 검색을 위한 BM25와 의미 검색을 위한 Vector Search를 RRF로 결합했습니다.",
     process:
-      "문서 구조를 수집·정규화한 뒤 청크와 출처 메타데이터를 생성하고, BM25와 벡터 검색 결과를 각각 계산해 RRF로 재정렬했습니다. 이후 인증 API와 답변 근거 표시까지 연결했습니다.",
-    role: "문서를 정적 JSON 인덱스로 변환하고 BM25와 Vector Search 결과를 RRF로 결합했습니다. 인증 API와 문서 출처·섹션 정보를 포함하는 검색 구조를 구현했습니다.",
+      "50개 문서를 737개 Chunk로 구조화하고 61개 Golden Query로 Vector·BM25·Hybrid 기준선을 측정했습니다. 이후 Legacy 검색을 유지한 채 Elasticsearch BM25·dense_vector kNN·HNSW·RRF Provider를 별도 구현했습니다.",
+    role: "문서 Chunking·메타데이터·검색 인덱스를 구성하고 BM25와 Vector Search를 RRF로 결합했습니다. Elasticsearch Mapping·Bulk Indexing·Hybrid Provider와 Legacy fallback을 추가했습니다.",
     result:
-      "프로젝트 지식을 검색 가능한 정적 구조로 정리하고, 코드·테스트·문서 관계를 2,057개 노드와 2,803개 관계로 구조화했습니다. 명시 관계와 AI 추론 관계를 분리해 근거를 다시 확인할 수 있게 했습니다.",
+      "Legacy Hybrid 기준 Hit@5 82.14%, Recall@5 61.01%, MRR 0.6875를 확보했고 전체 회귀 테스트 92개를 통과했습니다. 실제 Elasticsearch 61개 질의 실측은 후속 검증으로 명확히 분리했습니다.",
   },
 ];
 
@@ -173,7 +173,7 @@ const FullstackPortfolioPrint = () => {
             </h3>
             <span className="text-xs text-slate-500 font-mono">2026.05 – 2026.07</span>
           </div>
-          <p className="text-[7.8pt] text-sky-600 font-semibold mb-1">SK쉴더스 / 교육 이수 중</p>
+          <p className="text-[7.8pt] text-sky-600 font-semibold mb-1">SK쉴더스 / 과정 수료</p>
           <p className="text-[8pt] text-slate-700 leading-relaxed">
             AI 기반 실시간 영상 분석, 백엔드 이벤트 처리와 클라우드 인프라 연동 중심의 시스템 설계 및 프로젝트 수행
           </p>

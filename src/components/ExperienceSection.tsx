@@ -14,7 +14,7 @@ interface TimelineItem {
 const educationAndTraining: TimelineItem[] = [
   {
     title: "SK쉴더스 지능형 애플리케이션 개발 과정",
-    subtitle: "교육 이수 중",
+    subtitle: "수료",
     organization: "SK쉴더스 / 한국표준협회",
     period: "2026.05 – 2026.07",
     description: "AI 기반 실시간 영상 분석, 백엔드 이벤트 처리, 클라우드 인프라 연동 중심의 실전 시스템 설계 및 프로젝트 수행",

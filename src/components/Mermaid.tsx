@@ -5,6 +5,17 @@ mermaid.initialize({
   startOnLoad: false,
   theme: 'default',
   securityLevel: 'loose',
+  themeVariables: {
+    fontFamily: 'Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", sans-serif',
+    fontSize: '16px',
+  },
+  flowchart: {
+    useMaxWidth: false,
+    htmlLabels: true,
+    nodeSpacing: 44,
+    rankSpacing: 52,
+    padding: 14,
+  },
 });
 
 interface MermaidProps {
@@ -15,6 +26,8 @@ export const Mermaid: React.FC<MermaidProps> = ({ chart }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (import.meta.env.MODE === "test") return undefined;
+
     let isMounted = true;
 
     const renderChart = async () => {
@@ -25,6 +38,15 @@ export const Mermaid: React.FC<MermaidProps> = ({ chart }) => {
           const { svg } = await mermaid.render(id, chart);
           if (!isMounted || !containerRef.current) return;
           containerRef.current.innerHTML = svg;
+
+          const svgElement = containerRef.current.querySelector<SVGSVGElement>('svg');
+          if (svgElement) {
+            const intrinsicWidth = svgElement.viewBox.baseVal.width || 0;
+            svgElement.style.width = `${Math.max(intrinsicWidth, 820)}px`;
+            svgElement.style.maxWidth = 'none';
+            svgElement.style.height = 'auto';
+            svgElement.style.marginInline = 'auto';
+          }
         } catch (error) {
           console.error('Mermaid rendering failed:', error);
           if (containerRef.current) {
@@ -33,7 +55,7 @@ export const Mermaid: React.FC<MermaidProps> = ({ chart }) => {
         }
       }
     };
-    
+
     renderChart();
 
     return () => {
@@ -42,9 +64,9 @@ export const Mermaid: React.FC<MermaidProps> = ({ chart }) => {
   }, [chart]);
 
   return (
-    <div 
-      className="mermaid-diagram w-full overflow-x-auto flex justify-center py-6 bg-card/40 rounded-xl border border-border/50 shadow-inner" 
-      ref={containerRef} 
+    <div
+      className="mermaid-diagram w-full overflow-x-auto rounded-xl border border-border/50 bg-card/40 p-4 shadow-inner md:p-6"
+      ref={containerRef}
     />
   );
 };

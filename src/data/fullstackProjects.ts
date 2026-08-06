@@ -3,45 +3,6 @@ import type { Project } from "./projects";
 
 export const fullstackProjects: readonly Project[] = [
   {
-    icon: HeartPulse,
-    badge: "Main",
-    title: "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
-    summaryLine: "사용자 자가체크부터 결과 계산, 데이터 저장, 관리자 통계, PDF 리포트와 배포까지 연결한 웹서비스",
-    description: "개인적인 문제의식에서 시작해 약 2주 동안 기획부터 화면 구현, API, 데이터 저장, 결과 리포트와 배포까지 직접 완성한 웹서비스입니다.",
-    meta: {
-      period: "약 2주",
-      role: "1인 개발 · 기획, 설계, 개발, 배포",
-      service: "마음이음 자가체크 웹서비스",
-    },
-    highlights: ["모바일 우선 자가체크", "Workers API·D1", "PDF 리포트·운영 배포"],
-    tags: ["React", "TypeScript", "Vite", "Cloudflare Pages", "Cloudflare Workers", "D1", "REST API"],
-    gradient: "from-rose-500/10 to-pink-500/5",
-    liveUrl: "https://maumium.pages.dev/",
-    details: [
-      {
-        title: "왜 만들었고, 왜 이 기술을 선택했는가",
-        body:
-          "자가체크 결과처럼 민감하게 느껴질 수 있는 정보를 다루면서도 사용자가 모바일에서 빠르게 검사를 마치고 다음 행동을 확인할 수 있는 서비스가 필요했습니다.\n\n약 2주 안에 기획부터 운영 배포까지 완성해야 했기 때문에 React·TypeScript로 화면과 위험도 계산 로직을 분리하고, 별도 서버 운영 부담이 적은 Cloudflare Pages·Workers·D1 조합을 선택했습니다. 정적 프론트엔드, 경량 API와 데이터 저장을 하나의 Cloudflare 환경에서 관리할 수 있어 작은 서비스의 배포 속도와 운영 단순성을 확보할 수 있었습니다.",
-      },
-      {
-        title: "개발 프로세스",
-        items: [
-          "**1. 문제와 데이터 범위 정의**: 자가체크에 필요한 입력과 저장하지 않을 개인정보를 먼저 정하고, 서비스가 진단으로 오해되지 않도록 안내 문구와 동의 흐름을 설계했습니다.",
-          "**2. 핵심 사용자 흐름 구현**: React·Vite 기반 모바일 UI를 구현하고, 공통 위험도 기준을 결과 화면과 관리자 통계에서 함께 사용하도록 분리했습니다.",
-          "**3. API와 운영 기능 연결**: Workers API와 D1 저장을 연결하고, 동일한 결과 데이터를 해석 리포트·관리자 통계·PDF 리포트에서 재사용하도록 구성했습니다.",
-          "**4. 배포 전 검증**: 개인정보처리방침, 쿠키·분석 도구 동의, robots.txt, sitemap과 SEO 메타데이터를 점검한 뒤 Cloudflare Pages에 배포했습니다.",
-        ],
-      },
-      {
-        title: "판단과 배운 점",
-        items: [
-          "**필요한 개인정보만 수집하는 구조를 우선했습니다**: 자가체크 서비스는 민감한 결과를 다루기 때문에 기능을 늘리는 것보다 어떤 정보를 저장하지 않을지를 먼저 결정해야 했습니다. 진단 서비스처럼 보이지 않도록 안내 문구와 동의 절차를 구성하고, 결과 제공에 필요하지 않은 개인정보 수집을 줄였습니다. 이를 통해 개인정보 보호는 개발 이후 추가하는 문서가 아니라 데이터 구조를 정할 때부터 반영해야 한다는 점을 배웠습니다.",
-          "**작은 범위라도 배포 가능한 흐름을 완성했습니다**: 약 2주라는 제한된 기간에 화면 기능을 계속 확장하면 실제 사용 가능한 상태까지 완성하기 어렵다고 판단했습니다. 자가체크, 결과 계산, 저장, 관리자 통계, PDF 리포트와 배포까지 하나의 핵심 흐름을 먼저 완성했습니다. 이를 통해 기능 수보다 사용자가 처음부터 끝까지 막힘없이 사용할 수 있는 완결성이 더 중요하다는 점을 배웠습니다.",
-        ],
-      },
-    ],
-  },
-  {
     icon: Shield,
     badge: "Main",
     title: "AI 이벤트 수신부터 사고 검색까지 연결한 실시간 안전 관제 플랫폼",
@@ -266,7 +227,7 @@ export const fullstackProjects: readonly Project[] = [
         ],
       },
       {
-        title: "이 프로젝트로 보여주는 역량",
+        title: "핵심 기술 역량",
         items: [
           "MQTT·Spring Boot·WebSocket·React로 이어지는 End-to-End 이벤트 흐름 통합 및 지연 검증",
           "Event ID와 originalEventId를 활용한 멱등 처리와 Incident 병합 설계",
@@ -278,23 +239,62 @@ export const fullstackProjects: readonly Project[] = [
     ],
   },
   {
-    icon: BookOpen,
+    icon: HeartPulse,
     badge: "Main",
+    title: "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
+    summaryLine: "사용자 자가체크부터 결과 계산, 데이터 저장, 관리자 통계, PDF 리포트와 배포까지 연결한 웹서비스",
+    description: "개인적인 문제의식에서 시작해 약 2주 동안 기획부터 화면 구현, API, 데이터 저장, 결과 리포트와 배포까지 직접 완성한 웹서비스입니다.",
+    meta: {
+      period: "약 2주",
+      role: "1인 개발 · 기획, 설계, 개발, 배포",
+      service: "마음이음 자가체크 웹서비스",
+    },
+    highlights: ["모바일 우선 자가체크", "Workers API·D1", "PDF 리포트·운영 배포"],
+    tags: ["React", "TypeScript", "Vite", "Cloudflare Pages", "Cloudflare Workers", "D1", "REST API"],
+    gradient: "from-rose-500/10 to-pink-500/5",
+    liveUrl: "https://maumium.pages.dev/",
+    details: [
+      {
+        title: "프로젝트 배경과 기술 선택",
+        body:
+          "자가체크 결과처럼 민감하게 느껴질 수 있는 정보를 다루면서도 사용자가 모바일에서 빠르게 검사를 마치고 다음 행동을 확인할 수 있는 서비스가 필요했습니다.\n\n약 2주 안에 기획부터 운영 배포까지 완성해야 했기 때문에 React·TypeScript로 화면과 위험도 계산 로직을 분리하고, 별도 서버 운영 부담이 적은 Cloudflare Pages·Workers·D1 조합을 선택했습니다. 정적 프론트엔드, 경량 API와 데이터 저장을 하나의 Cloudflare 환경에서 관리할 수 있어 작은 서비스의 배포 속도와 운영 단순성을 확보할 수 있었습니다.",
+      },
+      {
+        title: "개발 프로세스",
+        items: [
+          "**1. 문제와 데이터 범위 정의**: 자가체크에 필요한 입력과 저장하지 않을 개인정보를 먼저 정하고, 서비스가 진단으로 오해되지 않도록 안내 문구와 동의 흐름을 설계했습니다.",
+          "**2. 핵심 사용자 흐름 구현**: React·Vite 기반 모바일 UI를 구현하고, 공통 위험도 기준을 결과 화면과 관리자 통계에서 함께 사용하도록 분리했습니다.",
+          "**3. API와 운영 기능 연결**: Workers API와 D1 저장을 연결하고, 동일한 결과 데이터를 해석 리포트·관리자 통계·PDF 리포트에서 재사용하도록 구성했습니다.",
+          "**4. 배포 전 검증**: 개인정보처리방침, 쿠키·분석 도구 동의, robots.txt, sitemap과 SEO 메타데이터를 점검한 뒤 Cloudflare Pages에 배포했습니다.",
+        ],
+      },
+      {
+        title: "판단과 배운 점",
+        items: [
+          "**필요한 개인정보만 수집하는 구조를 우선했습니다**: 자가체크 서비스는 민감한 결과를 다루기 때문에 기능을 늘리는 것보다 어떤 정보를 저장하지 않을지를 먼저 결정해야 했습니다. 진단 서비스처럼 보이지 않도록 안내 문구와 동의 절차를 구성하고, 결과 제공에 필요하지 않은 개인정보 수집을 줄였습니다. 이를 통해 개인정보 보호는 개발 이후 추가하는 문서가 아니라 데이터 구조를 정할 때부터 반영해야 한다는 점을 배웠습니다.",
+          "**작은 범위라도 배포 가능한 흐름을 완성했습니다**: 약 2주라는 제한된 기간에 화면 기능을 계속 확장하면 실제 사용 가능한 상태까지 완성하기 어렵다고 판단했습니다. 자가체크, 결과 계산, 저장, 관리자 통계, PDF 리포트와 배포까지 하나의 핵심 흐름을 먼저 완성했습니다. 이를 통해 기능 수보다 사용자가 처음부터 끝까지 막힘없이 사용할 수 있는 완결성이 더 중요하다는 점을 배웠습니다.",
+        ],
+      },
+    ],
+  },
+  {
+    icon: BookOpen,
+    badge: "Supporting",
     title: "LLM Wiki·Smart Safety Engineering Wiki",
     summaryLine: "프로젝트 문서와 기술 의사결정을 검색 가능한 데이터로 구조화한 하이브리드 검색 서비스",
     description:
-      "스마트 안전관제 개발 과정에서 생성된 기술 문서와 장애 기록을 검색 가능한 지식으로 구조화하고, BM25·Vector Search·RRF와 Elasticsearch 확장 구조를 설계·구현했습니다.",
+      "스마트 안전관제 개발 과정의 장애·실험·설계 판단을 50개 문서와 737개 Chunk로 지식화했습니다. 61개 Golden Query로 Vector·BM25·Hybrid 검색의 기준선을 측정한 뒤 Elasticsearch BM25·dense_vector kNN·HNSW·RRF Provider를 별도로 구현했으며, 실제 Elasticsearch 전체 질의 실측은 후속 검증으로 분리했습니다.",
     meta: {
       period: "2026",
-      role: "문서를 정적 인덱스로 구조화하고 BM25·Vector Search·RRF를 구현했으며, Elasticsearch Provider와 검색 품질 평가 구조를 설계·구현했습니다.",
+      role: "문서를 구조적 Chunk와 정적 인덱스로 변환하고 BM25·Vector Search·RRF를 구현했습니다. 61개 평가 질의로 기준선을 측정하고 Elasticsearch Provider와 Legacy fallback을 추가했습니다.",
       service: "LLM Wiki·RAG 지식 검색 시스템",
     },
-    highlights: ["50개 문서 · 737개 Chunk", "61개 Golden Query 평가", "Hybrid Hit@5 82.14%"],
-    tags: ["TypeScript", "Cloudflare Pages Functions", "BM25", "Vector Search", "RRF", "JSON Index", "RAG"],
+    highlights: ["50개 문서 · 737개 Chunk", "61개 Golden Query 평가", "Hybrid Hit@5 82.14%", "Elasticsearch Provider 구현"],
+    tags: ["TypeScript", "Cloudflare Pages Functions", "BM25", "Vector Search", "RRF", "Elasticsearch", "HNSW", "JSON Index", "RAG"],
     gradient: "from-indigo-500/10 to-violet-500/5",
     details: [
       {
-        title: "왜 만들었고, 왜 이 기술을 선택했는가",
+        title: "프로젝트 배경과 기술 선택",
         body:
           "프로젝트 문서와 기술 의사결정이 여러 파일에 흩어져 있어 정확한 파일명이나 코드 식별자를 찾는 검색과, 표현이 다른 유사 내용을 찾는 검색이 모두 필요했습니다.\n\nBM25는 키워드와 식별자 검색에 강하고 Vector Search는 문맥이 비슷한 문서를 찾는 데 유리해 두 방식을 함께 사용했습니다. 서로 다른 점수 체계를 직접 합산하는 대신 순위 기반인 RRF로 결과를 결합했고, Cloudflare 정적 배포 환경의 런타임 부하를 줄이기 위해 문서를 빌드 단계에서 JSON 인덱스로 변환했습니다.",
       },
@@ -306,6 +306,28 @@ export const fullstackProjects: readonly Project[] = [
           "**3. 결과 결합**: 서로 다른 검색 점수를 직접 비교하지 않고 RRF로 순위를 결합해 최종 검색 결과를 만들었습니다.",
           "**4. 서비스 연결**: `/api/rag/ask` 검색 API와 `/api/auth/verify` 인증 흐름을 구성하고, 응답에 문서 출처와 섹션 정보를 포함했습니다.",
           "**5. 배포 최적화**: 빌드 단계에서 정적 JSON 인덱스를 생성해 런타임에서는 검색과 응답 처리에 집중하도록 구성했습니다.",
+        ],
+      },
+      {
+        title: "검색 품질 기준선 평가",
+        body:
+          "Elasticsearch를 도입하기 전에 61개 Golden Query를 구성해 동일한 Top-5 조건에서 Vector, BM25, Hybrid 검색을 비교했습니다. Hybrid는 품질이 가장 높았지만 애플리케이션 내부 계산 비용으로 p95 지연이 증가해, Elasticsearch 확장의 필요성을 수치로 정의할 수 있었습니다.",
+        table: {
+          headers: ["검색 방식", "Hit@5", "Recall@5", "MRR", "nDCG@5", "p95"],
+          rows: [
+            ["Vector", "69.64%", "46.13%", "0.5696", "0.4618", "2.45ms"],
+            ["BM25", "75.00%", "50.00%", "0.6369", "0.4977", "127.73ms"],
+            ["Hybrid", "82.14%", "61.01%", "0.6875", "0.5884", "171.89ms"],
+          ],
+        },
+      },
+      {
+        title: "Elasticsearch 학습·확장 구현과 검증 경계",
+        items: [
+          "**검색 Provider 분리**: 기존 BM25·로컬 Vector·RRF 경로를 유지하면서 Elasticsearch Provider를 별도 모듈로 구성해 점진적으로 전환할 수 있게 했습니다.",
+          "**색인·검색 구현**: 256차원 dense_vector, cosine 기반 int8_hnsw, 필드별 BM25 가중치, 200개 단위 Bulk Indexing, BM25+kNN RRF 검색을 구현했습니다.",
+          "**회귀 검증**: Elasticsearch 신규 테스트 3개와 전체 회귀 테스트 92개를 통과해 기존 Wiki 검색 흐름이 깨지지 않는 것을 확인했습니다.",
+          "**검증 경계**: Docker Desktop 환경 이슈로 실제 Elasticsearch 컨테이너의 61개 전체 질의 실측은 완료하지 못했습니다. 따라서 성능 개선으로 단정하지 않고, 동일 평가셋으로 비교할 수 있는 구현 단계까지 완료했다고 구분했습니다.",
         ],
       },
       {

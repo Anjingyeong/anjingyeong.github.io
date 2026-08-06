@@ -15,15 +15,20 @@ const readText = (path: string) => readFileSync(resolve(process.cwd(), path), "u
 describe("full-stack portfolio", () => {
   it("keeps exactly three requested projects with grounded ownership copy", () => {
     expect(fullstackProjects.map((project) => project.title)).toEqual([
-      "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
       "AI 이벤트 수신부터 사고 검색까지 연결한 실시간 안전 관제 플랫폼",
+      "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
       "LLM Wiki·Smart Safety Engineering Wiki",
     ]);
     expect(fullstackProjects).toHaveLength(3);
     expect(fullstackProjects.some((project) => project.title.includes("포트폴리오 웹사이트"))).toBe(false);
-    expect(fullstackProjects[0].meta?.period).toBe("약 2주");
-    expect(fullstackProjects[0].meta?.role).toContain("1인 개발");
-    expect(fullstackProjects[1].description).toContain("비동기로 도착하는 경보와 증거 데이터를 하나의 사고로 유지하고");
+    expect(fullstackProjects.map((project) => project.badge)).toEqual(["Main", "Main", "Supporting"]);
+    expect(fullstackProjects[0].meta?.period).toBe("2026.05–2026.07");
+    expect(fullstackProjects[0].meta?.role).toContain("5인 팀장");
+    expect(fullstackProjects[0].description).toContain("비동기로 도착하는 경보와 증거 데이터를 하나의 사고로 유지하고");
+    expect(fullstackProjects[1].meta?.period).toBe("약 2주");
+    expect(fullstackProjects[1].meta?.role).toContain("1인 개발");
+    expect(fullstackProjects[2].description).toContain("61개 Golden Query");
+    expect(fullstackProjects[2].description).toContain("실제 Elasticsearch 전체 질의 실측은 후속 검증");
     expect(JSON.stringify(fullstackProjects)).not.toContain("직접 구현한 것으로 표현하지 않습니다");
 
     render(<ProjectsSection items={fullstackProjects} grouped={false} />);
@@ -52,8 +57,8 @@ describe("full-stack portfolio", () => {
 
   it("uses the stated project periods", () => {
     expect(fullstackProjects.map((project) => project.meta?.period)).toEqual([
-      "약 2주",
       "2026.05–2026.07",
+      "약 2주",
       "2026",
     ]);
   });
@@ -84,12 +89,12 @@ describe("full-stack portfolio", () => {
       screen.getByText("AI 이벤트를 실제 서비스 흐름으로 연결해 온 풀스택 개발자")
     ).toBeInTheDocument();
 
-    // 3 & 4 & 5. 마음이음이 1번째, 스마트 안전 관제가 2번째, LLM Wiki가 3번째(Supporting Project)인지
+    // 3 & 4 & 5. 스마트 안전 관제가 1번째, 마음이음이 2번째, LLM Wiki가 3번째(Supporting Project)인지
     const projectHeadings = Array.from(
       printPages[1].querySelectorAll("h3")
     ).map((h) => h.textContent);
-    expect(projectHeadings[0]).toContain("1. 마음이음");
-    expect(projectHeadings[1]).toContain("2. 스마트 안전 관제");
+    expect(projectHeadings[0]).toContain("1. 스마트 안전 관제");
+    expect(projectHeadings[1]).toContain("2. 마음이음");
     expect(projectHeadings[2]).toContain("3. LLM Wiki·RAG");
     expect(screen.getByText("Supporting Project")).toBeInTheDocument();
 
@@ -107,6 +112,8 @@ describe("full-stack portfolio", () => {
     // 8. originalEventId와 Incident가 포함되는지
     expect(printText).toContain("originalEventId");
     expect(printText).toContain("Incident");
+    expect(printText).toContain("Hit@5 82.14%");
+    expect(printText).toContain("후속 검증");
 
     // 9. 전체 백엔드와 프론트엔드를 단독 구현하지 않았다는 역할 경계 포함
     expect(printText).toContain(
@@ -133,9 +140,11 @@ describe("full-stack portfolio", () => {
     expect(resume).toContain("Full-Stack Developer 이력서");
     expect(resume).toContain("직접 구현");
     expect(resume).toContain("MQTT 메시지를 발행");
-    expect(resume.indexOf("마음이음")).toBeLessThan(resume.indexOf("스마트 안전 관제"));
-    expect(resume.indexOf("스마트 안전 관제")).toBeLessThan(resume.indexOf("LLM Wiki·RAG"));
+    expect(resume.indexOf("### 스마트 안전 관제")).toBeLessThan(resume.indexOf("### 마음이음"));
+    expect(resume.indexOf("### 마음이음")).toBeLessThan(resume.indexOf("### LLM Wiki·RAG"));
     expect(resume).toContain("약 2주 · 개인 프로젝트 · 1인 개발");
+    expect(resume).toContain("Legacy Hybrid Hit@5 82.14%");
+    expect(resume).toContain("실제 Elasticsearch 전체 질의 실측은 후속 검증");
     expect(resume).not.toContain("직접 구현한 것으로 표현하지 않습니다");
     expect(resume).toContain("건양대학교 의공학과 학사, 2026.02 졸업");
     expect(resume).toContain("SK쉴더스 지능형 애플리케이션 개발 부트캠프 5기, 2026.05–2026.07");
@@ -243,7 +252,7 @@ describe("full-stack portfolio", () => {
       );
 
       const capabilities = project.details.find(
-        (detail) => detail.title === "이 프로젝트로 보여주는 역량"
+        (detail) => detail.title === "핵심 기술 역량"
       );
 
       expect(reflection).toBeDefined();
@@ -271,7 +280,7 @@ describe("full-stack portfolio", () => {
       "운영 안정화와 검증 범위",
       "담당 범위와 협업",
       "판단과 배운 점",
-      "이 프로젝트로 보여주는 역량",
+      "핵심 기술 역량",
     ]);
 
     const titles = smartSafety?.details.map((detail) => detail.title) ?? [];
@@ -350,7 +359,7 @@ describe("full-stack portfolio", () => {
       "운영 안정성과 검증 범위",
       "담당 범위와 협업",
       "판단과 배운 점",
-      "이 프로젝트로 보여주는 역량",
+      "핵심 기술 역량",
     ]);
 
     const problemTitles = [

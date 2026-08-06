@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { createElement } from "react";
 import { describe, expect, it } from "vitest";
 import ProjectsSection from "@/components/ProjectsSection";
@@ -11,6 +11,15 @@ const readText = (path: string) =>
 const publicProjectSources = [
   readText("src/components/ProjectsSection.tsx"),
   readText("src/data/projects.ts"),
+].join("\n");
+
+const submissionUiSources = [
+  publicProjectSources,
+  readText("src/data/fullstackProjects.ts"),
+  readText("src/components/HeroSection.tsx"),
+  readText("src/components/AboutSection.tsx"),
+  readText("src/pages/PortfolioPrint.tsx"),
+  readText("src/pages/FullstackPortfolioPrint.tsx"),
 ].join("\n");
 
 const packageJson = readText("package.json");
@@ -75,6 +84,15 @@ describe("ProjectsSection public copy", () => {
     );
   });
 
+  it("uses submission-ready project labels without addressing the evaluator", () => {
+    expect(submissionUiSources).not.toMatch(
+      /채용담당자 요약|이 프로젝트로 보여주는 역량|프로젝트에서 보여준 역량|원인·구현·검증|지원 포트폴리오|지원 직무|표현 원칙|포트폴리오 \(제출용\)|기술 나열보다 현장 문제, 개인 기여, 판단 근거와 검증 결과가 먼저 보이도록 구성했습니다\./,
+    );
+    expect(submissionUiSources).toContain("프로젝트 요약");
+    expect(submissionUiSources).toContain("핵심 기술 역량");
+    expect(submissionUiSources).toContain("프로젝트 배경과 기술 선택");
+  });
+
   it("presents Smart Safety before LLM Wiki as public representative work", () => {
     const allSources = [
       publicProjectSources,
@@ -87,16 +105,24 @@ describe("ProjectsSection public copy", () => {
     expect(llmWikiIndex).toBeGreaterThan(smartSafetyIndex);
   });
 
-  it("shows Smart Safety problem, role, decisions, and results without opening a dialog", () => {
+  it("opens Smart Safety details from the same card interaction as the other projects", () => {
     render(createElement(ProjectsSection));
 
-    expect(screen.getAllByText("해결한 문제").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("개인 기여 · 직접 담당").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("문제를 어떻게 판단하고 개선했는지").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("AI 시스템 구조").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("최신 프레임 정책과 TensorRT로 실시간성을 확보했습니다").length).toBeGreaterThan(0);
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.queryByText("AI 시스템 구조")).not.toBeInTheDocument();
+    expect(screen.getByText("대표 프로젝트")).toBeInTheDocument();
+    expect(screen.getAllByText("프로젝트")).toHaveLength(3);
+    expect(screen.queryByText("Main")).not.toBeInTheDocument();
+    expect(screen.queryByText("Supporting")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByText("실시간 이상행동 탐지 및 안전 관제 AI 시스템"));
+
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    expect(screen.getByText("문제 정의와 목표")).toBeInTheDocument();
+    expect(screen.getByText("담당 범위와 협업")).toBeInTheDocument();
+    expect(screen.getByText("AI 시스템 구조")).toBeInTheDocument();
+    expect(screen.getByText("자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다")).toBeInTheDocument();
+    expect(screen.getByText("최신 프레임 정책과 TensorRT로 실시간성을 확보했습니다")).toBeInTheDocument();
   });
 
   it("shows VAE responsibility evidence directly on the page", () => {
@@ -121,6 +147,8 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).toContain("dense_vector");
     expect(publicProjectSources).toContain("HNSW");
     expect(publicProjectSources).toContain("Legacy 검색 유지");
+    expect(publicProjectSources).toContain("Elasticsearch 학습·확장 구현");
+    expect(publicProjectSources).toContain("실제 Elasticsearch 전체 질의 실측은 후속 검증");
     expect(publicProjectSources).not.toMatch(
       /\/api\/rag\/ask|LLM API key|GraphRAG/,
     );
