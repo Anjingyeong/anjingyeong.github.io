@@ -52,10 +52,10 @@ describe("full-stack portfolio", () => {
     expect(screen.getByText("기능의 앞뒤 흐름까지 책임지는 개발자")).toBeInTheDocument();
     expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
     expect(screen.getByText("흐름으로 설계")).toBeInTheDocument();
-    expect(screen.queryByText("배운 기술을 실제 관제 흐름으로 연결하는 개발자")).not.toBeInTheDocument();
+    expect(screen.queryByText("문제를 수치로 좁히고 관제 흐름까지 검증하는 개발자")).not.toBeInTheDocument();
 
     rerender(<AboutSection variant="ai" />);
-    expect(screen.getByText("배운 기술을 실제 관제 흐름으로 연결하는 개발자")).toBeInTheDocument();
+    expect(screen.getByText("문제를 수치로 좁히고 관제 흐름까지 검증하는 개발자")).toBeInTheDocument();
     expect(screen.getByText("융합보안·AI 안전관제 플랫폼")).toBeInTheDocument();
     expect(screen.getByText("구간을 나눠 측정")).toBeInTheDocument();
   });

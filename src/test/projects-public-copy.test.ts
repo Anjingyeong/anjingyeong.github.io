@@ -3,6 +3,8 @@ import { resolve } from "node:path";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { createElement } from "react";
 import { describe, expect, it } from "vitest";
+import AboutSection from "@/components/AboutSection";
+import ContactSection from "@/components/ContactSection";
 import ProjectsSection from "@/components/ProjectsSection";
 
 const readText = (path: string) =>
@@ -13,10 +15,18 @@ const publicProjectSources = [
   readText("src/data/projects.ts"),
 ].join("\n");
 
+const heroSource = readText("src/components/HeroSection.tsx");
+
+const portfolioLinkSources = [
+  readText("src/data/projects.ts"),
+  readText("src/components/AboutSection.tsx"),
+  readText("src/components/ContactSection.tsx"),
+].join("\n");
+
 const submissionUiSources = [
   publicProjectSources,
   readText("src/data/fullstackProjects.ts"),
-  readText("src/components/HeroSection.tsx"),
+  heroSource,
   readText("src/components/AboutSection.tsx"),
   readText("src/pages/PortfolioPrint.tsx"),
   readText("src/pages/FullstackPortfolioPrint.tsx"),
@@ -36,13 +46,62 @@ const portfolioPublicCopy = [
 ].join("\n");
 
 describe("ProjectsSection public copy", () => {
+  it("publishes the deployed LLM Wiki and development blog destinations", () => {
+    expect(publicProjectSources).toContain(
+      'liveUrl: "https://llmwiki.jingyeong.cloud"',
+    );
+    expect(publicProjectSources).toContain(
+      'githubUrl: "https://github.com/Anjingyeong/llm_wiki_strange"',
+    );
+    expect(portfolioLinkSources).toContain("https://zero-to-dev.tistory.com/");
+  });
+
+  it("renders the LLM Wiki live-service action in the project dialog", () => {
+    render(createElement(ProjectsSection));
+    fireEvent.click(screen.getByText("LLM Wiki · Hybrid Search 지식 시스템"));
+
+    expect(screen.getByRole("link", { name: "서비스 바로가기" })).toHaveAttribute(
+      "href",
+      "https://llmwiki.jingyeong.cloud",
+    );
+    expect(screen.getByRole("link", { name: "GitHub" })).toHaveAttribute(
+      "href",
+      "https://github.com/Anjingyeong/llm_wiki_strange",
+    );
+  });
+
+  it("renders the development blog in profile and contact surfaces", () => {
+    const about = render(createElement(AboutSection));
+    expect(about.getByRole("link", { name: "개발 블로그 열기" })).toHaveAttribute(
+      "href",
+      "https://zero-to-dev.tistory.com/",
+    );
+    about.unmount();
+
+    render(createElement(ContactSection));
+    expect(screen.getByRole("link", { name: "zero-to-dev.tistory.com" })).toHaveAttribute(
+      "href",
+      "https://zero-to-dev.tistory.com/",
+    );
+  });
+
   it("describes Smart Safety as a real-time event pipeline with caveated metrics", () => {
     expect(publicProjectSources).toContain("실시간 이상행동 탐지 및 안전 관제 AI 시스템");
-    expect(publicProjectSources).toContain("29/29건 위험 이벤트 1초 내 MQTT Subscriber 도달");
+    expect(publicProjectSources).toContain("발생한 위험 이벤트 29건이 모두 1초 안에 MQTT Subscriber에 도달했습니다");
     expect(publicProjectSources).toContain("YOLO26n-pose");
     expect(publicProjectSources).toContain("RTSP 영상에서 YOLO26n-pose로");
     expect(publicProjectSources).toContain("LSTM");
     expect(publicProjectSources).toContain("MQTT");
+  });
+
+  it("uses the strongest verified Smart Safety outcomes in the AI hero and project card", () => {
+    expect(heroSource).toContain("실시간 영상 AI의 정확도와 지연을 개선하고 관제 서비스까지 연결했습니다");
+    expect(heroSource).toContain('{ value: "+4.20%p", label: "행동 분류 F1"');
+    expect(heroSource).toContain('{ value: "8 → 1", label: "ID Switch"');
+    expect(heroSource).toContain('{ value: "-48.2%", label: "전체 처리 지연"');
+    expect(publicProjectSources).toContain("행동 분류 F1 89.29% → 93.49%");
+    expect(publicProjectSources).toContain("ID Switch 8건 → 1건");
+    expect(publicProjectSources).toContain("전체 처리 지연 11.789ms → 6.101ms");
   });
 
   it("does not contain bracketed evidence labels in public copy", () => {
@@ -65,6 +124,8 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).toContain("데이터 증강 적용 · 증강 후 bbox 정합성 검토");
     expect(publicProjectSources).not.toContain("영상 입력 애플리케이션 구현");
     expect(publicProjectSources).toContain("mAP@50");
+    expect(publicProjectSources).toContain("Kvasir Train 70 / Val 20 / Test 10");
+    expect(publicProjectSources).toContain("Elastic·Grid 증강 + bbox 정합성 검토");
     expect(publicProjectSources).toContain("/images/rf-detr-polyp-detection.png");
     expect(publicProjectSources).toContain("/images/rf_detr_aug.png");
     expect(publicProjectSources).toContain("/images/rf_detr_gold.jpg");

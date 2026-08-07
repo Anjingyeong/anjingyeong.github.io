@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import ScrollAnimator from "./ScrollAnimator";
-import { Github, Mail, MessageCircle, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { BookOpen, Github, Mail, MessageCircle, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -182,6 +182,17 @@ const ContactSection = () => {
                       <Github size={16} className="text-primary" />
                     </div>
                     github.com/Anjingyeong
+                  </a>
+                  <a
+                    href="https://zero-to-dev.tistory.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
+                  >
+                    <div className="w-9 h-9 rounded-lg bg-primary/8 flex items-center justify-center flex-shrink-0">
+                      <BookOpen size={16} className="text-primary" />
+                    </div>
+                    zero-to-dev.tistory.com
                   </a>
                 </div>
               </div>

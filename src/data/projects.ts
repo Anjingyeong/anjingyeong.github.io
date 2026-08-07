@@ -65,9 +65,9 @@ export const projects: readonly Project[] = [
     badge: "Main",
     title: "실시간 이상행동 탐지 및 안전 관제 AI 시스템",
     summaryLine:
-      "YOLO 비교·선정, Tracking과 LSTM 입력 개선, 프레임 버퍼·TensorRT 최적화와 영상 송출을 담당하고 MQTT 토픽 정합성을 맞춘 실시간 컴퓨터비전 프로젝트",
+      "낙상 판단 오류를 입력 특징·Tracking 연속성·처리 지연으로 나눠 측정하고, 각 병목을 개선해 관제 이벤트 흐름까지 연결한 대표 프로젝트",
     description:
-      "2개 카메라 내부 테스트에서 위험 이벤트 29건을 모두 1초 안에 MQTT Subscriber까지 전달했습니다. Spring Boot·STOMP·React 관제 화면 표시는 별도 통합 테스트로 확인했고, 이후 행동 분류, Tracking 단절과 추론 병목을 구간별 수치로 개선했습니다.",
+      "행동 분류 F1을 89.29%에서 93.49%로 높이고, 자체 낙상 테스트에서 ID Switch를 8건에서 1건으로 줄였습니다. TensorRT와 최신 프레임 정책이 함께 적용된 통합 조건의 전체 처리 지연은 11.789ms에서 6.101ms로 감소했으며, 최종 위험 판단을 MQTT로 전달해 백엔드·관제 화면과 별도 통합 테스트로 확인했습니다.",
     meta: {
       period: "2026.05–2026.07",
       role: "5인 팀장 · YOLO 비교·선정, Tracking·프레임 버퍼·TensorRT, LSTM 특징 개선, 영상 송출 담당",
@@ -79,9 +79,9 @@ export const projects: readonly Project[] = [
         "RTSP 입력부터 Pose·Tracking·LSTM·상태 후처리·MQTT 이벤트까지 연결한 AI 판단 파이프라인",
     },
     highlights: [
-      "29/29건 위험 이벤트 1초 내 MQTT Subscriber 도달",
       "행동 분류 F1 89.29% → 93.49%",
-      "TensorRT YOLO 지연 50.0% 감소",
+      "ID Switch 8건 → 1건",
+      "전체 처리 지연 11.789ms → 6.101ms",
     ],
     tags: ["Python", "PyTorch", "YOLO26n-pose", "LSTM", "OpenCV", "RTSP", "MQTT"],
     gradient: "from-rose-500/10 to-orange-500/10",
@@ -307,7 +307,7 @@ export const projects: readonly Project[] = [
       src: "/images/rf-detr-polyp-detection.png",
       caption: "대장 내시경 용종 검출 대표 화면",
     },
-    highlights: ["mAP@50 86.2% · 팀 모델", "증강 후 bbox 정합성 검토", "22+ FPS · 팀 애플리케이션"],
+    highlights: ["mAP@50 86.2% · 팀 모델", "Kvasir Train 70 / Val 20 / Test 10", "Elastic·Grid 증강 + bbox 정합성 검토"],
     tags: ["Python", "RF-DETR", "DINOv2", "OpenCV", "Kvasir Dataset", "Data Augmentation"],
     gradient: "from-blue-500/10 to-indigo-500/10",
     githubUrl: "https://github.com/Anjingyeong/RF-DETR-project",
@@ -497,8 +497,10 @@ export const projects: readonly Project[] = [
     icon: Brain,
     badge: "Supporting",
     title: "LLM Wiki · Hybrid Search 지식 시스템",
+    liveUrl: "https://llmwiki.jingyeong.cloud",
+    githubUrl: "https://github.com/Anjingyeong/llm_wiki_strange",
     summaryLine:
-      "스마트 안전관제 개발 지식을 코드 근거와 연결하고, 검색 기준선 측정부터 Elasticsearch 확장 학습까지 이어간 프로젝트",
+      "개인 구현 · 스마트 안전관제 개발 지식을 코드 근거와 연결하고, 검색 기준선 측정부터 Elasticsearch 확장 학습까지 이어간 RAG 지식 시스템",
     description:
       "스마트 안전관제 시스템 개발 과정에서 흩어진 문제 해결 기록, 실험 결과, 설계 판단을 구조화해 **50개 Wiki 문서 / 737개 Chunk**로 검색 가능한 지식 시스템을 구축했습니다. **61개 Golden Query 평가셋**으로 Vector·BM25·Hybrid 검색 기준선을 먼저 측정하고, 그 한계를 바탕으로 Elasticsearch의 BM25·dense_vector kNN·HNSW·RRF를 학습해 별도 Provider로 구현했습니다. 실제 Elasticsearch 전체 질의 실측은 후속 검증으로 구분했습니다.",
     highlights: [
@@ -535,8 +537,9 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "저장소와 데모",
+        title: "배포와 저장소",
         items: [
+          "**Live Service**: https://llmwiki.jingyeong.cloud",
           "**GitHub 저장소**: https://github.com/Anjingyeong/llm_wiki_strange",
           "**핵심 가치**: 단순한 문서 보관이 아니라, 문제·원인·판단·코드 근거를 다시 검색 가능한 형태로 구조화",
           "**활용 목적**: 개발 중 트러블슈팅 재참조, 기술 근거 정리, 기술 설명을 위한 지식 저장소",

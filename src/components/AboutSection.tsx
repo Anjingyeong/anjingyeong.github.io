@@ -1,5 +1,5 @@
 import ScrollAnimator from "./ScrollAnimator";
-import { Github, Mail, MapPin, GraduationCap, Briefcase, Brain, Globe } from "lucide-react";
+import { BookOpen, Github, Mail, MapPin, GraduationCap, Briefcase, Brain, Globe } from "lucide-react";
 
 const infoItems = [
   { icon: MapPin, label: "거주지", value: "서울, 대한민국" },
@@ -67,12 +67,12 @@ const AboutSection = ({ variant = "ai" }: AboutSectionProps) => {
                 </>
               ) : (
                 <>
-                  <h3 className="text-lg font-semibold mb-5 text-foreground">배운 기술을 실제 관제 흐름으로 연결하는 개발자</h3>
+                  <h3 className="text-lg font-semibold mb-5 text-foreground">문제를 수치로 좁히고 관제 흐름까지 검증하는 개발자</h3>
                   <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    부트캠프 프로젝트에서 영상 AI 결과가 기대와 다르면 곧바로 모델을 바꾸기보다 입력, 추적, 시계열 구성과 이벤트 전달 과정을 나누어 확인했습니다. 비교 가능한 지표와 로그를 만들고, 배운 기술을 실제 관제 목적에 맞게 적용하는 과정을 반복했습니다.
+                    영상 AI 결과가 기대와 다를 때 바로 모델을 바꾸기보다 Pose 검출, Tracking ID, LSTM 입력 시퀀스와 처리 지연을 나눠 측정했습니다. 낙상 전이를 설명하는 특징을 보강해 행동 분류 F1을 89.29%에서 93.49%로 높였고, Tracking 단절과 전체 처리 지연도 같은 방식으로 원인을 좁혀 개선했습니다.
                   </p>
                   <p className="leading-[1.8] mb-6" style={{ color: "#4A4A4A" }}>
-                    팀장으로서는 AI 탐지만 완료로 보지 않고 MQTT 이벤트, 백엔드 저장과 프론트 관제 화면 표시까지 같은 기준으로 확인했습니다. 모르는 부분은 빠르게 학습하고, 파트 간 이벤트 의미와 완료 조건을 맞춰 하나의 동작하는 시스템으로 완성하는 데 집중했습니다.
+                    팀장으로서는 AI 결과만 완료로 보지 않고 AI Worker → MQTT → Spring Boot → STOMP/WebSocket → React 관제 화면까지 팀 시스템의 전달 흐름과 완료 기준을 맞췄습니다. 개인 구현과 팀 통합 범위를 구분하면서도, 모델 결과가 실제 관제 판단으로 이어지는지 끝까지 확인하는 데 집중했습니다.
                   </p>
 
                   <div className="mt-8 pt-6 border-t border-border">
@@ -94,10 +94,13 @@ const AboutSection = ({ variant = "ai" }: AboutSectionProps) => {
               )}
 
               <div className="flex gap-3 mt-8 pt-6 border-t border-border">
-                <a href="https://github.com/Anjingyeong" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300">
+                <a href="https://github.com/Anjingyeong" target="_blank" rel="noopener noreferrer" aria-label="GitHub 열기" title="GitHub" className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300">
                   <Github size={18} />
                 </a>
-                <a href="mailto:anjin0910@gmail.com" className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300">
+                <a href="https://zero-to-dev.tistory.com/" target="_blank" rel="noopener noreferrer" aria-label="개발 블로그 열기" title="Blog" className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300">
+                  <BookOpen size={18} />
+                </a>
+                <a href="mailto:anjin0910@gmail.com" aria-label="이메일 보내기" title="Email" className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-300">
                   <Mail size={18} />
                 </a>
               </div>

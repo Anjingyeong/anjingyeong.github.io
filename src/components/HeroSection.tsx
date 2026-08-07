@@ -13,9 +13,9 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
         { value: "1 Incident", label: "경보·증거·설명 통합", note: "originalEventId" },
       ]
     : [
-        { value: "29/29", label: "1초 내 MQTT 도달", note: "Subscriber 기준 · 화면 별도 확인" },
-        { value: "93.49%", label: "행동 분류 F1", note: "동일 평가 조건" },
-        { value: "-50.0%", label: "YOLO 추론 지연", note: "9.454 → 4.723ms" },
+        { value: "+4.20%p", label: "행동 분류 F1", note: "89.29 → 93.49%" },
+        { value: "8 → 1", label: "ID Switch", note: "자체 낙상 테스트" },
+        { value: "-48.2%", label: "전체 처리 지연", note: "11.789 → 6.101ms" },
       ];
 
   const showLocalPortfolioSwitcher = !import.meta.env.PROD;
@@ -58,20 +58,20 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
               {isFullstack
                 ? "안전·보안 이벤트를 운영 가능한 관제 서비스로 연결합니다"
-                : "부트캠프 프로젝트에서 영상 AI와 실시간 이벤트를 관제 서비스로 연결했습니다"}
+                : "실시간 영상 AI의 정확도와 지연을 개선하고 관제 서비스까지 연결했습니다"}
             </h1>
 
             <div className="mb-8 max-w-xl space-y-3 break-keep">
               <p className="text-base md:text-lg text-foreground/75 leading-relaxed font-normal">
                 {isFullstack
                   ? "AI 위험 이벤트가 MQTT·Spring Boot·Incident·STOMP를 거쳐 관제 화면과 사고 검색까지 이어지는 흐름을 설계했습니다. 비동기 도착 순서와 중복, 실패 상황을 함께 검증했습니다."
-                  : "SK쉴더스 지능형 애플리케이션 개발 과정에서 RTSP 영상 입력부터 객체 탐지·Tracking·행동 분석, MQTT 이벤트 전달과 관제 화면 알림까지 하나의 시스템 흐름으로 구현했습니다. 모델 정확도뿐 아니라 실시간 처리와 데이터 정합성도 함께 검증했습니다."}
+                  : "SK쉴더스 지능형 애플리케이션 개발 과정의 스마트 안전관제 팀 프로젝트에서 RTSP 영상 입력부터 Pose·Tracking·행동 분석, MQTT 이벤트 전달과 관제 화면 알림까지 이어지는 흐름을 함께 검증했습니다. 저는 모델 성능뿐 아니라 Tracking 단절과 처리 지연을 구간별 수치로 비교해 개선했습니다."}
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 <strong className="font-semibold text-foreground">개인 기여 · </strong>
                 {isFullstack
                   ? "이벤트 계약, originalEventId 기반 Incident 정합성, VLM 비동기 처리 흐름과 파트 간 통합 검증"
-                  : "YOLO 후보 비교·선정, Tracking 재연결, LSTM 입력 특징 보강, 프레임 처리·TensorRT·영상 송출 최적화"}
+                  : "YOLO 후보 비교·선정, Tracking 재연결, LSTM 입력 특징 보강, 실시간 처리 지연 분석·최적화, 영상 송출 및 MQTT 계약 정합성 조율"}
               </p>
             </div>
 
