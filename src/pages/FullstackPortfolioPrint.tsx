@@ -29,10 +29,10 @@ export const fullstackPrintProjects: FullstackPrintProject[] = [
     decision:
       "영상 추론과 서비스 처리를 분리하기 위해 MQTT를 이벤트 계약으로 사용하고, Spring Boot에서 저장·병합한 뒤 WebSocket / STOMP로 관제 화면에 전달했습니다. PostgreSQL은 Incident 정합성, S3는 증거 자산 보관에 사용했습니다.",
     process:
-      "이벤트 스키마와 originalEventId를 먼저 합의하고, 수신→DB 저장→Incident 병합→실시간 브로드캐스트→VLM 후처리 순서로 통합했습니다. 각 단계의 완료 기준과 로그를 맞춘 뒤 2카메라 환경에서 End-to-End 지연을 측정했습니다.",
+      "이벤트 스키마와 originalEventId를 먼저 합의하고, 수신→DB 저장→Incident 병합→실시간 브로드캐스트→VLM 후처리 순서로 통합했습니다. 각 단계의 완료 기준과 로그를 맞춘 뒤 2카메라 환경에서 AI Worker 프레임 수신 → MQTT Subscriber 전달 지연을 측정하고, Spring Boot 저장·STOMP·React 화면은 별도 통합 테스트로 확인했습니다.",
     role: "AI 이벤트 계약, originalEventId 기반 Incident 정합성, VLM 비동기 작업 흐름과 파트 간 통합 검증을 담당했습니다. 전체 백엔드와 프론트엔드를 단독 구현한 것이 아니라 각 담당자와 데이터 계약과 완료 기준을 맞췄습니다.",
     result:
-      "2카메라 TensorRT 환경에서 위험 이벤트 29건의 End-to-End 평균 지연 20.931ms, p95 26ms를 확인했으며 29건 모두 1초 이내에 전달됐습니다. originalEventId를 기준으로 경보·스냅샷·클립·VLM 설명을 하나의 Incident에 병합했습니다.",
+      "2카메라 TensorRT 환경에서 MQTT Subscriber 기준 평균 전달 지연 20.931ms, p95 26ms, 최대 27ms를 확인했고 29건 모두 1초 이내에 도달했습니다. Spring Boot 저장·STOMP·React 화면 표시는 별도 통합 테스트로 확인했으며, originalEventId를 기준으로 경보·스냅샷·클립·VLM 설명을 하나의 Incident에 병합했습니다.",
   },
   {
     id: "maumium",
@@ -98,7 +98,7 @@ const FullstackPortfolioPrint = () => {
                 안진경 <span className="text-slate-400 font-normal">| An Jin Gyeong</span>
               </h1>
               <p className="text-sky-600 font-semibold text-sm mt-1 uppercase tracking-wide">
-                AI 이벤트를 실제 서비스 흐름으로 연결해 온 풀스택 개발자
+                비동기 데이터 정합성과 실시간 이벤트 흐름을 끝까지 연결하는 풀스택 개발자
               </p>
             </div>
             <div className="text-right space-y-1">

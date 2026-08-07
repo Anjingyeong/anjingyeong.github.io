@@ -8,9 +8,9 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
   const isFullstack = variant === "fullstack";
   const metrics = isFullstack
     ? [
-        { value: "2주", label: "1인 서비스 완성", note: "기획부터 배포" },
-        { value: "29/29", label: "1초 내 이벤트 전달", note: "2카메라 측정" },
-        { value: "1 Incident", label: "경보·증거·설명 통합", note: "originalEventId" },
+        { value: "29/29", label: "1초 내 MQTT 도달", note: "2카메라 · Subscriber 기준" },
+        { value: "1 Incident", label: "경보·증거·설명 병합", note: "originalEventId" },
+        { value: "약 2주", label: "1인 웹서비스 배포", note: "기획 → 운영" },
       ]
     : [
         { value: "+4.20%p", label: "행동 분류 F1", note: "89.29 → 93.49%" },
@@ -27,7 +27,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-hidden py-8 sm:py-12 lg:py-0"
       style={{ paddingTop: "var(--header-height)", background: "var(--gradient-hero)" }}
     >
       <div className="float-decoration w-96 h-96 -top-48 -right-48" />
@@ -37,7 +37,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
       <div className="absolute top-1/2 left-1/4 w-1 h-1 rounded-full bg-primary/15 animate-pulse" style={{ animationDelay: "2s" }} />
 
       <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center max-w-6xl mx-auto">
           <div className="order-1 lg:order-1 lg:col-span-7 pr-0 lg:pr-10">
             <div className="mb-5">
               <p className="text-sm font-bold tracking-[0.2em] text-primary uppercase">
@@ -51,36 +51,36 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-5">
               <Sparkles size={14} className="text-primary" />
               <span className="text-sm font-medium text-primary">
-                FM·안전관리 플랫폼 연계 · 융합보안 · 지능형 영상관제
+                {isFullstack ? "실시간 이벤트 · 데이터 정합성 · 서비스 운영" : "FM·안전관리 플랫폼 연계 · 융합보안 · 지능형 영상관제"}
               </span>
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
               {isFullstack
-                ? "안전·보안 이벤트를 운영 가능한 관제 서비스로 연결합니다"
+                ? "비동기 데이터의 정합성을 지키며 AI 이벤트를 운영 가능한 서비스로 연결했습니다"
                 : "실시간 영상 AI의 정확도와 지연을 개선하고 관제 서비스까지 연결했습니다"}
             </h1>
 
             <div className="mb-8 max-w-xl space-y-3 break-keep">
               <p className="text-base md:text-lg text-foreground/75 leading-relaxed font-normal">
                 {isFullstack
-                  ? "AI 위험 이벤트가 MQTT·Spring Boot·Incident·STOMP를 거쳐 관제 화면과 사고 검색까지 이어지는 흐름을 설계했습니다. 비동기 도착 순서와 중복, 실패 상황을 함께 검증했습니다."
+                  ? "팀 프로젝트에서는 MQTT 위험 이벤트를 Incident로 저장·병합하고 STOMP·React 화면과 VLM 후처리까지 연결했습니다. 개인 프로젝트에서는 약 2주 안에 자가체크 서비스의 화면·API·D1·PDF 리포트·배포를 1인으로 완성했습니다."
                   : "SK쉴더스 지능형 애플리케이션 개발 과정의 스마트 안전관제 팀 프로젝트에서 RTSP 영상 입력부터 Pose·Tracking·행동 분석, MQTT 이벤트 전달과 관제 화면 알림까지 이어지는 흐름을 함께 검증했습니다. 저는 모델 성능뿐 아니라 Tracking 단절과 처리 지연을 구간별 수치로 비교해 개선했습니다."}
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 <strong className="font-semibold text-foreground">개인 기여 · </strong>
                 {isFullstack
-                  ? "이벤트 계약, originalEventId 기반 Incident 정합성, VLM 비동기 처리 흐름과 파트 간 통합 검증"
+                  ? "팀 프로젝트: 이벤트 계약·originalEventId Incident 정합성·VLM 비동기 흐름 / 개인 프로젝트: 기획·API·DB·배포 전 과정"
                   : "YOLO 후보 비교·선정, Tracking 재연결, LSTM 입력 특징 보강, 실시간 처리 지연 분석·최적화, 영상 송출 및 MQTT 계약 정합성 조율"}
               </p>
             </div>
 
-            <div className="grid max-w-xl grid-cols-1 gap-3 mb-8 sm:grid-cols-3">
+            <div className="grid max-w-xl grid-cols-3 gap-2 sm:gap-3 mb-6 sm:mb-8">
               {metrics.map((metric) => (
-                <div key={metric.label} className="rounded-xl border border-border/70 bg-background/45 px-4 py-3 backdrop-blur-sm">
-                  <strong className="block text-lg font-bold text-primary">{metric.value}</strong>
-                  <span className="mt-0.5 block text-sm font-semibold text-foreground">{metric.label}</span>
-                  <span className="mt-1 block text-xs text-muted-foreground">{metric.note}</span>
+                <div key={metric.label} className="rounded-xl border border-border/70 bg-background/45 px-2.5 sm:px-4 py-3 backdrop-blur-sm">
+                  <strong className="block text-base sm:text-lg font-bold text-primary">{metric.value}</strong>
+                  <span className="mt-0.5 block text-[11px] sm:text-sm font-semibold text-foreground break-keep">{metric.label}</span>
+                  <span className="mt-1 block text-[10px] sm:text-xs text-muted-foreground">{metric.note}</span>
                 </div>
               ))}
             </div>
@@ -119,7 +119,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
 
           <div className="flex justify-center lg:justify-end order-2 lg:order-2 lg:col-span-5">
             <div className="flex flex-col items-center">
-              <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-[19rem] lg:h-[19rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: "0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)" }}>
+              <div className="relative w-36 h-36 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-[19rem] lg:h-[19rem] rounded-full border border-primary/30 overflow-hidden group" style={{ boxShadow: "0 8px 48px rgba(60, 80, 180, 0.10), 0 1px 4px rgba(0,0,0,0.06)" }}>
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <img
                   src="/profile.jpg"

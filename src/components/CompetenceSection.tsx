@@ -73,7 +73,7 @@ const CompetenceSection = () => {
                         우수 소프트웨어 활용역량
                       </h3>
                       <p className="text-xs text-muted-foreground mt-0.5 font-medium">
-                        발급: 건양대학교 (2025.12)
+                        발급: 건양대학교 (2026.03.21)
                       </p>
                     </div>
                   </div>
@@ -118,7 +118,7 @@ const CompetenceSection = () => {
                         의공학 전문 실무역량
                       </h3>
                       <p className="text-xs text-muted-foreground mt-0.5 font-medium">
-                        발급: 건양대학교 (2026.02)
+                        발급: 건양대학교 (2026.03.21)
                       </p>
                     </div>
                   </div>

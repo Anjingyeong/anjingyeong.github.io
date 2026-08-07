@@ -199,7 +199,7 @@ const PortfolioPrint = () => {
             Python, PyTorch, RF-DETR, DINOv2, OpenCV, Kvasir Dataset
           </p>
           <p className="text-[7.5pt] text-slate-700 leading-relaxed mb-1.5">
-            데이터 증강과 bbox 정합성 검증으로 내시경 영상의 형태 편차에 대응한 용종 검출 프로젝트
+            기하학적 데이터 증강으로 내시경 영상의 형태·시야 편차를 보완한 용종 검출 팀 프로젝트
           </p>
           <div className="print-grid-3 gap-x-4">
             <div>
@@ -211,7 +211,7 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Role / Contribution</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                Elastic Deformation과 Grid Distortion 적용 및 증강 후 bbox 정합성 검증을 담당했습니다.
+                Elastic Deformation과 Grid Distortion 기반 데이터 증강을 설계하고 적용했습니다.
               </p>
             </div>
             <div>
@@ -247,7 +247,7 @@ const PortfolioPrint = () => {
             <div>
               <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Role / Contribution</h4>
               <p className="text-[7.5pt] text-slate-700 leading-relaxed">
-                초음파 영상 데이터 증강과 원본·재구성 차영상 기반 이상 후보 시각화 아이디어를 담당했습니다. VAE 모델과 후처리는 팀 구현입니다.
+                원본 영상과 팀의 VAE 재구성 결과 사이의 차영상을 생성하고 비교·시각화했습니다. VAE 모델과 후처리는 팀 구현입니다.
               </p>
             </div>
             <div>

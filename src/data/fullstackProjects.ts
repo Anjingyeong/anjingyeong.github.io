@@ -7,12 +7,12 @@ export const fullstackProjects: readonly Project[] = [
     badge: "Main",
     title: "AI 이벤트 수신부터 사고 검색까지 연결한 실시간 안전 관제 플랫폼",
     summaryLine:
-      "AI 위험 이벤트를 MQTT로 수신해 하나의 Incident로 저장·병합하고, 실시간 알림·사고 증거·VLM 검색까지 연결한 관제 플랫폼",
+      "비동기로 도착하는 경보·스냅샷·클립을 originalEventId로 하나의 Incident에 병합하고, 실시간 경보와 VLM 후처리를 분리한 관제 서비스",
     description:
-      "비동기로 도착하는 경보와 증거 데이터를 하나의 사고로 유지하고, 실패와 도착 순서를 고려한 서비스 흐름을 설계했습니다.",
+      "비동기로 도착하는 경보와 증거 데이터를 하나의 사고로 유지했습니다. MQTT 전달 지연은 Subscriber 기준으로 측정하고, Spring Boot 저장·STOMP·React 화면 표시는 별도 통합 테스트로 확인해 측정 범위와 서비스 연결 범위를 구분했습니다.",
     meta: {
       period: "2026.05–2026.07",
-      role: "5인 팀장 · 관제 서비스 데이터 흐름 담당",
+      role: "5인 팀장 · 이벤트 계약·Incident 정합성·VLM 비동기 흐름·통합 검증",
       service: "실시간 안전 관제 플랫폼",
     },
     heroImage: {
@@ -21,9 +21,9 @@ export const fullstackProjects: readonly Project[] = [
         "실시간 위험 알림과 자연어 사고 검색을 제공하는 스마트 안전 관제 대시보드",
     },
     highlights: [
-      "29개 이벤트 모두 1초 이내 전달",
+      "29/29건 1초 내 MQTT Subscriber 도달",
       "originalEventId 기반 Incident 병합",
-      "실시간 경보·VLM 비동기 분리",
+      "실시간 경보 / VLM 비동기 분리",
     ],
     tags: [
       "Java 21",
@@ -61,35 +61,35 @@ export const fullstackProjects: readonly Project[] = [
         ],
       },
       {
-        title: "AI 이벤트가 관제 화면까지 도달하는 시간을 측정했습니다",
+        title: "AI 이벤트 전달 지연의 측정 범위를 분리했습니다",
         problemSolving: [
           {
             label: "측정 현상",
-            text: "위험 이벤트는 AI Worker에서 발행된 뒤 MQTT Broker, Spring Boot 저장과 STOMP 브로드캐스트를 거쳐 React 화면에 표시됩니다. 각 구성 요소가 정상 동작하는지만 확인해서는 실제 사용자가 알림을 받기까지의 지연을 알 수 없었습니다.",
+            text: "2개 카메라 통합 테스트에서 위험 이벤트 29건과 timestamp 로그를 확보했지만, 지연 수치는 AI Worker에서 MQTT Subscriber까지의 전달 구간을 측정한 값이었고 Spring Boot·STOMP·React 화면은 별도 통합 테스트로 확인한 범위였습니다.",
           },
           {
             label: "원인 분석",
-            text: "AI 발행 시점과 백엔드 수신·저장·브로드캐스트 시점이 하나의 측정 기준으로 연결되지 않으면 어느 구간에서 지연이 발생했는지 특정하기 어려웠습니다.",
+            text: "MQTT Subscriber 기준 수치를 관제 화면 표시까지의 End-to-End 지연으로 함께 표현하면 실제 측정 endpoint보다 넓은 범위를 성과처럼 설명하게 되는 문제가 있었습니다.",
           },
           {
             label: "의사결정",
-            text: "개별 API 응답 시간이 아니라 AI 이벤트 생성부터 관제 화면 전달까지의 End-to-End 지연을 검증 기준으로 사용하기로 했습니다.",
+            text: "정량 지연이 측정된 구간과 서비스 통합이 확인된 구간을 분리해 설명하기로 했습니다. 숫자는 AI Worker → MQTT Subscriber 범위에만 사용하고, Spring Boot 저장·STOMP·React 표시는 별도 통합 검증으로 구분했습니다.",
           },
           {
             label: "구현",
-            text: "MQTT QoS 1로 이벤트를 전달하고 Spring Boot에서 비동기로 수신·저장한 뒤, 시설별 STOMP 토픽으로 React 관제 화면에 브로드캐스트했습니다. 이벤트의 발행·수신 시각을 로그로 연결해 End-to-End 지연을 측정했습니다.",
+            text: "AI Worker의 프레임 수신 시각과 MQTT Subscriber 수신 시각을 이벤트·timestamp 로그로 연결해 전달 지연을 측정했습니다. 이후 Spring Boot 저장, 시설별 STOMP 브로드캐스트와 React 화면 표시가 이어지는지는 별도 통합 테스트로 확인했습니다.",
           },
           {
             label: "결과",
-            text: "2카메라 TensorRT 환경에서 발생한 위험 이벤트 29건의 평균 End-to-End 지연은 20.931ms, p95는 26ms였으며 29건 모두 1초 안에 전달됐습니다.",
+            text: "2카메라 TensorRT 환경에서 MQTT Subscriber 기준 전달 지연은 평균 20.931ms, p95 26ms, 최대 27ms였고 위험 이벤트 29건 모두 1초 안에 도달했습니다. Spring Boot 저장·STOMP·React 화면 표시는 별도 통합 테스트로 확인했습니다.",
           },
           {
             label: "배운 점",
-            text: "실시간 시스템은 기능이 연결됐다는 사실만으로 충분하지 않으며, 각 구간의 시각과 이벤트 ID를 연결해 실제 End-to-End 지연을 검증해야 한다는 점을 배웠습니다.",
+            text: "실시간 성능을 설명할 때는 단순히 End-to-End라고 부르기보다 측정 시작점과 종료점을 명시하고, 정량 측정과 기능 통합 검증의 범위를 구분해야 신뢰할 수 있다는 점을 배웠습니다.",
           },
         ],
         note:
-          "MQTT QoS 1은 at-least-once 전달이므로 중복 가능성이 있습니다. Event ID, Incident 병합과 DB 제약을 함께 적용해 멱등성을 보완했습니다.",
+          "20.931ms·p95 26ms·최대 27ms와 1초 이내 29/29는 MQTT Subscriber 기준이며 브라우저 표시 지연 수치가 아닙니다. Spring Boot 저장·STOMP·React 화면 표시는 별도 통합 테스트로 확인했습니다.",
       },
       {
         title: "화면의 중복이 아니라 사고 식별 구조를 수정했습니다",
@@ -242,14 +242,14 @@ export const fullstackProjects: readonly Project[] = [
     icon: HeartPulse,
     badge: "Supporting",
     title: "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
-    summaryLine: "사용자 자가체크부터 결과 계산, 데이터 저장, 관리자 통계, PDF 리포트와 배포까지 연결한 웹서비스",
+    summaryLine: "민감정보 최소 수집을 전제로 자가체크 → 결과 계산 → 저장 → 관리자 통계 → PDF 리포트 → 배포까지 약 2주 동안 1인 완성한 웹서비스",
     description: "개인적인 문제의식에서 시작해 약 2주 동안 기획부터 화면 구현, API, 데이터 저장, 결과 리포트와 배포까지 직접 완성한 웹서비스입니다.",
     meta: {
       period: "약 2주",
       role: "1인 개발 · 기획, 설계, 개발, 배포",
       service: "마음이음 자가체크 웹서비스",
     },
-    highlights: ["모바일 우선 자가체크", "Workers API·D1", "PDF 리포트·운영 배포"],
+    highlights: ["약 2주 · 1인 기획 → 배포", "Workers API·D1·관리자 통계", "PDF 리포트·동의/SEO 운영"],
     tags: ["React", "TypeScript", "Vite", "Cloudflare Pages", "Cloudflare Workers", "D1", "REST API"],
     gradient: "from-rose-500/10 to-pink-500/5",
     liveUrl: "https://maumium.pages.dev/",
@@ -286,12 +286,14 @@ export const fullstackProjects: readonly Project[] = [
       "스마트 안전관제 개발 과정의 장애·실험·설계 판단을 50개 문서와 737개 Chunk로 지식화했습니다. 61개 Golden Query로 Vector·BM25·Hybrid 검색의 기준선을 측정한 뒤 Elasticsearch BM25·dense_vector kNN·HNSW·RRF Provider를 별도로 구현했으며, 실제 Elasticsearch 전체 질의 실측은 후속 검증으로 분리했습니다.",
     meta: {
       period: "2026",
-      role: "문서를 구조적 Chunk와 정적 인덱스로 변환하고 BM25·Vector Search·RRF를 구현했습니다. 61개 평가 질의로 기준선을 측정하고 Elasticsearch Provider와 Legacy fallback을 추가했습니다.",
+      role: "개인 구현 · 문서 구조화, BM25·Vector Search·RRF 검색, 61개 평가 질의 기준선 측정, Elasticsearch Provider·Legacy fallback",
       service: "LLM Wiki·RAG 지식 검색 시스템",
     },
     highlights: ["50개 문서 · 737개 Chunk", "61개 Golden Query 평가", "Hybrid Hit@5 82.14%", "Elasticsearch Provider 구현"],
     tags: ["TypeScript", "Cloudflare Pages Functions", "BM25", "Vector Search", "RRF", "Elasticsearch", "HNSW", "JSON Index", "RAG"],
     gradient: "from-indigo-500/10 to-violet-500/5",
+    liveUrl: "https://llmwiki.jingyeong.cloud",
+    githubUrl: "https://github.com/Anjingyeong/llm_wiki_strange",
     details: [
       {
         title: "프로젝트 배경과 기술 선택",

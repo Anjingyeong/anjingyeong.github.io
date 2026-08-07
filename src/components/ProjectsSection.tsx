@@ -1,6 +1,12 @@
 import { useState, type KeyboardEvent, type ReactNode } from "react";
 import { ArrowUpRight, ExternalLink, Github, Play, X } from "lucide-react";
-import { projects, type Project, type ProjectDetail } from "@/data/projects";
+import {
+  projects,
+  type ProblemSolvingStep,
+  type Project,
+  type ProjectDetail,
+  type ProjectStory,
+} from "@/data/projects";
 import ScrollAnimator from "./ScrollAnimator";
 import Mermaid from "./Mermaid";
 
@@ -17,17 +23,130 @@ const renderInlineText = (text: string): ReactNode[] =>
     return part;
   });
 
-const summaryStepLabels = [
-  { source: "측정 현상", display: "문제 상황" },
-  { source: "의사결정", display: "기술적 선택" },
-  { source: "결과", display: "결과" },
-] as const;
+const findProblemStep = (
+  steps: readonly ProblemSolvingStep[],
+  label: ProblemSolvingStep["label"],
+) => steps.find((step) => step.label === label)?.text;
 
-const technicalStepLabels = ["원인 분석", "구현", "배운 점"] as const;
+const joinProblemSteps = (...steps: Array<string | undefined>) =>
+  steps.filter((step): step is string => Boolean(step)).join(" ");
 
-const summarizeStep = (text: string): string => {
-  const firstSentence = text.match(/^.*?다\./)?.[0] ?? text;
-  return firstSentence;
+const StoryCard = ({
+  label,
+  framework,
+  text,
+  emphasized = false,
+}: {
+  readonly label: string;
+  readonly framework: string;
+  readonly text: string;
+  readonly emphasized?: boolean;
+}) => (
+  <div
+    className={`rounded-xl border p-4 ${
+      emphasized
+        ? "border-primary/25 bg-primary/[0.06]"
+        : "border-border bg-muted/20"
+    }`}
+  >
+    <div className="mb-2 flex items-center justify-between gap-3">
+      <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary">{label}</p>
+      <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {framework}
+      </span>
+    </div>
+    <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(text)}</p>
+  </div>
+);
+
+const ProjectStoryPanel = ({ story }: { readonly story: ProjectStory }) => (
+  <section className="mb-8 rounded-xl border border-border bg-card/60 p-5 md:p-6">
+    <div className="mb-4">
+      <div>
+        <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">Project Story</p>
+        <h4 className="mt-1 text-lg font-semibold text-foreground">AS-IS → TASK → ACTION → TO-BE</h4>
+      </div>
+    </div>
+    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      <StoryCard label="AS-IS" framework="Situation" text={story.asIs} />
+      <StoryCard label="TASK" framework="Task" text={story.task} />
+      <StoryCard label="ACTION" framework="Action" text={story.action} />
+      <StoryCard label="TO-BE" framework="Result" text={story.toBe} emphasized />
+    </div>
+  </section>
+);
+
+const ProblemSolvingStory = ({
+  steps,
+  table,
+  diagram,
+  note,
+}: {
+  readonly steps: readonly ProblemSolvingStep[];
+  readonly table?: ProjectDetail["table"];
+  readonly diagram?: string;
+  readonly note?: string;
+}) => {
+  const asIs = joinProblemSteps(
+    findProblemStep(steps, "측정 현상"),
+    findProblemStep(steps, "원인 분석"),
+  );
+  const task = findProblemStep(steps, "의사결정");
+  const action = joinProblemSteps(
+    findProblemStep(steps, "구현"),
+    findProblemStep(steps, "적용"),
+  );
+  const toBe = findProblemStep(steps, "결과");
+  const insight = findProblemStep(steps, "배운 점");
+
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        {asIs ? <StoryCard label="AS-IS" framework="Situation" text={asIs} /> : null}
+        {task ? <StoryCard label="TASK" framework="Task" text={task} /> : null}
+        {action ? <StoryCard label="ACTION" framework="Action" text={action} /> : null}
+        {toBe ? <StoryCard label="TO-BE" framework="Result" text={toBe} emphasized /> : null}
+      </div>
+
+      {insight ? (
+        <div className="rounded-lg border border-border bg-background/50 p-4">
+          <p className="mb-1 text-xs font-bold uppercase tracking-wide text-primary">Technical Insight</p>
+          <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(insight)}</p>
+        </div>
+      ) : null}
+
+      {table ? (
+        <div className="overflow-x-auto rounded-lg border border-border">
+          <table className="w-full text-left text-xs md:text-sm">
+            <thead className="border-b border-border bg-muted/50 font-semibold text-foreground">
+              <tr>
+                {table.headers.map((h, idx) => (
+                  <th key={idx} className="p-2.5 md:p-3">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border text-muted-foreground">
+              {table.rows.map((row, rIdx) => (
+                <tr key={rIdx} className="hover:bg-muted/20">
+                  {row.map((cell, cIdx) => (
+                    <td key={cIdx} className="p-2.5 md:p-3">{renderInlineText(cell)}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : null}
+
+      {diagram ? <Mermaid chart={diagram} /> : null}
+
+      {note ? (
+        <p className="rounded-lg bg-muted/30 p-3 text-xs leading-relaxed text-muted-foreground">
+          {renderInlineText(note)}
+        </p>
+      ) : null}
+    </div>
+  );
 };
 
 const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) => (
@@ -39,74 +158,12 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
       </p>
     ) : null}
     {detail.problemSolving ? (
-      <div className="space-y-3">
-        <div className="grid gap-3 md:grid-cols-3">
-          {summaryStepLabels.map(({ source, display }) => {
-            const step = detail.problemSolving?.find((item) => item.label === source);
-            if (!step) return null;
-
-            return (
-              <div key={source} className="rounded-lg border border-border bg-muted/20 p-4">
-                <p className="mb-1 text-xs font-bold uppercase tracking-wide text-primary">{display}</p>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {renderInlineText(summarizeStep(step.text))}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="rounded-lg border border-border bg-background/40">
-          <div className="border-b border-border px-4 py-3 text-sm font-semibold text-foreground">
-            구현 과정
-          </div>
-          <div className="space-y-4 p-4">
-            <div className="grid gap-3 md:grid-cols-2">
-              {detail.problemSolving
-                .filter((step) => technicalStepLabels.includes(step.label as (typeof technicalStepLabels)[number]))
-                .map((step) => (
-                  <div key={step.label} className="rounded-lg border border-border bg-muted/20 p-4">
-                    <p className="mb-1 text-xs font-bold uppercase tracking-wide text-primary">
-                      {step.label === "배운 점" ? "기술적 인사이트" : step.label === "구현" ? "구현 내용" : step.label}
-                    </p>
-                    <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(step.text)}</p>
-                  </div>
-                ))}
-            </div>
-
-            {detail.table ? (
-              <div className="overflow-x-auto rounded-lg border border-border">
-                <table className="w-full text-left text-xs md:text-sm">
-                  <thead className="border-b border-border bg-muted/50 font-semibold text-foreground">
-                    <tr>
-                      {detail.table.headers.map((h, idx) => (
-                        <th key={idx} className="p-2.5 md:p-3">{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border text-muted-foreground">
-                    {detail.table.rows.map((row, rIdx) => (
-                      <tr key={rIdx} className="hover:bg-muted/20">
-                        {row.map((cell, cIdx) => (
-                          <td key={cIdx} className="p-2.5 md:p-3">{renderInlineText(cell)}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : null}
-
-            {detail.diagram ? <Mermaid chart={detail.diagram} /> : null}
-
-            {detail.note ? (
-              <p className="rounded-lg bg-muted/30 p-3 text-xs leading-relaxed text-muted-foreground">
-                {renderInlineText(detail.note)}
-              </p>
-            ) : null}
-          </div>
-        </div>
-      </div>
+      <ProblemSolvingStory
+        steps={detail.problemSolving}
+        table={detail.table}
+        diagram={detail.diagram}
+        note={detail.note}
+      />
     ) : null}
     {detail.items ? (
       <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
@@ -450,6 +507,8 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
                   </div>
                 </div>
               ) : null}
+
+              {selectedProject.story ? <ProjectStoryPanel story={selectedProject.story} /> : null}
 
               <div className="mb-8 flex flex-col gap-2 md:flex-row md:flex-wrap">
                 {selectedProject.highlights.map((highlight) => (

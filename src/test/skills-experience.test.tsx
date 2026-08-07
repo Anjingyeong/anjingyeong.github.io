@@ -45,13 +45,13 @@ describe("Skills & Experience & Competence sections", () => {
   it("has exactly 3 awards with distinct RF-DETR award descriptions", () => {
     render(<ExperienceSection />);
     const capstoneAward = screen.getByText(
-      "RF-DETR 용종 검출 팀 프로젝트로 금상 수상 · 개인 기여: 데이터 증강과 bbox 정합성 검토"
+      "RF-DETR 용종 검출 팀 프로젝트로 금상 수상 · 개인 기여: Kvasir 데이터 증강 설계·적용"
     );
     const consortiumAward = screen.getByText(
-      "RF-DETR 용종 검출 팀 프로젝트로 동상 수상 · 개인 기여: 데이터 증강과 bbox 정합성 검토"
+      "RF-DETR 용종 검출 팀 프로젝트로 동상 수상 · 개인 기여: Kvasir 데이터 증강 설계·적용"
     );
     const dnaAward = screen.getByText(
-      "VAE 기반 유방 초음파 이상 후보 시각화 팀 프로젝트로 수상 · 개인 기여: 데이터 증강과 차영상 아이디어"
+      "VAE 기반 유방 초음파 이상 후보 시각화 팀 프로젝트로 수상 · 개인 기여: 원본·재구성 차영상 생성·비교 시각화"
     );
 
     expect(capstoneAward).toBeInTheDocument();
@@ -78,5 +78,6 @@ describe("Skills & Experience & Competence sections", () => {
     const infoEngineerText = screen.getByText("정보처리기사");
     expect(infoEngineerText).toBeInTheDocument();
     expect(screen.getByText("필기 합격 · 실기 준비 중")).toBeInTheDocument();
+    expect(screen.getAllByText("발급: 건양대학교 (2026.03.21)")).toHaveLength(2);
   });
 });

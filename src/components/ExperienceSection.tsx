@@ -50,7 +50,7 @@ const awards: TimelineItem[] = [
     subtitle: "동상",
     organization: "산업통상자원부 / 공학교육혁신센터",
     period: "2025.11",
-    description: "RF-DETR 용종 검출 팀 프로젝트로 동상 수상 · 개인 기여: 데이터 증강과 bbox 정합성 검토",
+    description: "RF-DETR 용종 검출 팀 프로젝트로 동상 수상 · 개인 기여: Kvasir 데이터 증강 설계·적용",
     icon: Trophy,
   },
   {
@@ -58,7 +58,7 @@ const awards: TimelineItem[] = [
     subtitle: "금상",
     organization: "건양대학교",
     period: "2025.10",
-    description: "RF-DETR 용종 검출 팀 프로젝트로 금상 수상 · 개인 기여: 데이터 증강과 bbox 정합성 검토",
+    description: "RF-DETR 용종 검출 팀 프로젝트로 금상 수상 · 개인 기여: Kvasir 데이터 증강 설계·적용",
     icon: Award,
   },
   {
@@ -66,7 +66,7 @@ const awards: TimelineItem[] = [
     subtitle: "공학혁신상",
     organization: "산업통상자원부 / 공학교육혁신센터",
     period: "2024.10",
-    description: "VAE 기반 유방 초음파 이상 후보 시각화 팀 프로젝트로 수상 · 개인 기여: 데이터 증강과 차영상 아이디어",
+    description: "VAE 기반 유방 초음파 이상 후보 시각화 팀 프로젝트로 수상 · 개인 기여: 원본·재구성 차영상 생성·비교 시각화",
     icon: Award,
   },
 ];

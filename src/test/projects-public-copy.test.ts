@@ -121,11 +121,18 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).toContain("fine-tuning");
     expect(publicProjectSources).toContain("팀 구현");
     expect(publicProjectSources).toContain("OpenCV");
-    expect(publicProjectSources).toContain("데이터 증강 적용 · 증강 후 bbox 정합성 검토");
+    expect(publicProjectSources).toContain("Elastic·Grid 데이터 증강 설계·적용");
+    expect(publicProjectSources).not.toContain("patient_info Excel");
+    expect(publicProjectSources).not.toContain("4초 이상 병변 탐지");
     expect(publicProjectSources).not.toContain("영상 입력 애플리케이션 구현");
     expect(publicProjectSources).toContain("mAP@50");
-    expect(publicProjectSources).toContain("Kvasir Train 70 / Val 20 / Test 10");
-    expect(publicProjectSources).toContain("Elastic·Grid 증강 + bbox 정합성 검토");
+    expect(publicProjectSources).not.toContain("4초 연속 탐지 Auto Record");
+    expect(publicProjectSources).toContain("증강 단독 효과");
+    expect(publicProjectSources).toContain("별도 ablation 없음");
+    expect(publicProjectSources).not.toContain("증강 후 bbox 정합성");
+    expect(submissionUiSources).not.toContain("bbox 정합성");
+    expect(publicProjectSources).not.toContain("22+ FPS");
+    expect(publicProjectSources).not.toContain("mAP@50 약 +7%p 향상");
     expect(publicProjectSources).toContain("/images/rf-detr-polyp-detection.png");
     expect(publicProjectSources).toContain("/images/rf_detr_aug.png");
     expect(publicProjectSources).toContain("/images/rf_detr_gold.jpg");
@@ -133,11 +140,17 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).not.toContain("임상 검증이 완료");
   });
 
-  it("keeps VAE responsibilities aligned to augmentation and difference-image ideation", () => {
+  it("keeps VAE responsibilities aligned to difference-image generation", () => {
     expect(portfolioPublicCopy).toContain("유방 초음파");
-    expect(publicProjectSources).toContain("초음파 영상 데이터 증강");
-    expect(publicProjectSources).toContain("차영상 기반 이상 후보 시각화 아이디어");
-    expect(publicProjectSources).toContain("VAE 모델과 후처리 구현은 팀 작업");
+    expect(publicProjectSources).not.toContain("초음파 영상 데이터 증강");
+    expect(submissionUiSources).not.toContain("초음파 영상 데이터 증강");
+    expect(publicProjectSources).toContain("원본·VAE 재구성 차영상 생성");
+    expect(publicProjectSources).toContain("VAE 모델과 후처리는 팀 구현");
+    expect(publicProjectSources).toContain("라벨 부족 → 정상 영상 재구성");
+    expect(publicProjectSources).toContain("0.8325");
+    expect(publicProjectSources).toContain("0.9094");
+    expect(publicProjectSources).toContain("Dynamic Threshold 미적용");
+    expect(publicProjectSources).toContain("Dynamic Threshold 적용");
     expect(publicProjectSources).not.toContain("VAE 비지도 이상탐지 및 Dynamic Threshold 후처리");
     expect(portfolioPublicCopy).not.toMatch(
       /Custom Loss 설계|커스텀 Loss|커스텀 손실 함수.*구현|KLD\+MSE 커스텀 손실 함수/,
@@ -184,6 +197,11 @@ describe("ProjectsSection public copy", () => {
     fireEvent.click(screen.getByText("실시간 이상행동 탐지 및 안전 관제 AI 시스템"));
 
     expect(screen.getByRole("dialog")).toBeInTheDocument();
+    expect(screen.getByText("AS-IS → TASK → ACTION → TO-BE")).toBeInTheDocument();
+    expect(screen.getAllByText("AS-IS").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("TASK").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("ACTION").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("TO-BE").length).toBeGreaterThan(0);
     expect(screen.getByText("문제 정의와 목표")).toBeInTheDocument();
     expect(screen.getByText("담당 범위와 협업")).toBeInTheDocument();
     expect(screen.getByText("AI 시스템 구조")).toBeInTheDocument();
@@ -195,17 +213,19 @@ describe("ProjectsSection public copy", () => {
     render(createElement(ProjectsSection));
 
     expect(screen.getByText("VAE 기반 유방 초음파 이상 탐지")).toBeInTheDocument();
-    expect(screen.getAllByText(/초음파 영상 데이터 증강/).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/차영상 기반 후보 시각화 아이디어/).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/VAE 재구성 · 팀 흐름/).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/초음파 데이터 증강/)).not.toBeInTheDocument();
+    expect(screen.getAllByText(/개인 기여: 차영상 생성/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/라벨 부족 → 정상 영상 재구성/).length).toBeGreaterThan(0);
     expect(screen.queryByText(/커스텀 손실 함수를 단독 설계/)).not.toBeInTheDocument();
   });
 
   it("keeps LLM Wiki claims aligned with the evaluated hybrid search and Elasticsearch scope", () => {
     expect(packageJson).toContain('"wiki:index"');
-    expect(publicProjectSources).toContain("50개 Wiki 문서 / 737개 Chunk");
-    expect(publicProjectSources).toContain("61개 Golden Query 평가셋");
+    expect(publicProjectSources).toContain("50개 문서를 737개 Section Chunk");
+    expect(publicProjectSources).toContain("61개 Golden Query");
     expect(publicProjectSources).toContain("Hybrid Hit@5 82.14%");
+    expect(publicProjectSources).toContain("Hit@5가 **75.00% → 82.14%**");
+    expect(publicProjectSources).toContain("Recall@5가 **50.00% → 61.01%**");
     expect(publicProjectSources).toContain("BM25");
     expect(publicProjectSources).toContain("Vector Search");
     expect(publicProjectSources).toContain("RRF");
@@ -214,20 +234,16 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).toContain("HNSW");
     expect(publicProjectSources).toContain("Legacy 검색 유지");
     expect(publicProjectSources).toContain("Elasticsearch 학습·확장 구현");
-    expect(publicProjectSources).toContain("실제 Elasticsearch 전체 질의 실측은 후속 검증");
+    expect(publicProjectSources).toContain("실제 Elasticsearch 컨테이너 색인 및 61개 질의 전체 실측은 미완료");
     expect(publicProjectSources).not.toMatch(
       /\/api\/rag\/ask|LLM API key|GraphRAG/,
     );
   });
 
-  it("describes incident-search metadata needed for safety event questions", () => {
-    for (const metadataField of [
-      "incidentAt",
-      "cameraId",
-      "eventType",
-      "severity",
-    ]) {
-      expect(publicProjectSources).toContain(metadataField);
+  it("keeps low-level incident metadata out of the project overview while retaining it in wiki indexes", () => {
+    expect(publicProjectSources).not.toContain("incidentAt / cameraId / eventType / severity");
+    for (const metadataField of ["incidentAt", "cameraId", "eventType", "severity"]) {
+      expect(JSON.stringify(searchIndex)).toContain(metadataField);
     }
   });
 

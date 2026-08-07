@@ -41,21 +41,21 @@ const AboutSection = ({ variant = "ai" }: AboutSectionProps) => {
             <div className="minimal-card p-8 md:p-10">
               {isFullstack ? (
                 <>
-                  <h3 className="text-lg font-semibold mb-5 text-foreground">기능의 앞뒤 흐름까지 책임지는 개발자</h3>
+                  <h3 className="text-lg font-semibold mb-5 text-foreground">비동기 데이터의 식별자와 완료 조건을 설계하는 개발자</h3>
                   <p className="leading-[1.8] mb-4" style={{ color: "#4A4A4A" }}>
-                    기능을 화면 한 장이나 API 하나로 보지 않고, 사용자의 입력이 어떤 상태로 저장되고 다음 화면과 알림으로 어떻게 이어지는지까지 확인합니다. 문제가 생기면 보이는 증상만 수정하기보다 데이터가 생성되고 전달되는 흐름을 따라 원인을 찾습니다.
+                    관제 화면에 중복 사고 카드가 보였을 때 화면만 숨기지 않고, 경보·스냅샷·클립이 서로 다른 시점에 도착하는 데이터 흐름부터 확인했습니다. originalEventId를 공통 식별자로 두고 백엔드 Incident 병합과 프론트 WebSocket·REST 병합 기준을 맞춰 하나의 사고 상태로 유지했습니다.
                   </p>
                   <p className="leading-[1.8] mb-6" style={{ color: "#4A4A4A" }}>
-                    협업할 때는 파트별 구현보다 먼저 공통 식별자, 상태 변화와 완료 조건을 맞춥니다. 서로 다른 기준 때문에 문제가 반복되지 않도록 구간별 로그와 데이터 계약을 공유하고, 실제 사용자 화면까지 함께 확인하는 방식으로 작업합니다.
+                    외부 VLM 호출처럼 느리고 실패할 수 있는 작업은 실시간 경보 경로와 분리하고 상태·재시도 조건을 두었습니다. 개인 프로젝트에서는 약 2주 안에 자가체크 화면, Workers API, D1, 관리자 통계, PDF 리포트와 배포까지 직접 완성하며 데이터 범위와 운영 흐름을 끝까지 확인했습니다.
                   </p>
 
                   <div className="mt-8 pt-6 border-t border-border">
                     <h4 className="text-sm font-semibold mb-4 text-primary uppercase tracking-wide">How I Work</h4>
                     <div className="grid gap-3 sm:grid-cols-3">
                       {[
-                        ["흐름으로 설계", "입력부터 저장·표시까지 기능의 전체 경로를 확인합니다."],
-                        ["계약으로 협업", "식별자·상태·완료 조건을 먼저 맞춰 재작업을 줄입니다."],
-                        ["운영까지 검증", "실패와 재시도 상황에서도 사용 가능한지 확인합니다."],
+                        ["식별자로 정합성 유지", "비동기 데이터를 하나의 비즈니스 상태로 묶어 중복과 불일치를 줄입니다."],
+                        ["Critical Path 분리", "느리거나 실패할 수 있는 작업을 실시간 경로에서 분리하고 재시도 가능하게 설계합니다."],
+                        ["배포까지 완결", "사용자 흐름·API·데이터·운영 조건을 실제 배포 상태까지 연결합니다."],
                       ].map(([title, description]) => (
                         <div key={title} className="rounded-lg border border-border bg-muted/20 p-4">
                           <p className="mb-1 text-sm font-semibold text-foreground">{title}</p>

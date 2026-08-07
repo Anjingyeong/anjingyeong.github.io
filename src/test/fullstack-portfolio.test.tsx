@@ -24,11 +24,17 @@ describe("full-stack portfolio", () => {
     expect(fullstackProjects.map((project) => project.badge)).toEqual(["Main", "Supporting", "Supporting"]);
     expect(fullstackProjects[0].meta?.period).toBe("2026.05–2026.07");
     expect(fullstackProjects[0].meta?.role).toContain("5인 팀장");
-    expect(fullstackProjects[0].description).toContain("비동기로 도착하는 경보와 증거 데이터를 하나의 사고로 유지하고");
+    expect(fullstackProjects[0].description).toContain("비동기로 도착하는 경보와 증거 데이터를 하나의 사고로 유지했습니다");
+    expect(fullstackProjects[0].description).toContain("Subscriber 기준");
+    expect(fullstackProjects[0].description).toContain("별도 통합 테스트");
     expect(fullstackProjects[1].meta?.period).toBe("약 2주");
     expect(fullstackProjects[1].meta?.role).toContain("1인 개발");
+    expect(fullstackProjects[1].highlights).toContain("약 2주 · 1인 기획 → 배포");
     expect(fullstackProjects[2].description).toContain("61개 Golden Query");
     expect(fullstackProjects[2].description).toContain("실제 Elasticsearch 전체 질의 실측은 후속 검증");
+    expect(fullstackProjects[2].meta?.role).toContain("개인 구현");
+    expect(fullstackProjects[2].liveUrl).toBe("https://llmwiki.jingyeong.cloud");
+    expect(fullstackProjects[2].githubUrl).toBe("https://github.com/Anjingyeong/llm_wiki_strange");
     expect(JSON.stringify(fullstackProjects)).not.toContain("직접 구현한 것으로 표현하지 않습니다");
 
     render(<ProjectsSection items={fullstackProjects} grouped={false} />);
@@ -42,6 +48,10 @@ describe("full-stack portfolio", () => {
 
     expect(indexSource.indexOf("<ProjectsSection")).toBeLessThan(indexSource.indexOf("<AboutSection"));
     expect(heroSource).toContain("FM·안전관리 플랫폼 연계 · 융합보안 · 지능형 영상관제");
+    expect(heroSource).toContain("실시간 이벤트 · 데이터 정합성 · 서비스 운영");
+    expect(heroSource).toContain("비동기 데이터의 정합성을 지키며 AI 이벤트를 운영 가능한 서비스로 연결했습니다");
+    expect(heroSource).toContain('{ value: "29/29", label: "1초 내 MQTT 도달", note: "2카메라 · Subscriber 기준" }');
+    expect(heroSource).toContain('{ value: "약 2주", label: "1인 웹서비스 배포", note: "기획 → 운영" }');
     expect(heroSource).toContain("showLocalPortfolioSwitcher = !import.meta.env.PROD");
     expect(heroSource).toContain("대표 프로젝트 보기");
     expect(heroSource).toContain("시연 영상");
@@ -49,9 +59,9 @@ describe("full-stack portfolio", () => {
 
   it("switches About copy without changing the AI variant", () => {
     const { rerender } = render(<AboutSection variant="fullstack" />);
-    expect(screen.getByText("기능의 앞뒤 흐름까지 책임지는 개발자")).toBeInTheDocument();
+    expect(screen.getByText("비동기 데이터의 식별자와 완료 조건을 설계하는 개발자")).toBeInTheDocument();
     expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
-    expect(screen.getByText("흐름으로 설계")).toBeInTheDocument();
+    expect(screen.getByText("식별자로 정합성 유지")).toBeInTheDocument();
     expect(screen.queryByText("문제를 수치로 좁히고 관제 흐름까지 검증하는 개발자")).not.toBeInTheDocument();
 
     rerender(<AboutSection variant="ai" />);
@@ -97,7 +107,7 @@ describe("full-stack portfolio", () => {
 
     // 2. 지원 직무 문구가 Full-Stack Developer 방향인지
     expect(
-      screen.getByText("AI 이벤트를 실제 서비스 흐름으로 연결해 온 풀스택 개발자")
+      screen.getByText("비동기 데이터 정합성과 실시간 이벤트 흐름을 끝까지 연결하는 풀스택 개발자")
     ).toBeInTheDocument();
 
     // 3 & 4 & 5. 스마트 안전 관제가 1번째, 마음이음이 2번째, LLM Wiki가 3번째(Supporting Project)인지
@@ -119,6 +129,9 @@ describe("full-stack portfolio", () => {
     expect(printText).toContain("29건");
     expect(printText).toContain("20.931ms");
     expect(printText).toContain("p95 26ms");
+    expect(printText).toContain("MQTT Subscriber 기준");
+    expect(printText).toContain("별도 통합 테스트");
+    expect(printText).not.toContain("End-to-End 평균 지연 20.931ms");
 
     // 8. originalEventId와 Incident가 포함되는지
     expect(printText).toContain("originalEventId");
@@ -363,7 +376,7 @@ describe("full-stack portfolio", () => {
     expect(fullstackSmartSafety?.details.map((detail) => detail.title)).toEqual([
       "문제 정의와 서비스 목표",
       "End-to-End 서비스 구조",
-      "AI 이벤트가 관제 화면까지 도달하는 시간을 측정했습니다",
+      "AI 이벤트 전달 지연의 측정 범위를 분리했습니다",
       "화면의 중복이 아니라 사고 식별 구조를 수정했습니다",
       "경보 이후의 증거 확인 흐름",
       "실시간 알림과 VLM 분석을 서로 다른 처리 경로로 분리했습니다",
@@ -374,7 +387,7 @@ describe("full-stack portfolio", () => {
     ]);
 
     const problemTitles = [
-      "AI 이벤트가 관제 화면까지 도달하는 시간을 측정했습니다",
+      "AI 이벤트 전달 지연의 측정 범위를 분리했습니다",
       "화면의 중복이 아니라 사고 식별 구조를 수정했습니다",
       "실시간 알림과 VLM 분석을 서로 다른 처리 경로로 분리했습니다",
     ];
@@ -397,6 +410,14 @@ describe("full-stack portfolio", () => {
         expectedLabels
       );
     }
+
+    const latencyBoundary = fullstackSmartSafety?.details.find(
+      (detail) => detail.title === "AI 이벤트 전달 지연의 측정 범위를 분리했습니다"
+    );
+    expect(latencyBoundary?.problemSolving?.find((step) => step.label === "결과")?.text).toContain(
+      "MQTT Subscriber 기준"
+    );
+    expect(latencyBoundary?.note).toContain("브라우저 표시 지연 수치가 아닙니다");
 
     const collaboration = fullstackSmartSafety?.details.find(
       (detail) => detail.title === "담당 범위와 협업"
