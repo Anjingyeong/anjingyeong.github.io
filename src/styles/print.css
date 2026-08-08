@@ -37,6 +37,62 @@
   }
 }
 
+/* Small-screen preview only. Keep the real @media print A4 rules unchanged. */
+@media screen and (max-width: 850px) {
+  .print-body {
+    padding: 16px 12px;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .print-btn-container {
+    width: 100%;
+    margin: 0;
+    padding: 0 !important;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .print-btn-container > * {
+    flex: 1 1 160px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .print-page {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 24px 18px;
+    overflow: visible;
+  }
+
+  .print-header > .flex:first-child {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .print-header .text-right {
+    text-align: left;
+  }
+
+  .print-header .justify-end {
+    justify-content: flex-start;
+  }
+
+  .print-grid-2,
+  .print-grid-3,
+  .print-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .print-page .flex.justify-between.items-baseline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}
+
 /* Print layout: Render exactly as A4 print sheets */
 @media print {
   @page {
@@ -189,4 +245,13 @@
   background-color: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
+}
+
+/* Keep these overrides after the common grid declarations so mobile wins. */
+@media screen and (max-width: 850px) {
+  .print-grid-2,
+  .print-grid-3,
+  .print-grid-4 {
+    grid-template-columns: 1fr;
+  }
 }

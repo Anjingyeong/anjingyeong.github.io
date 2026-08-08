@@ -4,8 +4,8 @@ import { BookOpen, Github, Mail, MapPin, GraduationCap, Briefcase, Brain, Globe 
 const infoItems = [
   { icon: MapPin, label: "거주지", value: "서울, 대한민국" },
   { icon: GraduationCap, label: "학력", value: "건양대학교 의공학과" },
-  { icon: Briefcase, label: "지원 분야", value: "융합보안·AI 안전관제 플랫폼" },
-  { icon: Brain, label: "핵심 분야", value: "영상 AI · 실시간 이벤트 · 관제 서비스 연동" },
+  { icon: Briefcase, label: "전문 분야", value: "AI Software Engineer" },
+  { icon: Brain, label: "핵심 분야", value: "실시간 영상 AI · 플랫폼 연동 · 검색" },
   { icon: Globe, label: "협업 방식", value: "이벤트 계약 · 로그 · 수치 기반 조율" },
   { icon: Mail, label: "이메일", value: "anjin0910@gmail.com" },
 ];
@@ -28,7 +28,7 @@ const AboutSection = ({ variant = "ai" }: AboutSectionProps) => {
   const displayedInfoItems = isFullstack ? fullstackInfoItems : infoItems;
 
   return (
-    <div id="about" className="py-24 md:py-32">
+    <div id="about" className="pt-24 pb-12 md:pt-32 md:pb-16">
       <div className="container">
         <ScrollAnimator>
           <div className="section-header">

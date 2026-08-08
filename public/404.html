@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>안진경 포트폴리오로 이동 중</title>
+  <link rel="icon" href="/profile.jpg" type="image/jpeg" />
+</head>
+<body>
+  <p>포트폴리오 페이지로 이동 중입니다.</p>
+  <script>
+    (() => {
+      const target = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      window.location.replace(`/?spa-route=${encodeURIComponent(target)}`);
+    })();
+  </script>
+</body>
+</html>

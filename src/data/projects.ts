@@ -313,7 +313,7 @@ export const projects: readonly Project[] = [
     icon: Microscope,
     badge: "Supporting",
     title: "RF-DETR 기반 대장 내시경 용종 검출 애플리케이션",
-    summaryLine: "Kvasir 데이터에 기하학적 증강을 적용해 내시경 영상의 형태·시야 변화를 보완한 의료영상 팀 프로젝트",
+    summaryLine: "용종의 형태와 촬영 시야가 영상마다 달라지는 문제를 Elastic·Grid 증강으로 보완한 의료영상 팀 프로젝트",
     description:
       "Kvasir 용종 데이터를 **Train 70% / Val 20% / Test 10%**로 분할한 팀 프로젝트입니다. 저는 Elastic Deformation·Grid Distortion 기반 데이터 증강을 설계하고 적용했습니다. RF-DETR fine-tuning과 탐지·결과 저장 애플리케이션은 팀 구현이며, 최종 팀 모델은 Kvasir 10% 테스트셋에서 mAP@50 86.2%를 기록했습니다.",
     meta: {
@@ -346,16 +346,6 @@ export const projects: readonly Project[] = [
         body: "대장 내시경 검사는 육안 판독 시 의사의 피로도와 숙련도에 따라 미세 용종을 놓칠 위험이 있습니다. 특히 비정형적이거나 크기가 작은 병변은 조기 발견이 어렵습니다. 본 프로젝트는 Kvasir 대장 내시경 데이터를 활용해 병변 검출 모델을 fine-tuning하고, 카메라·동영상 입력 환경에서 의료진의 판독을 보조하는 애플리케이션을 구축하는 것을 목표로 했습니다.",
       },
       {
-        title: "프로젝트 요약",
-        items: [
-          "**문제**: 내시경 영상의 조명·형태 편차를 단순 모델 교체만으로 해결하기 어려웠습니다.",
-          "**개인 기여**: 내시경 영상의 형태·시야 편차를 학습 입력에 반영하기 위해 Elastic Deformation과 Grid Distortion 데이터 증강을 설계하고 적용했습니다.",
-          "**팀 결과**: 최종 팀 모델은 Kvasir 10% 내부 테스트셋에서 mAP@50 86.2%를 기록했습니다. 데이터 증강만의 효과를 분리한 ablation은 진행하지 않아 개인 기여와 팀 성능을 인과로 연결하지 않았습니다.",
-          "**역할 구분**: RF-DETR fine-tuning과 탐지·결과 저장 애플리케이션은 팀 구현이며, 제 담당 범위는 데이터 증강입니다.",
-          "**핵심 역량**: 데이터 특성에 맞는 증강을 선택하고 팀 성과와 개인 기여를 분리해 설명했습니다.",
-        ],
-      },
-      {
         title: "시스템 구조",
         diagram: `flowchart LR
     Raw["Kvasir Dataset\\n(Polyp Images)"] --> Split["Data Split\\nTrain 70% / Val 20% / Test 10%"]
@@ -369,12 +359,12 @@ export const projects: readonly Project[] = [
     GUI --> Result["Video/Webcam Detection\\nmAP@50 86.2%"]`,
       },
       {
-        title: "왜 Elastic·Grid 증강을 사용했는가",
+        title: "형태와 시야 변화에 맞춰 증강 기법을 선택했습니다",
         items: [
-          "**문제**: 내시경 영상마다 병변의 형태와 주변 조직의 굴곡이 달라 학습 입력의 형태 다양성을 보완할 필요가 있었습니다.",
-          "**Elastic Deformation**: 영상 전체를 비선형적으로 변형해 부드러운 형태 변화를 추가했습니다.",
-          "**Grid Distortion**: 격자 단위의 국소 왜곡을 적용해 서로 다른 기하학적 변형을 학습 입력에 추가했습니다.",
-          "**결과 해석**: 최종 팀 모델의 mAP@50은 86.2%였습니다. 다만 증강 전후만 고정한 별도 ablation이 없으므로 이 수치를 증강 효과로 단정하지 않았습니다.",
+          "**해결하려던 문제**: 용종과 주변 조직은 부드럽게 휘어지고, 카메라 위치에 따라 화면 일부가 국소적으로 왜곡됩니다.",
+          "**Elastic Deformation을 선택한 이유**: 조직이 눌리거나 휘어질 때 생기는 부드러운 비선형 형태 변화를 학습 데이터에 추가하기 위해 사용했습니다.",
+          "**Grid Distortion을 선택한 이유**: 촬영 각도와 시야 변화로 생기는 국소적인 기하학적 왜곡을 보완하기 위해 사용했습니다.",
+          "**검증 결과**: 최종 팀 모델은 mAP@50 86.2%를 기록했습니다. 증강 on/off 비교는 진행하지 않아 해당 수치를 증강만의 개선 효과로 표현하지 않았습니다.",
         ],
         images: [
           { src: "/images/rf-detr-polyp-detection.png", caption: "대장 내시경 용종 검출 시각화" },
@@ -428,9 +418,9 @@ export const projects: readonly Project[] = [
     icon: BarChart2,
     badge: "Supporting",
     title: "VAE 기반 유방 초음파 이상 탐지",
-    summaryLine: "병변 위치 라벨이 부족해 정상 영상 재구성 방식으로 접근하고, 원본·재구성 차이로 이상 후보를 표현한 팀 프로젝트",
+    summaryLine: "병변 라벨 부족 문제를 비지도 이상탐지로 재정의하고, 원본·재구성 차영상으로 이상 후보를 표현한 팀 프로젝트",
     description:
-      "병변 위치 라벨이 부족해 정상 영상을 VAE로 재구성하고, 원본과 재구성 영상의 차이를 이상 후보로 확인하는 방식으로 접근했습니다. 저는 팀의 VAE 재구성 결과와 원본의 차영상을 생성하고 비교·시각화했습니다.",
+      "병변 위치 라벨이 부족해 지도학습 검출 대신 정상 패턴을 학습하는 비지도 이상탐지로 문제를 바꿨습니다. 저는 팀의 VAE 재구성 결과와 원본 사이의 차영상을 만들고, 이상 후보가 나타난 위치를 비교·시각화했습니다.",
     meta: {
       period: "2024.03–2024.10",
       role: "원본·VAE 재구성 차영상 생성·비교 시각화",
@@ -438,19 +428,19 @@ export const projects: readonly Project[] = [
     },
     story: {
       asIs:
-        "병변 위치 라벨을 충분히 확보하기 어려워 일반적인 지도학습 검출 문제로 바로 풀기 어려웠고, 원본과 재구성 영상의 차이도 밝기·노이즈에 영향을 받을 수 있었습니다.",
+        "병변 위치를 표시한 라벨이 부족해 일반적인 지도학습 검출 모델을 충분히 학습시키기 어려웠습니다. 원본과 재구성 영상의 차이도 밝기와 노이즈에 영향을 받았습니다.",
       task:
         "팀 프로젝트에서 VAE 재구성 결과와 원본의 차이를 사람이 위치별로 확인할 수 있는 형태로 표현해야 했습니다. 제 역할은 두 영상의 차영상을 생성하고 비교·시각화하는 작업이었습니다.",
       action:
-        "팀이 생성한 VAE 재구성 영상과 원본의 픽셀별 차이를 계산해 차영상을 만들고, 이상 후보 신호가 나타나는 위치를 비교할 수 있도록 시각화했습니다. Dynamic Threshold 후처리는 팀 구현 범위입니다.",
+        "팀이 생성한 VAE 재구성 영상과 원본의 픽셀별 차이를 계산해 차영상을 만들었습니다. 이상 후보 신호를 위치별로 비교할 수 있도록 시각화했습니다. VAE 모델 학습과 Dynamic Threshold 후처리는 팀 구현입니다.",
       toBe:
-        "원본-재구성 차이를 이상 후보로 시각화했고, 팀 후처리 결과에서 평가 케이스 B의 Dice가 0.8325→0.9094로 높아졌습니다. 해당 프로젝트로 창의혁신 DNA 산학협력 공학혁신상을 수상했습니다.",
+        "라벨이 부족한 조건에서도 원본과 정상 재구성 결과의 차이를 이상 후보로 확인할 수 있게 했습니다. 팀의 Dynamic Threshold 적용 전후 비교와 개인 차영상 구현을 분리해 기록했고, 프로젝트는 공학혁신상을 수상했습니다.",
     },
     highlights: [
-      "라벨 부족 → 정상 영상 재구성",
+      "데이터 부족 → 비지도 이상탐지",
       "개인 기여: 차영상 생성",
-      "원본·재구성 결과 비교 시각화",
-      "팀 후처리 B Dice 0.8325 → 0.9094",
+      "팀 구현: VAE·Dynamic Threshold",
+      "원본·재구성 차이 시각화",
     ],
     tags: ["TensorFlow", "VAE", "Anomaly Detection", "Reconstruction Error", "Image Difference", "Computer Vision"],
     gradient: "from-violet-500/10 to-purple-500/10",
@@ -458,17 +448,8 @@ export const projects: readonly Project[] = [
     hasAwards: true,
     details: [
       {
-        title: "문제와 목표",
-        body: "병변 위치 라벨이 충분하지 않아 지도학습용 데이터를 크게 확보하기 어려웠습니다. 그래서 정상 영상을 VAE로 재구성한 뒤 원본과 달라진 영역을 이상 후보로 보는 방식으로 접근했습니다. 지도학습보다 우수하다고 주장하기보다, 확보 가능한 데이터 조건에 맞춰 문제를 풀기 위한 선택이었습니다.",
-      },
-      {
-        title: "프로젝트 요약",
-        items: [
-          "**문제**: 병변 위치 라벨이 부족해 일반적인 지도학습 방식의 적용과 평가가 제한적이었습니다.",
-          "**개인 기여**: 원본 영상과 팀의 VAE 재구성 결과 사이의 차영상을 생성하고, 위치별 차이를 비교할 수 있도록 시각화했습니다. VAE 모델과 후처리는 팀 구현입니다.",
-          "**검증 기준**: 평가 조건이 불명확한 과거 Dice 수치는 대표 성과에서 제외하고, 정성 확인 결과와 미완료 검증 범위를 분리했습니다.",
-          "**핵심 역량**: 정상 상태와의 차이를 이상 후보 신호로 해석하고, 팀 모델 결과를 비교 가능한 차영상으로 표현했습니다.",
-        ],
+        title: "데이터 부족을 비지도 이상탐지로 해결했습니다",
+        body: "병변 위치 라벨이 부족해 지도학습 검출 모델을 충분히 학습시키기 어려웠습니다. 그래서 정상 영상의 패턴을 학습한 뒤, 정상적으로 재구성되지 않는 영역을 이상 후보로 보는 비지도 이상탐지 문제로 바꿨습니다. 지도학습보다 정확하다고 주장한 것이 아니라, 실제로 확보할 수 있는 데이터에 맞춘 선택입니다.",
       },
       {
         title: "시스템 구조",
@@ -483,12 +464,28 @@ export const projects: readonly Project[] = [
     Mask --> BBox["🎯 Anomaly Detection\\nCandidate Region"]`,
       },
       {
-        title: "핵심 문제 해결",
-        items: [
-          "**문제**: 병변 위치 라벨 확보가 제한적이었습니다.",
-          "**판단**: 병변 위치 라벨이 부족한 조건에 맞춰 정상 영상 재구성 기반의 비지도 이상탐지를 선택했습니다.",
-          "**해결**: 팀은 VAE 재구성 결과와 후처리 흐름을 구성했고, 저는 원본·재구성 영상의 차영상을 생성해 이상 후보 신호를 위치별로 비교할 수 있도록 시각화했습니다.",
-          "**결과**: 원본·재구성 차이를 영상으로 확인할 수 있게 만들었고, Dynamic Threshold와 정량 평가는 팀 후처리 결과로 구분했습니다.",
+        title: "차영상을 이상 후보 신호로 바꿨습니다",
+        problemSolving: [
+          {
+            label: "측정 현상",
+            text: "원본과 VAE 재구성 영상은 전체적으로 비슷해 보여도 병변 후보 위치에서 픽셀 차이가 남았습니다.",
+          },
+          {
+            label: "원인 분석",
+            text: "정상 영상 중심으로 학습한 VAE가 정상 패턴과 다른 영역을 충분히 재구성하지 못하면 원본과의 오차가 커집니다.",
+          },
+          {
+            label: "구현",
+            text: "원본과 팀의 VAE 재구성 결과를 같은 크기로 맞춘 뒤 픽셀별 차이를 계산해 Reconstruction Error Map을 만들고, 오차가 큰 위치를 시각화했습니다.",
+          },
+          {
+            label: "결과",
+            text: "모델 출력만으로는 알기 어려웠던 이상 후보 위치를 영상 위에서 비교할 수 있게 했습니다. 정량 임계값 평가와 Dynamic Threshold는 팀 결과로 분리했습니다.",
+          },
+          {
+            label: "배운 점",
+            text: "Reconstruction Error는 병변뿐 아니라 밝기와 노이즈에도 커질 수 있어, 전처리·임계값·평가 기준을 함께 정의해야 해석 가능한 이상탐지가 된다는 점을 확인했습니다.",
+          },
         ],
         images: [
           { src: "/images/vae_diff.png", caption: "Reconstruction Error Map 기반 오차 시각화" },
@@ -497,8 +494,8 @@ export const projects: readonly Project[] = [
         ],
       },
       {
-        title: "팀 후처리의 역할과 검증 한계",
-        body: "Dynamic Threshold는 팀 구현 범위입니다. 영상별 Reconstruction Error 분포를 반영해 이진화 기준을 조정했고, 프로젝트 원본 결과표의 평가 케이스 A/B를 그대로 사용해 적용 전후 Dice를 비교했습니다.",
+        title: "팀 후처리: 영상마다 임계값을 다르게 적용했습니다",
+        body: "고정 임계값은 밝기와 노이즈가 다른 모든 영상에 같은 기준을 사용합니다. 팀은 각 영상의 Reconstruction Error 분포를 반영해 이진화 기준을 조정하는 Dynamic Threshold를 적용했습니다. 아래 값은 프로젝트 원본 결과표의 A/B 케이스를 그대로 옮긴 팀 결과이며, 제가 개발한 알고리즘으로 표현하지 않습니다.",
         table: {
           headers: ["평가 케이스", "Dynamic Threshold 미적용", "Dynamic Threshold 적용", "변화"],
           rows: [
@@ -511,9 +508,9 @@ export const projects: readonly Project[] = [
       {
         title: "검증 범위와 한계",
         items: [
-          "**후처리 정량 비교 부재**: 고정 임계값과 동적 임계값의 동일 조건 FP/FN 비교가 남아 있지 않아 성능 개선 수치를 대표 성과로 사용하지 않았습니다.",
+          "**후처리 해석 한계**: A/B 케이스의 Dice 비교는 남아 있지만 전체 데이터의 FP/FN과 평균 Dice 비교가 없어 대표 성과로 사용하지 않았습니다.",
           "**지도학습 모델과의 직접 비교 한계**: 비지도학습 방식이 동일한 데이터 조건에서 지도학습(U-Net 등)보다 우수하다고 단정하지 않았으며, 지도학습 대조군과의 직접 비교 부재를 본 연구의 한계로 명시했습니다.",
-          "**Dynamic Threshold 세부 수식 파라미터**: percentile, mean/std, Otsu 알고리즘 등 구체적인 픽셀 분포 수식 파라미터와 경계값 조건은 추후 연구 문서로 체계화하고 있습니다.",
+          "**Dynamic Threshold 재현 한계**: 팀이 사용한 구체적인 수식과 파라미터 기록이 남아 있지 않아 알고리즘을 임의로 설명하거나 개인 구현으로 주장하지 않았습니다.",
         ],
         images: [
           { src: "/images/vae_award.jpg", caption: "🏆 공학혁신상 — 2024 창의혁신 DNA 산학협력 공학혁신상" },
@@ -522,8 +519,8 @@ export const projects: readonly Project[] = [
       {
         title: "판단과 배운 점",
         items: [
-          "**데이터 조건이 모델 선택보다 먼저였습니다**: 병변 위치 라벨이 부족한 상황에서는 지도학습 정확도를 억지로 비교하기보다 정상 영상 재구성으로 이상 후보를 찾는 접근이 데이터 조건에 맞았습니다. 모델을 고르기 전에 어떤 라벨을 실제로 확보할 수 있는지 확인해야 했습니다.",
-          "**Reconstruction Error는 후처리 기준까지 함께 봐야 했습니다**: 원본과 재구성 영상의 차이는 밝기와 노이즈에도 영향을 받습니다. 이상 후보를 시각화할 때는 VAE 출력뿐 아니라 threshold 방식과 평가 조건까지 함께 정의해야 결과를 해석할 수 있었습니다.",
+          "**라벨 형태가 문제 정의를 결정했습니다**: 병변 위치 라벨이 부족하면 지도학습 검출 성능을 제대로 비교하기 어렵습니다. 사용 가능한 정상 영상으로 학습 문제를 다시 정의하는 데이터 중심 접근을 익혔습니다.",
+          "**오차 맵만으로는 이상을 확정할 수 없습니다**: Reconstruction Error는 병변 외에 밝기와 노이즈에도 반응합니다. 전처리 조건, 임계값 산정 방식, Dice·FP·FN 평가를 함께 설계해야 결과를 재현하고 비교할 수 있습니다.",
         ],
       },
       {
@@ -532,7 +529,8 @@ export const projects: readonly Project[] = [
           "원본·VAE 재구성 영상의 차영상 생성",
           "픽셀별 차이 비교와 이상 후보 신호 시각화",
           "팀 VAE 재구성 흐름과 개인 기여 범위 구분",
-          "라벨 부족 환경에서의 문제 정의와 검증 한계 관리",
+          "라벨 부족 문제를 정상 패턴 학습 기반의 비지도 이상탐지로 재정의",
+          "Reconstruction Error의 밝기·노이즈 민감도와 후처리 평가 조건 이해",
         ],
       },
     ],
@@ -579,51 +577,31 @@ export const projects: readonly Project[] = [
       {
         title: "문제와 목표",
         body:
-          "스마트 안전관제 시스템은 AI 추론, RTSP 스트리밍, MQTT 이벤트, 백엔드 저장, 프론트 알림까지 여러 기술 영역이 연결된 복합 프로젝트였습니다. 개발이 진행될수록 RTSP 지연, Overlay 불일치, 중복 알림, TensorRT 검증, VLM 후처리 분리 같은 문제의 원인과 해결 기록이 Git 커밋, 메신저, 개인 메모, 코드 내부에 흩어졌습니다. 이 프로젝트의 목표는 흩어진 개발 기록을 단순 문서가 아니라 다시 검색하고 재사용할 수 있는 엔지니어링 지식 자산으로 전환하는 것이었습니다.",
-      },
-      {
-        title: "프로젝트 요약",
-        items: [
-          "**문제**: 여러 저장소와 메모에 흩어진 장애 원인과 기술 판단을 다시 찾기 어려웠습니다.",
-          "**담당 역할**: 50개 문서를 737개 Section Chunk로 구조화하고, 61개 Golden Query로 Vector·BM25·Hybrid 검색을 같은 조건에서 비교했습니다.",
-          "**검증 결과**: BM25 대비 Hybrid의 Hit@5는 75.00%에서 82.14%, Recall@5는 50.00%에서 61.01%, MRR은 0.6369에서 0.6875로 높아졌습니다.",
-          "**핵심 역량**: LLM 답변 품질과 Retrieval 품질을 분리하고, Hit@5·Recall@5·MRR로 검색 단계부터 개선 여부를 확인했습니다.",
-        ],
-      },
-      {
-        title: "배포와 저장소",
-        items: [
-          "**Live Service**: https://llmwiki.jingyeong.cloud",
-          "**GitHub 저장소**: https://github.com/Anjingyeong/llm_wiki_strange",
-          "**핵심 가치**: 단순한 문서 보관이 아니라, 문제·원인·판단·코드 근거를 다시 검색 가능한 형태로 구조화",
-          "**활용 목적**: 개발 중 트러블슈팅 재참조, 기술 근거 정리, 기술 설명을 위한 지식 저장소",
-        ],
+          "개발 기록이 Git 커밋, 메모와 여러 문서에 흩어져 과거 오류 원인과 기술 선택 근거를 다시 찾기 어려웠습니다. 50개 문서를 검색 가능한 단위로 나누고, 정확한 식별자와 표현이 다른 질문을 모두 찾는 검색 구조를 만드는 것이 목표였습니다.",
       },
       {
         title: "왜 BM25 + Vector + RRF를 사용했는가",
         items: [
-          "**BM25**: YOLO26n, cameraLoginId, 오류 메시지처럼 정확한 기술명·식별자가 들어간 질문에서 키워드 일치를 활용했습니다.",
-          "**Vector Search**: 같은 의미를 다른 표현으로 묻는 질문에서 문장 의미가 가까운 문서를 찾는 데 사용했습니다.",
-          "**RRF**: BM25와 Vector의 점수 범위를 억지로 맞추지 않고 두 검색 결과의 순위를 결합했습니다.",
+          "**BM25**: YOLO26n이나 오류 메시지처럼 철자가 중요한 기술명·식별자를 정확히 찾기 위해 사용했습니다.",
+          "**Vector Search**: 같은 문제를 다른 표현으로 질문해도 의미가 가까운 기록을 찾기 위해 사용했습니다.",
+          "**RRF**: 서로 단위가 다른 BM25와 Vector 점수를 직접 보정하지 않고, 두 결과의 순위만으로 안정적으로 결합하기 위해 선택했습니다.",
           "**결과**: BM25 단독 대비 Hybrid Hit@5 75.00% → 82.14%, Recall@5 50.00% → 61.01%로 개선됐습니다.",
         ],
       },
       {
         title: "시스템 구조",
         diagram: `flowchart LR
-    Raw["📝 Raw Notes / Logs / Screenshots"] --> Normalize["🧹 Document Normalization"]
-    Normalize --> Chunk["✂️ Chunking + Context Prefix"]
-    Chunk --> Meta["🏷️ Metadata\\ncategory / tags / sourcePath / status"]
-    Meta --> Legacy["🔎 Legacy Search\\nBM25 / Vector / RRF"]
-    Meta --> Elastic["⚡ Elasticsearch Provider\\nBM25 / dense_vector kNN / HNSW / RRF"]
-    Legacy --> Answer["📄 Search Result + Source Evidence"]
-    Elastic --> Answer
-    Answer --> Reuse["♻️ Troubleshooting / Engineering Decisions / Knowledge Reuse"]`,
+    Raw["개발 문서 50개"] --> Chunk["Section Chunk 737개"]
+    Chunk --> BM25["BM25\\n정확한 기술명·식별자"]
+    Chunk --> Vector["Vector Search\\n표현이 다른 질문"]
+    BM25 --> RRF["RRF 순위 결합"]
+    Vector --> RRF
+    RRF --> Result["근거 문서 Top-k"]`,
       },
       {
-        title: "검색 구조와 인덱싱",
+        title: "검색 품질을 비교할 기준부터 만들었습니다",
         body:
-          "Markdown 문서를 제목과 섹션 구조를 기준으로 나누고, 각 Chunk가 어느 문서와 섹션에서 왔는지 추적할 수 있도록 source 정보를 유지했습니다. 검색 품질에 직접 필요한 구조만 남기고, 세부 메타데이터는 필터링이나 근거 추적이 필요한 경우에만 사용했습니다.",
+          "검색 결과가 좋아졌는지 느낌으로 판단하지 않기 위해 61개 Golden Query를 만들었습니다. 정답 근거가 상위 5개 결과에 포함되는지 Hit@5·Recall@5·MRR로 측정하고, 답을 찾을 수 없는 질문도 제대로 거절하는지 함께 확인했습니다.",
         table: {
           headers: ["항목", "내용"],
           rows: [
@@ -651,13 +629,10 @@ export const projects: readonly Project[] = [
       {
         title: "Elasticsearch 학습·확장 구현",
         items: [
-          "**Legacy 검색 유지**: 기존 BM25 · 로컬 Vector · RRF 경로를 보존한 상태에서 Elasticsearch Provider를 분리 설계",
-          "**BM25 검색**: title, codeSymbols, tags, headingPath 등에 가중치를 둔 검색 구성",
-          "**Vector 검색**: 256차원 임베딩을 dense_vector 필드에 저장하고 cosine similarity 기반 kNN 검색 구성",
-          "**HNSW 적용**: int8_hnsw 인덱싱 구조로 확장성 고려",
-          "**Hybrid 검색**: BM25 결과와 kNN 결과를 RRF로 결합",
-          "**Bulk Indexing**: RAG JSON 인덱스를 Elasticsearch 문서 형식으로 변환해 200개 단위로 _bulk 색인",
-          "**Fallback 구조**: Elasticsearch 연결 실패 시 기존 Legacy 검색 경로로 복구 가능하도록 분리",
+          "**Legacy 검색 유지**: 기존 BM25·Vector·RRF 경로를 유지한 채 Elasticsearch Provider를 분리해 회귀 위험을 줄였습니다.",
+          "**검색 구조 구현**: BM25 필드 가중치, 256차원 dense_vector kNN·HNSW, RRF 결합을 코드로 구성했습니다.",
+          "**색인과 복구**: 200개 단위 Bulk Indexing과 Elasticsearch 연결 실패 시 Legacy 검색으로 돌아가는 fallback을 구현했습니다.",
+          "**검증 경계**: Mapping·검색·색인 코드와 테스트는 완료했지만 실제 컨테이너의 61개 질의 전체 성능은 측정하지 않아 개선 수치로 사용하지 않았습니다.",
         ],
       },
       {
@@ -672,9 +647,9 @@ export const projects: readonly Project[] = [
       {
         title: "판단과 배운 점",
         items: [
-          "**Retrieval과 답변 생성을 분리해 평가했습니다**: LLM이 그럴듯하게 답하는지만 보지 않고, 정답 근거가 Top-k 안에 들어오는지를 Hit@5·Recall@5·MRR로 먼저 측정했습니다. 검색 문제와 생성 문제를 분리해 원인을 찾을 수 있었습니다.",
-          "**BM25와 Vector의 강점이 달랐습니다**: 정확한 기술명·식별자는 BM25가 유리했고, 표현이 달라진 질문은 Vector가 보완했습니다. RRF를 사용해 서로 다른 점수 체계를 정규화하지 않고 순위 기반으로 결합할 수 있었습니다.",
-          "**검색 품질과 지연시간을 함께 봐야 했습니다**: BM25 p95 127.73ms에서 Hybrid p95 171.89ms로 지연은 늘었지만 Hit@5·Recall@5·MRR은 높아졌습니다. 검색 정확도와 응답 지연을 같은 평가표에서 비교하는 기준을 만들었습니다.",
+          "**Retrieval 평가 역량**: LLM 답변과 검색 품질을 분리하고, Hit@5·Recall@5·MRR로 정답 근거가 실제로 검색되는지 측정했습니다.",
+          "**Hybrid 설계 역량**: 정확한 식별자에는 BM25, 표현이 다른 질문에는 Vector가 강하다는 결과를 확인하고 RRF로 두 순위를 결합했습니다.",
+          "**품질·지연 Trade-off 분석**: BM25 대비 Hybrid는 Hit@5와 Recall@5가 높아졌지만 p95는 127.73ms에서 171.89ms로 늘었습니다. 정확도만이 아니라 응답 지연까지 같은 기준에서 비교했습니다.",
         ],
       },
       {

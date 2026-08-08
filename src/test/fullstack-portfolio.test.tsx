@@ -47,7 +47,7 @@ describe("full-stack portfolio", () => {
     const heroSource = readText("src/components/HeroSection.tsx");
 
     expect(indexSource.indexOf("<ProjectsSection")).toBeLessThan(indexSource.indexOf("<AboutSection"));
-    expect(heroSource).toContain("FM·안전관리 플랫폼 연계 · 융합보안 · 지능형 영상관제");
+    expect(heroSource).toContain("실시간 영상 AI · 이벤트 연동 · 검색 시스템");
     expect(heroSource).toContain("실시간 이벤트 · 데이터 정합성 · 서비스 운영");
     expect(heroSource).toContain("비동기 데이터의 정합성을 지키며 AI 이벤트를 운영 가능한 서비스로 연결했습니다");
     expect(heroSource).toContain('{ value: "29/29", label: "1초 내 MQTT 도달", note: "2카메라 · Subscriber 기준" }');
@@ -66,13 +66,13 @@ describe("full-stack portfolio", () => {
 
     rerender(<AboutSection variant="ai" />);
     expect(screen.getByText("문제를 수치로 좁히고 관제 흐름까지 검증하는 개발자")).toBeInTheDocument();
-    expect(screen.getByText("융합보안·AI 안전관제 플랫폼")).toBeInTheDocument();
+    expect(screen.getByText("AI Software Engineer")).toBeInTheDocument();
     expect(screen.getByText("구간을 나눠 측정")).toBeInTheDocument();
   });
 
   it("marks the AI role active on the root variant", () => {
     render(<MemoryRouter initialEntries={["/"]}><Header variant="ai" /></MemoryRouter>);
-    expect(screen.getByRole("link", { name: "융합보안·AI 관제" })).toHaveClass("bg-primary");
+    expect(screen.getByRole("link", { name: "AI Software Engineer" })).toHaveClass("bg-primary");
     expect(screen.getByRole("link", { name: "Full-Stack Developer" })).not.toHaveClass("bg-primary");
   });
 

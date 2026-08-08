@@ -7,14 +7,16 @@ import CompetenceSection from "@/components/CompetenceSection";
 describe("Skills & Experience & Competence sections", () => {
   it("renders AI skills categories and representative tech without removed libraries", () => {
     const { container } = render(<SkillsSection variant="ai" />);
-    expect(screen.getByText("Computer Vision")).toBeInTheDocument();
-    expect(screen.getByText("Modeling & Optimization")).toBeInTheDocument();
-    expect(screen.getByText("Real-Time Pipeline")).toBeInTheDocument();
-    expect(screen.getByText("Development & Evaluation")).toBeInTheDocument();
+    expect(screen.getByText("AI / Vision")).toBeInTheDocument();
+    expect(screen.getByText("Realtime / Integration")).toBeInTheDocument();
+    expect(screen.getByText("Platform / Backend")).toBeInTheDocument();
+    expect(screen.getByText("Frontend")).toBeInTheDocument();
+    expect(screen.getByText("Search / Infra")).toBeInTheDocument();
 
     expect(screen.getByText("YOLO Pose")).toBeInTheDocument();
     expect(screen.getByText("TensorRT")).toBeInTheDocument();
     expect(screen.getByText("RTSP")).toBeInTheDocument();
+    expect(screen.getByText("Hit@5 75.00% → 82.14%")).toBeInTheDocument();
 
     const textContent = container.textContent ?? "";
     expect(textContent).not.toContain("BeautifulSoup4");

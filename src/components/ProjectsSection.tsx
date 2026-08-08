@@ -76,16 +76,44 @@ const ProjectStoryPanel = ({ story }: { readonly story: ProjectStory }) => (
   </section>
 );
 
+const SupportingProjectNarrative = ({ story }: { readonly story: ProjectStory }) => {
+  const sections = [
+    { title: "문제와 맥락", text: story.asIs },
+    { title: "역할과 목표", text: story.task },
+    { title: "기술 선택과 구현", text: story.action },
+    { title: "결과와 검증 범위", text: story.toBe },
+  ];
+
+  return (
+    <section className="mb-8 border-y border-border py-6 md:py-8">
+      <p className="text-xs font-extrabold tracking-[0.12em] text-primary">기술 사례</p>
+      <h4 className="mt-1 text-lg font-semibold text-foreground">문제에서 결과까지</h4>
+      <div className="mt-6 space-y-6">
+        {sections.map((section) => (
+          <div key={section.title} className="grid gap-2 md:grid-cols-[9rem_1fr] md:gap-6">
+            <h5 className="text-sm font-semibold text-foreground">{section.title}</h5>
+            <p className="text-sm leading-[1.8] text-muted-foreground">
+              {renderInlineText(section.text)}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
 const ProblemSolvingStory = ({
   steps,
   table,
   diagram,
   note,
+  narrative = false,
 }: {
   readonly steps: readonly ProblemSolvingStep[];
   readonly table?: ProjectDetail["table"];
   readonly diagram?: string;
   readonly note?: string;
+  readonly narrative?: boolean;
 }) => {
   const asIs = joinProblemSteps(
     findProblemStep(steps, "측정 현상"),
@@ -101,16 +129,38 @@ const ProblemSolvingStory = ({
 
   return (
     <div className="space-y-4">
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-        {asIs ? <StoryCard label="AS-IS" framework="Situation" text={asIs} /> : null}
-        {task ? <StoryCard label="TASK" framework="Task" text={task} /> : null}
-        {action ? <StoryCard label="ACTION" framework="Action" text={action} /> : null}
-        {toBe ? <StoryCard label="TO-BE" framework="Result" text={toBe} emphasized /> : null}
-      </div>
+      {narrative ? (
+        <div className="space-y-5 border-l border-border pl-4 md:pl-6">
+          {[
+            { title: "문제 상황", text: asIs },
+            { title: "기술적 판단", text: task },
+            { title: "구현 과정", text: action },
+            { title: "결과", text: toBe },
+          ].map((section) =>
+            section.text ? (
+              <div key={section.title} className="space-y-1.5">
+                <h5 className="text-sm font-semibold text-foreground">{section.title}</h5>
+                <p className="text-sm leading-[1.8] text-muted-foreground">
+                  {renderInlineText(section.text)}
+                </p>
+              </div>
+            ) : null,
+          )}
+        </div>
+      ) : (
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          {asIs ? <StoryCard label="AS-IS" framework="Situation" text={asIs} /> : null}
+          {task ? <StoryCard label="TASK" framework="Task" text={task} /> : null}
+          {action ? <StoryCard label="ACTION" framework="Action" text={action} /> : null}
+          {toBe ? <StoryCard label="TO-BE" framework="Result" text={toBe} emphasized /> : null}
+        </div>
+      )}
 
       {insight ? (
-        <div className="rounded-lg border border-border bg-background/50 p-4">
-          <p className="mb-1 text-xs font-bold uppercase tracking-wide text-primary">Technical Insight</p>
+        <div className={narrative ? "border-t border-border pt-4" : "rounded-lg border border-border bg-background/50 p-4"}>
+          <p className={narrative ? "mb-1 text-sm font-semibold text-foreground" : "mb-1 text-xs font-bold uppercase tracking-wide text-primary"}>
+            {narrative ? "기술적으로 배운 점" : "Technical Insight"}
+          </p>
           <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(insight)}</p>
         </div>
       ) : null}
@@ -149,7 +199,13 @@ const ProblemSolvingStory = ({
   );
 };
 
-const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) => (
+const ProjectDetailSection = ({
+  detail,
+  narrative = false,
+}: {
+  readonly detail: ProjectDetail;
+  readonly narrative?: boolean;
+}) => (
   <section className="space-y-2">
     <h4 className="text-lg font-semibold text-foreground">{detail.title}</h4>
     {detail.body ? (
@@ -163,6 +219,7 @@ const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) =>
         table={detail.table}
         diagram={detail.diagram}
         note={detail.note}
+        narrative={narrative}
       />
     ) : null}
     {detail.items ? (
@@ -508,7 +565,13 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
                 </div>
               ) : null}
 
-              {selectedProject.story ? <ProjectStoryPanel story={selectedProject.story} /> : null}
+              {selectedProject.story ? (
+                selectedProject.badge === "Main" ? (
+                  <ProjectStoryPanel story={selectedProject.story} />
+                ) : (
+                  <SupportingProjectNarrative story={selectedProject.story} />
+                )
+              ) : null}
 
               <div className="mb-8 flex flex-col gap-2 md:flex-row md:flex-wrap">
                 {selectedProject.highlights.map((highlight) => (
@@ -523,7 +586,11 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
 
               <div className="mb-8 space-y-6 overflow-hidden rounded-xl border border-border bg-card/50 p-6 md:p-8">
                 {selectedProject.details.map((detail) => (
-                  <ProjectDetailSection key={detail.title} detail={detail} />
+                  <ProjectDetailSection
+                    key={detail.title}
+                    detail={detail}
+                    narrative={selectedProject.badge === "Supporting"}
+                  />
                 ))}
               </div>
             </div>

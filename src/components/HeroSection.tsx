@@ -44,14 +44,14 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
                 An Jin Gyeong
               </p>
               <p className="mt-1 text-base font-semibold text-foreground/70">
-                안진경 · {isFullstack ? "Full-Stack Developer" : "융합보안·AI 안전관제 플랫폼 개발자"}
+                안진경 · {isFullstack ? "Full-Stack Developer" : "AI Software Engineer"}
               </p>
             </div>
 
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-5">
               <Sparkles size={14} className="text-primary" />
               <span className="text-sm font-medium text-primary">
-                {isFullstack ? "실시간 이벤트 · 데이터 정합성 · 서비스 운영" : "FM·안전관리 플랫폼 연계 · 융합보안 · 지능형 영상관제"}
+                {isFullstack ? "실시간 이벤트 · 데이터 정합성 · 서비스 운영" : "실시간 영상 AI · 이벤트 연동 · 검색 시스템"}
               </span>
             </div>
 
@@ -130,7 +130,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
               <div className="mt-5 text-center">
                 <strong className="block text-xl font-black tracking-tight text-foreground">안진경</strong>
                 <span className="mt-1 block text-sm font-semibold text-primary">
-                  {isFullstack ? "Full-Stack Developer" : "융합보안·AI 안전관제 플랫폼 개발자"}
+                  {isFullstack ? "Full-Stack Developer" : "AI Software Engineer"}
                 </span>
               </div>
             </div>

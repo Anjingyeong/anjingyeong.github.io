@@ -145,8 +145,8 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).not.toContain("초음파 영상 데이터 증강");
     expect(submissionUiSources).not.toContain("초음파 영상 데이터 증강");
     expect(publicProjectSources).toContain("원본·VAE 재구성 차영상 생성");
-    expect(publicProjectSources).toContain("VAE 모델과 후처리는 팀 구현");
-    expect(publicProjectSources).toContain("라벨 부족 → 정상 영상 재구성");
+    expect(publicProjectSources).toContain("VAE 모델 학습과 Dynamic Threshold 후처리는 팀 구현");
+    expect(publicProjectSources).toContain("데이터 부족 → 비지도 이상탐지");
     expect(publicProjectSources).toContain("0.8325");
     expect(publicProjectSources).toContain("0.9094");
     expect(publicProjectSources).toContain("Dynamic Threshold 미적용");
@@ -167,7 +167,8 @@ describe("ProjectsSection public copy", () => {
     expect(submissionUiSources).not.toMatch(
       /채용담당자 요약|이 프로젝트로 보여주는 역량|프로젝트에서 보여준 역량|원인·구현·검증|지원 포트폴리오|지원 직무|표현 원칙|포트폴리오 \(제출용\)|기술 나열보다 현장 문제, 개인 기여, 판단 근거와 검증 결과가 먼저 보이도록 구성했습니다\./,
     );
-    expect(submissionUiSources).toContain("프로젝트 요약");
+    expect(submissionUiSources).not.toContain("프로젝트 요약");
+    expect(submissionUiSources).toContain("문제에서 결과까지");
     expect(submissionUiSources).toContain("핵심 기술 역량");
     expect(submissionUiSources).toContain("프로젝트 배경과 기술 선택");
   });
@@ -215,8 +216,24 @@ describe("ProjectsSection public copy", () => {
     expect(screen.getByText("VAE 기반 유방 초음파 이상 탐지")).toBeInTheDocument();
     expect(screen.queryByText(/초음파 데이터 증강/)).not.toBeInTheDocument();
     expect(screen.getAllByText(/개인 기여: 차영상 생성/).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/라벨 부족 → 정상 영상 재구성/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/데이터 부족 → 비지도 이상탐지/).length).toBeGreaterThan(0);
     expect(screen.queryByText(/커스텀 손실 함수를 단독 설계/)).not.toBeInTheDocument();
+  });
+
+  it("uses prose narrative sections for supporting projects instead of AS-IS cards", () => {
+    render(createElement(ProjectsSection));
+
+    fireEvent.click(screen.getByText("VAE 기반 유방 초음파 이상 탐지"));
+
+    expect(screen.getByText("문제에서 결과까지")).toBeInTheDocument();
+    expect(screen.getByText("문제와 맥락")).toBeInTheDocument();
+    expect(screen.getByText("역할과 목표")).toBeInTheDocument();
+    expect(screen.getByText("기술 선택과 구현")).toBeInTheDocument();
+    expect(screen.getByText("결과와 검증 범위")).toBeInTheDocument();
+    expect(screen.queryByText("AS-IS → TASK → ACTION → TO-BE")).not.toBeInTheDocument();
+    expect(screen.queryByText("AS-IS")).not.toBeInTheDocument();
+    expect(screen.queryByText("ACTION")).not.toBeInTheDocument();
+    expect(screen.getByText("기술적으로 배운 점")).toBeInTheDocument();
   });
 
   it("keeps LLM Wiki claims aligned with the evaluated hybrid search and Elasticsearch scope", () => {
