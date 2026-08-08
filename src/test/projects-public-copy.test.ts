@@ -204,11 +204,14 @@ describe("ProjectsSection public copy", () => {
     fireEvent.click(screen.getByText("실시간 이상행동 탐지 및 안전 관제 AI 시스템"));
 
     expect(screen.getByRole("dialog")).toBeInTheDocument();
-    expect(screen.getByText("AS-IS → TASK → ACTION → TO-BE")).toBeInTheDocument();
-    expect(screen.getAllByText("AS-IS").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("TASK").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("ACTION").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("TO-BE").length).toBeGreaterThan(0);
+    expect(screen.queryByText("문제에서 결과까지")).not.toBeInTheDocument();
+    expect(screen.queryByText("문제 해결")).not.toBeInTheDocument();
+    expect(screen.getAllByText("Result").length).toBeGreaterThan(0);
+    expect(screen.queryByText("AS-IS → TASK → ACTION → TO-BE")).not.toBeInTheDocument();
+    expect(screen.queryByText("AS-IS")).not.toBeInTheDocument();
+    expect(screen.queryByText("TASK")).not.toBeInTheDocument();
+    expect(screen.queryByText("ACTION")).not.toBeInTheDocument();
+    expect(screen.queryByText("TO-BE")).not.toBeInTheDocument();
     expect(screen.getByText("문제 정의와 목표")).toBeInTheDocument();
     expect(screen.getByText("담당 범위와 협업")).toBeInTheDocument();
     expect(screen.getByText("AI 시스템 구조")).toBeInTheDocument();
@@ -226,19 +229,19 @@ describe("ProjectsSection public copy", () => {
     expect(screen.queryByText(/커스텀 손실 함수를 단독 설계/)).not.toBeInTheDocument();
   });
 
-  it("uses prose narrative sections for supporting projects instead of AS-IS cards", () => {
+  it("uses the compact narrative problem-solving format for the other independent projects", () => {
     render(createElement(ProjectsSection));
 
     fireEvent.click(screen.getByText("VAE 기반 유방 초음파 이상 탐지"));
 
     expect(screen.getByText("문제에서 결과까지")).toBeInTheDocument();
-    expect(screen.getByText("문제와 맥락")).toBeInTheDocument();
-    expect(screen.getByText("역할과 목표")).toBeInTheDocument();
-    expect(screen.getByText("기술 선택과 구현")).toBeInTheDocument();
-    expect(screen.getByText("결과와 검증 범위")).toBeInTheDocument();
+    expect(screen.getByText("문제 해결")).toBeInTheDocument();
+    expect(screen.getAllByText("Result").length).toBeGreaterThan(0);
     expect(screen.queryByText("AS-IS → TASK → ACTION → TO-BE")).not.toBeInTheDocument();
     expect(screen.queryByText("AS-IS")).not.toBeInTheDocument();
+    expect(screen.queryByText("TASK")).not.toBeInTheDocument();
     expect(screen.queryByText("ACTION")).not.toBeInTheDocument();
+    expect(screen.queryByText("TO-BE")).not.toBeInTheDocument();
     expect(screen.getByText("기술적으로 배운 점")).toBeInTheDocument();
   });
 

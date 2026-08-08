@@ -31,89 +31,36 @@ const findProblemStep = (
 const joinProblemSteps = (...steps: Array<string | undefined>) =>
   steps.filter((step): step is string => Boolean(step)).join(" ");
 
-const StoryCard = ({
-  label,
-  framework,
-  text,
-  emphasized = false,
-}: {
-  readonly label: string;
-  readonly framework: string;
-  readonly text: string;
-  readonly emphasized?: boolean;
-}) => (
-  <div
-    className={`rounded-xl border p-4 ${
-      emphasized
-        ? "border-primary/25 bg-primary/[0.06]"
-        : "border-border bg-muted/20"
-    }`}
-  >
-    <div className="mb-2 flex items-center justify-between gap-3">
-      <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-primary">{label}</p>
-      <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-        {framework}
-      </span>
-    </div>
-    <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(text)}</p>
-  </div>
-);
-
 const ProjectStoryPanel = ({ story }: { readonly story: ProjectStory }) => (
-  <section className="mb-8 rounded-xl border border-border bg-card/60 p-5 md:p-6">
-    <div className="mb-4">
-      <div>
-        <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary">Project Story</p>
-        <h4 className="mt-1 text-lg font-semibold text-foreground">AS-IS → TASK → ACTION → TO-BE</h4>
+  <section className="mb-8 border-y border-border py-6 md:py-8">
+    <p className="text-xs font-extrabold tracking-[0.12em] text-primary">문제 해결</p>
+    <h4 className="mt-1 text-lg font-semibold text-foreground">문제에서 결과까지</h4>
+
+    <div className="mt-5 grid gap-5 md:grid-cols-[minmax(0,1fr)_18rem] md:items-start">
+      <p className="text-sm leading-[1.85] text-muted-foreground">
+        {renderInlineText(joinProblemSteps(story.asIs, story.task, story.action))}
+      </p>
+
+      <div className="border-l-2 border-primary/50 bg-primary/[0.05] px-4 py-3">
+        <p className="mb-1 text-xs font-extrabold uppercase tracking-[0.12em] text-primary">Result</p>
+        <p className="text-base font-semibold leading-[1.7] text-foreground md:text-lg">
+          {renderInlineText(story.toBe)}
+        </p>
       </div>
-    </div>
-    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-      <StoryCard label="AS-IS" framework="Situation" text={story.asIs} />
-      <StoryCard label="TASK" framework="Task" text={story.task} />
-      <StoryCard label="ACTION" framework="Action" text={story.action} />
-      <StoryCard label="TO-BE" framework="Result" text={story.toBe} emphasized />
     </div>
   </section>
 );
-
-const SupportingProjectNarrative = ({ story }: { readonly story: ProjectStory }) => {
-  const sections = [
-    { title: "문제와 맥락", text: story.asIs },
-    { title: "역할과 목표", text: story.task },
-    { title: "기술 선택과 구현", text: story.action },
-    { title: "결과와 검증 범위", text: story.toBe },
-  ];
-
-  return (
-    <section className="mb-8 border-y border-border py-6 md:py-8">
-      <p className="text-xs font-extrabold tracking-[0.12em] text-primary">기술 사례</p>
-      <h4 className="mt-1 text-lg font-semibold text-foreground">문제에서 결과까지</h4>
-      <div className="mt-6 space-y-6">
-        {sections.map((section) => (
-          <div key={section.title} className="grid gap-2 md:grid-cols-[9rem_1fr] md:gap-6">
-            <h5 className="text-sm font-semibold text-foreground">{section.title}</h5>
-            <p className="text-sm leading-[1.8] text-muted-foreground">
-              {renderInlineText(section.text)}
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-};
 
 const ProblemSolvingStory = ({
   steps,
   table,
   diagram,
   note,
-  narrative = false,
 }: {
   readonly steps: readonly ProblemSolvingStep[];
   readonly table?: ProjectDetail["table"];
   readonly diagram?: string;
   readonly note?: string;
-  readonly narrative?: boolean;
 }) => {
   const asIs = joinProblemSteps(
     findProblemStep(steps, "측정 현상"),
@@ -129,38 +76,24 @@ const ProblemSolvingStory = ({
 
   return (
     <div className="space-y-4">
-      {narrative ? (
-        <div className="space-y-5 border-l border-border pl-4 md:pl-6">
-          {[
-            { title: "문제 상황", text: asIs },
-            { title: "기술적 판단", text: task },
-            { title: "구현 과정", text: action },
-            { title: "결과", text: toBe },
-          ].map((section) =>
-            section.text ? (
-              <div key={section.title} className="space-y-1.5">
-                <h5 className="text-sm font-semibold text-foreground">{section.title}</h5>
-                <p className="text-sm leading-[1.8] text-muted-foreground">
-                  {renderInlineText(section.text)}
-                </p>
-              </div>
-            ) : null,
-          )}
-        </div>
-      ) : (
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-          {asIs ? <StoryCard label="AS-IS" framework="Situation" text={asIs} /> : null}
-          {task ? <StoryCard label="TASK" framework="Task" text={task} /> : null}
-          {action ? <StoryCard label="ACTION" framework="Action" text={action} /> : null}
-          {toBe ? <StoryCard label="TO-BE" framework="Result" text={toBe} emphasized /> : null}
-        </div>
-      )}
+      <div className="grid gap-4 border-l border-border pl-4 md:grid-cols-[minmax(0,1fr)_16rem] md:gap-6 md:pl-6">
+        <p className="text-sm leading-[1.85] text-muted-foreground">
+          {renderInlineText(joinProblemSteps(asIs, task, action))}
+        </p>
+
+        {toBe ? (
+          <div className="border-l-2 border-primary/50 bg-primary/[0.05] px-4 py-3">
+            <p className="mb-1 text-xs font-extrabold uppercase tracking-[0.12em] text-primary">Result</p>
+            <p className="text-sm font-semibold leading-[1.75] text-foreground md:text-base">
+              {renderInlineText(toBe)}
+            </p>
+          </div>
+        ) : null}
+      </div>
 
       {insight ? (
-        <div className={narrative ? "border-t border-border pt-4" : "rounded-lg border border-border bg-background/50 p-4"}>
-          <p className={narrative ? "mb-1 text-sm font-semibold text-foreground" : "mb-1 text-xs font-bold uppercase tracking-wide text-primary"}>
-            {narrative ? "기술적으로 배운 점" : "Technical Insight"}
-          </p>
+        <div className="border-t border-border pt-4">
+          <p className="mb-1 text-sm font-semibold text-foreground">기술적으로 배운 점</p>
           <p className="text-sm leading-relaxed text-muted-foreground">{renderInlineText(insight)}</p>
         </div>
       ) : null}
@@ -199,13 +132,7 @@ const ProblemSolvingStory = ({
   );
 };
 
-const ProjectDetailSection = ({
-  detail,
-  narrative = false,
-}: {
-  readonly detail: ProjectDetail;
-  readonly narrative?: boolean;
-}) => (
+const ProjectDetailSection = ({ detail }: { readonly detail: ProjectDetail }) => (
   <section className="space-y-2">
     <h4 className="text-lg font-semibold text-foreground">{detail.title}</h4>
     {detail.body ? (
@@ -219,7 +146,6 @@ const ProjectDetailSection = ({
         table={detail.table}
         diagram={detail.diagram}
         note={detail.note}
-        narrative={narrative}
       />
     ) : null}
     {detail.items ? (
@@ -352,8 +278,8 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
   };
 
   const mainProjects = items.filter((project) => project.badge === "Main");
-  const supportingProjects = items.filter((project) => project.badge === "Supporting");
-  const orderedProjects = grouped ? [...mainProjects, ...supportingProjects] : items;
+  const otherProjects = items.filter((project) => project.badge !== "Main");
+  const orderedProjects = grouped ? [...mainProjects, ...otherProjects] : items;
   const sectionDescription = grouped
     ? "영상 AI의 정확도·Tracking·처리 지연을 개선하고, 위험 이벤트를 관제 서비스의 대응 흐름까지 연결한 경험입니다."
     : "안전·보안 이벤트를 신뢰할 수 있는 Incident로 저장하고, 실시간 알림·증거 확인·사고 검색까지 연결한 경험입니다.";
@@ -584,12 +510,8 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
                 </div>
               ) : null}
 
-              {selectedProject.story ? (
-                selectedProject.badge === "Main" ? (
-                  <ProjectStoryPanel story={selectedProject.story} />
-                ) : (
-                  <SupportingProjectNarrative story={selectedProject.story} />
-                )
+              {selectedProject.badge !== "Main" && selectedProject.story ? (
+                <ProjectStoryPanel story={selectedProject.story} />
               ) : null}
 
               <div className="mb-8 flex flex-col gap-2 md:flex-row md:flex-wrap">
@@ -605,11 +527,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
 
               <div className="mb-8 space-y-6 overflow-hidden rounded-xl border border-border bg-card/50 p-6 md:p-8">
                 {selectedProject.details.map((detail) => (
-                  <ProjectDetailSection
-                    key={detail.title}
-                    detail={detail}
-                    narrative={selectedProject.badge === "Supporting"}
-                  />
+                  <ProjectDetailSection key={detail.title} detail={detail} />
                 ))}
               </div>
             </div>
