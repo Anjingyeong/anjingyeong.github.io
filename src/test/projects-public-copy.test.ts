@@ -190,8 +190,14 @@ describe("ProjectsSection public copy", () => {
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(screen.queryByText("AI 시스템 구조")).not.toBeInTheDocument();
-    expect(screen.getAllByText("대표 프로젝트").length).toBeGreaterThanOrEqual(2);
-    expect(screen.getAllByText("기술 확장")).toHaveLength(3);
+    expect(screen.getByText("실시간 관제 · 핵심 구현")).toBeInTheDocument();
+    expect(screen.getByText("의료영상 AI · 검색 시스템")).toBeInTheDocument();
+    expect(screen.getByText("팀장 · AI 파이프라인")).toBeInTheDocument();
+    expect(screen.getByText("데이터 증강")).toBeInTheDocument();
+    expect(screen.getByText("차영상 시각화")).toBeInTheDocument();
+    expect(screen.getByText("개인 프로젝트")).toBeInTheDocument();
+    expect(screen.queryByText("기술 확장")).not.toBeInTheDocument();
+    expect(screen.queryByText("기술 확장 프로젝트")).not.toBeInTheDocument();
     expect(screen.queryByText("Main")).not.toBeInTheDocument();
     expect(screen.queryByText("Supporting")).not.toBeInTheDocument();
 

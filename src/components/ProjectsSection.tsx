@@ -330,6 +330,13 @@ type ProjectsSectionProps = {
   readonly grouped?: boolean;
 };
 
+const getProjectLabel = (project: Project) => {
+  if (project.badge === "Main") return "팀장 · AI 파이프라인";
+  if (project.title.startsWith("RF-DETR")) return "데이터 증강";
+  if (project.title.startsWith("VAE")) return "차영상 시각화";
+  return "개인 프로젝트";
+};
+
 
 const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionProps) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -355,7 +362,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
     <ScrollAnimator key={project.title}>
       <div
         className={`minimal-card-accent group h-full cursor-pointer overflow-hidden ${
-          featured ? "flex flex-col md:grid md:grid-cols-[1.05fr_0.95fr]" : "flex flex-col"
+          featured ? "flex flex-col md:grid md:grid-cols-[0.92fr_1.08fr]" : "flex flex-col"
         }`}
         role="button"
         tabIndex={0}
@@ -372,7 +379,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
           event.currentTarget.style.boxShadow = "";
         }}
       >
-        <div className={`bg-gradient-to-br ${project.gradient} p-8 pb-6`}>
+        <div className={`bg-gradient-to-br ${project.gradient} ${featured ? "p-6 md:p-7" : "p-8 pb-6"}`}>
           <div className="mb-4 flex items-start justify-between">
             <div className="icon-container">
               <project.icon size={22} />
@@ -385,7 +392,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
                     : "border-border bg-muted text-muted-foreground"
                 }`}
               >
-                {project.badge === "Main" ? "대표 프로젝트" : "기술 확장"}
+                {getProjectLabel(project)}
               </span>
               <ArrowUpRight
                 size={20}
@@ -398,7 +405,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
             {project.title}
           </h3>
           {project.heroImage ? (
-            <div className="mt-5 overflow-hidden rounded-lg border border-border bg-card/70">
+            <div className={`${featured ? "mt-4" : "mt-5"} overflow-hidden rounded-lg border border-border bg-card/70`}>
               <img
                 src={project.heroImage.src}
                 alt={project.heroImage.caption}
@@ -408,26 +415,34 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
           ) : null}
         </div>
 
-        <div className="flex flex-1 flex-col justify-between p-8 pt-5">
-          <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{renderInlineText(project.summaryLine)}</p>
-          <div>
-            <div className="mb-5 flex flex-wrap gap-2">
-              {project.highlights.map((highlight) => (
-                <span
-                  key={highlight}
-                  className="inline-flex items-center gap-1 rounded-md bg-primary/8 px-2.5 py-1 text-xs font-semibold text-primary"
-                >
-                  {highlight}
-                </span>
-              ))}
+        <div className={`flex flex-1 flex-col ${featured ? "p-6 md:p-8" : "p-8 pt-5"}`}>
+          <p className="text-sm leading-[1.8] text-muted-foreground">{renderInlineText(project.summaryLine)}</p>
+
+          {featured && project.story ? (
+            <div className="mt-5 border-l-2 border-primary/50 pl-4">
+              <p className="mb-1 text-xs font-bold text-primary">핵심 기여</p>
+              <p className="text-sm leading-[1.75] text-muted-foreground">
+                {renderInlineText(project.story.action)}
+              </p>
             </div>
-            <div className="flex flex-wrap gap-2 border-t border-border pt-4">
-              {project.tags.map((tag) => (
-                <span key={tag} className="tech-tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
+          ) : null}
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            {project.highlights.map((highlight) => (
+              <span
+                key={highlight}
+                className="inline-flex items-center gap-1 rounded-md bg-primary/8 px-2.5 py-1 text-xs font-semibold text-primary"
+              >
+                {highlight}
+              </span>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-wrap gap-2 border-t border-border pt-4">
+            {project.tags.map((tag) => (
+              <span key={tag} className="tech-tag">
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
       </div>
@@ -449,7 +464,10 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
         <div className="relative z-10 space-y-10">
           {orderedProjects[0] ? (
             <div>
-              <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-primary">대표 프로젝트</p>
+              <div className="mb-4 flex items-center gap-3">
+                <span className="h-px w-8 bg-primary" />
+                <p className="text-sm font-semibold text-foreground">실시간 관제 · 핵심 구현</p>
+              </div>
               <div className="grid grid-cols-1 gap-6">
                 {renderCard(orderedProjects[0], true)}
               </div>
@@ -458,9 +476,10 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
 
           {orderedProjects.length > 1 ? (
             <div>
-              <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-muted-foreground">
-                기술 확장 프로젝트
-              </p>
+              <div className="mb-4 flex items-center gap-3">
+                <span className="h-px w-8 bg-border" />
+                <p className="text-sm font-semibold text-foreground">의료영상 AI · 검색 시스템</p>
+              </div>
               <div className={grouped ? "grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3" : "grid grid-cols-1 gap-6 md:grid-cols-2"}>
                 {orderedProjects.slice(1).map((project) => renderCard(project))}
               </div>
@@ -503,7 +522,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
                           : "border-border bg-muted text-muted-foreground"
                       }`}
                     >
-                      {selectedProject.badge === "Main" ? "대표 프로젝트" : "기술 확장 프로젝트"}
+                      {getProjectLabel(selectedProject)}
                     </span>
                   </div>
                 </div>
