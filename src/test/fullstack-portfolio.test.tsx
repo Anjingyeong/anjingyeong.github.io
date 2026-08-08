@@ -34,7 +34,7 @@ describe("full-stack portfolio", () => {
     expect(fullstackProjects[2].description).toContain("실제 Elasticsearch 전체 질의 실측은 후속 검증");
     expect(fullstackProjects[2].meta?.role).toContain("개인 구현");
     expect(fullstackProjects[2].liveUrl).toBe("https://llmwiki.jingyeong.cloud");
-    expect(fullstackProjects[2].githubUrl).toBe("https://github.com/Anjingyeong/llm_wiki_strange");
+    expect(fullstackProjects[2].githubUrl).toBeUndefined();
     expect(JSON.stringify(fullstackProjects)).not.toContain("직접 구현한 것으로 표현하지 않습니다");
 
     render(<ProjectsSection items={fullstackProjects} grouped={false} />);
@@ -46,8 +46,8 @@ describe("full-stack portfolio", () => {
     const indexSource = readText("src/pages/Index.tsx");
     const heroSource = readText("src/components/HeroSection.tsx");
 
-    expect(indexSource.indexOf("<ProjectsSection")).toBeLessThan(indexSource.indexOf("<AboutSection"));
-    expect(heroSource).toContain("실시간 영상 AI · 이벤트 연동 · 검색 시스템");
+    expect(indexSource.indexOf("<ProjectsSection")).toBeLessThan(indexSource.indexOf("<SkillsSection"));
+    expect(heroSource).toContain("실시간 AI · 시스템 최적화 · 플랫폼 연동");
     expect(heroSource).toContain("실시간 이벤트 · 데이터 정합성 · 서비스 운영");
     expect(heroSource).toContain("비동기 데이터의 정합성을 지키며 AI 이벤트를 운영 가능한 서비스로 연결했습니다");
     expect(heroSource).toContain('{ value: "29/29", label: "1초 내 MQTT 도달", note: "2카메라 · Subscriber 기준" }');
@@ -62,12 +62,15 @@ describe("full-stack portfolio", () => {
     expect(screen.getByText("비동기 데이터의 식별자와 완료 조건을 설계하는 개발자")).toBeInTheDocument();
     expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
     expect(screen.getByText("식별자로 정합성 유지")).toBeInTheDocument();
-    expect(screen.queryByText("문제를 수치로 좁히고 관제 흐름까지 검증하는 개발자")).not.toBeInTheDocument();
+    expect(screen.queryByText("프로젝트마다 같은 방식으로 문제를 좁히고, 선택의 근거를 만들고, 실제 서비스 흐름까지 확인합니다.")).not.toBeInTheDocument();
 
     rerender(<AboutSection variant="ai" />);
-    expect(screen.getByText("문제를 수치로 좁히고 관제 흐름까지 검증하는 개발자")).toBeInTheDocument();
-    expect(screen.getByText("AI Software Engineer")).toBeInTheDocument();
-    expect(screen.getByText("구간을 나눠 측정")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "How I Work" })).toBeInTheDocument();
+    expect(screen.getByText("프로젝트마다 같은 방식으로 문제를 좁히고, 선택의 근거를 만들고, 실제 서비스 흐름까지 확인합니다.")).toBeInTheDocument();
+    expect(screen.queryByText("AI Software Engineer")).not.toBeInTheDocument();
+    expect(screen.getByText("끝까지 연결합니다")).toBeInTheDocument();
+    expect(screen.getByText("근거를 만들고 선택합니다")).toBeInTheDocument();
+    expect(screen.getByText("모르는 영역도 연결합니다")).toBeInTheDocument();
   });
 
   it("marks the AI role active on the root variant", () => {
@@ -178,7 +181,7 @@ describe("full-stack portfolio", () => {
     const aiSmartSafety = projects.find((p) => p.title.includes("실시간 이상행동 탐지"));
     const fullstackSmartSafety = fullstackProjects.find((p) => p.title.includes("AI 이벤트 수신부터 사고 검색"));
 
-    expect(aiSmartSafety?.heroImage?.src).toBe("/images/smart-safety/ai-pipeline.jpg");
+    expect(aiSmartSafety?.heroImage?.src).toBe("/images/SSAI썸네일.png");
     expect(fullstackSmartSafety?.heroImage?.src).toBe("/images/smart-safety/dashboard-and-search.jpg");
 
     const aiImageSources = aiSmartSafety?.details.flatMap((d) => d.images?.map((i) => i.src) ?? []) ?? [];
@@ -198,9 +201,9 @@ describe("full-stack portfolio", () => {
     const aiSmartSafety = projects.find((p) => p.title.includes("실시간 이상행동 탐지"));
     const fullstackSmartSafety = fullstackProjects.find((p) => p.title.includes("AI 이벤트 수신부터 사고 검색"));
 
-    expect(aiSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies/ai");
+    expect(aiSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies/");
     expect(aiSmartSafety?.demoUrl).toBe("https://www.youtube.com/watch?v=O1-JNhcpvDQ");
-    expect(fullstackSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies");
+    expect(fullstackSmartSafety?.githubUrl).toBe("https://github.com/strangeRookies/");
     expect(fullstackSmartSafety?.demoUrl).toBe("https://www.youtube.com/watch?v=O1-JNhcpvDQ");
 
     const projectsSectionSrc = readText("src/components/ProjectsSection.tsx");
@@ -254,7 +257,7 @@ describe("full-stack portfolio", () => {
       );
 
       expect(reflection).toBeDefined();
-      expect(reflection?.items?.length).toBeGreaterThanOrEqual(2);
+      expect(reflection?.items?.length).toBeGreaterThanOrEqual(1);
     }
 
     for (const project of fullstackProjects) {
@@ -280,7 +283,7 @@ describe("full-stack portfolio", () => {
       );
 
       expect(reflection).toBeDefined();
-      expect(reflection?.items?.length).toBeGreaterThanOrEqual(2);
+      expect(reflection?.items?.length).toBeGreaterThanOrEqual(1);
       expect(capabilities).toBeDefined();
 
       expect(project.details.indexOf(reflection!)).toBeLessThan(
@@ -298,10 +301,12 @@ describe("full-stack portfolio", () => {
     expect(smartSafety?.details.map((detail) => detail.title)).toEqual([
       "문제 정의와 목표",
       "AI 시스템 구조",
+      "서비스 연동 · 이벤트 계약",
       "낙상 순간 끊기는 Tracking ID의 원인을 추적했습니다",
       "자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다",
       "최신 프레임 정책과 TensorRT로 실시간성을 확보했습니다",
-      "운영 안정화와 검증 범위",
+      "이벤트 전후 10초를 8개 Keyframe으로 압축해 VLM 사고 검색까지 연결했습니다",
+      "운영 안정화와 검증 기준",
       "담당 범위와 협업",
       "판단과 배운 점",
       "핵심 기술 역량",
@@ -349,7 +354,7 @@ describe("full-stack portfolio", () => {
 
     expect(projectJson).not.toContain("약 19.7%");
     expect(smartSafety?.heroImage?.src).toBe(
-      "/images/smart-safety/ai-pipeline.jpg"
+      "/images/SSAI썸네일.png"
     );
 
     const systemStructure = smartSafety?.details.find(

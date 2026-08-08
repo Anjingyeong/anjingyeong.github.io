@@ -51,28 +51,28 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-5">
               <Sparkles size={14} className="text-primary" />
               <span className="text-sm font-medium text-primary">
-                {isFullstack ? "실시간 이벤트 · 데이터 정합성 · 서비스 운영" : "실시간 영상 AI · 이벤트 연동 · 검색 시스템"}
+                {isFullstack ? "실시간 이벤트 · 데이터 정합성 · 서비스 운영" : "실시간 AI · 시스템 최적화 · 플랫폼 연동"}
               </span>
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
               {isFullstack
                 ? "비동기 데이터의 정합성을 지키며 AI 이벤트를 운영 가능한 서비스로 연결했습니다"
-                : "실시간 영상 AI의 정확도와 지연을 개선하고 관제 서비스까지 연결했습니다"}
+                : "실시간 AI를 서비스까지 연결하고, 성능과 지연을 수치로 개선합니다"}
             </h1>
 
             <div className="mb-8 max-w-xl space-y-3 break-keep">
               <p className="text-base md:text-lg text-foreground/75 leading-relaxed font-normal">
                 {isFullstack
                   ? "팀 프로젝트에서는 MQTT 위험 이벤트를 Incident로 저장·병합하고 STOMP·React 화면과 VLM 후처리까지 연결했습니다. 개인 프로젝트에서는 약 2주 안에 자가체크 서비스의 화면·API·D1·PDF 리포트·배포를 1인으로 완성했습니다."
-                  : "SK쉴더스 지능형 애플리케이션 개발 과정의 스마트 안전관제 팀 프로젝트에서 RTSP 영상 입력부터 Pose·Tracking·행동 분석, MQTT 이벤트 전달과 관제 화면 알림까지 이어지는 흐름을 함께 검증했습니다. 저는 모델 성능뿐 아니라 Tracking 단절과 처리 지연을 구간별 수치로 비교해 개선했습니다."}
+                  : "영상 입력부터 AI 추론·Tracking·이벤트 전달·서비스 연동까지 하나의 흐름으로 연결했습니다. 문제는 로그와 동일 조건 비교로 좁히고, 개선 효과는 수치로 검증했습니다."}
               </p>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                <strong className="font-semibold text-foreground">개인 기여 · </strong>
-                {isFullstack
-                  ? "팀 프로젝트: 이벤트 계약·originalEventId Incident 정합성·VLM 비동기 흐름 / 개인 프로젝트: 기획·API·DB·배포 전 과정"
-                  : "YOLO 후보 비교·선정, Tracking 재연결, LSTM 입력 특징 보강, 실시간 처리 지연 분석·최적화, 영상 송출 및 MQTT 계약 정합성 조율"}
-              </p>
+              {isFullstack ? (
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  <strong className="font-semibold text-foreground">개인 기여 · </strong>
+                  팀 프로젝트: 이벤트 계약·originalEventId Incident 정합성·VLM 비동기 흐름 / 개인 프로젝트: 기획·API·DB·배포 전 과정
+                </p>
+              ) : null}
             </div>
 
             <div className="grid max-w-xl grid-cols-3 gap-2 sm:gap-3 mb-6 sm:mb-8">
@@ -127,12 +127,12 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
               </div>
-              <div className="mt-5 text-center">
-                <strong className="block text-xl font-black tracking-tight text-foreground">안진경</strong>
-                <span className="mt-1 block text-sm font-semibold text-primary">
-                  {isFullstack ? "Full-Stack Developer" : "AI Software Engineer"}
-                </span>
-              </div>
+              {isFullstack ? (
+                <div className="mt-5 text-center">
+                  <strong className="block text-xl font-black tracking-tight text-foreground">안진경</strong>
+                  <span className="mt-1 block text-sm font-semibold text-primary">Full-Stack Developer</span>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

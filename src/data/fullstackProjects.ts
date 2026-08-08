@@ -40,7 +40,7 @@ export const fullstackProjects: readonly Project[] = [
       "Gemini VLM",
     ],
     gradient: "from-orange-500/10 to-rose-500/5",
-    githubUrl: "https://github.com/strangeRookies",
+    githubUrl: "https://github.com/strangeRookies/",
     demoUrl: "https://www.youtube.com/watch?v=O1-JNhcpvDQ",
     details: [
       {
@@ -293,7 +293,6 @@ export const fullstackProjects: readonly Project[] = [
     tags: ["TypeScript", "Cloudflare Pages Functions", "BM25", "Vector Search", "RRF", "Elasticsearch", "HNSW", "JSON Index", "RAG"],
     gradient: "from-indigo-500/10 to-violet-500/5",
     liveUrl: "https://llmwiki.jingyeong.cloud",
-    githubUrl: "https://github.com/Anjingyeong/llm_wiki_strange",
     details: [
       {
         title: "프로젝트 배경과 기술 선택",

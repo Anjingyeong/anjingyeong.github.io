@@ -50,9 +50,7 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).toContain(
       'liveUrl: "https://llmwiki.jingyeong.cloud"',
     );
-    expect(publicProjectSources).toContain(
-      'githubUrl: "https://github.com/Anjingyeong/llm_wiki_strange"',
-    );
+    expect(publicProjectSources).not.toContain("https://github.com/Anjingyeong/llm_wiki_strange");
     expect(portfolioLinkSources).toContain("https://zero-to-dev.tistory.com/");
   });
 
@@ -64,18 +62,12 @@ describe("ProjectsSection public copy", () => {
       "href",
       "https://llmwiki.jingyeong.cloud",
     );
-    expect(screen.getByRole("link", { name: "GitHub" })).toHaveAttribute(
-      "href",
-      "https://github.com/Anjingyeong/llm_wiki_strange",
-    );
+    expect(screen.queryByRole("link", { name: "GitHub" })).not.toBeInTheDocument();
   });
 
-  it("renders the development blog in profile and contact surfaces", () => {
+  it("keeps profile links out of the compact AI work section and publishes them in contact", () => {
     const about = render(createElement(AboutSection));
-    expect(about.getByRole("link", { name: "개발 블로그 열기" })).toHaveAttribute(
-      "href",
-      "https://zero-to-dev.tistory.com/",
-    );
+    expect(about.queryByRole("link", { name: "개발 블로그 열기" })).not.toBeInTheDocument();
     about.unmount();
 
     render(createElement(ContactSection));
@@ -92,16 +84,41 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).toContain("RTSP 영상에서 YOLO26n-pose로");
     expect(publicProjectSources).toContain("LSTM");
     expect(publicProjectSources).toContain("MQTT");
+    expect(publicProjectSources).toContain("VLM 사고 후처리");
+    expect(publicProjectSources).toContain("이벤트 전후 10초를 8개 Keyframe으로 압축해 VLM 사고 검색까지 연결했습니다");
+    expect(publicProjectSources).toContain("Critical Path");
+    expect(publicProjectSources).toContain("이전 150프레임과 이후 150프레임");
+    expect(publicProjectSources).toContain("각 구간 중앙 프레임을 추출");
+    expect(publicProjectSources).toContain("768차원 임베딩");
+    expect(publicProjectSources).toContain("VLM은 실시간 위험 판단에 참여하지 않고");
+    expect(publicProjectSources).toContain("자연어 사고 검색 결과에 연결했습니다");
+    expect(publicProjectSources).toContain("4·8·12 Keyframe 조건을 비교했습니다");
+    expect(publicProjectSources).toContain("4.5 / 5.0");
+    expect(publicProjectSources).toContain("5.68초 / 6.25초");
+    expect(publicProjectSources).toContain("8.20초 / 8.90초");
+    expect(publicProjectSources).toContain("허위 설명 0건");
+    expect(publicProjectSources).toContain("외부 Gemini API의 호출량·비용 제약");
+    expect(publicProjectSources).not.toContain("VLM 분석 품질 자체에 대한 별도 정량 평가는 수행하지 않았습니다");
   });
 
   it("uses the strongest verified Smart Safety outcomes in the AI hero and project card", () => {
-    expect(heroSource).toContain("실시간 영상 AI의 정확도와 지연을 개선하고 관제 서비스까지 연결했습니다");
+    expect(heroSource).toContain("실시간 AI · 시스템 최적화 · 플랫폼 연동");
+    expect(heroSource).toContain("실시간 AI를 서비스까지 연결하고, 성능과 지연을 수치로 개선합니다");
+    expect(heroSource).toContain("영상 입력부터 AI 추론·Tracking·이벤트 전달·서비스 연동까지 하나의 흐름으로 연결했습니다.");
+    expect(heroSource).not.toContain("SK쉴더스 교육과정의 5인 팀 프로젝트에서");
+    expect(heroSource).not.toContain("실시간 관제 · 이벤트 연동 · 플랫폼 통합");
+    expect(heroSource).not.toContain("실시간 영상 AI · 이벤트 연동 · 검색 시스템");
+    expect(heroSource).not.toContain("YOLO 후보 비교·선정, Tracking 재연결, LSTM 입력 특징 보강");
     expect(heroSource).toContain('{ value: "+4.20%p", label: "행동 분류 F1"');
     expect(heroSource).toContain('{ value: "8 → 1", label: "ID Switch"');
     expect(heroSource).toContain('{ value: "-48.2%", label: "전체 처리 지연"');
     expect(publicProjectSources).toContain("행동 분류 F1 89.29% → 93.49%");
     expect(publicProjectSources).toContain("ID Switch 8건 → 1건");
     expect(publicProjectSources).toContain("전체 처리 지연 11.789ms → 6.101ms");
+    expect(publicProjectSources).toContain("MQTT → Spring Boot → STOMP → React 통합 검증");
+    expect(publicProjectSources).toContain("서비스 연동 · 이벤트 계약");
+    expect(publicProjectSources).toContain("cameraLoginId·frameId·timestamp·eventType");
+    expect(publicProjectSources).toContain("Spring Boot·React 구현은 팀원 담당");
   });
 
   it("does not contain bracketed evidence labels in public copy", () => {
@@ -127,8 +144,8 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).not.toContain("영상 입력 애플리케이션 구현");
     expect(publicProjectSources).toContain("mAP@50");
     expect(publicProjectSources).not.toContain("4초 연속 탐지 Auto Record");
-    expect(publicProjectSources).toContain("증강 단독 효과");
-    expect(publicProjectSources).toContain("별도 ablation 없음");
+    expect(publicProjectSources).not.toContain("증강 단독 효과");
+    expect(publicProjectSources).not.toContain("별도 ablation 없음");
     expect(publicProjectSources).not.toContain("증강 후 bbox 정합성");
     expect(submissionUiSources).not.toContain("bbox 정합성");
     expect(publicProjectSources).not.toContain("22+ FPS");
@@ -174,12 +191,9 @@ describe("ProjectsSection public copy", () => {
   });
 
   it("presents Smart Safety before LLM Wiki as public representative work", () => {
-    const allSources = [
-      publicProjectSources,
-      readText("src/data/fullstackProjects.ts"),
-    ].join("\n");
-    const smartSafetyIndex = allSources.indexOf("스마트 안전 관제");
-    const llmWikiIndex = allSources.indexOf("LLM Wiki");
+    const projectDataSource = readText("src/data/projects.ts");
+    const smartSafetyIndex = projectDataSource.indexOf("실시간 이상행동 탐지 및 안전 관제 AI 시스템");
+    const llmWikiIndex = projectDataSource.indexOf("LLM Wiki · Hybrid Search 지식 시스템");
 
     expect(smartSafetyIndex).toBeGreaterThanOrEqual(0);
     expect(llmWikiIndex).toBeGreaterThan(smartSafetyIndex);
@@ -190,12 +204,19 @@ describe("ProjectsSection public copy", () => {
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(screen.queryByText("AI 시스템 구조")).not.toBeInTheDocument();
-    expect(screen.getByText("실시간 관제 · 핵심 구현")).toBeInTheDocument();
-    expect(screen.getByText("의료영상 AI · 검색 시스템")).toBeInTheDocument();
+    expect(screen.getByText("대표 프로젝트 · 실시간 AI 시스템")).toBeInTheDocument();
+    expect(screen.getByText("검색 시스템 · 의료영상 AI")).toBeInTheDocument();
+    const cardHeadings = screen.getAllByRole("heading", { level: 3 }).map((heading) => heading.textContent);
+    expect(cardHeadings).toEqual([
+      "실시간 이상행동 탐지 및 안전 관제 AI 시스템",
+      "LLM Wiki · Hybrid Search 지식 시스템",
+      "RF-DETR 기반 대장 내시경 용종 검출 애플리케이션",
+      "VAE 기반 유방 초음파 이상 탐지",
+    ]);
     expect(screen.getByText("팀장 · AI 파이프라인")).toBeInTheDocument();
     expect(screen.getByText("데이터 증강")).toBeInTheDocument();
     expect(screen.getByText("차영상 시각화")).toBeInTheDocument();
-    expect(screen.getByText("개인 프로젝트")).toBeInTheDocument();
+    expect(screen.getByText("Hybrid Search · Elasticsearch")).toBeInTheDocument();
     expect(screen.queryByText("기술 확장")).not.toBeInTheDocument();
     expect(screen.queryByText("기술 확장 프로젝트")).not.toBeInTheDocument();
     expect(screen.queryByText("Main")).not.toBeInTheDocument();
@@ -206,7 +227,7 @@ describe("ProjectsSection public copy", () => {
     expect(screen.getByRole("dialog")).toBeInTheDocument();
     expect(screen.queryByText("문제에서 결과까지")).not.toBeInTheDocument();
     expect(screen.queryByText("문제 해결")).not.toBeInTheDocument();
-    expect(screen.getAllByText("Result").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("검증 결과").length).toBeGreaterThan(0);
     expect(screen.queryByText("AS-IS → TASK → ACTION → TO-BE")).not.toBeInTheDocument();
     expect(screen.queryByText("AS-IS")).not.toBeInTheDocument();
     expect(screen.queryByText("TASK")).not.toBeInTheDocument();
@@ -215,8 +236,10 @@ describe("ProjectsSection public copy", () => {
     expect(screen.getByText("문제 정의와 목표")).toBeInTheDocument();
     expect(screen.getByText("담당 범위와 협업")).toBeInTheDocument();
     expect(screen.getByText("AI 시스템 구조")).toBeInTheDocument();
+    expect(screen.getByText("서비스 연동 · 이벤트 계약")).toBeInTheDocument();
     expect(screen.getByText("자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다")).toBeInTheDocument();
     expect(screen.getByText("최신 프레임 정책과 TensorRT로 실시간성을 확보했습니다")).toBeInTheDocument();
+    expect(screen.getByText("이벤트 전후 10초를 8개 Keyframe으로 압축해 VLM 사고 검색까지 연결했습니다")).toBeInTheDocument();
   });
 
   it("shows VAE responsibility evidence directly on the page", () => {
@@ -236,7 +259,7 @@ describe("ProjectsSection public copy", () => {
 
     expect(screen.getByText("문제에서 결과까지")).toBeInTheDocument();
     expect(screen.getByText("문제 해결")).toBeInTheDocument();
-    expect(screen.getAllByText("Result").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("검증 결과").length).toBeGreaterThan(0);
     expect(screen.queryByText("AS-IS → TASK → ACTION → TO-BE")).not.toBeInTheDocument();
     expect(screen.queryByText("AS-IS")).not.toBeInTheDocument();
     expect(screen.queryByText("TASK")).not.toBeInTheDocument();
@@ -259,8 +282,10 @@ describe("ProjectsSection public copy", () => {
     expect(publicProjectSources).toContain("dense_vector");
     expect(publicProjectSources).toContain("HNSW");
     expect(publicProjectSources).toContain("Legacy 검색 유지");
-    expect(publicProjectSources).toContain("Elasticsearch 학습·확장 구현");
-    expect(publicProjectSources).toContain("실제 Elasticsearch 컨테이너 색인 및 61개 질의 전체 실측은 미완료");
+    expect(publicProjectSources).toContain("기준선을 유지한 채 Elasticsearch Provider로 확장했습니다");
+    expect(publicProjectSources).toContain("Elasticsearch 신규 테스트 3개");
+    expect(publicProjectSources).toContain("전체 회귀 테스트 92개");
+    expect(publicProjectSources).not.toContain("실제 Elasticsearch 컨테이너 색인 및 61개 질의 전체 실측은 미완료");
     expect(publicProjectSources).not.toMatch(
       /\/api\/rag\/ask|LLM API key|GraphRAG/,
     );

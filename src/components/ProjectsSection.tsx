@@ -42,7 +42,7 @@ const ProjectStoryPanel = ({ story }: { readonly story: ProjectStory }) => (
       </p>
 
       <div className="border-l-2 border-primary/50 bg-primary/[0.05] px-4 py-3">
-        <p className="mb-1 text-xs font-extrabold uppercase tracking-[0.12em] text-primary">Result</p>
+        <p className="mb-1 text-xs font-extrabold tracking-[0.12em] text-primary">검증 결과</p>
         <p className="text-base font-semibold leading-[1.7] text-foreground md:text-lg">
           {renderInlineText(story.toBe)}
         </p>
@@ -83,7 +83,7 @@ const ProblemSolvingStory = ({
 
         {toBe ? (
           <div className="border-l-2 border-primary/50 bg-primary/[0.05] px-4 py-3">
-            <p className="mb-1 text-xs font-extrabold uppercase tracking-[0.12em] text-primary">Result</p>
+            <p className="mb-1 text-xs font-extrabold tracking-[0.12em] text-primary">검증 결과</p>
             <p className="text-sm font-semibold leading-[1.75] text-foreground md:text-base">
               {renderInlineText(toBe)}
             </p>
@@ -258,9 +258,17 @@ type ProjectsSectionProps = {
 
 const getProjectLabel = (project: Project) => {
   if (project.badge === "Main") return "팀장 · AI 파이프라인";
+  if (project.title.startsWith("LLM Wiki")) return "Hybrid Search · Elasticsearch";
   if (project.title.startsWith("RF-DETR")) return "데이터 증강";
   if (project.title.startsWith("VAE")) return "차영상 시각화";
   return "개인 프로젝트";
+};
+
+const getOtherProjectPriority = (project: Project) => {
+  if (project.title.startsWith("LLM Wiki")) return 0;
+  if (project.title.startsWith("RF-DETR")) return 1;
+  if (project.title.startsWith("VAE")) return 2;
+  return 3;
 };
 
 
@@ -278,7 +286,10 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
   };
 
   const mainProjects = items.filter((project) => project.badge === "Main");
-  const otherProjects = items.filter((project) => project.badge !== "Main");
+  const otherProjects = items
+    .filter((project) => project.badge !== "Main")
+    .slice()
+    .sort((a, b) => getOtherProjectPriority(a) - getOtherProjectPriority(b));
   const orderedProjects = grouped ? [...mainProjects, ...otherProjects] : items;
   const sectionDescription = grouped
     ? "영상 AI의 정확도·Tracking·처리 지연을 개선하고, 위험 이벤트를 관제 서비스의 대응 흐름까지 연결한 경험입니다."
@@ -392,7 +403,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
             <div>
               <div className="mb-4 flex items-center gap-3">
                 <span className="h-px w-8 bg-primary" />
-                <p className="text-sm font-semibold text-foreground">실시간 관제 · 핵심 구현</p>
+                <p className="text-sm font-semibold text-foreground">대표 프로젝트 · 실시간 AI 시스템</p>
               </div>
               <div className="grid grid-cols-1 gap-6">
                 {renderCard(orderedProjects[0], true)}
@@ -404,7 +415,7 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
             <div>
               <div className="mb-4 flex items-center gap-3">
                 <span className="h-px w-8 bg-border" />
-                <p className="text-sm font-semibold text-foreground">의료영상 AI · 검색 시스템</p>
+                <p className="text-sm font-semibold text-foreground">검색 시스템 · 의료영상 AI</p>
               </div>
               <div className={grouped ? "grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3" : "grid grid-cols-1 gap-6 md:grid-cols-2"}>
                 {orderedProjects.slice(1).map((project) => renderCard(project))}

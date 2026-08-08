@@ -34,7 +34,7 @@ const aiSkillCategories: SkillCategory[] = [
     color: "from-emerald-500/10 to-teal-600/5",
   },
   {
-    title: "Platform / Backend",
+    title: "Backend / Platform",
     icon: Database,
     skills: [
       { name: "Spring Boot", evidence: "MQTT 이벤트 저장·브로드캐스트 팀 통합 검증" },
@@ -42,16 +42,6 @@ const aiSkillCategories: SkillCategory[] = [
       { name: "SQL / DB", evidence: "이벤트와 사고 상태를 저장하는 데이터 구조 경험" },
     ],
     color: "from-indigo-500/10 to-indigo-600/5",
-  },
-  {
-    title: "Frontend",
-    icon: Cpu,
-    skills: [
-      { name: "React", evidence: "AI 이벤트가 관제 화면에 표시되는 흐름 검증" },
-      { name: "WebSocket / STOMP", evidence: "저장된 이벤트를 화면에 실시간 전달" },
-      { name: "JavaScript", evidence: "관제 UI와 비동기 이벤트 처리" },
-    ],
-    color: "from-emerald-500/10 to-teal-600/5",
   },
   {
     title: "Search / Infra",
@@ -62,6 +52,16 @@ const aiSkillCategories: SkillCategory[] = [
       { name: "Git / Linux / Cloud", evidence: "버전 관리·실행 환경·배포 흐름에 사용" },
     ],
     color: "from-purple-500/10 to-purple-600/5",
+  },
+  {
+    title: "Frontend",
+    icon: Cpu,
+    skills: [
+      { name: "React", evidence: "AI 이벤트가 관제 화면에 표시되는 흐름 검증" },
+      { name: "WebSocket / STOMP", evidence: "저장된 이벤트를 화면에 실시간 전달" },
+      { name: "JavaScript", evidence: "관제 UI와 비동기 이벤트 처리" },
+    ],
+    color: "from-emerald-500/10 to-teal-600/5",
   },
 ];
 

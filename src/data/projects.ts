@@ -78,7 +78,7 @@ export const projects: readonly Project[] = [
       "행동 분류 F1을 89.29%에서 93.49%로 높이고, 자체 낙상 테스트에서 ID Switch를 8건에서 1건으로 줄였습니다. TensorRT와 최신 프레임 정책이 함께 적용된 통합 조건의 전체 처리 지연은 11.789ms에서 6.101ms로 감소했으며, 최종 위험 판단을 MQTT로 전달해 백엔드·관제 화면과 별도 통합 테스트로 확인했습니다.",
     meta: {
       period: "2026.05–2026.07",
-      role: "5인 팀장 · YOLO 비교·선정, Tracking·프레임 버퍼·TensorRT, LSTM 특징 개선, 영상 송출 담당",
+      role: "5인 팀장 · 실시간 AI 파이프라인, Tracking·LSTM·지연 최적화, MQTT 이벤트·VLM 사고 후처리",
       service: "스마트 안전 관제 AI 시스템",
     },
     story: {
@@ -92,7 +92,7 @@ export const projects: readonly Project[] = [
         "ID Switch 8→1, 행동 분류 F1 89.29%→93.49%, 전체 처리 지연 11.789ms→6.101ms를 확인했습니다. MQTT 이후 Spring Boot 저장·React 표시는 팀 통합 테스트로 검증했습니다.",
     },
     heroImage: {
-      src: "/images/smart-safety/ai-pipeline.jpg",
+      src: "/images/SSAI썸네일.png",
       caption:
         "RTSP 입력부터 Pose·Tracking·LSTM·상태 후처리·MQTT 이벤트까지 연결한 AI 판단 파이프라인",
     },
@@ -100,10 +100,11 @@ export const projects: readonly Project[] = [
       "행동 분류 F1 89.29% → 93.49%",
       "ID Switch 8건 → 1건",
       "전체 처리 지연 11.789ms → 6.101ms",
+      "MQTT → Spring Boot → STOMP → React 통합 검증",
     ],
-    tags: ["Python", "PyTorch", "YOLO26n-pose", "LSTM", "OpenCV", "RTSP", "MQTT"],
+    tags: ["Python", "PyTorch", "YOLO26n-pose", "LSTM", "OpenCV", "RTSP", "MQTT", "VLM"],
     gradient: "from-rose-500/10 to-orange-500/10",
-    githubUrl: "https://github.com/strangeRookies/ai",
+    githubUrl: "https://github.com/strangeRookies/",
     demoUrl: "https://www.youtube.com/watch?v=O1-JNhcpvDQ",
     hasAwards: false,
     details: [
@@ -125,11 +126,23 @@ export const projects: readonly Project[] = [
     Post --> MQTT["📡 MQTT Event Publisher\\nReal-time Alert to Control Center"]`,
       },
       {
+        title: "서비스 연동 · 이벤트 계약",
+        body:
+          "AI 판단 결과를 화면에 직접 결합하기보다 MQTT 이벤트로 분리해 Backend·Frontend가 같은 계약을 기준으로 소비하도록 맞췄습니다. AI Worker에서는 최종 위험 판단을 MQTT payload로 발행하고, Backend·Frontend 담당자와 cameraLoginId·frameId·timestamp·eventType 필드의 의미와 완료 기준을 조율했습니다.\n\nSpring Boot의 MQTT Subscriber·DB 저장·브로드캐스트와 STOMP/WebSocket을 통한 React 관제 화면 표시는 각 담당자가 구현했습니다. 저는 팀장 겸 AI 담당으로 AI Worker의 발행 payload와 인터페이스를 맞추고, RTSP 입력부터 관제 화면 표시까지 전달 흐름을 팀 통합 테스트로 함께 확인했습니다.",
+        diagram: `flowchart LR
+    AI["🤖 AI Worker\\n위험 판단"] --> MQTT["📡 MQTT Event\\ncameraLoginId · frameId\\ntimestamp · eventType"]
+    MQTT --> Back["☕ Spring Boot\\nSubscriber · DB 저장 · Broadcast"]
+    Back --> STOMP["🔄 STOMP / WebSocket"]
+    STOMP --> UI["🖥️ React 관제 화면"]`,
+        note:
+          "직접 구현 범위는 AI Worker의 MQTT 발행·payload 정합성과 인터페이스 조율입니다. Spring Boot·React 구현은 팀원 담당이며, 전체 전달 흐름은 팀 통합 테스트로 검증했습니다.",
+      },
+      {
         title: "낙상 순간 끊기는 Tracking ID의 원인을 추적했습니다",
         problemSolving: [
           {
             label: "측정 현상",
-            text: "자체 낙상 테스트 영상에서 동일 인물의 ID Switch가 8건 발생했고, Mean Track Coverage는 35.76%에 머물렀습니다. Tracking ID가 바뀔 때마다 해당 인물의 LSTM 입력 시퀀스도 중간에 분리됐습니다.",
+            text: "자체 낙상 테스트 영상에서 동일 인물의 ID Switch가 8건 발생했습니다. Tracking ID가 바뀔 때마다 해당 인물의 LSTM 입력 시퀀스도 중간에 분리됐습니다.",
           },
           {
             label: "원인 분석",
@@ -145,7 +158,7 @@ export const projects: readonly Project[] = [
           },
           {
             label: "결과",
-            text: "자체 테스트 영상에서 ID Switch를 8건에서 1건으로 줄였고, Mean Track Coverage를 35.76%에서 49.70%로 높였습니다.",
+            text: "동일 영상·동일 Detection 결과를 고정하고 Tracking 재연결 로직만 변경한 조건에서 ID Switch를 8건에서 1건으로 줄였습니다.",
           },
           {
             label: "배운 점",
@@ -159,7 +172,7 @@ export const projects: readonly Project[] = [
     D -->|"Hard Match"| E["기존 시퀀스 유지"]
     D -->|"Soft·Sole Match"| E
     D -->|"조건 불충족"| F["새 Track 생성"]`,
-        note: "ID Switch와 Track Coverage는 자체 테스트 시나리오의 내부 평가 결과입니다. 객관적인 추적 성능을 주장하려면 MOTA·HOTA·Fragmentation 등의 추가 평가가 필요합니다.",
+        note: "ID Switch는 자체 낙상 테스트 영상에서 동일 Detection 결과를 고정하고 Tracking 재연결 로직만 변경한 내부 비교 결과입니다.",
       },
       {
         title: "자세 좌표만으로 부족했던 낙상 전이를 특징으로 추가했습니다",
@@ -248,7 +261,31 @@ export const projects: readonly Project[] = [
           "AI Worker의 프레임 수신부터 MQTT Subscriber 수신까지 전달 지연은 평균 20.931ms, p95 26ms, 최대 27ms로 측정했습니다. Spring Boot 저장·STOMP·React 화면 표시는 별도 통합 테스트로 확인했습니다. 전체 처리 지연과 Dropped Frame은 TensorRT와 최신 프레임 처리 정책이 함께 적용된 통합 결과입니다.",
       },
       {
-        title: "운영 안정화와 검증 범위",
+        title: "이벤트 전후 10초를 8개 Keyframe으로 압축해 VLM 사고 검색까지 연결했습니다",
+        body:
+          "실시간 위험 판단은 YOLO Pose·Tracking·LSTM과 상태 후처리에서 끝내고 MQTT 경보를 먼저 발행했습니다. VLM은 위험 여부를 판단하지 않고, 확정된 이벤트의 사고 맥락을 설명하고 검색하기 위한 사후 분석 경로로 분리했습니다.\n\n이벤트 발생 시 원형 버퍼의 이전 150프레임과 이후 150프레임을 모아 기본 30fps 기준 약 10초, 즉 전후 약 5초의 사고 클립을 생성했습니다. 이후 VLM 입력량을 임의로 정하지 않고 4·8·12 Keyframe 조건을 비교했습니다. 8프레임은 평균 설명 점수 4.5/5.0으로 가장 높았고 평균 API 지연 5.68초, p95 6.25초, 평균 입력량 5.97MB를 기록해 설명 품질과 처리 비용의 균형점으로 선택했습니다. 최종 구현에서는 300프레임 클립을 8개 구간으로 나누고 각 구간 중앙 프레임을 추출해 비식별화 후 VLM 분석에 사용했습니다. 생성된 사고 설명과 768차원 임베딩은 동일 이벤트에 저장해 관제 대시보드의 사고 상세 설명과 자연어 사고 검색 결과에 연결했습니다.",
+        diagram: `flowchart LR
+    Event["🚨 위험 이벤트 확정"] --> Alert["📡 MQTT 경보\\n실시간 판단 종료"]
+    Event --> Clip["🎞️ 10초 사고 클립\\n150 Pre + 150 Post"]
+    Clip --> Keyframe["🖼️ 8 Keyframes\\n8구간 중앙 프레임"]
+    Keyframe --> Deid["🙈 비식별화"]
+    Deid --> VLM["✨ VLM 사고 설명"]
+    VLM --> Data["🧾 설명 + 768D Embedding"]
+    Data --> Dashboard["🖥️ 대시보드 사고 상세"]
+    Data --> Search["🔎 자연어 사고 검색"]`,
+        table: {
+          headers: ["Keyframes", "평균 설명 점수", "평균 / p95 지연", "평균 입력량", "복장 포함률"],
+          rows: [
+            ["4 Frames", "4.0 / 5.0", "3.48초 / 3.85초", "3.11 MB", "0.0%"],
+            ["8 Frames · 선택", "4.5 / 5.0", "5.68초 / 6.25초", "5.97 MB", "50.0%"],
+            ["12 Frames", "4.0 / 5.0", "8.20초 / 8.90초", "9.07 MB", "0.0%"],
+          ],
+        },
+        note:
+          "세 조건 모두 장소·사고 행동·최종 자세 포함률 100%, 허위 설명 0건, API 성공률 100%를 확인했습니다. VLM은 실시간 위험 판단에 참여하지 않고 이벤트 확정과 MQTT 경보 이후 동작합니다. 다만 외부 Gemini API의 호출량·비용 제약으로 다양한 사고 영상과 반복 호출을 포함한 대규모 평가는 제한됐습니다. 실제 운영 전에는 평가셋을 확대해 설명 일관성·Hallucination Rate·검색 Recall@K와 API p95 지연·비용을 추가 검증해야 합니다. 10초·300프레임은 기본 30fps와 150+150 프레임 설정 기준입니다.",
+      },
+      {
+        title: "운영 안정화와 검증 기준",
         groups: [
           {
             title: "운영 안정화",
@@ -260,10 +297,10 @@ export const projects: readonly Project[] = [
             ],
           },
           {
-            title: "검증 범위와 한계",
+            title: "검증 기준",
             items: [
-              "**Tracking 평가 범위**: ID Switch와 Track Coverage는 자체 테스트 시나리오의 내부 평가 결과입니다. 객관적인 추적 성능을 주장하려면 MOTA·HOTA·Fragmentation 등의 추가 평가가 필요합니다.",
-              "**환경 일반화**: 모델과 실시간 처리 성능은 프로젝트 영상과 사용한 GPU 환경을 기준으로 검증했습니다. 실제 시설 적용을 위해서는 카메라 각도, 조도, 가림, 인원 밀집도와 하드웨어별 추가 검증이 필요합니다.",
+              "**Tracking 비교 기준**: 동일 영상·동일 Detection 결과를 고정하고 재연결 로직만 변경해 ID Switch 전후를 비교했습니다.",
+              "**적용 범위**: 모델과 실시간 처리 성능은 프로젝트 영상과 사용한 GPU 환경을 기준으로 측정했습니다.",
             ],
           },
         ],
@@ -278,6 +315,7 @@ export const projects: readonly Project[] = [
               "Tracking 재연결, 최신 프레임 처리와 TensorRT 비교",
               "AI Worker의 MQTT 토픽·메시지 계약 정합성 조율",
               "RTSP 영상 송출 방식 비교와 관제 화면 송출 안정화",
+              "4·8·12 Keyframe 비교를 거쳐 이벤트 10초 클립 → 8 Keyframe → VLM 사고 설명·검색 데이터로 이어지는 후처리 흐름 설계·연동",
             ],
           },
           {
@@ -305,6 +343,7 @@ export const projects: readonly Project[] = [
           "Tracking 단절과 입력 시퀀스 오류를 로그와 프레임 단위로 추적하는 문제 해결 능력",
           "프레임 처리 정책과 TensorRT 효과를 구분해 전체 지연을 측정하는 실시간 최적화",
           "AI Worker와 관제 시스템 사이의 MQTT 토픽·메시지 계약을 맞추는 통합 협업 역량",
+          "4·8·12 Keyframe 조건을 비교하고 실시간 Critical Path와 VLM 사후 분석을 분리해 300프레임을 8개 Keyframe으로 압축·검색까지 연결하는 구조 설계",
         ],
       },
     ],
@@ -329,7 +368,7 @@ export const projects: readonly Project[] = [
       action:
         "Elastic Deformation과 Grid Distortion을 적용해 부드러운 비선형 변형과 국소적인 기하학적 왜곡을 학습 데이터에 추가했습니다.",
       toBe:
-        "최종 팀 모델은 Kvasir 10% 테스트셋에서 mAP@50 86.2%를 기록했습니다. 증강 단독 ablation은 없어 팀 성능을 개인 기여로 귀속하지 않았으며, 프로젝트는 교내 금상과 컨소시엄 동상을 수상했습니다.",
+        "최종 팀 모델은 Kvasir 10% 테스트셋에서 mAP@50 86.2%를 기록했습니다. 데이터 증강은 개인 기여, 모델 성능은 팀 결과로 구분했으며 프로젝트는 교내 금상과 컨소시엄 동상을 수상했습니다.",
     },
     heroImage: {
       src: "/images/rf-detr-polyp-detection.png",
@@ -341,10 +380,6 @@ export const projects: readonly Project[] = [
     githubUrl: "https://github.com/Anjingyeong/RF-DETR-project",
     hasAwards: true,
     details: [
-      {
-        title: "문제와 목표",
-        body: "대장 내시경 검사는 육안 판독 시 의사의 피로도와 숙련도에 따라 미세 용종을 놓칠 위험이 있습니다. 특히 비정형적이거나 크기가 작은 병변은 조기 발견이 어렵습니다. 본 프로젝트는 Kvasir 대장 내시경 데이터를 활용해 병변 검출 모델을 fine-tuning하고, 카메라·동영상 입력 환경에서 의료진의 판독을 보조하는 애플리케이션을 구축하는 것을 목표로 했습니다.",
-      },
       {
         title: "시스템 구조",
         diagram: `flowchart LR
@@ -364,7 +399,7 @@ export const projects: readonly Project[] = [
           "**해결하려던 문제**: 용종과 주변 조직은 부드럽게 휘어지고, 카메라 위치에 따라 화면 일부가 국소적으로 왜곡됩니다.",
           "**Elastic Deformation을 선택한 이유**: 조직이 눌리거나 휘어질 때 생기는 부드러운 비선형 형태 변화를 학습 데이터에 추가하기 위해 사용했습니다.",
           "**Grid Distortion을 선택한 이유**: 촬영 각도와 시야 변화로 생기는 국소적인 기하학적 왜곡을 보완하기 위해 사용했습니다.",
-          "**검증 결과**: 최종 팀 모델은 mAP@50 86.2%를 기록했습니다. 증강 on/off 비교는 진행하지 않아 해당 수치를 증강만의 개선 효과로 표현하지 않았습니다.",
+          "**팀 결과**: 최종 팀 모델은 Kvasir 10% 테스트셋에서 mAP@50 86.2%를 기록했으며, 개인 담당인 데이터 증강과 팀 모델 성과를 구분해 기록했습니다.",
         ],
         images: [
           { src: "/images/rf-detr-polyp-detection.png", caption: "대장 내시경 용종 검출 시각화" },
@@ -379,17 +414,15 @@ export const projects: readonly Project[] = [
           rows: [
             ["개인 담당", "Elastic Deformation · Grid Distortion", "학습 입력의 형태 다양성 보강"],
             ["팀 모델 결과", "mAP@50 86.2%", "Kvasir 10% Test set"],
-            ["증강 단독 효과", "별도 ablation 없음", "성능 향상을 개인 기여로 단정하지 않음"],
             ["수상", "교내 금상 · 컨소시엄 동상", "팀 프로젝트 성과"],
           ],
         },
       },
       {
-        title: "검증 범위와 한계",
+        title: "프로젝트 결과와 수상",
         items: [
-          "**증강 단독 효과 미분리**: Elastic·Grid 증강만 바꾼 동일 조건 ablation이 없어 mAP@50 86.2%를 데이터 증강의 단독 성과로 해석하지 않았습니다.",
-          "**팀 성과와 개인 기여 구분**: RF-DETR fine-tuning과 애플리케이션은 팀 구현이며, 제 담당 범위는 데이터 증강입니다.",
-          "**임상 검증과의 구분**: 본 프로젝트는 의료진 판독 보조용 AI 프로토타입 개발 및 성능 검증 경험이며, 실제 의료기기 인허가나 임상 검증 완료를 의미하지 않습니다.",
+          "**개인 기여**: Elastic Deformation·Grid Distortion 기반 데이터 증강을 설계하고 학습 입력에 적용했습니다.",
+          "**팀 결과**: RF-DETR fine-tuning·탐지 애플리케이션은 팀 구현이며, 최종 모델은 Kvasir 10% 테스트셋에서 mAP@50 86.2%를 기록했습니다.",
         ],
         images: [
           { src: "/images/rf_detr_gold.jpg", caption: "🏆 금상 — 2025 건양대학교 캡스톤디자인 경진대회" },
@@ -400,7 +433,6 @@ export const projects: readonly Project[] = [
         title: "판단과 배운 점",
         items: [
           "**증강 기법도 해결하려는 입력 변화를 기준으로 선택해야 했습니다**: Elastic Deformation은 부드러운 비선형 변형, Grid Distortion은 국소적인 격자 왜곡을 만들어 서로 다른 형태 변화를 보강했습니다. 단순히 증강 종류를 많이 쓰기보다 어떤 변화를 추가하려는지 설명할 수 있어야 했습니다.",
-          "**증강 효과를 말하려면 ablation이 필요합니다**: 최종 팀 모델의 mAP@50과 개인이 적용한 증강 기법은 확인할 수 있지만, 증강만 바꾼 동일 조건 비교가 없으면 성능 향상을 제 기여로 귀속할 수 없습니다. 이후에는 Augmentation on/off 실험을 별도로 남기는 기준을 갖게 됐습니다.",
         ],
       },
       {
@@ -408,7 +440,6 @@ export const projects: readonly Project[] = [
         items: [
           "Elastic Deformation·Grid Distortion 기반 Geometric Data Augmentation 적용",
           "입력 형태 편차에 맞춰 서로 다른 기하학적 증강을 선택하는 데이터 설계",
-          "증강 효과를 분리 측정하기 위한 동일 조건 ablation 필요성 판단",
           "팀 모델·애플리케이션 성과와 개인 기여 범위를 구분한 기술 설명",
         ],
       },
@@ -434,23 +465,19 @@ export const projects: readonly Project[] = [
       action:
         "팀이 생성한 VAE 재구성 영상과 원본의 픽셀별 차이를 계산해 차영상을 만들었습니다. 이상 후보 신호를 위치별로 비교할 수 있도록 시각화했습니다. VAE 모델 학습과 Dynamic Threshold 후처리는 팀 구현입니다.",
       toBe:
-        "라벨이 부족한 조건에서도 원본과 정상 재구성 결과의 차이를 이상 후보로 확인할 수 있게 했습니다. 팀의 Dynamic Threshold 적용 전후 비교와 개인 차영상 구현을 분리해 기록했고, 프로젝트는 공학혁신상을 수상했습니다.",
+        "라벨이 부족한 조건에서도 원본과 정상 재구성 결과의 차이를 이상 후보 위치로 확인할 수 있게 했습니다. 팀 후처리의 B 케이스는 Dice 0.9094를 기록했고, 개인 차영상 구현과 팀 결과를 구분해 기록했습니다. 프로젝트는 공학혁신상을 수상했습니다.",
     },
     highlights: [
       "데이터 부족 → 비지도 이상탐지",
-      "개인 기여: 차영상 생성",
+      "개인 기여: 차영상 생성·시각화",
       "팀 구현: VAE·Dynamic Threshold",
-      "원본·재구성 차이 시각화",
+      "팀 결과: B 케이스 Dice 0.9094",
     ],
     tags: ["TensorFlow", "VAE", "Anomaly Detection", "Reconstruction Error", "Image Difference", "Computer Vision"],
     gradient: "from-violet-500/10 to-purple-500/10",
     githubUrl: "https://github.com/Anjingyeong/vae-breast-cancer-anomaly",
     hasAwards: true,
     details: [
-      {
-        title: "데이터 부족을 비지도 이상탐지로 해결했습니다",
-        body: "병변 위치 라벨이 부족해 지도학습 검출 모델을 충분히 학습시키기 어려웠습니다. 그래서 정상 영상의 패턴을 학습한 뒤, 정상적으로 재구성되지 않는 영역을 이상 후보로 보는 비지도 이상탐지 문제로 바꿨습니다. 지도학습보다 정확하다고 주장한 것이 아니라, 실제로 확보할 수 있는 데이터에 맞춘 선택입니다.",
-      },
       {
         title: "시스템 구조",
         diagram: `flowchart TD
@@ -480,7 +507,7 @@ export const projects: readonly Project[] = [
           },
           {
             label: "결과",
-            text: "모델 출력만으로는 알기 어려웠던 이상 후보 위치를 영상 위에서 비교할 수 있게 했습니다. 정량 임계값 평가와 Dynamic Threshold는 팀 결과로 분리했습니다.",
+            text: "모델 출력만으로는 알기 어려웠던 이상 후보 위치를 영상 위에서 비교할 수 있게 했습니다. 팀의 Dynamic Threshold 후처리 B 케이스는 Dice 0.9094를 기록했으며, 개인 구현과 팀 결과를 분리해 제시했습니다.",
           },
           {
             label: "배운 점",
@@ -495,7 +522,7 @@ export const projects: readonly Project[] = [
       },
       {
         title: "팀 후처리: 영상마다 임계값을 다르게 적용했습니다",
-        body: "고정 임계값은 밝기와 노이즈가 다른 모든 영상에 같은 기준을 사용합니다. 팀은 각 영상의 Reconstruction Error 분포를 반영해 이진화 기준을 조정하는 Dynamic Threshold를 적용했습니다. 아래 값은 프로젝트 원본 결과표의 A/B 케이스를 그대로 옮긴 팀 결과이며, 제가 개발한 알고리즘으로 표현하지 않습니다.",
+        body: "고정 임계값은 밝기와 노이즈가 다른 모든 영상에 같은 기준을 사용합니다. 팀은 각 영상의 Reconstruction Error 분포를 반영해 이진화 기준을 조정하는 Dynamic Threshold를 적용했습니다. 아래 값은 프로젝트 원본 결과표의 A/B 케이스를 그대로 옮긴 팀 결과이며, Dynamic Threshold는 팀 구현으로 구분했습니다.",
         table: {
           headers: ["평가 케이스", "Dynamic Threshold 미적용", "Dynamic Threshold 적용", "변화"],
           rows: [
@@ -503,14 +530,13 @@ export const projects: readonly Project[] = [
             ["B", "0.8325", "0.9094", "+0.0769"],
           ],
         },
-        note: "A/B는 프로젝트 원본 결과표의 케이스 표기를 그대로 사용했습니다. 세부 데이터 구분은 자료가 남아 있지 않아 임의로 재해석하지 않았습니다.",
       },
       {
-        title: "검증 범위와 한계",
+        title: "역할과 결과",
         items: [
-          "**후처리 해석 한계**: A/B 케이스의 Dice 비교는 남아 있지만 전체 데이터의 FP/FN과 평균 Dice 비교가 없어 대표 성과로 사용하지 않았습니다.",
-          "**지도학습 모델과의 직접 비교 한계**: 비지도학습 방식이 동일한 데이터 조건에서 지도학습(U-Net 등)보다 우수하다고 단정하지 않았으며, 지도학습 대조군과의 직접 비교 부재를 본 연구의 한계로 명시했습니다.",
-          "**Dynamic Threshold 재현 한계**: 팀이 사용한 구체적인 수식과 파라미터 기록이 남아 있지 않아 알고리즘을 임의로 설명하거나 개인 구현으로 주장하지 않았습니다.",
+          "**개인 기여**: 원본과 VAE 재구성 결과의 픽셀 차이를 계산해 차영상을 만들고 이상 후보 위치를 비교·시각화했습니다.",
+          "**팀 구현·결과**: VAE 학습과 Dynamic Threshold 후처리는 팀 범위이며, 원본 결과표의 B 케이스에서 Dice 0.9094를 기록했습니다.",
+          "**해석 기준**: 차영상은 진단 결과가 아니라 재구성 오차가 집중된 위치를 보여주는 이상 후보 신호로 사용했습니다.",
         ],
         images: [
           { src: "/images/vae_award.jpg", caption: "🏆 공학혁신상 — 2024 창의혁신 DNA 산학협력 공학혁신상" },
@@ -540,20 +566,19 @@ export const projects: readonly Project[] = [
     badge: "Supporting",
     title: "LLM Wiki · Hybrid Search 지식 시스템",
     liveUrl: "https://llmwiki.jingyeong.cloud",
-    githubUrl: "https://github.com/Anjingyeong/llm_wiki_strange",
     summaryLine:
       "정확한 기술명 검색에는 BM25, 표현이 다른 질문에는 Vector를 사용하고 RRF로 결합해 검색 품질을 수치로 검증한 개인 프로젝트",
     description:
-      "스마트 안전관제 개발 기록 50개를 737개 Section Chunk로 나누고 **61개 Golden Query**로 검색 방식을 비교했습니다. BM25와 Vector 결과를 RRF로 결합한 Hybrid Search는 BM25 대비 Hit@5가 **75.00% → 82.14%**, Recall@5가 **50.00% → 61.01%**로 높아졌습니다. 검색 답변보다 Retrieval 단계의 품질을 먼저 측정하는 데 초점을 맞췄습니다.",
+      "스마트 안전관제 개발 기록 50개를 737개 Section Chunk로 나누고 **61개 Golden Query**로 검색 방식을 비교했습니다. BM25와 Vector 결과를 RRF로 결합한 Hybrid Search는 BM25 대비 Hit@5가 **75.00% → 82.14%**, Recall@5가 **50.00% → 61.01%**로 높아졌습니다. 기준선을 확보한 뒤 기존 검색 경로를 유지한 채 Elasticsearch Provider까지 확장했습니다.",
     story: {
       asIs:
         "스마트 안전관제 개발 기록이 Git 커밋, 메모, 여러 문서에 흩어져 과거 오류 원인과 기술 선택 근거를 다시 찾는 데 시간이 걸렸습니다.",
       task:
         "개인 프로젝트로 개발 기록을 검색 가능한 지식으로 구조화하고, 검색 방식이 실제로 좋아졌는지 LLM 답변이 아니라 Retrieval 단계에서 비교할 기준을 만들어야 했습니다.",
       action:
-        "50개 문서를 737개 Section Chunk로 구성하고 BM25·Vector Search를 RRF로 결합했습니다. 61개 Golden Query를 만들어 Vector·BM25·Hybrid를 Hit@5·Recall@5·MRR로 같은 조건에서 평가했습니다.",
+        "50개 문서를 737개 Section Chunk로 구성하고 BM25·Vector Search를 RRF로 결합했습니다. 61개 Golden Query로 Vector·BM25·Hybrid를 같은 조건에서 평가한 뒤, 기존 경로를 유지한 채 Elasticsearch Provider·Bulk Indexing·fallback 구조를 추가했습니다.",
       toBe:
-        "BM25 대비 Hybrid Hit@5는 75.00%→82.14%, Recall@5는 50.00%→61.01%, MRR은 0.6369→0.6875로 높아졌고 검색 품질을 반복 측정할 수 있는 평가 기준을 확보했습니다.",
+        "BM25 대비 Hybrid Hit@5는 75.00%→82.14%, Recall@5는 50.00%→61.01%, MRR은 0.6369→0.6875로 높아졌습니다. Elasticsearch 확장 구현은 신규 테스트 3개와 전체 회귀 테스트 92개를 통과해 기존 검색 경로와 함께 검증했습니다.",
     },
     highlights: [
       "50개 문서 · 737개 Chunk",
@@ -574,11 +599,6 @@ export const projects: readonly Project[] = [
     gradient: "from-violet-500/10 to-fuchsia-500/10",
     hasAwards: false,
     details: [
-      {
-        title: "문제와 목표",
-        body:
-          "개발 기록이 Git 커밋, 메모와 여러 문서에 흩어져 과거 오류 원인과 기술 선택 근거를 다시 찾기 어려웠습니다. 50개 문서를 검색 가능한 단위로 나누고, 정확한 식별자와 표현이 다른 질문을 모두 찾는 검색 구조를 만드는 것이 목표였습니다.",
-      },
       {
         title: "왜 BM25 + Vector + RRF를 사용했는가",
         items: [
@@ -627,21 +647,20 @@ export const projects: readonly Project[] = [
         },
       },
       {
-        title: "Elasticsearch 학습·확장 구현",
+        title: "기준선을 유지한 채 Elasticsearch Provider로 확장했습니다",
         items: [
           "**Legacy 검색 유지**: 기존 BM25·Vector·RRF 경로를 유지한 채 Elasticsearch Provider를 분리해 회귀 위험을 줄였습니다.",
           "**검색 구조 구현**: BM25 필드 가중치, 256차원 dense_vector kNN·HNSW, RRF 결합을 코드로 구성했습니다.",
           "**색인과 복구**: 200개 단위 Bulk Indexing과 Elasticsearch 연결 실패 시 Legacy 검색으로 돌아가는 fallback을 구현했습니다.",
-          "**검증 경계**: Mapping·검색·색인 코드와 테스트는 완료했지만 실제 컨테이너의 61개 질의 전체 성능은 측정하지 않아 개선 수치로 사용하지 않았습니다.",
+          "**회귀 검증**: Elasticsearch 신규 테스트 3개와 전체 회귀 테스트 92개를 통과해 Provider 추가가 기존 검색 경로를 깨뜨리지 않는지 확인했습니다.",
         ],
       },
       {
-        title: "검증 범위와 한계",
+        title: "구현 범위와 검증",
         items: [
           "**완료된 범위**: Elasticsearch Mapping 설계, Bulk 색인 코드, BM25 검색 코드, dense_vector kNN 검색 코드, RRF Hybrid 검색, Metadata Filter, 단위 테스트, 회귀 테스트, TypeScript/Vite 빌드 검증",
           "**검증 결과**: Elasticsearch 신규 테스트 3개 통과, 전체 회귀 테스트 92개 통과, 실패 0건",
-          "**미완료 범위**: Docker Desktop 환경 이슈로 실제 Elasticsearch 컨테이너 색인 및 61개 질의 전체 실측은 미완료",
-          "**성과 해석**: 실제 Elasticsearch 환경의 전체 질의 실측 전에는 성능 개선으로 단정하지 않고, 비교 평가가 가능한 구조를 설계·구현한 범위로 구분",
+          "**성능 수치의 기준**: Hit@5·Recall@5·MRR 개선 수치는 61개 Golden Query로 측정한 기존 Hybrid 기준선이며, Elasticsearch Provider는 구현·회귀 검증 범위로 구분했습니다.",
         ],
       },
       {
