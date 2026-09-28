@@ -1,884 +1,885 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
-    --background: 0 0% 99%;
-    --foreground: 220 20% 14%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 14%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 14%;
-
-    --primary: 220 70% 50%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 220 15% 95%;
-    --secondary-foreground: 220 20% 14%;
-
-    --muted: 220 15% 96%;
-    --muted-foreground: 220 10% 46%;
-
-    --accent: 260 60% 55%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 220 70% 50%;
-
-    --radius: 0.75rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 220 20% 14%;
-    --sidebar-primary: 220 70% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 95%;
-    --sidebar-accent-foreground: 220 20% 14%;
-    --sidebar-border: 220 15% 90%;
-    --sidebar-ring: 220 70% 50%;
-
-    --color-network: 220 70% 50%;
-    --color-accent-dim: 220 70% 50% / 0.06;
-    --header-height: 70px;
-
-    --gradient-hero: linear-gradient(135deg, hsl(220 70% 97%), hsl(260 60% 97%), hsl(200 80% 97%));
-    --gradient-section: linear-gradient(180deg, hsl(220 15% 96% / 0.5), hsl(0 0% 99%));
-    --gradient-primary: linear-gradient(135deg, hsl(220 70% 50%), hsl(260 60% 55%));
-    --gradient-card-hover: linear-gradient(135deg, hsl(220 70% 50% / 0.03), hsl(260 60% 55% / 0.03));
-  }
-
-  .dark {
-    --background: 220 20% 7%;
-    --foreground: 0 0% 95%;
-    --card: 220 20% 10%;
-    --card-foreground: 0 0% 95%;
-    --popover: 220 20% 10%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 220 70% 55%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 15% 18%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 220 15% 18%;
-    --muted-foreground: 220 10% 60%;
-    --accent: 260 60% 60%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 220 70% 55%;
-    --sidebar-background: 220 20% 10%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 220 70% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 18%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 220 15% 20%;
-    --sidebar-ring: 220 70% 55%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Pretendard', 'Inter', sans-serif;
-    overflow-x: hidden;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold leading-tight tracking-tight text-foreground;
-  }
-}
-
-@layer components {
-  /* Enhanced card with subtle gradient on hover */
-  .minimal-card {
-    @apply relative overflow-hidden rounded-2xl bg-card transition-all duration-500;
-    border: 1px solid hsl(var(--border));
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  }
-
-  .minimal-card:hover {
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), 0 0 0 1px hsl(var(--primary) / 0.1);
-    transform: translateY(-3px);
-    background: var(--gradient-card-hover);
-  }
-
-  /* Gradient accent bar on top of card */
-  .minimal-card-accent {
-    @apply relative overflow-hidden rounded-2xl bg-card transition-all duration-500;
-    border: 1px solid hsl(var(--border));
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  }
-
-  .minimal-card-accent::before {
-    content: '';
-    @apply absolute top-0 left-0 w-full h-1;
-    background: var(--gradient-primary);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-
-  .minimal-card-accent:hover {
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-    transform: translateY(-3px);
-  }
-
-  .minimal-card-accent:hover::before {
-    opacity: 1;
-  }
-
-  /* Style Gallery-inspired spotlight: pointer-local light without heavy card motion. */
-  .project-spotlight {
-    --spot-x: 50%;
-    --spot-y: 45%;
-    isolation: isolate;
-    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease;
-  }
-
-  .project-spotlight::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0;
-    background:
-      radial-gradient(
-        360px circle at var(--spot-x) var(--spot-y),
-        hsl(var(--primary) / 0.085),
-        transparent 58%
-      );
-    transition: opacity 0.28s ease;
-  }
-
-  .project-spotlight > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .project-spotlight:hover {
-      transform: translateY(-2px);
-      border-color: hsl(var(--primary) / 0.22);
-      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.075), 0 0 0 1px hsl(var(--primary) / 0.05);
-    }
-
-    .project-spotlight:hover::after {
-      opacity: 1;
-    }
-  }
-
-  .project-meta-row {
-    @apply mb-4 flex flex-wrap gap-x-4 gap-y-2 rounded-xl border border-border/70 bg-muted/25 px-3 py-2.5 text-xs;
-  }
-
-  .project-meta-item {
-    @apply flex min-w-0 items-baseline gap-1.5;
-  }
-
-  .project-meta-item dt {
-    @apply shrink-0 font-bold text-foreground/65;
-  }
-
-  .project-meta-item dd {
-    @apply min-w-0 text-muted-foreground;
-  }
-
-  .project-meta-role {
-    flex-basis: 100%;
-  }
-
-  /* Buttons */
-  .minimal-btn {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-medium text-sm rounded-full transition-all duration-300;
-  }
-
-  .minimal-btn-primary {
-    @apply minimal-btn text-white;
-    background: var(--gradient-primary);
-    box-shadow: 0 4px 15px hsl(var(--primary) / 0.3);
-  }
-
-  .minimal-btn-primary:hover {
-    box-shadow: 0 6px 25px hsl(var(--primary) / 0.4);
-    transform: translateY(-2px);
-  }
-
-  .minimal-btn-secondary {
-    @apply minimal-btn text-foreground;
-    border: 1px solid hsl(var(--border));
-    background: hsl(var(--background));
-  }
-
-  .minimal-btn-secondary:hover {
-    border-color: hsl(var(--primary) / 0.5);
-    background: hsl(var(--primary) / 0.04);
-    transform: translateY(-1px);
-  }
-
-  /* Section headers */
-  .section-header {
-    @apply relative inline-block mb-16;
-  }
-
-  .section-header h2 {
-    @apply text-3xl md:text-4xl font-bold relative z-10;
-  }
-
-  .section-header::after {
-    content: '';
-    @apply absolute -bottom-3 left-0 w-16 h-1.5 rounded-full;
-    background: var(--gradient-primary);
-  }
-
-  /* Tags - generic (for other use cases) */
-  .tag {
-    @apply text-xs px-3 py-1.5 font-medium rounded-full;
-    background: hsl(var(--primary) / 0.06);
-    color: hsl(var(--primary));
-    border: 1px solid hsl(var(--primary) / 0.1);
-    cursor: default;
-    user-select: none;
-  }
-
-  /* Tech stack tags - static, clearly non-clickable */
-  .tech-tag {
-    @apply text-xs px-3 py-1.5 font-medium rounded-full;
-    background: hsl(var(--muted));
-    color: hsl(var(--muted-foreground));
-    border: 1px solid hsl(var(--border));
-    cursor: default;
-    user-select: none;
-  }
-
-  /* Competence Section — card */
-  .competence-card {
-    @apply relative bg-card rounded-2xl p-6 flex flex-col h-full transition-all duration-300;
-    border: 1px solid hsl(var(--border));
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-  }
-
-  .competence-card:hover {
-    border-color: hsl(var(--primary) / 0.35);
-    box-shadow: 0 8px 32px hsl(var(--primary) / 0.10), 0 0 0 1px hsl(var(--primary) / 0.12);
-    transform: translateY(-3px);
-  }
-
-  /* Competence pill tags */
-  .competence-tag {
-    @apply text-[11px] font-semibold px-2.5 py-0.5 rounded-full;
-    cursor: default;
-    user-select: none;
-  }
-
-  .competence-tag--blue {
-    background: hsl(220 70% 50% / 0.10);
-    color: hsl(220 70% 45%);
-    border: 1px solid hsl(220 70% 50% / 0.18);
-  }
-
-  .competence-tag--indigo {
-    background: hsl(243 75% 59% / 0.10);
-    color: hsl(243 75% 50%);
-    border: 1px solid hsl(243 75% 59% / 0.18);
-  }
-
-  .competence-tag--emerald {
-    background: hsl(160 60% 45% / 0.10);
-    color: hsl(160 60% 35%);
-    border: 1px solid hsl(160 60% 45% / 0.20);
-  }
-
-  .competence-tag--purple {
-    background: hsl(270 60% 55% / 0.10);
-    color: hsl(270 60% 45%);
-    border: 1px solid hsl(270 60% 55% / 0.18);
-  }
-
-  /* Section backgrounds */
-  .section-alt {
-    background: var(--gradient-hero);
-    position: relative;
-  }
-
-  .section-alt::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
-  }
-
-  .section-alt::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
-  }
-
-  /* Section divider */
-  .section-divider {
-    @apply w-full flex justify-center py-0;
-  }
-
-  .section-divider::after {
-    content: '';
-    @apply w-24 h-px;
-    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent);
-  }
-
-  /* Icon container */
-  .icon-container {
-    @apply w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300;
-    background: hsl(var(--primary) / 0.08);
-    color: hsl(var(--primary));
-  }
-
-  .icon-container-accent {
-    @apply w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300;
-    background: hsl(var(--accent) / 0.08);
-    color: hsl(var(--accent));
-  }
-
-  /* Scroll animations */
-  .fade-in-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .fade-in-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .scroll-progress {
-    @apply pointer-events-none absolute bottom-0 left-0 h-0.5 w-full overflow-hidden;
-    background: hsl(var(--border) / 0.55);
-  }
-
-  .scroll-progress > span {
-    @apply block h-full w-full;
-    background: var(--gradient-primary);
-    transform-origin: left center;
-    will-change: transform;
-  }
-
-  .hero-aurora {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    background:
-      radial-gradient(circle at 78% 24%, hsl(var(--primary) / 0.10), transparent 29%),
-      radial-gradient(circle at 18% 22%, hsl(var(--accent) / 0.07), transparent 30%),
-      radial-gradient(circle at 62% 78%, hsl(200 80% 55% / 0.055), transparent 30%);
-  }
-
-  .hero-aurora::before,
-  .hero-aurora::after {
-    content: '';
-    position: absolute;
-    width: 34rem;
-    height: 34rem;
-    border-radius: 9999px;
-    filter: blur(72px);
-    opacity: 0.23;
-    animation: hero-aurora-drift 16s ease-in-out infinite alternate;
-  }
-
-  .hero-aurora::before {
-    top: -18rem;
-    right: -11rem;
-    background: hsl(var(--primary) / 0.5);
-  }
-
-  .hero-aurora::after {
-    bottom: -20rem;
-    left: -12rem;
-    background: hsl(var(--accent) / 0.36);
-    animation-delay: -7s;
-  }
-
-  .hero-metric {
-    opacity: 0;
-    transform: translateY(8px);
-    animation: hero-metric-reveal 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  /* Floating decoration */
-  .float-decoration {
-    @apply absolute rounded-full opacity-30 blur-3xl pointer-events-none;
-    background: var(--gradient-primary);
-  }
-}
-
-@keyframes hero-aurora-drift {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate3d(-2.5rem, 1.75rem, 0) scale(1.08);
-  }
-}
-
-@keyframes hero-metric-reveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fade-in-up,
-  .fade-in-up.visible,
-  .hero-metric {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-    transition: none !important;
-  }
-
-  .hero-aurora::before,
-  .hero-aurora::after {
-    animation: none !important;
-  }
-
-  .project-spotlight,
-  .project-spotlight::after,
-  .minimal-card,
-  .minimal-card-accent,
-  .competence-card,
-  .minimal-btn,
-  .minimal-btn-primary,
-  .minimal-btn-secondary {
-    transition: none !important;
-  }
-
-  .project-spotlight:hover,
-  .minimal-card:hover,
-  .minimal-card-accent:hover,
-  .competence-card:hover,
-  .minimal-btn-primary:hover,
-  .minimal-btn-secondary:hover {
-    transform: none !important;
-  }
-}
-
-/* ── Certificate Modal — Glassmorphism styles ─────────────────────────────── */
-
-/* Frosted glass panel */
-.cert-modal-panel {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  box-shadow:
-    0 32px 64px rgba(0, 0, 0, 0.18),
-    0 8px 24px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.70);
-}
-
-/* X button — rotates 90° and turns primary on hover */
-.cert-modal-close:hover {
-  color: hsl(var(--primary));
-  background: hsl(var(--primary) / 0.08);
-  transform: rotate(90deg);
-}
-
-/* Modal entrance animation — scale-up + fade */
-@keyframes cert-modal-in {
-  from {
-    opacity: 0;
-    transform: scale(0.94) translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* ── Print Styles (PDF Export) ────────────────────────────────────────────── */
-@media print {
-  /* Reset background and text rendering */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    text-shadow: none !important;
-    box-shadow: none !important;
-    transition: none !important;
-    animation: none !important;
-  }
-  
-  /* Hide web-only elements */
-  header,
-  footer,
-  .minimal-btn,
-  .minimal-btn-primary,
-  .minimal-btn-secondary,
-  .cert-modal-panel,
-  .float-decoration,
-  .hero-aurora,
-  .scroll-progress,
-  .section-divider,
-  button,
-  form,
-  .print\:hidden {
-    display: none !important;
-  }
-
-  .project-spotlight::after {
-    display: none !important;
-  }
-  
-  body {
-    background: #ffffff !important;
-    color: #0f172a !important;
-    font-size: 8.2pt !important;
-    line-height: 1.35 !important;
-  }
-
-  /* Compact section headers */
-  .section-header {
-    margin-bottom: 0.4rem !important;
-    display: block !important;
-  }
-  .section-header h2 {
-    font-size: 11pt !important;
-    font-weight: bold !important;
-    margin-bottom: 2px !important;
-  }
-  .section-header::after {
-    height: 1.5px !important;
-    width: 30px !important;
-    bottom: -2px !important;
-  }
-  
-  /* Force elements that use scroll animator (fade-in-up) to be fully visible */
-  .fade-in-up,
-  .visible,
-  [data-aos] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-  
-  /* Layout adjustments for A4 print */
-  .container {
-    max-width: 100% !important;
-    width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  /* Spacing adjustments for print */
-  section {
-    padding-top: 0.6rem !important;
-    padding-bottom: 0.6rem !important;
-    margin: 0 !important;
-    page-break-inside: auto;
-  }
-
-  /* Card padding reset */
-  .minimal-card,
-  .minimal-card-accent,
-  .competence-card {
-    padding: 10px !important;
-    border-radius: 8px !important;
-    box-shadow: none !important;
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-
-  /* ── 1. Hero Section ── */
-  #home {
-    min-height: 0 !important;
-    height: auto !important;
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
-    background: none !important;
-  }
-  #home .grid {
-    display: grid !important;
-    grid-template-columns: 80px 1fr !important;
-    gap: 15px !important;
-    align-items: center !important;
-  }
-  #home .order-1 { order: 1 !important; }
-  #home .order-2 { order: 2 !important; }
-  #home .relative.w-48 {
-    width: 70px !important;
-    height: 70px !important;
-    margin: 0 !important;
-  }
-  #home .inline-flex { display: none !important; }
-  #home h1 {
-    font-size: 13pt !important;
-    margin-bottom: 2px !important;
-  }
-  #home p {
-    font-size: 9pt !important;
-    margin-bottom: 2px !important;
-  }
-  #home .text-base {
-    font-size: 8pt !important;
-    margin-bottom: 4px !important;
-    margin-top: 4px !important;
-  }
-  #home .flex-wrap {
-    margin-bottom: 0 !important;
-  }
-
-  /* ── 2. Projects Section (3 projects in 1 row) ── */
-  #projects .grid {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-  }
-  #projects .icon-container {
-    width: 28px !important;
-    height: 28px !important;
-    border-radius: 6px !important;
-    margin-bottom: 4px !important;
-  }
-  #projects .icon-container svg {
-    width: 14px !important;
-    height: 14px !important;
-  }
-  #projects .bg-gradient-to-br {
-    padding: 10px !important;
-    background: none !important;
-  }
-  #projects .p-8 {
-    padding: 10px !important;
-    padding-top: 2px !important;
-  }
-  #projects h3 {
-    font-size: 9pt !important;
-  }
-  #projects p {
-    font-size: 7.8pt !important;
-    margin-bottom: 6px !important;
-  }
-  #projects .flex-wrap {
-    margin-bottom: 4px !important;
-    gap: 3px !important;
-  }
-  #projects .flex-wrap span {
-    font-size: 7pt !important;
-    padding: 2px 4px !important;
-  }
-  #projects .border-t {
-    padding-top: 4px !important;
-    margin-top: 4px !important;
-  }
-  #projects svg { display: none !important; } /* Hide arrow indicators */
-
-  /* ── 3. Skills Section (4 categories in 1 row) ── */
-  #skills .grid {
-    display: grid !important;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-  }
-  #skills .bg-gradient-to-br {
-    padding: 10px !important;
-    background: none !important;
-  }
-  #skills .w-11 {
-    display: none !important;
-  }
-  #skills h3 {
-    font-size: 8.5pt !important;
-  }
-  #skills .p-6 {
-    padding: 10px !important;
-    padding-top: 2px !important;
-  }
-  #skills ul {
-    margin-top: 4px !important;
-  }
-  #skills li {
-    font-size: 7.8pt !important;
-    margin-bottom: 4px !important;
-  }
-
-  /* ── 4. Experience Section (2 columns of timeline items) ── */
-  #experience [style*="border-left"] {
-    border-left: none !important;
-    margin-left: 0 !important;
-    padding-left: 0 !important;
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-  }
-  #experience .absolute {
-    display: none !important;
-  }
-  #experience .minimal-card {
-    padding: 10px !important;
-    height: 100% !important;
-  }
-  #experience h3 {
-    font-size: 8.5pt !important;
-  }
-  #experience .text-primary\/80 {
-    font-size: 7.8pt !important;
-  }
-  #experience .text-mono {
-    font-size: 7.5pt !important;
-    padding: 1px 4px !important;
-  }
-  #experience p {
-    font-size: 7.8pt !important;
-    margin-top: 2px !important;
-  }
-
-  /* ── 5. Competence Section (2x2 layout, smaller badges) ── */
-  #competence p[style*="margin-top"] {
-    display: none !important;
-  }
-  #competence .grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-    margin-top: 4px !important;
-  }
-  #competence .competence-card {
-    padding: 10px !important;
-    height: 100% !important;
-  }
-  #competence img {
-    width: 40px !important;
-    height: 40px !important;
-    margin-bottom: 6px !important;
-  }
-  #competence h3 {
-    font-size: 8.5pt !important;
-  }
-  #competence p {
-    font-size: 7.8pt !important;
-  }
-  #competence .text-primary {
-    display: none !important; /* Hide view cert link */
-  }
-  #competence .mt-auto {
-    margin-top: 4px !important;
-    padding-top: 4px !important;
-  }
-
-  /* ── 6. About Section (side-by-side, no social links) ── */
-  #about .grid {
-    display: grid !important;
-    grid-template-columns: 2.2fr 1fr !important;
-    gap: 10px !important;
-  }
-  #about .minimal-card {
-    padding: 12px !important;
-  }
-  #about p {
-    font-size: 8pt !important;
-    margin-bottom: 4px !important;
-  }
-  #about .mt-8 {
-    margin-top: 6px !important;
-    padding-top: 6px !important;
-  }
-  #about h4 {
-    font-size: 8pt !important;
-    margin-bottom: 2px !important;
-  }
-  #about li {
-    font-size: 7.8pt !important;
-  }
-  #about .flex.gap-3.mt-8 {
-    display: none !important;
-  }
-  #about .space-y-5 {
-    margin-top: 0 !important;
-  }
-  #about .space-y-5 li {
-    margin-bottom: 6px !important;
-  }
-  #about .w-8 {
-    width: 22px !important;
-    height: 22px !important;
-  }
-  #about .w-8 svg {
-    width: 10px !important;
-    height: 10px !important;
-  }
-
-  /* ── 7. Contact Section (compact info card only) ── */
-  #contact {
-    padding-top: 0.4rem !important;
-    padding-bottom: 0.4rem !important;
-  }
-  #contact .grid {
-    display: block !important;
-  }
-  #contact .md\:col-span-2 {
-    width: 100% !important;
-  }
-  #contact .minimal-card {
-    padding: 10px !important;
-    background: #f8fafc !important;
-  }
-  #contact .icon-container {
-    display: none !important;
-  }
-  #contact h3 {
-    font-size: 8.5pt !important;
-    margin-bottom: 2px !important;
-  }
-  #contact p {
-    font-size: 7.8pt !important;
-    margin-bottom: 4px !important;
-  }
-  #contact .space-y-3 {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 15px !important;
-    margin-top: 4px !important;
-  }
-  #contact .space-y-3 a {
-    margin: 0 !important;
-    font-size: 8pt !important;
-  }
-  #contact .w-9 {
-    width: 20px !important;
-    height: 20px !important;
-  }
-  #contact .w-9 svg {
-    width: 10px !important;
-    height: 10px !important;
-  }
-
-  /* Avoid orphan headers */
-  h1, h2, h3 {
-    page-break-after: avoid;
-    break-after: avoid;
-  }
-}
-
-
+1	@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+2	@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+3	
+4	@tailwind base;
+5	@tailwind components;
+6	@tailwind utilities;
+7	
+8	@layer base {
+9	  :root {
+10	    --background: 0 0% 99%;
+11	    --foreground: 220 20% 14%;
+12	
+13	    --card: 0 0% 100%;
+14	    --card-foreground: 220 20% 14%;
+15	
+16	    --popover: 0 0% 100%;
+17	    --popover-foreground: 220 20% 14%;
+18	
+19	    --primary: 220 70% 50%;
+20	    --primary-foreground: 0 0% 100%;
+21	
+22	    --secondary: 220 15% 95%;
+23	    --secondary-foreground: 220 20% 14%;
+24	
+25	    --muted: 220 15% 96%;
+26	    --muted-foreground: 220 10% 46%;
+27	
+28	    --accent: 260 60% 55%;
+29	    --accent-foreground: 0 0% 100%;
+30	
+31	    --destructive: 0 84% 60%;
+32	    --destructive-foreground: 0 0% 98%;
+33	
+34	    --border: 220 15% 90%;
+35	    --input: 220 15% 90%;
+36	    --ring: 220 70% 50%;
+37	
+38	    --radius: 0.75rem;
+39	
+40	    --sidebar-background: 0 0% 98%;
+41	    --sidebar-foreground: 220 20% 14%;
+42	    --sidebar-primary: 220 70% 50%;
+43	    --sidebar-primary-foreground: 0 0% 100%;
+44	    --sidebar-accent: 220 15% 95%;
+45	    --sidebar-accent-foreground: 220 20% 14%;
+46	    --sidebar-border: 220 15% 90%;
+47	    --sidebar-ring: 220 70% 50%;
+48	
+49	    --color-network: 220 70% 50%;
+50	    --color-accent-dim: 220 70% 50% / 0.06;
+51	    --header-height: 70px;
+52	
+53	    --gradient-hero: linear-gradient(135deg, hsl(220 70% 97%), hsl(260 60% 97%), hsl(200 80% 97%));
+54	    --gradient-section: linear-gradient(180deg, hsl(220 15% 96% / 0.5), hsl(0 0% 99%));
+55	    --gradient-primary: linear-gradient(135deg, hsl(220 70% 50%), hsl(260 60% 55%));
+56	    --gradient-card-hover: linear-gradient(135deg, hsl(220 70% 50% / 0.03), hsl(260 60% 55% / 0.03));
+57	  }
+58	
+59	  .dark {
+60	    --background: 220 20% 7%;
+61	    --foreground: 0 0% 95%;
+62	    --card: 220 20% 10%;
+63	    --card-foreground: 0 0% 95%;
+64	    --popover: 220 20% 10%;
+65	    --popover-foreground: 0 0% 95%;
+66	    --primary: 220 70% 55%;
+67	    --primary-foreground: 0 0% 100%;
+68	    --secondary: 220 15% 18%;
+69	    --secondary-foreground: 0 0% 95%;
+70	    --muted: 220 15% 18%;
+71	    --muted-foreground: 220 10% 60%;
+72	    --accent: 260 60% 60%;
+73	    --accent-foreground: 0 0% 100%;
+74	    --destructive: 0 62.8% 30.6%;
+75	    --destructive-foreground: 0 0% 98%;
+76	    --border: 220 15% 20%;
+77	    --input: 220 15% 20%;
+78	    --ring: 220 70% 55%;
+79	    --sidebar-background: 220 20% 10%;
+80	    --sidebar-foreground: 0 0% 95%;
+81	    --sidebar-primary: 220 70% 55%;
+82	    --sidebar-primary-foreground: 0 0% 100%;
+83	    --sidebar-accent: 220 15% 18%;
+84	    --sidebar-accent-foreground: 0 0% 95%;
+85	    --sidebar-border: 220 15% 20%;
+86	    --sidebar-ring: 220 70% 55%;
+87	  }
+88	}
+89	
+90	@layer base {
+91	  * {
+92	    @apply border-border;
+93	  }
+94	
+95	  body {
+96	    @apply bg-background text-foreground font-sans antialiased;
+97	    font-family: 'Pretendard', 'Inter', sans-serif;
+98	    overflow-x: hidden;
+99	  }
+100	
+101	  h1, h2, h3, h4, h5, h6 {
+102	    @apply font-bold leading-tight tracking-tight text-foreground;
+103	  }
+104	}
+105	
+106	@layer components {
+107	  /* Enhanced card with subtle gradient on hover */
+108	  .minimal-card {
+109	    @apply relative overflow-hidden rounded-2xl bg-card transition-all duration-500;
+110	    border: 1px solid hsl(var(--border));
+111	    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+112	  }
+113	
+114	  .minimal-card:hover {
+115	    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), 0 0 0 1px hsl(var(--primary) / 0.1);
+116	    transform: translateY(-3px);
+117	    background: var(--gradient-card-hover);
+118	  }
+119	
+120	  /* Gradient accent bar on top of card */
+121	  .minimal-card-accent {
+122	    @apply relative overflow-hidden rounded-2xl bg-card transition-all duration-500;
+123	    border: 1px solid hsl(var(--border));
+124	    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+125	  }
+126	
+127	  .minimal-card-accent::before {
+128	    content: '';
+129	    @apply absolute top-0 left-0 w-full h-1;
+130	    background: var(--gradient-primary);
+131	    opacity: 0;
+132	    transition: opacity 0.4s ease;
+133	  }
+134	
+135	  .minimal-card-accent:hover {
+136	    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+137	    transform: translateY(-3px);
+138	  }
+139	
+140	  .minimal-card-accent:hover::before {
+141	    opacity: 1;
+142	  }
+143	
+144	  /* Style Gallery-inspired spotlight: pointer-local light without heavy card motion. */
+145	  .project-spotlight {
+146	    --spot-x: 50%;
+147	    --spot-y: 45%;
+148	    isolation: isolate;
+149	    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+150	  }
+151	
+152	  .project-spotlight::after {
+153	    content: '';
+154	    position: absolute;
+155	    inset: 0;
+156	    z-index: 0;
+157	    pointer-events: none;
+158	    opacity: 0;
+159	    background:
+160	      radial-gradient(
+161	        360px circle at var(--spot-x) var(--spot-y),
+162	        hsl(var(--primary) / 0.085),
+163	        transparent 58%
+164	      );
+165	    transition: opacity 0.28s ease;
+166	  }
+167	
+168	  .project-spotlight > * {
+169	    position: relative;
+170	    z-index: 1;
+171	  }
+172	
+173	  @media (hover: hover) and (pointer: fine) {
+174	    .project-spotlight:hover {
+175	      transform: translateY(-2px);
+176	      border-color: hsl(var(--primary) / 0.22);
+177	      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.075), 0 0 0 1px hsl(var(--primary) / 0.05);
+178	    }
+179	
+180	    .project-spotlight:hover::after {
+181	      opacity: 1;
+182	    }
+183	  }
+184	
+185	  .project-meta-row {
+186	    @apply mb-4 flex flex-wrap gap-x-4 gap-y-2 rounded-xl border border-border/70 bg-muted/25 px-3 py-2.5 text-xs;
+187	  }
+188	
+189	  .project-meta-item {
+190	    @apply flex min-w-0 items-baseline gap-1.5;
+191	  }
+192	
+193	  .project-meta-item dt {
+194	    @apply shrink-0 font-bold text-foreground/65;
+195	  }
+196	
+197	  .project-meta-item dd {
+198	    @apply min-w-0 text-muted-foreground;
+199	  }
+200	
+201	  .project-meta-role {
+202	    flex-basis: 100%;
+203	  }
+204	
+205	  /* Buttons */
+206	  .minimal-btn {
+207	    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-medium text-sm rounded-full transition-all duration-300;
+208	  }
+209	
+210	  .minimal-btn-primary {
+211	    @apply minimal-btn text-white;
+212	    background: var(--gradient-primary);
+213	    box-shadow: 0 4px 15px hsl(var(--primary) / 0.3);
+214	  }
+215	
+216	  .minimal-btn-primary:hover {
+217	    box-shadow: 0 6px 25px hsl(var(--primary) / 0.4);
+218	    transform: translateY(-2px);
+219	  }
+220	
+221	  .minimal-btn-secondary {
+222	    @apply minimal-btn text-foreground;
+223	    border: 1px solid hsl(var(--border));
+224	    background: hsl(var(--background));
+225	  }
+226	
+227	  .minimal-btn-secondary:hover {
+228	    border-color: hsl(var(--primary) / 0.5);
+229	    background: hsl(var(--primary) / 0.04);
+230	    transform: translateY(-1px);
+231	  }
+232	
+233	  /* Section headers */
+234	  .section-header {
+235	    @apply relative inline-block mb-16;
+236	  }
+237	
+238	  .section-header h2 {
+239	    @apply text-3xl md:text-4xl font-bold relative z-10;
+240	  }
+241	
+242	  .section-header::after {
+243	    content: '';
+244	    @apply absolute -bottom-3 left-0 w-16 h-1.5 rounded-full;
+245	    background: var(--gradient-primary);
+246	  }
+247	
+248	  /* Tags - generic (for other use cases) */
+249	  .tag {
+250	    @apply text-xs px-3 py-1.5 font-medium rounded-full;
+251	    background: hsl(var(--primary) / 0.06);
+252	    color: hsl(var(--primary));
+253	    border: 1px solid hsl(var(--primary) / 0.1);
+254	    cursor: default;
+255	    user-select: none;
+256	  }
+257	
+258	  /* Tech stack tags - static, clearly non-clickable */
+259	  .tech-tag {
+260	    @apply text-xs px-3 py-1.5 font-medium rounded-full;
+261	    background: hsl(var(--muted));
+262	    color: hsl(var(--muted-foreground));
+263	    border: 1px solid hsl(var(--border));
+264	    cursor: default;
+265	    user-select: none;
+266	  }
+267	
+268	  /* Competence Section — card */
+269	  .competence-card {
+270	    @apply relative bg-card rounded-2xl p-6 flex flex-col h-full transition-all duration-300;
+271	    border: 1px solid hsl(var(--border));
+272	    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+273	  }
+274	
+275	  .competence-card:hover {
+276	    border-color: hsl(var(--primary) / 0.35);
+277	    box-shadow: 0 8px 32px hsl(var(--primary) / 0.10), 0 0 0 1px hsl(var(--primary) / 0.12);
+278	    transform: translateY(-3px);
+279	  }
+280	
+281	  /* Competence pill tags */
+282	  .competence-tag {
+283	    @apply text-[11px] font-semibold px-2.5 py-0.5 rounded-full;
+284	    cursor: default;
+285	    user-select: none;
+286	  }
+287	
+288	  .competence-tag--blue {
+289	    background: hsl(220 70% 50% / 0.10);
+290	    color: hsl(220 70% 45%);
+291	    border: 1px solid hsl(220 70% 50% / 0.18);
+292	  }
+293	
+294	  .competence-tag--indigo {
+295	    background: hsl(243 75% 59% / 0.10);
+296	    color: hsl(243 75% 50%);
+297	    border: 1px solid hsl(243 75% 59% / 0.18);
+298	  }
+299	
+300	  .competence-tag--emerald {
+301	    background: hsl(160 60% 45% / 0.10);
+302	    color: hsl(160 60% 35%);
+303	    border: 1px solid hsl(160 60% 45% / 0.20);
+304	  }
+305	
+306	  .competence-tag--purple {
+307	    background: hsl(270 60% 55% / 0.10);
+308	    color: hsl(270 60% 45%);
+309	    border: 1px solid hsl(270 60% 55% / 0.18);
+310	  }
+311	
+312	  /* Section backgrounds */
+313	  .section-alt {
+314	    background: var(--gradient-hero);
+315	    position: relative;
+316	  }
+317	
+318	  .section-alt::before {
+319	    content: '';
+320	    position: absolute;
+321	    top: 0;
+322	    left: 0;
+323	    right: 0;
+324	    height: 1px;
+325	    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+326	  }
+327	
+328	  .section-alt::after {
+329	    content: '';
+330	    position: absolute;
+331	    bottom: 0;
+332	    left: 0;
+333	    right: 0;
+334	    height: 1px;
+335	    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+336	  }
+337	
+338	  /* Section divider */
+339	  .section-divider {
+340	    @apply w-full flex justify-center py-0;
+341	  }
+342	
+343	  .section-divider::after {
+344	    content: '';
+345	    @apply w-24 h-px;
+346	    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent);
+347	  }
+348	
+349	  /* Icon container */
+350	  .icon-container {
+351	    @apply w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300;
+352	    background: hsl(var(--primary) / 0.08);
+353	    color: hsl(var(--primary));
+354	  }
+355	
+356	  .icon-container-accent {
+357	    @apply w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300;
+358	    background: hsl(var(--accent) / 0.08);
+359	    color: hsl(var(--accent));
+360	  }
+361	
+362	  /* Scroll animations */
+363	  .fade-in-up {
+364	    opacity: 0;
+365	    transform: translateY(24px);
+366	    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+367	  }
+368	
+369	  .fade-in-up.visible {
+370	    opacity: 1;
+371	    transform: translateY(0);
+372	  }
+373	
+374	  .scroll-progress {
+375	    @apply pointer-events-none absolute bottom-0 left-0 h-0.5 w-full overflow-hidden;
+376	    background: hsl(var(--border) / 0.55);
+377	  }
+378	
+379	  .scroll-progress > span {
+380	    @apply block h-full w-full;
+381	    background: var(--gradient-primary);
+382	    transform-origin: left center;
+383	    will-change: transform;
+384	  }
+385	
+386	  .hero-aurora {
+387	    position: absolute;
+388	    inset: 0;
+389	    pointer-events: none;
+390	    overflow: hidden;
+391	    background:
+392	      radial-gradient(circle at 78% 24%, hsl(var(--primary) / 0.10), transparent 29%),
+393	      radial-gradient(circle at 18% 22%, hsl(var(--accent) / 0.07), transparent 30%),
+394	      radial-gradient(circle at 62% 78%, hsl(200 80% 55% / 0.055), transparent 30%);
+395	  }
+396	
+397	  .hero-aurora::before,
+398	  .hero-aurora::after {
+399	    content: '';
+400	    position: absolute;
+401	    width: 34rem;
+402	    height: 34rem;
+403	    border-radius: 9999px;
+404	    filter: blur(72px);
+405	    opacity: 0.23;
+406	    animation: hero-aurora-drift 16s ease-in-out infinite alternate;
+407	  }
+408	
+409	  .hero-aurora::before {
+410	    top: -18rem;
+411	    right: -11rem;
+412	    background: hsl(var(--primary) / 0.5);
+413	  }
+414	
+415	  .hero-aurora::after {
+416	    bottom: -20rem;
+417	    left: -12rem;
+418	    background: hsl(var(--accent) / 0.36);
+419	    animation-delay: -7s;
+420	  }
+421	
+422	  .hero-metric {
+423	    opacity: 0;
+424	    transform: translateY(8px);
+425	    animation: hero-metric-reveal 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+426	  }
+427	
+428	  /* Floating decoration */
+429	  .float-decoration {
+430	    @apply absolute rounded-full opacity-30 blur-3xl pointer-events-none;
+431	    background: var(--gradient-primary);
+432	  }
+433	}
+434	
+435	@keyframes hero-aurora-drift {
+436	  from {
+437	    transform: translate3d(0, 0, 0) scale(1);
+438	  }
+439	  to {
+440	    transform: translate3d(-2.5rem, 1.75rem, 0) scale(1.08);
+441	  }
+442	}
+443	
+444	@keyframes hero-metric-reveal {
+445	  to {
+446	    opacity: 1;
+447	    transform: translateY(0);
+448	  }
+449	}
+450	
+451	@media (prefers-reduced-motion: reduce) {
+452	  .fade-in-up,
+453	  .fade-in-up.visible,
+454	  .hero-metric {
+455	    opacity: 1 !important;
+456	    transform: none !important;
+457	    animation: none !important;
+458	    transition: none !important;
+459	  }
+460	
+461	  .hero-aurora::before,
+462	  .hero-aurora::after {
+463	    animation: none !important;
+464	  }
+465	
+466	  .project-spotlight,
+467	  .project-spotlight::after,
+468	  .minimal-card,
+469	  .minimal-card-accent,
+470	  .competence-card,
+471	  .minimal-btn,
+472	  .minimal-btn-primary,
+473	  .minimal-btn-secondary {
+474	    transition: none !important;
+475	  }
+476	
+477	  .project-spotlight:hover,
+478	  .minimal-card:hover,
+479	  .minimal-card-accent:hover,
+480	  .competence-card:hover,
+481	  .minimal-btn-primary:hover,
+482	  .minimal-btn-secondary:hover {
+483	    transform: none !important;
+484	  }
+485	}
+486	
+487	/* ── Certificate Modal — Glassmorphism styles ─────────────────────────────── */
+488	
+489	/* Frosted glass panel */
+490	.cert-modal-panel {
+491	  background: rgba(255, 255, 255, 0.82);
+492	  backdrop-filter: blur(20px);
+493	  -webkit-backdrop-filter: blur(20px);
+494	  border: 1px solid rgba(255, 255, 255, 0.55);
+495	  box-shadow:
+496	    0 32px 64px rgba(0, 0, 0, 0.18),
+497	    0 8px 24px rgba(0, 0, 0, 0.08),
+498	    inset 0 1px 0 rgba(255, 255, 255, 0.70);
+499	}
+500	
+501	/* X button — rotates 90° and turns primary on hover */
+502	.cert-modal-close:hover {
+503	  color: hsl(var(--primary));
+504	  background: hsl(var(--primary) / 0.08);
+505	  transform: rotate(90deg);
+506	}
+507	
+508	/* Modal entrance animation — scale-up + fade */
+509	@keyframes cert-modal-in {
+510	  from {
+511	    opacity: 0;
+512	    transform: scale(0.94) translateY(12px);
+513	  }
+514	  to {
+515	    opacity: 1;
+516	    transform: scale(1) translateY(0);
+517	  }
+518	}
+519	
+520	/* ── Print Styles (PDF Export) ────────────────────────────────────────────── */
+521	@media print {
+522	  /* Reset background and text rendering */
+523	  * {
+524	    -webkit-print-color-adjust: exact !important;
+525	    print-color-adjust: exact !important;
+526	    text-shadow: none !important;
+527	    box-shadow: none !important;
+528	    transition: none !important;
+529	    animation: none !important;
+530	  }
+531	  
+532	  /* Hide web-only elements */
+533	  header,
+534	  footer,
+535	  .minimal-btn,
+536	  .minimal-btn-primary,
+537	  .minimal-btn-secondary,
+538	  .cert-modal-panel,
+539	  .float-decoration,
+540	  .hero-aurora,
+541	  .scroll-progress,
+542	  .section-divider,
+543	  button,
+544	  form,
+545	  .print\:hidden {
+546	    display: none !important;
+547	  }
+548	
+549	  .project-spotlight::after {
+550	    display: none !important;
+551	  }
+552	  
+553	  body {
+554	    background: #ffffff !important;
+555	    color: #0f172a !important;
+556	    font-size: 8.2pt !important;
+557	    line-height: 1.35 !important;
+558	  }
+559	
+560	  /* Compact section headers */
+561	  .section-header {
+562	    margin-bottom: 0.4rem !important;
+563	    display: block !important;
+564	  }
+565	  .section-header h2 {
+566	    font-size: 11pt !important;
+567	    font-weight: bold !important;
+568	    margin-bottom: 2px !important;
+569	  }
+570	  .section-header::after {
+571	    height: 1.5px !important;
+572	    width: 30px !important;
+573	    bottom: -2px !important;
+574	  }
+575	  
+576	  /* Force elements that use scroll animator (fade-in-up) to be fully visible */
+577	  .fade-in-up,
+578	  .visible,
+579	  [data-aos] {
+580	    opacity: 1 !important;
+581	    transform: none !important;
+582	    transition: none !important;
+583	  }
+584	  
+585	  /* Layout adjustments for A4 print */
+586	  .container {
+587	    max-width: 100% !important;
+588	    width: 100% !important;
+589	    padding: 0 !important;
+590	    margin: 0 !important;
+591	  }
+592	
+593	  /* Spacing adjustments for print */
+594	  section {
+595	    padding-top: 0.6rem !important;
+596	    padding-bottom: 0.6rem !important;
+597	    margin: 0 !important;
+598	    page-break-inside: auto;
+599	  }
+600	
+601	  /* Card padding reset */
+602	  .minimal-card,
+603	  .minimal-card-accent,
+604	  .competence-card {
+605	    padding: 10px !important;
+606	    border-radius: 8px !important;
+607	    box-shadow: none !important;
+608	    background: #f8fafc !important;
+609	    border: 1px solid #e2e8f0 !important;
+610	    page-break-inside: avoid;
+611	    break-inside: avoid;
+612	  }
+613	
+614	  /* ── 1. Hero Section ── */
+615	  #home {
+616	    min-height: 0 !important;
+617	    height: auto !important;
+618	    padding-top: 0.5rem !important;
+619	    padding-bottom: 0.5rem !important;
+620	    background: none !important;
+621	  }
+622	  #home .grid {
+623	    display: grid !important;
+624	    grid-template-columns: 80px 1fr !important;
+625	    gap: 15px !important;
+626	    align-items: center !important;
+627	  }
+628	  #home .order-1 { order: 1 !important; }
+629	  #home .order-2 { order: 2 !important; }
+630	  #home .relative.w-48 {
+631	    width: 70px !important;
+632	    height: 70px !important;
+633	    margin: 0 !important;
+634	  }
+635	  #home .inline-flex { display: none !important; }
+636	  #home h1 {
+637	    font-size: 13pt !important;
+638	    margin-bottom: 2px !important;
+639	  }
+640	  #home p {
+641	    font-size: 9pt !important;
+642	    margin-bottom: 2px !important;
+643	  }
+644	  #home .text-base {
+645	    font-size: 8pt !important;
+646	    margin-bottom: 4px !important;
+647	    margin-top: 4px !important;
+648	  }
+649	  #home .flex-wrap {
+650	    margin-bottom: 0 !important;
+651	  }
+652	
+653	  /* ── 2. Projects Section (3 projects in 1 row) ── */
+654	  #projects .grid {
+655	    display: grid !important;
+656	    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+657	    gap: 8px !important;
+658	  }
+659	  #projects .icon-container {
+660	    width: 28px !important;
+661	    height: 28px !important;
+662	    border-radius: 6px !important;
+663	    margin-bottom: 4px !important;
+664	  }
+665	  #projects .icon-container svg {
+666	    width: 14px !important;
+667	    height: 14px !important;
+668	  }
+669	  #projects .bg-gradient-to-br {
+670	    padding: 10px !important;
+671	    background: none !important;
+672	  }
+673	  #projects .p-8 {
+674	    padding: 10px !important;
+675	    padding-top: 2px !important;
+676	  }
+677	  #projects h3 {
+678	    font-size: 9pt !important;
+679	  }
+680	  #projects p {
+681	    font-size: 7.8pt !important;
+682	    margin-bottom: 6px !important;
+683	  }
+684	  #projects .flex-wrap {
+685	    margin-bottom: 4px !important;
+686	    gap: 3px !important;
+687	  }
+688	  #projects .flex-wrap span {
+689	    font-size: 7pt !important;
+690	    padding: 2px 4px !important;
+691	  }
+692	  #projects .border-t {
+693	    padding-top: 4px !important;
+694	    margin-top: 4px !important;
+695	  }
+696	  #projects svg { display: none !important; } /* Hide arrow indicators */
+697	
+698	  /* ── 3. Skills Section (4 categories in 1 row) ── */
+699	  #skills .grid {
+700	    display: grid !important;
+701	    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+702	    gap: 8px !important;
+703	  }
+704	  #skills .bg-gradient-to-br {
+705	    padding: 10px !important;
+706	    background: none !important;
+707	  }
+708	  #skills .w-11 {
+709	    display: none !important;
+710	  }
+711	  #skills h3 {
+712	    font-size: 8.5pt !important;
+713	  }
+714	  #skills .p-6 {
+715	    padding: 10px !important;
+716	    padding-top: 2px !important;
+717	  }
+718	  #skills ul {
+719	    margin-top: 4px !important;
+720	  }
+721	  #skills li {
+722	    font-size: 7.8pt !important;
+723	    margin-bottom: 4px !important;
+724	  }
+725	
+726	  /* ── 4. Experience Section (2 columns of timeline items) ── */
+727	  #experience [style*="border-left"] {
+728	    border-left: none !important;
+729	    margin-left: 0 !important;
+730	    padding-left: 0 !important;
+731	    display: grid !important;
+732	    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+733	    gap: 8px !important;
+734	  }
+735	  #experience .absolute {
+736	    display: none !important;
+737	  }
+738	  #experience .minimal-card {
+739	    padding: 10px !important;
+740	    height: 100% !important;
+741	  }
+742	  #experience h3 {
+743	    font-size: 8.5pt !important;
+744	  }
+745	  #experience .text-primary\/80 {
+746	    font-size: 7.8pt !important;
+747	  }
+748	  #experience .text-mono {
+749	    font-size: 7.5pt !important;
+750	    padding: 1px 4px !important;
+751	  }
+752	  #experience p {
+753	    font-size: 7.8pt !important;
+754	    margin-top: 2px !important;
+755	  }
+756	
+757	  /* ── 5. Competence Section (2x2 layout, smaller badges) ── */
+758	  #competence p[style*="margin-top"] {
+759	    display: none !important;
+760	  }
+761	  #competence .grid {
+762	    display: grid !important;
+763	    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+764	    gap: 8px !important;
+765	    margin-top: 4px !important;
+766	  }
+767	  #competence .competence-card {
+768	    padding: 10px !important;
+769	    height: 100% !important;
+770	  }
+771	  #competence img {
+772	    width: 40px !important;
+773	    height: 40px !important;
+774	    margin-bottom: 6px !important;
+775	  }
+776	  #competence h3 {
+777	    font-size: 8.5pt !important;
+778	  }
+779	  #competence p {
+780	    font-size: 7.8pt !important;
+781	  }
+782	  #competence .text-primary {
+783	    display: none !important; /* Hide view cert link */
+784	  }
+785	  #competence .mt-auto {
+786	    margin-top: 4px !important;
+787	    padding-top: 4px !important;
+788	  }
+789	
+790	  /* ── 6. About Section (side-by-side, no social links) ── */
+791	  #about .grid {
+792	    display: grid !important;
+793	    grid-template-columns: 2.2fr 1fr !important;
+794	    gap: 10px !important;
+795	  }
+796	  #about .minimal-card {
+797	    padding: 12px !important;
+798	  }
+799	  #about p {
+800	    font-size: 8pt !important;
+801	    margin-bottom: 4px !important;
+802	  }
+803	  #about .mt-8 {
+804	    margin-top: 6px !important;
+805	    padding-top: 6px !important;
+806	  }
+807	  #about h4 {
+808	    font-size: 8pt !important;
+809	    margin-bottom: 2px !important;
+810	  }
+811	  #about li {
+812	    font-size: 7.8pt !important;
+813	  }
+814	  #about .flex.gap-3.mt-8 {
+815	    display: none !important;
+816	  }
+817	  #about .space-y-5 {
+818	    margin-top: 0 !important;
+819	  }
+820	  #about .space-y-5 li {
+821	    margin-bottom: 6px !important;
+822	  }
+823	  #about .w-8 {
+824	    width: 22px !important;
+825	    height: 22px !important;
+826	  }
+827	  #about .w-8 svg {
+828	    width: 10px !important;
+829	    height: 10px !important;
+830	  }
+831	
+832	  /* ── 7. Contact Section (compact info card only) ── */
+833	  #contact {
+834	    padding-top: 0.4rem !important;
+835	    padding-bottom: 0.4rem !important;
+836	  }
+837	  #contact .grid {
+838	    display: block !important;
+839	  }
+840	  #contact .md\:col-span-2 {
+841	    width: 100% !important;
+842	  }
+843	  #contact .minimal-card {
+844	    padding: 10px !important;
+845	    background: #f8fafc !important;
+846	  }
+847	  #contact .icon-container {
+848	    display: none !important;
+849	  }
+850	  #contact h3 {
+851	    font-size: 8.5pt !important;
+852	    margin-bottom: 2px !important;
+853	  }
+854	  #contact p {
+855	    font-size: 7.8pt !important;
+856	    margin-bottom: 4px !important;
+857	  }
+858	  #contact .space-y-3 {
+859	    display: flex !important;
+860	    flex-direction: row !important;
+861	    gap: 15px !important;
+862	    margin-top: 4px !important;
+863	  }
+864	  #contact .space-y-3 a {
+865	    margin: 0 !important;
+866	    font-size: 8pt !important;
+867	  }
+868	  #contact .w-9 {
+869	    width: 20px !important;
+870	    height: 20px !important;
+871	  }
+872	  #contact .w-9 svg {
+873	    width: 10px !important;
+874	    height: 10px !important;
+875	  }
+876	
+877	  /* Avoid orphan headers */
+878	  h1, h2, h3 {
+879	    page-break-after: avoid;
+880	    break-after: avoid;
+881	  }
+882	}
+883	
+884	
+885	
