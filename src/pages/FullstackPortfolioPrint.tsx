@@ -37,6 +37,7 @@ export const fullstackPrintProjects: FullstackPrintProject[] = [
   {
     id: "maumium",
     title: "2. 마음이음 · 개인정보 최소 수집형 자가체크 웹서비스",
+    category: "Shipped Product",
     periodRole: "약 2주 · 개인 프로젝트 · 1인 개발",
     stack: "React · TypeScript · Vite · Cloudflare Pages · Workers · D1",
     problem:
@@ -51,8 +52,25 @@ export const fullstackPrintProjects: FullstackPrintProject[] = [
     link: "https://maumium.pages.dev/",
   },
   {
+    id: "songsong",
+    title: "3. SongSong · 실시간 멀티플레이 음악 퀴즈 웹서비스",
+    category: "Shipped Product",
+    periodRole: "2026 · 개인 프로젝트",
+    stack: "React · TypeScript · Cloudflare Workers · Durable Objects",
+    problem:
+      "친구들이 같은 방에서 동일한 라운드를 공유하고 정답을 제출하는 실시간 음악 퀴즈 흐름이 필요했습니다.",
+    decision:
+      "프론트엔드는 React·TypeScript로 구성하고, 방별 참가·라운드 상태는 Cloudflare Workers와 Durable Objects로 묶어 서버리스 환경에서 운영했습니다.",
+    process:
+      "방 생성·참가·라운드 진행·정답 제출 흐름을 Room 상태 기준으로 정의하고 클라이언트와 Workers를 연결한 뒤 Cloudflare 환경과 Custom Domain에 배포했습니다.",
+    role: "요구사항 정리, React UI, Room 상태 흐름, Workers·Durable Objects 연결과 배포까지 개인 프로젝트 전 과정을 구현했습니다.",
+    result:
+      "Room 단위 멀티플레이와 실시간 정답 제출 흐름을 실제 사용 가능한 웹서비스로 배포했습니다.",
+    link: "https://songsong.jingyeong.cloud",
+  },
+  {
     id: "llm-wiki",
-    title: "3. LLM Wiki·RAG · 프로젝트 지식 검색 시스템",
+    title: "4. LLM Wiki·RAG · 프로젝트 지식 검색 시스템",
     category: "Supporting Project",
     periodRole: "Supporting Project · 개인 개발",
     stack:
@@ -70,6 +88,8 @@ export const fullstackPrintProjects: FullstackPrintProject[] = [
 ];
 
 const FullstackPortfolioPrint = () => {
+  const [primaryProject, ...supportingProjects] = fullstackPrintProjects;
+
   return (
     <div className="print-body">
       {/* Print Control Toolbar */}
@@ -98,7 +118,7 @@ const FullstackPortfolioPrint = () => {
                 안진경 <span className="text-slate-400 font-normal">| An Jin Gyeong</span>
               </h1>
               <p className="text-sky-600 font-semibold text-sm mt-1 uppercase tracking-wide">
-                비동기 데이터 정합성과 실시간 이벤트 흐름을 끝까지 연결하는 풀스택 개발자
+                서비스 흐름을 API·데이터·실시간 이벤트·배포까지 연결하는 풀스택 개발자
               </p>
             </div>
             <div className="text-right space-y-1">
@@ -141,7 +161,7 @@ const FullstackPortfolioPrint = () => {
         <div className="print-section">
           <h2 className="print-section-title">Profile Summary</h2>
           <p className="text-[8.5pt] text-slate-700 leading-relaxed">
-            사용자의 입력과 AI 이벤트가 화면, API, 데이터 저장과 결과까지 끊기지 않도록 만드는 풀스택 개발자입니다. 1인 웹서비스를 기획부터 배포까지 완성하고, 팀 프로젝트에서는 MQTT·Spring Boot·WebSocket을 연결하며 비동기 데이터의 식별자와 완료 기준을 맞췄습니다.
+            Java·Spring Boot와 React 기반 실시간 시스템 통합 경험이 있고, 개인 프로젝트에서는 React·TypeScript·Cloudflare Workers·D1·Durable Objects로 실제 웹서비스를 기획부터 배포까지 완성했습니다. LLM은 반복 구현 속도를 높이는 도구로 활용하되 구조·데이터 흐름·테스트와 배포 여부는 직접 검증합니다.
           </p>
         </div>
 
@@ -156,10 +176,13 @@ const FullstackPortfolioPrint = () => {
               <strong>Frontend:</strong> React, TypeScript, Tailwind CSS, Vite
             </p>
             <p>
-              <strong>Data &amp; Search:</strong> PostgreSQL, pgvector, Cloudflare D1
+              <strong>Data &amp; State:</strong> PostgreSQL, Cloudflare D1, Durable Objects, pgvector
             </p>
             <p>
-              <strong>Realtime &amp; Deployment:</strong> MQTT, WebSocket / STOMP, AWS S3, Docker / Cloudflare Pages
+              <strong>Realtime &amp; Delivery:</strong> MQTT, WebSocket / STOMP, Cloudflare Pages / Workers, Git / Linux / Docker
+            </p>
+            <p>
+              <strong>Development Workflow:</strong> LLM-assisted implementation, log / test based QA, deployment verification
             </p>
           </div>
         </div>
@@ -195,17 +218,18 @@ const FullstackPortfolioPrint = () => {
             <div>
               <h4 className="text-xs font-bold text-slate-800 mb-1">Awards (수상 내역)</h4>
               <ul className="print-bullet-list">
+                <li>2026 SK쉴더스 지능형 애플리케이션 개발과정 팀 프로젝트 우수상</li>
                 <li>2025 성균관대학교 컨소시엄 창의적 종합설계 경진대회 동상</li>
                 <li>2025 캡스톤디자인 경진대회 금상</li>
                 <li>2024 창의혁신 DNA 산학협력 공학혁신상</li>
               </ul>
             </div>
             <div>
-              <h4 className="text-xs font-bold text-slate-800 mb-1">Certifications (역량 인증)</h4>
+              <h4 className="text-xs font-bold text-slate-800 mb-1">Development Approach</h4>
               <ul className="print-bullet-list">
-                <li>우수 소프트웨어 활용역량</li>
-                <li>의공학 전문 실무역량</li>
-                <li>정보처리기사 필기 합격 · 실기 준비 중</li>
+                <li>Schema·ID·완료 기준을 먼저 맞춘 뒤 통합</li>
+                <li>로그와 동일 조건 테스트로 장애·성능 문제 재현</li>
+                <li>LLM 활용 후 코드·QA·배포 결과는 직접 검증</li>
               </ul>
             </div>
           </div>
@@ -224,12 +248,43 @@ const FullstackPortfolioPrint = () => {
           <h2 className="print-section-title">PROJECT PORTFOLIO</h2>
         </div>
 
-        <div className="space-y-4">
-          {fullstackPrintProjects.map((project) => (
-            <div key={project.id} className="print-section">
+        <div className="print-section">
+          <div className="flex justify-between items-baseline mb-1">
+            <h3 className="text-sm font-bold text-slate-800">{primaryProject.title}</h3>
+            <span className="text-xs text-slate-500 font-mono">{primaryProject.periodRole}</span>
+          </div>
+          <p className="text-[7.5pt] text-sky-600 font-semibold mb-2">{primaryProject.stack}</p>
+          <div className="print-grid-2 gap-x-5 gap-y-2">
+            <div>
+              <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Why / Problem</h4>
+              <p className="text-[7.5pt] text-slate-700 leading-relaxed">{primaryProject.problem}</p>
+            </div>
+            <div>
+              <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Why This Stack</h4>
+              <p className="text-[7.5pt] text-slate-700 leading-relaxed">{primaryProject.decision}</p>
+            </div>
+            <div>
+              <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Development Process</h4>
+              <p className="text-[7.5pt] text-slate-700 leading-relaxed">{primaryProject.process}</p>
+            </div>
+            <div>
+              <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Contribution / Outcome</h4>
+              <p className="text-[7.5pt] text-slate-700 leading-relaxed">{primaryProject.role}</p>
+              <p className="mt-0.5 text-[7.5pt] text-slate-700 leading-relaxed"><strong>결과:</strong> {primaryProject.result}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="print-section">
+          <h2 className="print-section-title">SHIPPED &amp; SUPPORTING PROJECTS</h2>
+        </div>
+
+        <div className="space-y-2">
+          {supportingProjects.map((project) => (
+            <div key={project.id} className="border-t border-slate-200 pt-2">
               <div className="flex justify-between items-baseline mb-1">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-bold text-slate-800">{project.title}</h3>
+                  <h3 className="text-[9pt] font-bold text-slate-800">{project.title}</h3>
                   {project.category && (
                     <span className="text-[7pt] px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded font-semibold border border-slate-200">
                       {project.category}
@@ -238,25 +293,16 @@ const FullstackPortfolioPrint = () => {
                 </div>
                 <span className="text-xs text-slate-500 font-mono">{project.periodRole}</span>
               </div>
-              <p className="text-[7.5pt] text-sky-600 font-semibold mb-2">{project.stack}</p>
+              <p className="text-[7pt] text-sky-600 font-semibold mb-1">{project.stack}</p>
 
-              <div className="print-grid-2 gap-x-5 gap-y-2">
+              <div className="print-grid-2 gap-x-5 gap-y-1">
                 <div>
-                  <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Why / Problem</h4>
-                  <p className="text-[7.5pt] text-slate-700 leading-relaxed">{project.problem}</p>
+                  <h4 className="text-[7pt] font-bold text-sky-600 mb-0.5">Problem / Build</h4>
+                  <p className="text-[7pt] text-slate-700 leading-relaxed">{project.problem} {project.decision}</p>
                 </div>
                 <div>
-                  <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Why This Stack</h4>
-                  <p className="text-[7.5pt] text-slate-700 leading-relaxed">{project.decision}</p>
-                </div>
-                <div>
-                  <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Development Process</h4>
-                  <p className="text-[7.5pt] text-slate-700 leading-relaxed">{project.process}</p>
-                </div>
-                <div>
-                  <h4 className="text-[7.5pt] font-bold text-sky-600 mb-0.5">Contribution / Outcome</h4>
-                  <p className="text-[7.5pt] text-slate-700 leading-relaxed">{project.role}</p>
-                  <p className="mt-0.5 text-[7.5pt] text-slate-700 leading-relaxed"><strong>결과:</strong> {project.result}</p>
+                  <h4 className="text-[7pt] font-bold text-sky-600 mb-0.5">Contribution / Outcome</h4>
+                  <p className="text-[7pt] text-slate-700 leading-relaxed">{project.role} <strong>결과:</strong> {project.result}</p>
                 </div>
               </div>
 

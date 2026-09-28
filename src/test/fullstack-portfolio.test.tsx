@@ -13,28 +13,36 @@ import FullstackPortfolioPrint from "@/pages/FullstackPortfolioPrint";
 const readText = (path: string) => readFileSync(resolve(process.cwd(), path), "utf8");
 
 describe("full-stack portfolio", () => {
-  it("keeps exactly three requested projects with grounded ownership copy", () => {
+  it("keeps the five master full-stack projects with grounded ownership copy", () => {
     expect(fullstackProjects.map((project) => project.title)).toEqual([
       "AI 이벤트 수신부터 사고 검색까지 연결한 실시간 안전 관제 플랫폼",
+      "JK · ChatGPT와 로컬 개발환경을 연결한 MCP 코딩 런타임",
       "개인정보 최소 수집형 자가체크 및 결과 리포트 웹서비스",
+      "SongSong · 실시간 멀티플레이 음악 퀴즈 웹서비스",
       "LLM Wiki · Hybrid Search 지식 시스템",
     ]);
-    expect(fullstackProjects).toHaveLength(3);
+    expect(fullstackProjects).toHaveLength(5);
     expect(fullstackProjects.some((project) => project.title.includes("포트폴리오 웹사이트"))).toBe(false);
-    expect(fullstackProjects.map((project) => project.badge)).toEqual(["Main", "Supporting", "Supporting"]);
+    expect(fullstackProjects.map((project) => project.badge)).toEqual(["Main", "Supporting", "Supporting", "Supporting", "Supporting"]);
     expect(fullstackProjects[0].meta?.period).toBe("2026.05–2026.07");
     expect(fullstackProjects[0].meta?.role).toContain("5인 팀장");
     expect(fullstackProjects[0].description).toContain("비동기로 도착하는 경보와 증거 데이터를 하나의 사고로 유지했습니다");
     expect(fullstackProjects[0].description).toContain("Subscriber 기준");
     expect(fullstackProjects[0].description).toContain("별도 통합 테스트");
-    expect(fullstackProjects[1].meta?.period).toBe("약 2주");
-    expect(fullstackProjects[1].meta?.role).toContain("1인 개발");
-    expect(fullstackProjects[1].highlights).toContain("약 2주 · 1인 기획 → 배포");
-    expect(fullstackProjects[2].description).toContain("61개 Golden Query");
-    expect(fullstackProjects[2].description).toContain("실제 Elasticsearch 전체 질의 실측은 후속 검증");
-    expect(fullstackProjects[2].meta?.role).toContain("개인 구현");
-    expect(fullstackProjects[2].liveUrl).toBe("https://llmwiki.jingyeong.cloud");
-    expect(fullstackProjects[2].githubUrl).toBeUndefined();
+    expect(fullstackProjects[1].meta?.period).toBe("2026 · ongoing");
+    expect(fullstackProjects[1].meta?.role).toContain("개인 프로젝트");
+    expect(fullstackProjects[1].description).toContain("Windows outbound executor");
+    expect(fullstackProjects[1].githubUrl).toBe("https://github.com/Anjingyeong/jk_free");
+    expect(fullstackProjects[2].meta?.period).toBe("약 2주");
+    expect(fullstackProjects[2].meta?.role).toContain("1인 개발");
+    expect(fullstackProjects[2].highlights).toContain("약 2주 · 1인 기획 → 배포");
+    expect(fullstackProjects[3].description).toContain("Durable Objects");
+    expect(fullstackProjects[3].liveUrl).toBe("https://songsong.jingyeong.cloud");
+    expect(fullstackProjects[4].description).toContain("61개 Golden Query");
+    expect(fullstackProjects[4].description).toContain("실제 Elasticsearch 전체 질의 실측은 후속 검증");
+    expect(fullstackProjects[4].meta?.role).toContain("개인 구현");
+    expect(fullstackProjects[4].liveUrl).toBe("https://llmwiki.jingyeong.cloud");
+    expect(fullstackProjects[4].githubUrl).toBeUndefined();
     expect(JSON.stringify(fullstackProjects)).not.toContain("직접 구현한 것으로 표현하지 않습니다");
 
     render(<ProjectsSection items={fullstackProjects} grouped={false} />);
@@ -47,11 +55,12 @@ describe("full-stack portfolio", () => {
     const heroSource = readText("src/components/HeroSection.tsx");
 
     expect(indexSource.indexOf("<ProjectsSection")).toBeLessThan(indexSource.indexOf("<SkillsSection"));
-    expect(heroSource).toContain("실시간 AI · 시스템 최적화 · 플랫폼 연동");
-    expect(heroSource).toContain("실시간 이벤트 · 데이터 정합성 · 서비스 운영");
-    expect(heroSource).toContain("비동기 데이터의 정합성을 지키며 AI 이벤트를 운영 가능한 서비스로 연결했습니다");
+    expect(heroSource).toContain("Vision · Agentic Systems · Platform Integration");
+    expect(heroSource).toContain("Web · API · Realtime · Cloud Delivery");
+    expect(heroSource).toContain("사용자 흐름부터 API·데이터·실시간 이벤트·배포까지 하나의 서비스로 연결합니다");
     expect(heroSource).toContain('{ value: "29/29", label: "1초 내 MQTT 도달", note: "2카메라 · Subscriber 기준" }');
-    expect(heroSource).toContain('{ value: "약 2주", label: "1인 웹서비스 배포", note: "기획 → 운영" }');
+    expect(heroSource).toContain('{ value: "2", label: "운영 배포 웹서비스", note: "SongSong · 마음이음" }');
+    expect(heroSource).toContain('{ value: "61", label: "검색 품질 평가 질의", note: "LLM Wiki · Golden Query" }');
     expect(heroSource).toContain("showLocalPortfolioSwitcher = !import.meta.env.PROD");
     expect(heroSource).toContain("대표 프로젝트 보기");
     expect(heroSource).toContain("시연 영상");
@@ -59,9 +68,10 @@ describe("full-stack portfolio", () => {
 
   it("switches About copy without changing the AI variant", () => {
     const { rerender } = render(<AboutSection variant="fullstack" />);
-    expect(screen.getByText("비동기 데이터의 식별자와 완료 조건을 설계하는 개발자")).toBeInTheDocument();
+    expect(screen.getByText("서비스 전체 흐름을 연결하고 로그로 검증하는 개발자")).toBeInTheDocument();
     expect(screen.getByText("Full-Stack Developer")).toBeInTheDocument();
-    expect(screen.getByText("식별자로 정합성 유지")).toBeInTheDocument();
+    expect(screen.getByText("흐름을 끝까지 연결")).toBeInTheDocument();
+    expect(screen.getByText("LLM은 속도, 검증은 직접")).toBeInTheDocument();
     expect(screen.queryByText("프로젝트마다 같은 방식으로 문제를 좁히고, 선택의 근거를 만들고, 실제 서비스 흐름까지 확인합니다.")).not.toBeInTheDocument();
 
     rerender(<AboutSection variant="ai" />);
@@ -82,7 +92,9 @@ describe("full-stack portfolio", () => {
   it("uses the stated project periods", () => {
     expect(fullstackProjects.map((project) => project.meta?.period)).toEqual([
       "2026.05–2026.07",
+      "2026 · ongoing",
       "약 2주",
+      "2026",
       "2026",
     ]);
   });
@@ -110,17 +122,19 @@ describe("full-stack portfolio", () => {
 
     // 2. 지원 직무 문구가 Full-Stack Developer 방향인지
     expect(
-      screen.getByText("비동기 데이터 정합성과 실시간 이벤트 흐름을 끝까지 연결하는 풀스택 개발자")
+      screen.getByText("서비스 흐름을 API·데이터·실시간 이벤트·배포까지 연결하는 풀스택 개발자")
     ).toBeInTheDocument();
 
-    // 3 & 4 & 5. 스마트 안전 관제가 1번째, 마음이음이 2번째, LLM Wiki가 3번째(Supporting Project)인지
+    // 스마트 안전 관제가 대표 프로젝트이고, 마음이음·SongSong·LLM Wiki가 이어지는지
     const projectHeadings = Array.from(
       printPages[1].querySelectorAll("h3")
     ).map((h) => h.textContent);
     expect(projectHeadings[0]).toContain("1. 스마트 안전 관제");
     expect(projectHeadings[1]).toContain("2. 마음이음");
-    expect(projectHeadings[2]).toContain("3. LLM Wiki·RAG");
+    expect(projectHeadings[2]).toContain("3. SongSong");
+    expect(projectHeadings[3]).toContain("4. LLM Wiki·RAG");
     expect(screen.getByText("Supporting Project")).toBeInTheDocument();
+    expect(screen.getAllByText("Shipped Product")).toHaveLength(2);
 
     // 6. 마음이음에 약 2주 · 개인 프로젝트 · 1인 개발 포함
     expect(
@@ -141,6 +155,8 @@ describe("full-stack portfolio", () => {
     expect(printText).toContain("Incident");
     expect(printText).toContain("Hit@5 82.14%");
     expect(printText).toContain("후속 검증");
+    expect(printText).toContain("Durable Objects");
+    expect(printText).toContain("songsong.jingyeong.cloud");
 
     // 9. 전체 백엔드와 프론트엔드를 단독 구현하지 않았다는 역할 경계 포함
     expect(printText).toContain(
@@ -270,8 +286,8 @@ describe("full-stack portfolio", () => {
     }
   });
 
-  it("unifies AI portfolio section structure across all 4 AI projects", () => {
-    expect(projects).toHaveLength(4);
+  it("unifies AI portfolio section structure across all 5 AI projects", () => {
+    expect(projects).toHaveLength(5);
 
     for (const project of projects) {
       const reflection = project.details.find(

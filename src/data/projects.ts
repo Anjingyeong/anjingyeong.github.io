@@ -1,5 +1,6 @@
 import type { ElementType } from "react";
 import { BarChart2, Brain, Microscope, Shield } from "lucide-react";
+import { jkAiProject } from "./jkProject";
 
 // allow: SIZE_OK - portfolio project data table kept together to preserve card/modal ordering.
 export type ProjectBadge = "Main" | "Supporting";
@@ -348,6 +349,7 @@ export const projects: readonly Project[] = [
       },
     ],
   },
+  jkAiProject,
   {
     icon: Microscope,
     badge: "Supporting",

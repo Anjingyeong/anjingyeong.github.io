@@ -9,8 +9,8 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
   const metrics = isFullstack
     ? [
         { value: "29/29", label: "1초 내 MQTT 도달", note: "2카메라 · Subscriber 기준" },
-        { value: "1 Incident", label: "경보·증거·설명 병합", note: "originalEventId" },
-        { value: "약 2주", label: "1인 웹서비스 배포", note: "기획 → 운영" },
+        { value: "2", label: "운영 배포 웹서비스", note: "SongSong · 마음이음" },
+        { value: "61", label: "검색 품질 평가 질의", note: "LLM Wiki · Golden Query" },
       ]
     : [
         { value: "+4.20%p", label: "행동 분류 F1", note: "89.29 → 93.49%" },
@@ -51,26 +51,26 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/8 border border-primary/10 mb-5">
               <Sparkles size={14} className="text-primary" />
               <span className="text-sm font-medium text-primary">
-                {isFullstack ? "실시간 이벤트 · 데이터 정합성 · 서비스 운영" : "실시간 AI · 시스템 최적화 · 플랫폼 연동"}
+                {isFullstack ? "Web · API · Realtime · Cloud Delivery" : "Vision · Agentic Systems · Platform Integration"}
               </span>
             </div>
 
             <h1 className="text-3xl md:text-4xl lg:text-[2.75rem] font-black mb-4 text-foreground leading-[1.25] tracking-tight break-keep">
               {isFullstack
-                ? "비동기 데이터의 정합성을 지키며 AI 이벤트를 운영 가능한 서비스로 연결했습니다"
-                : "실시간 AI를 서비스까지 연결하고, 성능과 지연을 수치로 개선합니다"}
+                ? "사용자 흐름부터 API·데이터·실시간 이벤트·배포까지 하나의 서비스로 연결합니다"
+                : "AI 모델을 실시간 시스템과 Agentic 개발 도구까지 연결합니다"}
             </h1>
 
             <div className="mb-8 max-w-xl space-y-3 break-keep">
               <p className="text-base md:text-lg text-foreground/75 leading-relaxed font-normal">
                 {isFullstack
-                  ? "팀 프로젝트에서는 MQTT 위험 이벤트를 Incident로 저장·병합하고 STOMP·React 화면과 VLM 후처리까지 연결했습니다. 개인 프로젝트에서는 약 2주 안에 자가체크 서비스의 화면·API·D1·PDF 리포트·배포를 1인으로 완성했습니다."
-                  : "영상 입력부터 AI 추론·Tracking·이벤트 전달·서비스 연동까지 하나의 흐름으로 연결했습니다. 문제는 로그와 동일 조건 비교로 좁히고, 개선 효과는 수치로 검증했습니다."}
+                  ? "팀 프로젝트에서는 MQTT → Spring Boot → DB → WebSocket → React로 이어지는 실시간 이벤트 흐름의 데이터 계약과 정합성을 맞췄습니다. 개인 프로젝트에서는 React·TypeScript와 Cloudflare Workers·D1·Durable Objects를 활용해 실제 웹서비스를 기획부터 배포까지 완성했습니다."
+                  : "실시간 영상 AI에서는 추론·Tracking·이벤트 전달 병목을 수치로 개선했고, JK에서는 ChatGPT와 로컬 프로젝트 사이에 상태·권한·검증을 갖춘 MCP 실행 계층을 구현했습니다. 문제는 로그와 동일 조건 비교로 좁히고, 변경은 테스트와 실행 근거로 확인합니다."}
               </p>
               {isFullstack ? (
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   <strong className="font-semibold text-foreground">개인 기여 · </strong>
-                  팀 프로젝트: 이벤트 계약·originalEventId Incident 정합성·VLM 비동기 흐름 / 개인 프로젝트: 기획·API·DB·배포 전 과정
+                  팀: 이벤트 계약·Incident 정합성·통합 검증 / 개인: 요구사항·UI·API·DB·배포 / 개발 방식: LLM 활용 + 로그·테스트 기반 직접 QA
                 </p>
               ) : null}
             </div>

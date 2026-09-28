@@ -1,5 +1,6 @@
-import { BookOpen, HeartPulse, Shield } from "lucide-react";
+import { BookOpen, HeartPulse, Music2, Shield } from "lucide-react";
 import type { Project } from "./projects";
+import { jkFullstackProject } from "./jkProject";
 
 export const fullstackProjects: readonly Project[] = [
   {
@@ -238,6 +239,7 @@ export const fullstackProjects: readonly Project[] = [
       },
     ],
   },
+  jkFullstackProject,
   {
     icon: HeartPulse,
     badge: "Supporting",
@@ -273,6 +275,50 @@ export const fullstackProjects: readonly Project[] = [
         items: [
           "**필요한 개인정보만 수집하는 구조를 우선했습니다**: 자가체크 서비스는 민감한 결과를 다루기 때문에 기능을 늘리는 것보다 어떤 정보를 저장하지 않을지를 먼저 결정해야 했습니다. 진단 서비스처럼 보이지 않도록 안내 문구와 동의 절차를 구성하고, 결과 제공에 필요하지 않은 개인정보 수집을 줄였습니다. 이를 통해 개인정보 보호는 개발 이후 추가하는 문서가 아니라 데이터 구조를 정할 때부터 반영해야 한다는 점을 배웠습니다.",
           "**작은 범위라도 배포 가능한 흐름을 완성했습니다**: 약 2주라는 제한된 기간에 화면 기능을 계속 확장하면 실제 사용 가능한 상태까지 완성하기 어렵다고 판단했습니다. 자가체크, 결과 계산, 저장, 관리자 통계, PDF 리포트와 배포까지 하나의 핵심 흐름을 먼저 완성했습니다. 이를 통해 기능 수보다 사용자가 처음부터 끝까지 막힘없이 사용할 수 있는 완결성이 더 중요하다는 점을 배웠습니다.",
+        ],
+      },
+    ],
+  },
+  {
+    icon: Music2,
+    badge: "Supporting",
+    title: "SongSong · 실시간 멀티플레이 음악 퀴즈 웹서비스",
+    summaryLine: "방 생성·라운드 진행·정답 제출을 Room 단위 상태로 연결하고 Workers·Durable Objects로 운영 배포한 실시간 웹게임",
+    description:
+      "친구들과 실제로 사용할 서비스를 목표로 React 클라이언트와 Cloudflare Workers를 연결하고, Room 단위 멀티플레이 상태와 라운드 흐름을 Durable Objects로 구성해 배포했습니다.",
+    meta: {
+      period: "2026",
+      role: "개인 개발 · React UI, Room 흐름, Workers·Durable Objects, 배포",
+      service: "실시간 멀티플레이 음악 퀴즈",
+    },
+    highlights: ["Room 단위 멀티플레이", "실시간 정답 제출 흐름", "Workers · Durable Objects 배포"],
+    tags: ["React", "TypeScript", "Cloudflare Workers", "Durable Objects", "Realtime"],
+    gradient: "from-cyan-500/10 to-blue-500/5",
+    liveUrl: "https://songsong.jingyeong.cloud",
+    details: [
+      {
+        title: "실제 사용을 전제로 멀티플레이 흐름을 먼저 정의했습니다",
+        body:
+          "각 사용자가 따로 진행하는 퀴즈가 아니라 같은 방에서 동일한 라운드를 공유하고 정답을 제출하는 흐름이 핵심이었습니다. 방 생성, 참가, 라운드 진행과 정답 제출을 하나의 Room 상태를 기준으로 연결했습니다.",
+      },
+      {
+        title: "Room 상태를 Durable Objects로 묶었습니다",
+        body:
+          "React 클라이언트의 사용자 흐름과 Cloudflare Workers를 연결하고, 방별로 유지해야 하는 참가·라운드 상태를 Durable Objects에 모아 멀티플레이 흐름을 구성했습니다. 정적 프론트엔드와 서버리스 상태 처리를 같은 Cloudflare 환경에서 운영할 수 있도록 배포했습니다.",
+      },
+      {
+        title: "작은 서비스도 실제 배포 상태까지 검증했습니다",
+        items: [
+          "Room 단위 멀티플레이와 정답 제출 흐름을 실제 서비스 형태로 구현",
+          "React·TypeScript 프론트와 Workers·Durable Objects 상태 처리를 연결",
+          "Custom Domain을 포함한 Cloudflare 운영 배포까지 완료",
+        ],
+      },
+      {
+        title: "판단과 배운 점",
+        items: [
+          "**멀티플레이는 화면보다 공유 상태를 먼저 정의했습니다**: 각 사용자의 UI를 따로 구현하기보다 방·라운드·정답 제출이 어떤 상태를 공유해야 하는지 먼저 정리했습니다. 이를 통해 실시간 기능에서는 화면 이벤트보다 서버가 유지해야 하는 공통 상태와 전이 규칙이 우선이라는 점을 배웠습니다.",
+          "**작은 서비스도 배포까지 닫았습니다**: 기능을 계속 늘리기보다 실제 친구들과 사용할 수 있는 방 생성·라운드·정답 제출 흐름을 먼저 완성하고 Cloudflare 환경에 배포했습니다. 이를 통해 개인 프로젝트에서도 구현 완료와 사용 가능한 서비스 상태를 구분해 검증해야 한다는 점을 배웠습니다.",
         ],
       },
     ],

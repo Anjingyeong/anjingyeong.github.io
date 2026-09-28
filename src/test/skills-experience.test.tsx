@@ -9,7 +9,7 @@ describe("Skills & Experience & Competence sections", () => {
     const { container } = render(<SkillsSection variant="ai" />);
     expect(screen.getByText("AI / Vision")).toBeInTheDocument();
     expect(screen.getByText("Realtime / Integration")).toBeInTheDocument();
-    expect(screen.getByText("Platform / Backend")).toBeInTheDocument();
+    expect(screen.getByText("Backend / Platform")).toBeInTheDocument();
     expect(screen.getByText("Frontend")).toBeInTheDocument();
     expect(screen.getByText("Search / Infra")).toBeInTheDocument();
 
@@ -25,10 +25,11 @@ describe("Skills & Experience & Competence sections", () => {
     expect(textContent).not.toContain("MySQL");
   });
 
-  it("includes Java 21 and AWS S3 in Full-Stack skills without Redis or MySQL", () => {
+  it("includes Java 21, JK MCP runtime, and cloud delivery skills without Redis or MySQL", () => {
     const { container } = render(<SkillsSection variant="fullstack" />);
     expect(screen.getByText("Java 21")).toBeInTheDocument();
-    expect(screen.getByText("AWS S3")).toBeInTheDocument();
+    expect(screen.getByText("JK / MCP Runtime")).toBeInTheDocument();
+    expect(screen.getByText("Cloudflare Pages / Workers")).toBeInTheDocument();
 
     const textContent = container.textContent ?? "";
     expect(textContent).not.toContain("BeautifulSoup4");

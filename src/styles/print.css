@@ -224,6 +224,20 @@
   gap: 8px;
 }
 
+/* Vibe portfolio: use the full A4 height instead of leaving one large blank block above the footer. */
+.vibe-print-page {
+  justify-content: space-between;
+}
+
+.vibe-print-page > .print-header,
+.vibe-print-page > .print-section {
+  margin-bottom: 0;
+}
+
+.vibe-print-page > .vibe-print-footer {
+  margin-top: 0 !important;
+}
+
 .print-bullet-list {
   padding-left: 12px;
   margin: 0;

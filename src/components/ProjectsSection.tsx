@@ -258,6 +258,7 @@ type ProjectsSectionProps = {
 
 const getProjectLabel = (project: Project) => {
   if (project.badge === "Main") return "팀장 · AI 파이프라인";
+  if (project.title.startsWith("JK")) return "Agentic AI · MCP Runtime";
   if (project.title.startsWith("LLM Wiki")) return "Hybrid Search · Elasticsearch";
   if (project.title.startsWith("RF-DETR")) return "데이터 증강";
   if (project.title.startsWith("VAE")) return "차영상 시각화";
@@ -265,10 +266,11 @@ const getProjectLabel = (project: Project) => {
 };
 
 const getOtherProjectPriority = (project: Project) => {
-  if (project.title.startsWith("LLM Wiki")) return 0;
-  if (project.title.startsWith("RF-DETR")) return 1;
-  if (project.title.startsWith("VAE")) return 2;
-  return 3;
+  if (project.title.startsWith("JK")) return 0;
+  if (project.title.startsWith("LLM Wiki")) return 1;
+  if (project.title.startsWith("RF-DETR")) return 2;
+  if (project.title.startsWith("VAE")) return 3;
+  return 4;
 };
 
 
@@ -292,8 +294,8 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
     .sort((a, b) => getOtherProjectPriority(a) - getOtherProjectPriority(b));
   const orderedProjects = grouped ? [...mainProjects, ...otherProjects] : items;
   const sectionDescription = grouped
-    ? "영상 AI의 정확도·Tracking·처리 지연을 개선하고, 위험 이벤트를 관제 서비스의 대응 흐름까지 연결한 경험입니다."
-    : "안전·보안 이벤트를 신뢰할 수 있는 Incident로 저장하고, 실시간 알림·증거 확인·사고 검색까지 연결한 경험입니다.";
+    ? "실시간 Vision의 정확도·Tracking·처리 지연을 수치로 개선하고, JK에서는 ChatGPT의 로컬 개발 작업을 상태·권한·검증 가능한 실행 흐름으로 연결했습니다."
+    : "실시간 이벤트 플랫폼, 운영 웹서비스, Agentic AI 개발 도구를 요구사항부터 API·데이터·실행·검증까지 연결한 프로젝트입니다.";
 
   const renderCard = (project: Project, featured = false): ReactNode => (
     <ScrollAnimator key={project.title}>
@@ -403,7 +405,9 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
             <div>
               <div className="mb-4 flex items-center gap-3">
                 <span className="h-px w-8 bg-primary" />
-                <p className="text-sm font-semibold text-foreground">대표 프로젝트 · 실시간 AI 시스템</p>
+                <p className="text-sm font-semibold text-foreground">
+                  {grouped ? "대표 프로젝트 · 실시간 AI 시스템" : "대표 프로젝트 · 실시간 서비스"}
+                </p>
               </div>
               <div className="grid grid-cols-1 gap-6">
                 {renderCard(orderedProjects[0], true)}
@@ -415,7 +419,9 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
             <div>
               <div className="mb-4 flex items-center gap-3">
                 <span className="h-px w-8 bg-border" />
-                <p className="text-sm font-semibold text-foreground">검색 시스템 · 의료영상 AI</p>
+                <p className="text-sm font-semibold text-foreground">
+                  {grouped ? "Agentic AI · 검색 시스템 · 의료영상 AI" : "Agentic AI · Web · Search"}
+                </p>
               </div>
               <div className={grouped ? "grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3" : "grid grid-cols-1 gap-6 md:grid-cols-2"}>
                 {orderedProjects.slice(1).map((project) => renderCard(project))}

@@ -13,6 +13,7 @@ const readText = (path: string) =>
 const publicProjectSources = [
   readText("src/components/ProjectsSection.tsx"),
   readText("src/data/projects.ts"),
+  readText("src/data/jkProject.ts"),
 ].join("\n");
 
 const heroSource = readText("src/components/HeroSection.tsx");
@@ -102,9 +103,10 @@ describe("ProjectsSection public copy", () => {
   });
 
   it("uses the strongest verified Smart Safety outcomes in the AI hero and project card", () => {
-    expect(heroSource).toContain("실시간 AI · 시스템 최적화 · 플랫폼 연동");
-    expect(heroSource).toContain("실시간 AI를 서비스까지 연결하고, 성능과 지연을 수치로 개선합니다");
-    expect(heroSource).toContain("영상 입력부터 AI 추론·Tracking·이벤트 전달·서비스 연동까지 하나의 흐름으로 연결했습니다.");
+    expect(heroSource).toContain("Vision · Agentic Systems · Platform Integration");
+    expect(heroSource).toContain("AI 모델을 실시간 시스템과 Agentic 개발 도구까지 연결합니다");
+    expect(heroSource).toContain("실시간 영상 AI에서는 추론·Tracking·이벤트 전달 병목을 수치로 개선했고");
+    expect(heroSource).toContain("JK에서는 ChatGPT와 로컬 프로젝트 사이에 상태·권한·검증을 갖춘 MCP 실행 계층을 구현했습니다.");
     expect(heroSource).not.toContain("SK쉴더스 교육과정의 5인 팀 프로젝트에서");
     expect(heroSource).not.toContain("실시간 관제 · 이벤트 연동 · 플랫폼 통합");
     expect(heroSource).not.toContain("실시간 영상 AI · 이벤트 연동 · 검색 시스템");
@@ -176,7 +178,7 @@ describe("ProjectsSection public copy", () => {
 
   it("does not expose internal analysis or trend-first labels in public project copy", () => {
     expect(publicProjectSources).not.toMatch(
-      /STAR-RN|2026 트렌드|실험 중|구현은 향후 계획|Next Step|면접|감독판|GraphRAG|Agentic AI/,
+      /STAR-RN|2026 트렌드|실험 중|구현은 향후 계획|Next Step|면접|감독판|GraphRAG/,
     );
   });
 
@@ -205,10 +207,11 @@ describe("ProjectsSection public copy", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(screen.queryByText("AI 시스템 구조")).not.toBeInTheDocument();
     expect(screen.getByText("대표 프로젝트 · 실시간 AI 시스템")).toBeInTheDocument();
-    expect(screen.getByText("검색 시스템 · 의료영상 AI")).toBeInTheDocument();
+    expect(screen.getByText("Agentic AI · 검색 시스템 · 의료영상 AI")).toBeInTheDocument();
     const cardHeadings = screen.getAllByRole("heading", { level: 3 }).map((heading) => heading.textContent);
     expect(cardHeadings).toEqual([
       "실시간 이상행동 탐지 및 안전 관제 AI 시스템",
+      "JK · 상태·권한·검증을 갖춘 로컬 AI 코딩 런타임",
       "LLM Wiki · Hybrid Search 지식 시스템",
       "RF-DETR 기반 대장 내시경 용종 검출 애플리케이션",
       "VAE 기반 유방 초음파 이상 탐지",
@@ -217,6 +220,7 @@ describe("ProjectsSection public copy", () => {
     expect(screen.getByText("데이터 증강")).toBeInTheDocument();
     expect(screen.getByText("차영상 시각화")).toBeInTheDocument();
     expect(screen.getByText("Hybrid Search · Elasticsearch")).toBeInTheDocument();
+    expect(screen.getByText("Agentic AI · MCP Runtime")).toBeInTheDocument();
     expect(screen.queryByText("기술 확장")).not.toBeInTheDocument();
     expect(screen.queryByText("기술 확장 프로젝트")).not.toBeInTheDocument();
     expect(screen.queryByText("Main")).not.toBeInTheDocument();
