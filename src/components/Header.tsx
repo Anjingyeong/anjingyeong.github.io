@@ -67,7 +67,7 @@
 67	          <div className="leading-tight">
 68	            <span className="block text-lg font-black text-foreground tracking-tight font-sans">안진경</span>
 69	            <span className="hidden text-[11px] font-semibold tracking-wide text-muted-foreground sm:block">
-70	              {variant === "fullstack" ? "FULL-STACK DEVELOPER" : "AI SOFTWARE ENGINEER · REAL-TIME VISION · PLATFORM"}
+70	              SOFTWARE ENGINEER
 71	            </span>
 72	          </div>
 73	          {showPortfolioSwitcher && <div className="hidden sm:flex items-center rounded-full border border-border bg-background/70 p-0.5 text-xs font-semibold">
