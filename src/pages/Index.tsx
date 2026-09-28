@@ -1,4 +1,3 @@
-import NetworkCanvas from "@/components/NetworkCanvas";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -16,7 +15,6 @@ type IndexProps = {
 const Index = ({ variant = "ai" }: IndexProps) => {
   return (
     <div className="relative min-h-screen bg-background">
-      <NetworkCanvas />
       <Header variant={variant} />
       <main className="relative z-10">
         <HeroSection variant={variant} />

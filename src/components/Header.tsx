@@ -17,6 +17,7 @@ const Header = ({ variant = "ai" }: HeaderProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const hostname = typeof window === "undefined" ? "" : window.location.hostname;
   const showPortfolioSwitcher = !import.meta.env.PROD || hostname === "jingyeong.cloud" || hostname === "www.jingyeong.cloud";
   const portfolioUrls = import.meta.env.PROD
@@ -32,6 +33,8 @@ const Header = ({ variant = "ai" }: HeaderProps) => {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 10);
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 0);
       const sections = document.querySelectorAll("section[id]");
       let current = "home";
       sections.forEach((section) => {
@@ -42,6 +45,7 @@ const Header = ({ variant = "ai" }: HeaderProps) => {
       });
       setActiveSection(current);
     };
+    onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -124,6 +128,9 @@ const Header = ({ variant = "ai" }: HeaderProps) => {
           ))}
         </nav>
       )}
+      <div className="scroll-progress" aria-hidden="true">
+        <span style={{ transform: `scaleX(${scrollProgress})` }} />
+      </div>
     </header>
   );
 };

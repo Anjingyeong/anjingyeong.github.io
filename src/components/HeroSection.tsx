@@ -30,11 +30,7 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
       className="relative min-h-screen flex items-center overflow-hidden py-8 sm:py-12 lg:py-0"
       style={{ paddingTop: "var(--header-height)", background: "var(--gradient-hero)" }}
     >
-      <div className="float-decoration w-96 h-96 -top-48 -right-48" />
-      <div className="float-decoration w-64 h-64 bottom-20 -left-32 opacity-20" />
-      <div className="absolute top-1/4 right-1/4 w-2 h-2 rounded-full bg-primary/20 animate-pulse" />
-      <div className="absolute top-2/3 right-1/3 w-1.5 h-1.5 rounded-full bg-accent/20 animate-pulse" style={{ animationDelay: "1s" }} />
-      <div className="absolute top-1/2 left-1/4 w-1 h-1 rounded-full bg-primary/15 animate-pulse" style={{ animationDelay: "2s" }} />
+      <div className="hero-aurora" aria-hidden="true" />
 
       <div className="container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center max-w-6xl mx-auto">
@@ -76,8 +72,12 @@ const HeroSection = ({ variant = "ai" }: HeroSectionProps) => {
             </div>
 
             <div className="grid max-w-xl grid-cols-3 gap-2 sm:gap-3 mb-6 sm:mb-8">
-              {metrics.map((metric) => (
-                <div key={metric.label} className="rounded-xl border border-border/70 bg-background/45 px-2.5 sm:px-4 py-3 backdrop-blur-sm">
+              {metrics.map((metric, index) => (
+                <div
+                  key={metric.label}
+                  className="hero-metric rounded-xl border border-border/70 bg-background/45 px-2.5 sm:px-4 py-3 backdrop-blur-sm"
+                  style={{ animationDelay: `${180 + index * 110}ms` }}
+                >
                   <strong className="block text-base sm:text-lg font-bold text-primary">{metric.value}</strong>
                   <span className="mt-0.5 block text-[11px] sm:text-sm font-semibold text-foreground break-keep">{metric.label}</span>
                   <span className="mt-1 block text-[10px] sm:text-xs text-muted-foreground">{metric.note}</span>

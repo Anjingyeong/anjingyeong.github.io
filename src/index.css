@@ -141,6 +141,67 @@
     opacity: 1;
   }
 
+  /* Style Gallery-inspired spotlight: pointer-local light without heavy card motion. */
+  .project-spotlight {
+    --spot-x: 50%;
+    --spot-y: 45%;
+    isolation: isolate;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+  }
+
+  .project-spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    background:
+      radial-gradient(
+        360px circle at var(--spot-x) var(--spot-y),
+        hsl(var(--primary) / 0.085),
+        transparent 58%
+      );
+    transition: opacity 0.28s ease;
+  }
+
+  .project-spotlight > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .project-spotlight:hover {
+      transform: translateY(-2px);
+      border-color: hsl(var(--primary) / 0.22);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.075), 0 0 0 1px hsl(var(--primary) / 0.05);
+    }
+
+    .project-spotlight:hover::after {
+      opacity: 1;
+    }
+  }
+
+  .project-meta-row {
+    @apply mb-4 flex flex-wrap gap-x-4 gap-y-2 rounded-xl border border-border/70 bg-muted/25 px-3 py-2.5 text-xs;
+  }
+
+  .project-meta-item {
+    @apply flex min-w-0 items-baseline gap-1.5;
+  }
+
+  .project-meta-item dt {
+    @apply shrink-0 font-bold text-foreground/65;
+  }
+
+  .project-meta-item dd {
+    @apply min-w-0 text-muted-foreground;
+  }
+
+  .project-meta-role {
+    flex-basis: 100%;
+  }
+
   /* Buttons */
   .minimal-btn {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-medium text-sm rounded-full transition-all duration-300;
@@ -310,10 +371,116 @@
     transform: translateY(0);
   }
 
+  .scroll-progress {
+    @apply pointer-events-none absolute bottom-0 left-0 h-0.5 w-full overflow-hidden;
+    background: hsl(var(--border) / 0.55);
+  }
+
+  .scroll-progress > span {
+    @apply block h-full w-full;
+    background: var(--gradient-primary);
+    transform-origin: left center;
+    will-change: transform;
+  }
+
+  .hero-aurora {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 78% 24%, hsl(var(--primary) / 0.10), transparent 29%),
+      radial-gradient(circle at 18% 22%, hsl(var(--accent) / 0.07), transparent 30%),
+      radial-gradient(circle at 62% 78%, hsl(200 80% 55% / 0.055), transparent 30%);
+  }
+
+  .hero-aurora::before,
+  .hero-aurora::after {
+    content: '';
+    position: absolute;
+    width: 34rem;
+    height: 34rem;
+    border-radius: 9999px;
+    filter: blur(72px);
+    opacity: 0.23;
+    animation: hero-aurora-drift 16s ease-in-out infinite alternate;
+  }
+
+  .hero-aurora::before {
+    top: -18rem;
+    right: -11rem;
+    background: hsl(var(--primary) / 0.5);
+  }
+
+  .hero-aurora::after {
+    bottom: -20rem;
+    left: -12rem;
+    background: hsl(var(--accent) / 0.36);
+    animation-delay: -7s;
+  }
+
+  .hero-metric {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: hero-metric-reveal 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
   /* Floating decoration */
   .float-decoration {
     @apply absolute rounded-full opacity-30 blur-3xl pointer-events-none;
     background: var(--gradient-primary);
+  }
+}
+
+@keyframes hero-aurora-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-2.5rem, 1.75rem, 0) scale(1.08);
+  }
+}
+
+@keyframes hero-metric-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-up,
+  .fade-in-up.visible,
+  .hero-metric {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .hero-aurora::before,
+  .hero-aurora::after {
+    animation: none !important;
+  }
+
+  .project-spotlight,
+  .project-spotlight::after,
+  .minimal-card,
+  .minimal-card-accent,
+  .competence-card,
+  .minimal-btn,
+  .minimal-btn-primary,
+  .minimal-btn-secondary {
+    transition: none !important;
+  }
+
+  .project-spotlight:hover,
+  .minimal-card:hover,
+  .minimal-card-accent:hover,
+  .competence-card:hover,
+  .minimal-btn-primary:hover,
+  .minimal-btn-secondary:hover {
+    transform: none !important;
   }
 }
 
@@ -370,10 +537,16 @@
   .minimal-btn-secondary,
   .cert-modal-panel,
   .float-decoration,
+  .hero-aurora,
+  .scroll-progress,
   .section-divider,
   button,
   form,
   .print\:hidden {
+    display: none !important;
+  }
+
+  .project-spotlight::after {
     display: none !important;
   }
   

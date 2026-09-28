@@ -300,22 +300,18 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
   const renderCard = (project: Project, featured = false): ReactNode => (
     <ScrollAnimator key={project.title}>
       <div
-        className={`minimal-card-accent group h-full cursor-pointer overflow-hidden ${
+        className={`minimal-card-accent project-spotlight group h-full cursor-pointer overflow-hidden ${
           featured ? "flex flex-col md:grid md:grid-cols-[0.92fr_1.08fr]" : "flex flex-col"
         }`}
         role="button"
         tabIndex={0}
-        style={{ transition: "transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease" }}
         onClick={() => setSelectedProject(project)}
         onKeyDown={(event) => openProjectFromKeyboard(event, project)}
-        onMouseEnter={(event) => {
-          event.currentTarget.style.transform = "translateY(-6px)";
-          event.currentTarget.style.boxShadow =
-            "0 20px 48px rgba(0,0,0,0.13), 0 0 0 1px hsl(220 70% 50% / 0.15)";
-        }}
-        onMouseLeave={(event) => {
-          event.currentTarget.style.transform = "translateY(0)";
-          event.currentTarget.style.boxShadow = "";
+        onPointerMove={(event) => {
+          if (event.pointerType !== "mouse") return;
+          const rect = event.currentTarget.getBoundingClientRect();
+          event.currentTarget.style.setProperty("--spot-x", `${event.clientX - rect.left}px`);
+          event.currentTarget.style.setProperty("--spot-y", `${event.clientY - rect.top}px`);
         }}
       >
         <div className={`bg-gradient-to-br ${project.gradient} ${featured ? "p-6 md:p-7" : "p-8 pb-6"}`}>
@@ -355,6 +351,22 @@ const ProjectsSection = ({ items = projects, grouped = true }: ProjectsSectionPr
         </div>
 
         <div className={`flex flex-1 flex-col ${featured ? "p-6 md:p-8" : "p-8 pt-5"}`}>
+          {project.meta ? (
+            <dl className="project-meta-row">
+              <div className="project-meta-item">
+                <dt>기간</dt>
+                <dd>{project.meta.period}</dd>
+              </div>
+              <div className="project-meta-item">
+                <dt>서비스</dt>
+                <dd>{project.meta.service}</dd>
+              </div>
+              <div className="project-meta-item project-meta-role">
+                <dt>역할</dt>
+                <dd>{project.meta.role}</dd>
+              </div>
+            </dl>
+          ) : null}
           <p className="text-sm leading-[1.8] text-muted-foreground">{renderInlineText(project.summaryLine)}</p>
 
           {featured && project.story ? (
