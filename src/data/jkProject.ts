@@ -1,8 +1,8 @@
 import { Workflow } from "lucide-react";
 import type { Project } from "./projects";
 
-const jkDagImage =
-  "https://raw.githubusercontent.com/Anjingyeong/jk-mcp/main/assets/readme-hero.png";
+const jkParallelWorkImage = "/images/jk/jk-parallel-work.webp";
+const jkRuntimeConsoleImage = "/images/jk/jk-runtime-console.webp";
 
 const jkDetails: Project["details"] = [
   {
@@ -50,16 +50,19 @@ const jkDetails: Project["details"] = [
     title: "DAG로 긴 작업을 dependency-aware lane으로 분해했습니다",
     body:
       "긴 요청을 하나의 직렬 작업으로 처리하면 서로 독립적인 작업도 앞 단계가 끝날 때까지 기다리고, 일부 검증 실패가 전체 결과를 흔들 수 있습니다. MASS ULW에서는 goal_loop가 작업을 dependency-aware lane으로 나누고, 선행 조건이 충족된 lane만 ready 상태로 열어 독립적인 lane을 병렬로 진행합니다. 각 lane은 자체 검증과 review를 통과해야 다음 dependency가 열리고, 마지막 integration 단계에서도 전체 검증을 다시 수행합니다.\n\n이 DAG의 목적은 에이전트 수를 늘리는 것이 아니라, 런타임이 '무엇이 아직 안 끝났는지', '어떤 작업이 서로 독립적인지', '어떤 결과가 검증을 통과했는지'를 추적해 긴 작업을 안전하게 합치는 것입니다.",
-    image: jkDagImage,
+    image: jkParallelWorkImage,
     imageAlt:
-      "JK README의 dependency DAG 이미지. 작업을 의존성이 있는 lane으로 분해하고 검증 후 통합하는 흐름을 보여줍니다.",
+      "Goal을 wave 기반 dependency graph로 분해하고 lane별 실행·대기·완료·실패·막힘 상태를 추적하는 JK Parallel Work 화면.",
     note:
-      "README 아키텍처 이미지 · DAG는 추론 모델의 내부 사고 과정이 아니라 작업 의존성·실행 순서·검증 상태를 관리하는 런타임 실행 계획입니다.",
+      "Parallel Work 실행 화면 · DAG는 추론 모델의 내부 사고 과정이 아니라 작업 의존성·실행 순서·검증 상태를 관리하는 런타임 실행 계획입니다.",
   },
   {
     title: "실제로 사용하는 Developer Tooling으로 운영했습니다",
     body:
       "JK는 프로젝트 탐색, 좁은 범위 소스 읽기, 안전 패치, 로컬 shell, Git, 개발 서버와 E2E, 외부 executor 라우팅, runtime/schema health 검증을 하나의 도구 표면으로 제공합니다. Windows launcher/installer와 Control Center도 함께 운영하며 실행 대상·승인·작업 상태를 확인할 수 있도록 구성했습니다.\n\n이 포트폴리오에 JK 프로젝트를 추가하는 작업 역시 JK를 통해 대상 저장소를 선택하고 기존 dirty 변경을 확인한 뒤, 현재 소스를 읽고 수정·테스트하는 흐름으로 진행했습니다.",
+    image: jkRuntimeConsoleImage,
+    imageAlt:
+      "MCP endpoint 연결, 런타임 상태, 프로젝트·역할·실행 모드를 관리하는 JK Runtime Console의 Launcher 화면.",
     note:
       "JK는 OpenAI와 별개의 독립 프로젝트이며, 추론 모델의 성능을 자체 성과로 주장하지 않습니다. 포트폴리오에서는 로컬 실행·상태 관리·안전장치·검증 자동화의 구현 범위를 중심으로 설명합니다.",
   },
@@ -97,13 +100,13 @@ export const jkAiProject: Project = {
   },
   story: {
     asIs:
-      "AI가 코드를 제안하는 것과 실제 로컬 저장소에서 긴 작업을 안전하게 이어서 수정·검증하는 것 사이에는 프로젝트 범위, 상태 유실, 동시 변경, 승인, 완료 판정 문제가 있었습니다.",
+      "브라우저의 AI로 긴 개발 작업을 진행할 때 코드 제안 자체보다 실제 로컬 저장소의 프로젝트 범위, 이전 턴의 작업 상태, 동시 변경, 위험 명령 승인, 테스트 완료 여부를 계속 유지하는 문제가 더 크게 드러났습니다.",
     task:
-      "ChatGPT의 추론은 그대로 활용하면서 로컬 실행을 별도 계층으로 분리하고, 작업 상태와 권한·검증 근거가 남는 실행 하네스를 만들어야 했습니다.",
+      "별도 추론 모델을 중복 탑재하지 않고 ChatGPT의 판단을 그대로 활용하면서, 중단 후에도 같은 작업을 이어가고 검증된 변경만 실제 저장소에 반영할 수 있는 MCP 실행 하네스를 만드는 것을 목표로 잡았습니다.",
     action:
-      "MCP/Actions → JK Runtime → local tools 구조를 만들고 work session·goal loop, project lease·Role/permission, hash precondition, approval gate, task workspace와 E2E/QA 흐름을 연결했습니다.",
+      "MCP/Actions → Hub → Windows outbound executor → JK Runtime 구조를 구성하고, work session·goal loop로 작업 상태를 유지했습니다. 여기에 project lease·Role/permission, SHA-256 hash precondition, 위험 작업 approval gate, dependency DAG 기반 병렬 작업, build·test·E2E 검증 근거를 실행 경로에 연결했습니다.",
     toBe:
-      "프로젝트 선택 → 소스 확인 → 수정 → 테스트/E2E → 리뷰·반영을 하나의 상태 기반 흐름으로 수행하고, 중단 후에도 같은 작업 세션을 이어갈 수 있는 로컬 코딩 런타임으로 운영하고 있습니다.",
+      "프로젝트 선택 → 소스 확인 → 수정 → 검증 → 리뷰·반영을 하나의 상태 기반 흐름으로 수행하고, 중단 후에도 같은 work session을 이어갈 수 있게 됐습니다. 현재 이 포트폴리오 수정도 JK로 기존 dirty 변경을 보존한 채 이미지·문구를 반영했고 production build 통과까지 확인해 실제 개발 도구로 사용하고 있습니다.",
   },
   highlights: [
     "MCP / Actions → Local Runtime",
@@ -124,9 +127,9 @@ export const jkAiProject: Project = {
   gradient: "from-violet-500/10 to-blue-500/10",
   githubUrl: "https://github.com/Anjingyeong/jk-mcp",
   heroImage: {
-    src: jkDagImage,
+    src: jkParallelWorkImage,
     caption:
-      "Goal을 dependency-aware lane으로 분해하고, lane별 검증·review를 통과한 결과만 최종 integration에 반영하는 JK의 DAG 실행 구조",
+      "Goal을 wave 기반 dependency graph로 분해하고, lane별 상태·검증 결과·병목을 추적하는 JK의 병렬 실행 화면",
   },
   details: jkDetails,
 };
