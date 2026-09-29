@@ -32,7 +32,9 @@ describe("full-stack portfolio", () => {
     expect(fullstackProjects[1].meta?.period).toBe("2026 · ongoing");
     expect(fullstackProjects[1].meta?.role).toContain("개인 프로젝트");
     expect(fullstackProjects[1].description).toContain("Windows outbound executor");
-    expect(fullstackProjects[1].githubUrl).toBe("https://github.com/Anjingyeong/jk_free");
+    expect(fullstackProjects[1].githubUrl).toBe("https://github.com/Anjingyeong/jk-mcp");
+    expect(fullstackProjects[1].heroImage?.src).toContain("assets/readme-hero.png");
+    expect(fullstackProjects[1].details.some((detail) => detail.title.includes("dependency-aware lane"))).toBe(true);
     expect(fullstackProjects[2].meta?.period).toBe("약 2주");
     expect(fullstackProjects[2].meta?.role).toContain("1인 개발");
     expect(fullstackProjects[2].highlights).toContain("약 2주 · 1인 기획 → 배포");
