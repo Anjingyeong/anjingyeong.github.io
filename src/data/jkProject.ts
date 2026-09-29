@@ -1,6 +1,9 @@
 import { Workflow } from "lucide-react";
 import type { Project } from "./projects";
 
+const jkDagImage =
+  "https://raw.githubusercontent.com/Anjingyeong/jk-mcp/main/assets/readme-hero.png";
+
 const jkDetails: Project["details"] = [
   {
     title: "문제 정의 · AI가 코드를 생성하는 것과 로컬 작업을 끝까지 수행하는 것은 달랐습니다",
@@ -44,9 +47,14 @@ const jkDetails: Project["details"] = [
     ],
   },
   {
-    title: "Task Workspace와 MASS ULW로 긴 작업과 병렬 작업을 분리했습니다",
+    title: "DAG로 긴 작업을 dependency-aware lane으로 분해했습니다",
     body:
-      "원본 저장소를 바로 수정하는 대신 작업별 private workspace에서 구현·검증한 뒤 충돌 검사와 review/verification 증거를 거쳐 원본에 반영할 수 있습니다. MASS ULW에서는 작업을 dependency-aware lane으로 나누고 서로 독립적인 lane은 병렬로 진행하며, 통과한 결과는 다른 lane의 수정 과정에서도 보존합니다.\n\n핵심은 에이전트 수를 늘리는 것이 아니라 '무엇이 아직 안 끝났는지', '어떤 검증을 통과했는지', '어떤 변경만 원본에 반영해도 되는지'를 런타임이 추적하게 만든 것입니다.",
+      "긴 요청을 하나의 직렬 작업으로 처리하면 서로 독립적인 작업도 앞 단계가 끝날 때까지 기다리고, 일부 검증 실패가 전체 결과를 흔들 수 있습니다. MASS ULW에서는 goal_loop가 작업을 dependency-aware lane으로 나누고, 선행 조건이 충족된 lane만 ready 상태로 열어 독립적인 lane을 병렬로 진행합니다. 각 lane은 자체 검증과 review를 통과해야 다음 dependency가 열리고, 마지막 integration 단계에서도 전체 검증을 다시 수행합니다.\n\n이 DAG의 목적은 에이전트 수를 늘리는 것이 아니라, 런타임이 '무엇이 아직 안 끝났는지', '어떤 작업이 서로 독립적인지', '어떤 결과가 검증을 통과했는지'를 추적해 긴 작업을 안전하게 합치는 것입니다.",
+    image: jkDagImage,
+    imageAlt:
+      "JK README의 dependency DAG 이미지. 작업을 의존성이 있는 lane으로 분해하고 검증 후 통합하는 흐름을 보여줍니다.",
+    note:
+      "README 아키텍처 이미지 · DAG는 추론 모델의 내부 사고 과정이 아니라 작업 의존성·실행 순서·검증 상태를 관리하는 런타임 실행 계획입니다.",
   },
   {
     title: "실제로 사용하는 Developer Tooling으로 운영했습니다",
@@ -99,9 +107,9 @@ export const jkAiProject: Project = {
   },
   highlights: [
     "MCP / Actions → Local Runtime",
-    "goal_loop · Durable Work Session",
+    "Durable Work Session · goal_loop",
+    "Dependency DAG · MASS ULW",
     "Lease · Role · Approval · Hash Guard",
-    "OCI Hub ↔ Windows Executor",
   ],
   tags: [
     "TypeScript",
@@ -114,7 +122,12 @@ export const jkAiProject: Project = {
     "E2E",
   ],
   gradient: "from-violet-500/10 to-blue-500/10",
-  githubUrl: "https://github.com/Anjingyeong/jk_free",
+  githubUrl: "https://github.com/Anjingyeong/jk-mcp",
+  heroImage: {
+    src: jkDagImage,
+    caption:
+      "Goal을 dependency-aware lane으로 분해하고, lane별 검증·review를 통과한 결과만 최종 integration에 반영하는 JK의 DAG 실행 구조",
+  },
   details: jkDetails,
 };
 
